@@ -19,6 +19,14 @@ This is a base project for the Software Architecture course in 2024/2025. It is 
 
 Both the user and auth service share a Mongo database that is accessed with mongoose.
 
+## Miembros del grupo
+<p>Alberto Martinez Olivar - uo282069@uniovi.es</p>
+<p>Pablo Jose Perez Diaz - uo282440@uniovi.es</p>
+<p>Marcos Gonzalez Garcia - uo282587@uniovi.es</p>
+<p>Celia Bobo Rodriguez Noriega - uo222898@uniovi.es</p>
+<p>Javier Monte Guillem - uo283951@uniovi.es</p>
+<p>Pelayo Palacios Suarez - uo274408@uniovi.es</p>
+
 ## Quick start guide
 
 First, clone the project:
