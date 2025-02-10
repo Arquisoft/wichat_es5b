@@ -39,16 +39,16 @@ See https://docs.arc42.org/section-6/[Runtime View] in the arc42 documentation.
 ****
 endif::arc42help[]
 
-=== <Login>
+=== <Inicio de sesion>
 
-Este diagrama de secuencia hace referencia a las llamadas entre los distintos objetos de la aplicacion web para que se loguee un usuario
+Este diagrama de secuencia hace referencia a las llamadas entre los distintos objetos de la aplicacion web para que un usuario inicie sesion.
 
 [plantuml,"Sequence diagram",png]
 ----
 actor Usuario
 participant Navegador
-participant Servidor_Web
-participant Base_de_Datos
+participant "Servidor Web" as Servidor_Web
+participant "Base de datos" as Base_de_Datos
 
 Usuario -> Navegador: Introduce credenciales
 Navegador -> Servidor_Web: Envía credenciales (POST)
@@ -63,8 +63,36 @@ else Credenciales erróneas
 end
 ----
 
-=== <Runtime Scenario 2>
+=== <Generacion de pregunta y respuestas>
 
-=== ...
+Este driagrama de secuencia resume el flujo de la aplicacion web para generar las preguntas y respuestas una vez iniciado el juego por parte del usuario.
+
+[plantuml,"Sequence diagram",png]
+----
+skinparam backgroundColor #F2F9FF
+skinparam sequence {
+    ActorBackgroundColor #CCE5FF
+    ParticipantBackgroundColor #E6F3FF
+    ParticipantBorderColor #0056B3
+    LifeLineBorderColor #0056B3
+    LifeLineBackgroundColor #CCE5FF
+    ArrowColor #0056B3
+    ArrowThickness 2
+}
+
+actor Usuario
+participant "Aplicación Web" as Aplicacion_Web
+participant "Servidor Backend" as Servidor_Backend
+participant "Endpoint SPARQL" as Endpoint_SPARQL
+
+Usuario -> Aplicacion_Web : Inicia el juego
+Aplicacion_Web -> Servidor_Backend : Solicita una pregunta
+Servidor_Backend -> Servidor_Backend : Genera consulta SPARQL para la pregunta
+Servidor_Backend -> Endpoint_SPARQL : Envía consulta SPARQL para obtener pregunta
+Endpoint_SPARQL --> Servidor_Backend : Devuelve pregunta y posibles respuestas
+Servidor_Backend -> Servidor_Backend : Procesa los datos recibidos
+Servidor_Backend -> Aplicacion_Web : Envía la pregunta y respuestas
+Aplicacion_Web -> Usuario : Muestra la pregunta y respuestas
+----
 
 === <Runtime Scenario n>
