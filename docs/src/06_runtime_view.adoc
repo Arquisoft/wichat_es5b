@@ -39,11 +39,43 @@ See https://docs.arc42.org/section-6/[Runtime View] in the arc42 documentation.
 ****
 endif::arc42help[]
 
+=== <Registro de nuevo usuario>
+
+Este diagrama de secuencia representa el flujo que tendra la peticion de un usuario para registrarse como nuevo usuario.
+
+[plantuml,"Registro de nuevo usuario",png]
+----
+@startuml
+skinparam backgroundColor #F2F9FF
+skinparam sequence {
+    ActorBackgroundColor #CCE5FF
+    ParticipantBackgroundColor #E6F3FF
+    ParticipantBorderColor #0056B3
+    LifeLineBorderColor #0056B3
+    LifeLineBackgroundColor #CCE5FF
+    ArrowColor #0056B3
+    ArrowThickness 2
+}
+
+actor Usuario
+participant "Aplicación Web" as Aplicacion_Web
+participant "Servidor Backend" as Servidor_Backend
+database "Base de Datos" as Base_Datos
+
+Usuario -> Aplicacion_Web : Solicita registrarse
+Aplicacion_Web -> Servidor_Backend : Envía datos de registro
+Servidor_Backend -> Base_Datos : Almacena los datos del usuario
+Base_Datos --> Servidor_Backend : Confirma almacenamiento
+Servidor_Backend -> Aplicacion_Web : Confirma registro exitoso
+Aplicacion_Web -> Usuario : Notifica registro exitoso
+@enduml
+----
+
 === <Inicio de sesion>
 
 Este diagrama de secuencia hace referencia a las llamadas entre los distintos objetos de la aplicacion web para que un usuario inicie sesion.
 
-[plantuml,"Sequence diagram",png]
+[plantuml,"Inicio de sesion",png]
 ----
 @startuml
 skinparam backgroundColor #F2F9FF
@@ -59,7 +91,7 @@ skinparam sequence {
 actor Usuario
 participant Navegador
 participant "Servidor Web" as Servidor_Web
-participant "Base de datos" as Base_de_Datos
+database "Base de datos" as Base_de_Datos
 
 Usuario -> Navegador: Introduce credenciales
 Navegador -> Servidor_Web: Envía credenciales (POST)
@@ -79,7 +111,7 @@ end
 
 Este driagrama de secuencia resume el flujo de la aplicacion web para generar las preguntas y respuestas una vez iniciado el juego por parte del usuario.
 
-[plantuml,"Sequence diagram",png]
+[plantuml,"Generacion de pregunta",png]
 ----
 @startuml
 skinparam backgroundColor #F2F9FF
@@ -113,7 +145,7 @@ Aplicacion_Web -> Usuario : Muestra la pregunta y respuestas
 
 Este diagrama de secuencia representa como se genera una pista para una pregunta determinada tras ser solicitada por el usuario que esta jugando.
 
-[plantuml,"Sequence diagram",png]
+[plantuml,"Generacion de pista",png]
 ----
 @startuml
 skinparam backgroundColor #F2F9FF
@@ -138,5 +170,37 @@ Servidor_Backend -> LLM : Solicita pista para la pregunta (a Mistral AI)
 LLM --> Servidor_Backend : Devuelve la pista generada
 Servidor_Backend -> Aplicacion_Web : Envía la pista generada
 Aplicacion_Web -> Usuario : Muestra la pista
+@enduml
+----
+
+=== <Consulta de estadisticas>
+
+Este diagrama de secuencia representa el flujo de la peticion de un usuario que haya iniciado sesion en el sistema y quiera saber sus estadisticas de juego.
+
+[plantuml,"Consulta de estadisticas",png]
+----
+@startuml
+skinparam backgroundColor #F2F9FF
+skinparam sequence {
+    ActorBackgroundColor #CCE5FF
+    ParticipantBackgroundColor #E6F3FF
+    ParticipantBorderColor #0056B3
+    LifeLineBorderColor #0056B3
+    LifeLineBackgroundColor #CCE5FF
+    ArrowColor #0056B3
+    ArrowThickness 2
+}
+
+actor Usuario
+participant "Aplicación Web" as Aplicacion_Web
+participant "Servidor Backend" as Servidor_Backend
+database "Base de Datos" as Base_Datos
+
+Usuario -> Aplicacion_Web : Solicita estadísticas
+Aplicacion_Web -> Servidor_Backend : Solicita datos de estadísticas
+Servidor_Backend -> Base_Datos : Consulta estadísticas del usuario
+Base_Datos --> Servidor_Backend : Devuelve datos de estadísticas
+Servidor_Backend -> Aplicacion_Web : Envía datos de estadísticas
+Aplicacion_Web -> Usuario : Muestra estadísticas
 @enduml
 ----
