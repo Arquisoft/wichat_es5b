@@ -45,6 +45,17 @@ Este diagrama de secuencia hace referencia a las llamadas entre los distintos ob
 
 [plantuml,"Sequence diagram",png]
 ----
+@startuml
+skinparam backgroundColor #F2F9FF
+skinparam sequence {
+    ActorBackgroundColor #CCE5FF
+    ParticipantBackgroundColor #E6F3FF
+    ParticipantBorderColor #0056B3
+    LifeLineBorderColor #0056B3
+    LifeLineBackgroundColor #CCE5FF
+    ArrowColor #0056B3
+    ArrowThickness 2
+}
 actor Usuario
 participant Navegador
 participant "Servidor Web" as Servidor_Web
@@ -61,6 +72,7 @@ else Credenciales erróneas
     Servidor_Web -> Navegador: Respuesta con error
     Navegador -> Usuario: Mensaje de error
 end
+@enduml
 ----
 
 === <Generacion de pregunta y respuestas>
@@ -69,6 +81,7 @@ Este driagrama de secuencia resume el flujo de la aplicacion web para generar la
 
 [plantuml,"Sequence diagram",png]
 ----
+@startuml
 skinparam backgroundColor #F2F9FF
 skinparam sequence {
     ActorBackgroundColor #CCE5FF
@@ -93,6 +106,37 @@ Endpoint_SPARQL --> Servidor_Backend : Devuelve pregunta y posibles respuestas
 Servidor_Backend -> Servidor_Backend : Procesa los datos recibidos
 Servidor_Backend -> Aplicacion_Web : Envía la pregunta y respuestas
 Aplicacion_Web -> Usuario : Muestra la pregunta y respuestas
+@enduml
 ----
 
-=== <Runtime Scenario n>
+=== <Generacion de una pista>
+
+Este diagrama de secuencia representa como se genera una pista para una pregunta determinada tras ser solicitada por el usuario que esta jugando.
+
+[plantuml,"Sequence diagram",png]
+----
+@startuml
+skinparam backgroundColor #F2F9FF
+skinparam sequence {
+    ActorBackgroundColor #CCE5FF
+    ParticipantBackgroundColor #E6F3FF
+    ParticipantBorderColor #0056B3
+    LifeLineBorderColor #0056B3
+    LifeLineBackgroundColor #CCE5FF
+    ArrowColor #0056B3
+    ArrowThickness 2
+}
+
+actor Usuario
+participant "Aplicación Web" as Aplicacion_Web
+participant "Servidor Backend" as Servidor_Backend
+participant "Mistral AI" as LLM
+
+Usuario -> Aplicacion_Web : Solicita una pista
+Aplicacion_Web -> Servidor_Backend : Envía solicitud de pista
+Servidor_Backend -> LLM : Solicita pista para la pregunta (a Mistral AI)
+LLM --> Servidor_Backend : Devuelve la pista generada
+Servidor_Backend -> Aplicacion_Web : Envía la pista generada
+Aplicacion_Web -> Usuario : Muestra la pista
+@enduml
+----
