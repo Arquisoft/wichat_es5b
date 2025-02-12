@@ -31,7 +31,7 @@ endif::arc42help[]
 [options="header",cols="1,2,2,2"]
 |===
 |Riesgo|Descripción|Impacto|Mitigación
-| _<Riesgo 1>_ | _<Descripción 1>_ | _<Impacto 1>_ | _<Mitigación 1>_
+| _Abandono de componentes del equipo_ | _<Descripción 1>_ | _<Impacto 1>_ | _<Mitigación 1>_
 | _<Riesgo 2>_ | _<Descripción 2>_ | _<Impacto 2>_ | _<Mitigación 2>_
 |===
 
