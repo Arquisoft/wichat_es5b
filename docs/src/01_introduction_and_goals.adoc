@@ -15,6 +15,7 @@ These include
 * quality goals for the architecture and
 * relevant stakeholders and their expectations
 ****
+
 endif::arc42help[]
 
 === Requirements Overview
@@ -44,6 +45,31 @@ See https://docs.arc42.org/section-1/[Introduction and Goals] in the arc42 docum
 
 ****
 endif::arc42help[]
+
+. El sistema contará con un frontend web
+.. El frontend mostrará imagenes
+.. El frontend mostrará respuestas
+. El sistema contará con un sistema de pistas
+.. El sistema de pistas permitirá a los usuarios obtener pistas sobre las imagenes
+. La web deberá estar desplegada
+. La web deberá estar disponible en la web
+. Los usuarios deberán poder registrarse
+.. Los usuarios registrados deberan poder consultar su historico de participación
+... El historico contendrá el numero de juegos
+... El historico contendrá las preguntas falladas
+... El historico contendrá las preguntas acertadas
+... El historico mostrará los tiempos
+. El sistema generará las preguntas de manera automatica a partir de Wikidata
+.. El sistema creará una respuesta correcta
+.. El sistema creará respuestas incorrectas
+. El sistema permitirá acceder a pistas en cada preguntas
+.. El sistema de pistas se obtendran mediante un LLM
+. El sistema de pistas tendra una tecnica para generar las preguntas
+.. El sistema de pistas generará las pistas mediante la informacion de Wikidata
+. El sistema permitirá contestar a las preguntas dentro de un plazo de tiempo determinado
+. El sistema permitirá acceder a la informacion del usuario mediante un API
+. El sistema permitirá acceder a la informacion de las preguntas medinate un API
+
 
 === Quality Goals
 
