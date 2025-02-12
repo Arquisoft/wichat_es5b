@@ -133,8 +133,11 @@ endif::arc42help[]
 [options="header",cols="1,2,2"]
 |===
 |Rol/Nombre|Contacto|Expectativas
-| RTVE | _Equipo de RTVE_ |  
-| Equipo de desarrollo | Alberto Martinez Olivar - uo282069@uniovi.es//Pablo Jose Perez Diaz - uo282440@uniovi.es//Marcos Gonzalez Garcia - uo282587@uniovi.es//Celia Bobo Rodriguez Noriega - uo222898@uniovi.es//Javier Monte Guillem - uo283951@uniovi.es//Pelayo Palacios Suarez - uo274408@uniovi.es |  
-| Empathy | https://www.empathy.ai/ |  
-| Usuarios | Todo usuario que utilice la aplicación |  
+| RTVE | _Equipo de RTVE_ |  Esperamos que RTVE nos facilite la suficiente informacion de que se espera de la aplicacion 
+| Equipo de desarrollo | Alberto Martinez Olivar - uo282069@uniovi.es//Pablo Jose Perez Diaz - uo282440@uniovi.es
+                        //Marcos Gonzalez Garcia - uo282587@uniovi.es//Celia Bobo Rodriguez Noriega - uo222898@uniovi.es
+                        //Javier Monte Guillem - uo283951@uniovi.es//Pelayo Palacios Suarez - uo274408@uniovi.es 
+                        |  Se espera que el grupo de desarrollo realice todas las actividades asignadas a tiempo y en caso de no realizarlas en el plazo asignado que esten finalizadas lo antes posible. Tambien se espera que el equipo de desarrollo aprenda lo suficiente de las tecnlogias escogidas para que puedan realizar correctamente el sistema deseado.
+| Empathy | https://www.empathy.ai/ | Esperamos que empathy mantenga disponible su LLM lo maximo posble para que podamos realizar este proyecto con su tecnologia. 
+| Usuarios | Todo usuario que utilice la aplicación |  Se espera que los usuarios ayuden a los desarrolladores avisando en caso de encontrar algun error o bug para poder solucionarlos rapidamente.
 |===
