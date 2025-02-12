@@ -99,10 +99,10 @@ endif::arc42help[]
 [options="header",cols="1,2,2"]
 |===
 |Caracteristica de calidad|Prioridad|Motivación
-| Usabilidad |  |
-| Rendimiento |  | 
-| Fiabilidad |  |
-| Compatibilidad |  |
+| Usabilidad | Alta | El sistema debe de ser intuitivo para que todos los usuarios usen la aplicacion. 
+| Rendimiento | Alta | La aplicacion deberá realizar la mayoria de las peticiones dentro de un marco de tiempo razonable y no debera verse afectado cuando haya varios usuarios utilizando el sistema.
+| Fiabilidad | Alta | El sistema debe de estar disponible para el usuario la mayoria de las veces que el usuario quiera utilizarla
+| Compatibilidad | Media | El sistema debera poder utilizarse en todos los navegadores, ya sean Chrome, Firefox...
 |===
 
 
