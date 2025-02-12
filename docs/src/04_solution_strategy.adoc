@@ -32,3 +32,18 @@ See https://docs.arc42.org/section-4/[Solution Strategy] in the arc42 documentat
 
 ****
 endif::arc42help[]
+
+=== 4.1 Decisiones tecnológicas
+* **API SPARQL**: API que permite obtener datos de WikiData mediante consultas parametrizables. Elegimos esta API debido a que otras alternativas no permiten consultas lo suficientemente específicas para generar las preguntas del juego.
+* **React**: biblioteca de JavaScript ampliamente utilizada para construir interfaces de usuario dinámicas. Elegimos usarla en el proyecto ya que permite la reutilización de componentes, y, al ser muy utilizada en la actualidad, hay mucha documentación y ejemplos disponibles.
+* **Node**: entorno de ejecución de JavaScript en el servidor. Lo elegimos debido a que al ejecutarse en el servidor y no en el cliente es más eficiente para aplicaciones de tiempo real.
+* **TypeScript**: lenguaje de programación utilizado para el desarrollo de aplicaciones web, tanto del lado del cliente como del servidor. Elegimos este lenguaje en vez de otras alternativas debido a su tipado dinámico, que facilita la detección de errores, además de la facilidad de usarlo tanto con Node como con React.
+* **Mistral**: modelo LLM de propósito general, diseñado para adaptarse a diversas tareas. Escogimos Mistral debido a que queremos participar en el concurso de Empathy, y consideramos es la más adecuada para el tipo de preguntas que se realizarán en la aplicación. Además, hay muchos recursos educativos que facilitan su uso e integración en proyectos. 
+* **Azure**: plataforma de computación en la nube que ofrece distintos servicios. En nuestro caso, la utilizaremos para tener una base de datos en la nube. Escogimos Azure para esto ya que permite tener una base de datos disponible en todo momento, además de que tenemos crédito para Azure proporcionado por la universidad.
+* **Microsoft SQL Server**: Sistema de Gestión de Bases de Datos SQL de Microsoft. Lo escogimos puesto que es la única opción que ofrece Azure para crear una base de datos en la nube.
+* **Docker**: herramienta para construir aplicaciones portátiles con todas sus dependencias. Escogimos Docker por la flexibilidad para desplegar aplicaciones en distintas plataformas.
+
+=== 4.2 Decisiones sobre cómo alcanzar objetivos clave de calidad 
+=== 4.3 Decisiones organizativas 
+
+
