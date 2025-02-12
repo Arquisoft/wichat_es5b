@@ -132,7 +132,9 @@ endif::arc42help[]
 
 [options="header",cols="1,2,2"]
 |===
-|Role/Name|Contact|Expectations
-| _<Role-1>_ | _<Contact-1>_ | _<Expectation-1>_
-| _<Role-2>_ | _<Contact-2>_ | _<Expectation-2>_
+|Rol/Nombre|Contacto|Expectativas
+| RTVE | _Equipo de RTVE_ |  
+| Equipo de desarrollo | Alberto Martinez Olivar - uo282069@uniovi.es//Pablo Jose Perez Diaz - uo282440@uniovi.es//Marcos Gonzalez Garcia - uo282587@uniovi.es//Celia Bobo Rodriguez Noriega - uo222898@uniovi.es//Javier Monte Guillem - uo283951@uniovi.es//Pelayo Palacios Suarez - uo274408@uniovi.es |  
+| Empathy | https://www.empathy.ai/ |  
+| Usuarios | Todo usuario que utilice la aplicación |  
 |===
