@@ -35,3 +35,23 @@ There you will find links and examples about ADR.
 
 ****
 endif::arc42help[]
+
+=== Acceso a Wikidata
+
+Decidimos usar el endpoint de SPARQL ya que era la forma de acceso a los datos de Wikidata que más se ajustaba a nuestro proyecto.
+
+=== Backend
+
+Usaremos React, Node y Typescript por la facilidad que tiene el tipado estático del lenguaje.
+
+=== Modelo de lenguaje usado
+
+El Modelo de Lenguaje que decidimos usar será Mistral de la empresa Empathy.
+
+=== Base de datos
+
+Se creará una base de datos en Azure para que esté disponible para todos. El SGBD usado será MicrosoftSQL Server.
+
+=== Despliegue
+
+La aplicación se desplegará usando Docker por la flexibilidad para desplegar en distintas plataformas.
