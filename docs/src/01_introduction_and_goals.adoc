@@ -95,6 +95,17 @@ A table with quality goals and concrete scenarios, ordered by priorities
 ****
 endif::arc42help[]
 
+
+[options="header",cols="1,2,2"]
+|===
+|Caracteristica de calidad|Prioridad|Motivación
+| Usabilidad |  |
+| Rendimiento |  | 
+| Fiabilidad |  |
+| Compatibilidad |  |
+|===
+
+
 === Stakeholders
 
 ifdef::arc42help[]
