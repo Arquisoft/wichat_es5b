@@ -1,7 +1,7 @@
 ifndef::imagesdir[:imagesdir: ../images]
 
 [[section-design-decisions]]
-== Architecture Decisions
+== Decisiones de Diseño
 
 
 ifdef::arc42help[]
@@ -38,20 +38,32 @@ endif::arc42help[]
 
 === Acceso a Wikidata
 
+Problema:
+Tenemos que acceder de alguna forma a las imágenes y etiquetas proporcionadas por Wikidata.
+
+Alternativas consideradas:
+    • Búsqueda con Elasticsearch via la API "wbsearchentities"
+    • Búsqueda son SPARQL via endpoint propio de Wikidata
+
+Decisión tomada:
 Decidimos usar el endpoint de SPARQL ya que era la forma de acceso a los datos de Wikidata que más se ajustaba a nuestro proyecto.
-
-=== Backend
-
-Usaremos React, Node y Typescript por la facilidad que tiene el tipado estático del lenguaje.
 
 === Modelo de lenguaje usado
 
+Problema:
+Necesitamos usar un LLM en la aplicación para proporcionar un chat interactivo en tiempo real.
+
+Alternativas consideradas:
+    • Gemini de Google
+    • Mistral de Empathy
+
+Decisión tomada:
 El Modelo de Lenguaje que decidimos usar será Mistral de la empresa Empathy.
-
-=== Base de datos
-
-Se creará una base de datos en Azure para que esté disponible para todos. El SGBD usado será MicrosoftSQL Server.
 
 === Despliegue
 
+Problema:
+Necesitamos desplegar la aplicación para su uso.
+
+Decisión:
 La aplicación se desplegará usando Docker por la flexibilidad para desplegar en distintas plataformas.
