@@ -1930,43 +1930,59 @@ There you will find links and examples about ADR.</p>
 <div class="sect2">
 <h3 id="_acceso_a_wikidata">9.1. Acceso a Wikidata</h3>
 <div class="paragraph">
-<p>Problema:
+<p><strong>Problema:</strong>
 Tenemos que acceder de alguna forma a las imágenes y etiquetas proporcionadas por Wikidata.</p>
 </div>
 <div class="paragraph">
-<p>Alternativas consideradas:
-    • Búsqueda con Elasticsearch via la API "wbsearchentities"
-    • Búsqueda son SPARQL via endpoint propio de Wikidata</p>
+<p><strong>Alternativas consideradas:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Búsqueda con Elasticsearch via la API "wbsearchentities"</p>
+</li>
+<li>
+<p>Búsqueda son SPARQL via endpoint propio de Wikidata</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Decisión tomada:
+<p><strong>Decisión tomada:</strong>
 Decidimos usar el endpoint de SPARQL ya que era la forma de acceso a los datos de Wikidata que más se ajustaba a nuestro proyecto.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_modelo_de_lenguaje_usado">9.2. Modelo de lenguaje usado</h3>
 <div class="paragraph">
-<p>Problema:
+<p><strong>Problema:</strong>
 Necesitamos usar un LLM en la aplicación para proporcionar un chat interactivo en tiempo real.</p>
 </div>
 <div class="paragraph">
-<p>Alternativas consideradas:
-    • Gemini de Google
-    • Mistral de Empathy</p>
+<p><strong>Alternativas consideradas:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Gemini de Google</p>
+</li>
+<li>
+<p>Mistral de Empathy</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Decisión tomada:
+<p><strong>Decisión tomada:</strong>
 El Modelo de Lenguaje que decidimos usar será Mistral de la empresa Empathy.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_despliegue">9.3. Despliegue</h3>
 <div class="paragraph">
-<p>Problema:
+<p><strong>Problema:</strong>
 Necesitamos desplegar la aplicación para su uso.</p>
 </div>
 <div class="paragraph">
-<p>Decisión:
+<p><strong>Decisión:</strong>
 La aplicación se desplegará usando Docker por la flexibilidad para desplegar en distintas plataformas.</p>
 </div>
 <div style="page-break-after: always;"></div>
