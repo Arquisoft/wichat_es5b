@@ -42,8 +42,9 @@ endif::arc42help[]
 Tenemos que acceder de alguna forma a las imágenes y etiquetas proporcionadas por Wikidata.
 
 *Alternativas consideradas:*
-    * Búsqueda con Elasticsearch via la API "wbsearchentities"
-    * Búsqueda son SPARQL via endpoint propio de Wikidata
+
+* Búsqueda con Elasticsearch via la API "wbsearchentities"
+* Búsqueda son SPARQL via endpoint propio de Wikidata
 
 *Decisión tomada:*
 Decidimos usar el endpoint de SPARQL ya que era la forma de acceso a los datos de Wikidata que más se ajustaba a nuestro proyecto.
@@ -53,9 +54,10 @@ Decidimos usar el endpoint de SPARQL ya que era la forma de acceso a los datos d
 *Problema:*
 Necesitamos usar un LLM en la aplicación para proporcionar un chat interactivo en tiempo real.
 
-Alternativas consideradas:
-    * Gemini de Google
-    * Mistral de Empathy
+*Alternativas consideradas:*
+
+* Gemini de Google
+* Mistral de Empathy
 
 *Decisión tomada:*
 El Modelo de Lenguaje que decidimos usar será Mistral de la empresa Empathy.
