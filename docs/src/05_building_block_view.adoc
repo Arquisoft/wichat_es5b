@@ -67,7 +67,7 @@ In the best case you will get away with examples or simple signatures.
 ****
 endif::arc42help[]
 
-El siguiente diagrama...
+El siguiente diagrama muestra una visión general de los principales componentes del sistema y sus interacciones:
 
 [plantuml,"Vision general",png]
 ----
@@ -89,8 +89,18 @@ cloud "Wikidata" {
 @enduml
 ----
 
+==== Componentes que intervienen:
 
-=== Font-End
+[options="header",cols="1,2"]
+|===
+|Componente|Descripción
+| _User_ | _Representa el usuario final de la aplicación. Este interactua con el sistema jugando al juego de preguntas_
+| _WIQ_ | _Es el componente principal de la aplicación. Este maneja la parte lógica del juego, la creación de preguntas a través de consultas a la API de wikidata, el envío y consultas de resultados a la base de datos, la interacción con el ranking y el login de la aplicación_
+| _Wikidata_ | _Es un servicio externo a la aplicación, utilizado por esta, para obtener información y generar las preguntas._
+|===
+
+
+=== Front-End
 
 ifdef::arc42help[]
 [role="arc42help"]
