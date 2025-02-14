@@ -33,7 +33,7 @@ Antes de detallar la arquitectura del sistema, es fundamental definir las restri
 Estas restricciones pueden derivar de decisiones tecnológicas, organizativas, limitaciones del negocio o requisitos legales que deben cumplirse. 
 A continuación, se presentan los principales aspectos que influirán en el desarrollo del sistema.
 
-== 2.1 Restricciones Tecnológicas
+=== Restricciones Tecnológicas
 
 
 * Frontend:
@@ -57,7 +57,7 @@ El despliegue será realizado con Docker por su flexibilidad para desplegar en d
 * Testing:
 El proyecto deberá incluir pruebas para garantizar el resultado esperado y un producto de calidad.
 
-== 2.2 Restricciones organizativas
+=== Restricciones organizativas
 
 
 * Tiempo:
@@ -73,7 +73,7 @@ El equipo se reunirá al menos una vez a la semana para poner en común el traba
 Se utilizará GitHub para coordinar el trabajo del proyecto, realizar un seguimiento de los cambios y gestionar el flujo de trabajo.
 
 
-== 2.3 Convenciones
+=== Convenciones
 
 * ARC42:
 La Documentación debe seguir la estructura de ARC42.

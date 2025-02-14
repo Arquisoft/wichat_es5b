@@ -28,11 +28,19 @@ endif::arc42help[]
 
 === Riesgos
 
-[options="header",cols="1,2,2,2"]
+[options="header",cols="1,2,2,2,2"]
 |===
-|Riesgo|Descripción|Impacto|Mitigación
-| _Abandono de componentes del equipo_ | _<Descripción 1>_ | _<Impacto 1>_ | _<Mitigación 1>_
-| _<Riesgo 2>_ | _<Descripción 2>_ | _<Impacto 2>_ | _<Mitigación 2>_
+|Riesgo|Descripción|Impacto|Probabilidad|Mitigación
+| _Abandono de componentes del equipo_ | _Si se da el caso de que uno o más componentes del equipo lo abandonan durante el desarrollo, la carga de trabajo del resto de componentes se verá aumentada._ | _Alto_ | _Media_ | _Código bien documentado y estructurado, de forma que cualquier componente, haya o no participado en esa parte del desarrollo, pueda entenderla y trabajar en ella._
+| _Mala comunicación entre el equipo_ | _Una comunicación deficiente entre los miembros del equipo puede generar malentendidos, retrasos y conflictos en el proyecto._ | _Medio_ | _Baja_ | _Reuniones de forma rutinaria recogiendo en acta los puntos tratados y las responsabilidades de cada miembro._
+| _Poca experiencia en trabajos green field_ | _El quipo cuenta con poca experiencia desarrollando proyectos de cero, así como haciendo la toma de decisiones de tecnologías a usar. Esto puede derivar en retrasos o partes del proyecto poco eficientes._ | _Alto_ | _Media_ | _Investigación y formación previa._
+| _Seguridad en el sistema de login_ | _El almacenamiento y tratamiento de credenciales de usuarios podría ser vulnerable._ | _Alto_ | _Baja_ | _Utilización de una encriptación segura. Normas mínimas de seguridad a la hora de establecer contraseñas._
+| _Escalabilidad de la base de datos_ | _Según aumentan los usuarios y el ranking de partidas, el rendimiento de la base de datos puede verse perjudicado._ | _Bajo_ | _Baja_ | _Optimización de consultas e índices adecuados._
+| _Dependencia de la disponibilidad de la base de datos en la nube_ | _El proyecto utiliza una base de datos alojada en la nube, por lo que introduce una dependencia de la infraestructura de la nube._ | _Medio_ | _Baja_ | _Replicación de datos mediante copias de seguridad periódicas._
+| _Tiempos de respuesta del LLM_ | _El modelo de lenguaje puede presentar tiempos de respuesta elevados, así como verse afectado por la alta demanda._ | _Bajo_ | _Baja_ | _Elección de modelo eficiente y optimización de consultas._
+| _Respuestas no coherentes del LLM_ | _El modelo de lenguaje puede generar respuestas irrelevantes, incorrectas o incoherentes._ | _Medio_ | _Media_ | _Definición de prompts adecuados._
+| _Dependencia de la disponibilidad de la API externa_ | _El sistema depende de una API externa para la obtención de imágenes y preguntas. Si esta API sufre caídas, el juego podría verse afectado impidiendo la carga de contenido esencial._ | _Alto_ | _Baja_ | _Evaluar APIs de respaldo o cachear las últimas respuestas de esta._
+| _Uso concurrente de la aplicación_ | _El uso concurrente de la aplicación puede llevar a un menor rendimiento de esta, fallos en la base de datos o la caída del sistema._ | _Medio_ | _Media_ | _Pruebas de carga y uso de cache evitando consultas repetitivas._
 |===
 
 === Deuda Técnica
@@ -40,6 +48,8 @@ endif::arc42help[]
 [options="header",cols="1,2,2,2"]
 |===
 |Deuda Técnica|Descripción|Consecuencia|Mitigación
-| _<Deuda 1>_ | _<Descripción 1>_ | _<Consecuencia 1>_ | _<Mitigación 1>_
-| _<Deuda 2>_ | _<Descripción 2>_ | _<Consecuencia 2>_ | _<Mitigación 2>_
+| _Estructura de la base de datos_ | _El modelo de datos establecido al inicio del desarrollo puede no ser óptimo para futuras expansiones del proyecto._ | _Problemas de rendimiento y retrasos al tener que modificar la estructura de la base de datos._ | _Diseñar utilizando principios de normalización._
+| _Rendimiento del LLM_ | _El modelo de lenguaje utilizado puede generar tiempos de respuesta elevados, así como respuestas irrelevantes al contexto._ | _Afecta la experiencia de usuario._ | _Optimización de prompts y monitoreo de rendimiento._
+| _Ausencia de pruebas_ | _La falta de pruebas puede provocar que cada cambio en el código pueda introducir errores sin ser detectados._ | _Fallos en la aplicación y difícil detección de estos._ | _Implementación de pruebas unitarias, de integración y automatizadas._
+| _Código poco mantenible_ | _El código no sigue buenas prácticas de arquitectura y estructuración._ | _Cualquier cambio en el código puede volverse complicado y costoso de implementar._ | _Desarrollar código que cumpla los principios SOLID._
 |===
