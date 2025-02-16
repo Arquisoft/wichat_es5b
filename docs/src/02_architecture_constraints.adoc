@@ -1,33 +1,29 @@
 ifndef::imagesdir[:imagesdir: ../images]
 
 [[section-architecture-constraints]]
-== Architecture Constraints
-
+== Restricciones de la Arquitectura
 
 ifdef::arc42help[]
 [role="arc42help"]
 ****
-.Contents
-Any requirement that constraints software architects in their freedom of design and implementation decisions or decision about the development process. These constraints sometimes go beyond individual systems and are valid for whole organizations and companies.
+.Contenido
+Cualquier requerimiento que restrinja a los arquitectos de software en la libertad de diseño y la toma de decisiones
+sobre la implementación o el proceso de desarrollo. Estas restricciones a veces van más allá de sistemas individuales
+y son válidos para organizaciones y compañías enteras.
 
-.Motivation
-Architects should know exactly where they are free in their design decisions and where they must adhere to constraints.
-Constraints must always be dealt with; they may be negotiable, though.
+.Motivación
+Los arquitectos deben saber exactamente sus libertades respecto a las decisiones de diseño y en dónde deben apegarse
+a restricciones. Las restricciones siempre deben ser acatadas, aunque en algunos casos pueden ser negociables.
 
-.Form
-Simple tables of constraints with explanations.
-If needed you can subdivide them into
-technical constraints, organizational and political constraints and
-conventions (e.g. programming or versioning guidelines, documentation or naming conventions)
-
+.Forma
+Tablas de restricciones con sus explicaciones.
+Si se requiere, se pueden subdividir en restricciones técnicas, organizacionales y/o políticas y convenciones
+(por ejemplo, guías de versionado o programación, convenciones de documentación o nombrado).
 
 .Further Information
-
-See https://docs.arc42.org/section-2/[Architecture Constraints] in the arc42 documentation.
-
+Consulta https://docs.arc42.org/section-2/[Architecture Constraints]
 ****
 endif::arc42help[]
-
 
 Antes de detallar la arquitectura del sistema, es fundamental definir las restricciones que condicionan su diseño e implementación. 
 Estas restricciones pueden derivar de decisiones tecnológicas, organizativas, limitaciones del negocio o requisitos legales que deben cumplirse. 
@@ -35,50 +31,35 @@ A continuación, se presentan los principales aspectos que influirán en el desa
 
 === Restricciones Tecnológicas
 
+[cols="1,2", options="header"]
+|===
+| Restricción       | Explicación
+| Wikidata         | La información de las preguntas será generada automáticamente a partir de los datos de Wikidata.
+| LLM             | Será posible interactuar con la aplicación en cada pregunta para poder obtener pistas sobre las mismas. Para ello se utilizará un modelo de lenguaje (LLM).
+| Docker         | La aplicación deberá utilizar contenedores para garantizar su portabilidad y facilidad de despliegue.
+| Frontend       | El sistema contará al menos con un frontend web que mostrará las imágenes, preguntas y respuestas.
+| Gestión de Usuarios | Los usuarios podrán registrarse en el sistema y consultar el histórico de su participación en el sistema.
+| Despliegue     | La web deberá estar desplegada y accesible a través de la Web.
+| Pruebas        | El proyecto deberá incluir distintos tipos de pruebas para garantizar el resultado esperado y un producto de calidad (pruebas de aceptación, de carga, cobertura, etc.).
+|===
 
-* Frontend:
-Se utilizará React.js con TypeScript.
+=== Restricciones Organizativas
 
-* Backend:
-La aplicación será desarrollada con Node.js 
-
-* Bases de Datos:
-Se empleará Microsoft SQL Server alojado en Azure, lo que garantiza disponibilidad y accesibilidad global.
-
-* Wikidata:
-Se utilizará la API SPARQL de Wikidata para obtener preguntas de forma dinámica.
-
-* LLM:
-Se integrará el modelo Mistral de Empathy.
-
-* Despliegue:
-El despliegue será realizado con Docker por su flexibilidad para desplegar en distintas plataformas.
-
-* Testing:
-El proyecto deberá incluir pruebas para garantizar el resultado esperado y un producto de calidad.
-
-=== Restricciones organizativas
-
-
-* Tiempo:
-El proyecto debe ser desarrollado en un tiempo límite, este cuatrimestre.
-
-* Tamaño del Equipo:
-El equipo está compuesto por 6 miembros del mismo grupo de laboratorio.
-
-* Reuniones:
-El equipo se reunirá al menos una vez a la semana para poner en común el trabajo realizado y organizar futuras tareas.
-
-* GitHub:
-Se utilizará GitHub para coordinar el trabajo del proyecto, realizar un seguimiento de los cambios y gestionar el flujo de trabajo.
-
+[cols="1,2", options="header"]
+|===
+| Restricción       | Explicación
+| Tiempo           | El proyecto debe ser desarrollado antes de la fecha límite de entrega de este cuatrimestre. El tiempo estará repartido en 2 horas de trabajo presencial en clase de laboratorio cada semana y trabajo individual.
+| Tamaño del Equipo | El equipo está compuesto por 6 miembros, por lo que será necesario mantener una buena cooperación durante el desarrollo del proyecto.
+| Reuniones       | El equipo se reunirá al menos una vez a la semana para poner en común el trabajo realizado y organizar futuras tareas.
+| Actas          | En cada reunión se deberá crear un acta donde queden reflejados los miembros del equipo que participaron, las decisiones que han sido tomadas durante la sesión y la organización y reparto de tareas para la semana siguiente.
+| GitHub         | Se utilizará GitHub para coordinar el trabajo del proyecto, realizar un seguimiento de los cambios y gestionar el flujo de trabajo.
+|===
 
 === Convenciones
 
-* ARC42:
-La Documentación debe seguir la estructura de ARC42.
-
-* Idioma:
-El proyecto será desarrollado en español.
-
-
+[cols="1,2", options="header"]
+|===
+| Restricción       | Explicación
+| ARC42           | La documentación debe seguir la estructura de ARC42.
+| Idioma          | El proyecto será desarrollado en español.
+|===
