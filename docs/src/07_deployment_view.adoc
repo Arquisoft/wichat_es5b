@@ -3,7 +3,7 @@ ifndef::imagesdir[:imagesdir: ../images]
 [[section-deployment-view]]
 
 
-== Deployment View
+== Vista de despliegue
 
 ifdef::arc42help[]
 [role="arc42help"]
@@ -44,7 +44,7 @@ See https://docs.arc42.org/section-7/[Deployment View] in the arc42 documentatio
 ****
 endif::arc42help[]
 
-=== Infrastructure Level 1
+=== Nivel de Infraestructura 1
 
 ifdef::arc42help[]
 [role="arc42help"]
@@ -127,37 +127,23 @@ con una base de datos en la que almacenamos la información de los usuarios y de
 
 
 
-Características de calidad y/o rendimiento::
+Características de calidad/rendimiento::
 
 Gracias al uso de docker nuestro sistema es portable (podriamos cambiarlo de maquina y seguiria funcionando sin 
 muchos cambios) y escalable ya que podemos crear nuevos contenedores y nuevas instancias en el caso de que sean 
-necesarias.
+necesarias. Tambien gracias a que almacenamos la base de datos dentro de la misma maquina que nuestra aplicación
+las llamadas a la misma seran mas rapidas que si se encontrase fuera de la misma.
 
-Mapping of Building Blocks to Infrastructure::
-_<description of the mapping>_
+Mapeo de los Bloques de Construcción a Infraestructura::
+[options="header",cols="1,2"]
+|===
+| Bloque de Construcción | Infraestructura
+| WebApp |
+| BBDD MongoDB |
+| Gatewayservice |
+| authservice |
+| userservice |
+| LLMService |
+|===
 
 
-=== Infrastructure Level 2
-
-ifdef::arc42help[]
-[role="arc42help"]
-****
-Here you can include the internal structure of (some) infrastructure elements from level 1.
-
-Please copy the structure from level 1 for each selected element.
-****
-endif::arc42help[]
-
-==== _<Infrastructure Element 1>_
-
-_<diagram + explanation>_
-
-==== _<Infrastructure Element 2>_
-
-_<diagram + explanation>_
-
-...
-
-==== _<Infrastructure Element n>_
-
-_<diagram + explanation>_
