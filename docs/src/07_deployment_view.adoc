@@ -60,7 +60,60 @@ For multiple environments or alternative deployments please copy and adapt this 
 ****
 endif::arc42help[]
 
-_**<Overview Diagram>**_
+[plantuml, arquitectura, png]
+----
+@startuml
+
+[Azure] as azure
+
+[Wikidata] as Wikidata
+actor usuario
+[LLM]
+
+node azure{
+
+    node Docker1{
+        [Webapp] as webapp
+    }
+
+    node Docker2{
+        database "BBDD\nMongoDB" as BBDD
+    }
+
+    node Docker3{
+        [authservice] as ause
+    }
+
+    node Docker4{
+        [LLMService] as LLMService
+    }
+
+    node Docker5{
+        [userservice] as userService
+    }
+
+    node Docker6{
+        [Gatewayservice] as gateway
+    }
+}
+
+node Dispositivo{
+    [Buscador] as buscador
+}
+
+usuario --> buscador
+buscador --> webapp
+webapp --> gateway
+gateway --> LLMService
+LLMService --> LLM
+gateway --> ause
+gateway --> userService
+gateway --> Wikidata
+userService --> BBDD
+ause --> BBDD
+
+@enduml
+----
 
 Motivation::
 
