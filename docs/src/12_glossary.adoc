@@ -1,44 +1,55 @@
 ifndef::imagesdir[:imagesdir: ../images]
 
 [[section-glossary]]
-== Glossary
+== Glosario
 
 ifdef::arc42help[]
 [role="arc42help"]
 ****
-.Contents
-The most important domain and technical terms that your stakeholders use when discussing the system.
+.Contenido
+Los términos de dominio y técnicos más importantes que utilizan tus partes interesadas al hablar sobre el sistema.
 
-You can also see the glossary as source for translations if you work in multi-language teams.
+También puedes ver el glosario como una fuente de traducciones si trabajas en equipos multilingües.
 
-.Motivation
-You should clearly define your terms, so that all stakeholders
+.Motivación
+Debes definir claramente tus términos para que todas las partes interesadas:
 
-* have an identical understanding of these terms
-* do not use synonyms and homonyms
-
-
-.Form
-
-A table with columns <Term> and <Definition>.
-
-Potentially more columns in case you need translations.
+* tengan una comprensión idéntica de estos términos
+* no usen sinónimos ni homónimos
 
 
-.Further Information
+.Formato
 
-See https://docs.arc42.org/section-12/[Glossary] in the arc42 documentation.
+Una tabla con las columnas <Término> y <Definición>.
+
+Potencialmente más columnas en caso de necesitar traducciones.
+
+
+.Más información
+
+Observa https://docs.arc42.org/section-12/[Glossary] en la documentacion de arc42.
 
 ****
 endif::arc42help[]
 
 [cols="e,2e" options="header"]
 |===
-|Term |Definition
+|Término |Definición
 
-|<Term-1>
-|<definition-1>
+|API
+|(Interfaz de Programación de Aplicaciones) Conjunto de reglas y definiciones que permiten la comunicación entre diferentes sistemas o componentes de software.
 
-|<Term-2>
-|<definition-2>
+|Microservicio
+|Estilo arquitectónico en el que una aplicación se divide en pequeños servicios independientes que se comunican entre sí mediante APIs.
+
+|Gateway
+|Punto de entrada que gestiona y dirige el tráfico entre clientes y servicios, actuando como intermediario.
+
+|Front-end
+|Parte de una aplicación con la que interactúa el usuario, encargada de la presentación y experiencia visual.
+
+|Back-end
+|Parte de una aplicación que gestiona la lógica de negocio, el procesamiento de datos y la comunicación con la base de datos, funcionando en el servidor y respondiendo a las solicitudes del front-end.
+
 |===
+

@@ -42,7 +42,7 @@ See https://docs.arc42.org/section-5/[Building Block View] in the arc42 document
 ****
 endif::arc42help[]
 
-=== Whitebox Overall System
+=== Visión General
 
 ifdef::arc42help[]
 [role="arc42help"]
@@ -67,159 +67,112 @@ In the best case you will get away with examples or simple signatures.
 ****
 endif::arc42help[]
 
-_**<Overview Diagram>**_
+El siguiente diagrama muestra una visión general de los principales componentes del sistema y sus interacciones:
 
-Motivation::
+[plantuml,"Vision general",png]
+----
+@startuml
+skinparam monochrome true
+left to right direction
 
-_<text explanation>_
+actor "User"
 
+node "WIQ" {
+}
 
-Contained Building Blocks::
-_<Description of contained building block (black boxes)>_
+cloud "Wikidata" {
+}
 
-Important Interfaces::
-_<Description of important interfaces>_
+"User" <--> "WIQ" : Interacciona
+"WIQ" <--> "Wikidata" : Recibe datos
 
-ifdef::arc42help[]
-[role="arc42help"]
-****
-Insert your explanations of black boxes from level 1:
+@enduml
+----
 
-If you use tabular form you will only describe your black boxes with name and
-responsibility according to the following schema:
+==== Componentes que intervienen:
 
-[cols="1,2" options="header"]
+[options="header",cols="1,2"]
 |===
-| **Name** | **Responsibility**
-| _<black box 1>_ | _<Text>_
-| _<black box 2>_ | _<Text>_
+|Componente|Descripción
+| _User_ | _Representa el usuario final de la aplicación. Este interactua con el sistema jugando al juego de preguntas_
+| _WIQ_ | _Es el componente principal de la aplicación. Este maneja la parte lógica del juego, la creación de preguntas a través de consultas a la API de wikidata, el envío y consultas de resultados a la base de datos, la interacción con el ranking y el login de la aplicación_
+| _Wikidata_ | _Es un servicio externo a la aplicación, utilizado por esta, para obtener información y generar las preguntas._
 |===
 
 
-
-If you use a list of black box descriptions then you fill in a separate black box template for every important building block .
-Its headline is the name of the black box.
-****
-endif::arc42help[]
-
-==== <Name black box 1>
+=== Nivel 2
 
 ifdef::arc42help[]
 [role="arc42help"]
 ****
-Here you describe <black box 1>
-according the the following black box template:
-
-* Purpose/Responsibility
-* Interface(s), when they are not extracted as separate paragraphs. This interfaces may include qualities and performance characteristics.
-* (Optional) Quality-/Performance characteristics of the black box, e.g.availability, run time behavior, ....
-* (Optional) directory/file location
-* (Optional) Fulfilled requirements (if you need traceability to requirements).
-* (Optional) Open issues/problems/risks
-
+Visión del segundo nivel del proyecto
 ****
 endif::arc42help[]
 
-_<Purpose/Responsibility>_
+[plantuml,"Nivel 2",png]
+----
+@startuml
+skinparam monochrome true
+left to right direction
 
-_<Interface(s)>_
+actor "User"
 
-_<(Optional) Quality/Performance Characteristics>_
+frame "WIQ" {
+    node "Frontend" {
+    }
 
-_<(Optional) Directory/File Location>_
+    node "Backend" {
+    }
 
-_<(Optional) Fulfilled Requirements>_
+    database "MongoDB" {
+    }
+}
 
-_<(optional) Open Issues/Problems/Risks>_
+cloud "Wikidata" {
+}
+
+cloud "LLM" {
+}
+
+"User" <--> "Frontend" : Interacciona
+"Frontend"<--> "Backend" : Interacciona
+"Backend" <--> "MongoDB" : Almacena
+"Backend" <-down-> "Wikidata" : Recibe datos
+"Backend" <-down-> "LLM" : Utiliza
+
+@enduml
+----
+
+==== Componentes que intervienen:
+
+[options="header",cols="1,2"]
+|===
+|Componente|Descripción
+| _User_ | _Representa el usuario final de la aplicación. Este interactua con el frontend del sistema._
+| _Frontend_ | _Es el componente responsable de la iterfaz de usuario con la que el usuario final llevará a cabo la interacción. Se comunica con el backend para llevar a cabo el juego._
+| _Backend_ | _Es el componente que manejala parte lógica del juego. También se encarga de almacenar y recuperar los datos de la base de datos. Utiliza las APIs wikidata y la correspondiente al llm._
+| _MongoDB_ | _Sistema de base de datos NoSQL diseñado para almacenar grandes volúmenes de datos de manera flexible y escalable._
+| _Wikidata_ | _Base de conocimiento colaborativa y estructurada. Almacena datos y permite la utilización de estos al proyecto. Estos datos se obtienen a través de su API._
+| _LLM_ | _Modelo de lenguaje que permite a la aplicación interactuar con él a través de su API._
+
+|===
 
 
-
-
-==== <Name black box 2>
-
-_<black box template>_
-
-==== <Name black box n>
-
-_<black box template>_
-
-
-==== <Name interface 1>
-
-...
-
-==== <Name interface m>
-
-
-
-=== Level 2
+=== Back-End
 
 ifdef::arc42help[]
 [role="arc42help"]
 ****
-Here you can specify the inner structure of (some) building blocks from level 1 as white boxes.
-
-You have to decide which building blocks of your system are important enough to justify such a detailed description.
-Please prefer relevance over completeness. Specify important, surprising, risky, complex or volatile building blocks.
-Leave out normal, simple, boring or standardized parts of your system
+Visión de la parte back-end del proyecto
 ****
 endif::arc42help[]
 
-==== White Box _<building block 1>_
+
+=== APIs
 
 ifdef::arc42help[]
 [role="arc42help"]
 ****
-...describes the internal structure of _building block 1_.
+Información acerca de las APIs utilizadas en el proyecto
 ****
 endif::arc42help[]
-
-_<white box template>_
-
-==== White Box _<building block 2>_
-
-
-_<white box template>_
-
-...
-
-==== White Box _<building block m>_
-
-
-_<white box template>_
-
-
-
-=== Level 3
-
-ifdef::arc42help[]
-[role="arc42help"]
-****
-Here you can specify the inner structure of (some) building blocks from level 2 as white boxes.
-
-When you need more detailed levels of your architecture please copy this
-part of arc42 for additional levels.
-****
-endif::arc42help[]
-
-==== White Box <_building block x.1_>
-
-ifdef::arc42help[]
-[role="arc42help"]
-****
-Specifies the internal structure of _building block x.1_.
-****
-endif::arc42help[]
-
-_<white box template>_
-
-
-==== White Box <_building block x.2_>
-
-_<white box template>_
-
-
-
-==== White Box <_building block y.1_>
-
-_<white box template>_

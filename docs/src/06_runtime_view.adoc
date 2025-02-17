@@ -1,40 +1,40 @@
 ifndef::imagesdir[:imagesdir: ../images]
 
 [[section-runtime-view]]
-== Runtime View
+== Vista de Ejecución
 
 
 ifdef::arc42help[]
 [role="arc42help"]
 ****
-.Contents
-The runtime view describes concrete behavior and interactions of the system’s building blocks in form of scenarios from the following areas:
+.Contenido
+La vista de ejecución describe el comportamiento concreto y las interacciones de los bloques del sistema en forma de escenarios de las siguientes áreas:
 
-* important use cases or features: how do building blocks execute them?
-* interactions at critical external interfaces: how do building blocks cooperate with users and neighboring systems?
-* operation and administration: launch, start-up, stop
-* error and exception scenarios
+* casos de uso o características importantes: ¿cómo los ejecutan los bloques?
+* interacciones en interfaces externas críticas: ¿cómo cooperan los bloques con los usuarios y sistemas vecinos?
+* operación y administración: lanzamiento, inicio, detención
+* escenarios de error y excepciones
 
-Remark: The main criterion for the choice of possible scenarios (sequences, workflows) is their *architectural relevance*. It is *not* important to describe a large number of scenarios. You should rather document a representative selection.
+Nota: El criterio principal para la elección de los escenarios posibles (secuencias, flujos de trabajo) es su *relevancia arquitectónica*. *No* es importante describir un gran número de escenarios. En su lugar, deberías documentar una selección representativa.
 
-.Motivation
-You should understand how (instances of) building blocks of your system perform their job and communicate at runtime.
-You will mainly capture scenarios in your documentation to communicate your architecture to stakeholders that are less willing or able to read and understand the static models (building block view, deployment view).
+.Motivación
+Debes comprender cómo (instancias de) los bloques de construcción de tu sistema realizan su trabajo y se comunican en tiempo de ejecución.
+Principalmente capturarás escenarios en tu documentación para comunicar tu arquitectura a las partes interesadas que tienen menos disposición o capacidad para leer y entender los modelos estáticos (vista de bloques, vista de despliegue).
 
-.Form
-There are many notations for describing scenarios, e.g.
+.Formato
+Existen muchas notaciones para describir escenarios, por ejemplo:
 
-* numbered list of steps (in natural language)
-* activity diagrams or flow charts
-* sequence diagrams
-* BPMN or EPCs (event process chains)
-* state machines
+* lista numerada de pasos (en lenguaje natural)
+* diagramas de actividad o diagramas de flujo
+* diagramas de secuencia
+* BPMN o EPCs (cadenas de procesos de eventos)
+* máquinas de estados
 * ...
 
 
-.Further Information
+.Más información
 
-See https://docs.arc42.org/section-6/[Runtime View] in the arc42 documentation.
+Observa https://docs.arc42.org/section-6/[Runtime View] en la documentacion de arc42.
 
 ****
 endif::arc42help[]
