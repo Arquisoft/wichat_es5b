@@ -67,11 +67,11 @@ node "WiChat" {
 cloud "Wikidata" {
 }
 
-cloud "Mistral" {
+node "Mistral" {
 }
 
-"Usuario" <--> "WiChat" : Interactúa
-"WiChat" <-- "Wikidata" : Recibe datos
+"Usuario" --> "WiChat" : Interactúa
+"WiChat" <--> "Wikidata" : Pide y recibe datos
 "WiChat" <--> "Mistral" : Intercambia mensajes del usuario
 
 @enduml
@@ -91,6 +91,8 @@ Modelo de Lenguaje creado por Empathy. Es el modelo de lenguaje que usaremos par
 
 === Contexto Técnico
 
+Este apartado indica cómo las diferentes partes de la aplicación se comunican entre sí:
+
 ifdef::arc42help[]
 [role="arc42help"]
 ****
@@ -107,8 +109,85 @@ together with a mapping table showing the relationships between channels and inp
 ****
 endif::arc42help[]
 
-**<Diagram or Table>**
+[plantuml,"Vision general",png]
+----
+@startuml
+skinparam monochrome true
+left to right direction
 
-**<optionally: Explanation of technical interfaces>**
+actor "Usuario"
 
-**<Mapping Input/Output to Channels>**
+frame WiChat {
+    node "Webapp"
+
+    node "Gateway"
+
+    node "User service"
+
+    node "Auth service"
+
+    node "LLM service"
+
+    database "Mongo DB"
+}
+
+cloud "Wikidata"
+
+cloud "Mistral"
+
+"Usuario" --> "Webapp"
+"Webapp" <--> "Gateway"
+"Gateway" <--> "User service"
+"Gateway" <--> "Auth service"
+"Gateway" <--> "LLM service"
+"User service" <--> "Mongo DB"
+"Auth service" <--> "Mongo DB"
+"LLM service" <--> "Mistral"
+"Gateway" <--> "Wikidata"
+
+
+@enduml
+----
+
+[cols="1,1,1"]
+|===
+|Participantes
+|Vía de comunicación
+|Motivo de la comunicación
+
+|Usuario - Webapp
+|HTTP
+|Interacción con la aplicación
+
+|Webapp - Gateway
+|HTTP
+|Intercambio de datos entre Frontend y Backend
+
+|Gateway - User service
+|HTTP
+|Registro
+
+|Gateway - Auth service
+|HTTP
+|Inicio de sesión
+
+|Gateway - LLM service
+|HTTP
+|Chat en tiempo real
+
+|Gateway - Wikidata
+|HTTPS
+|Obtención de imágenes y datos
+
+|User service - Mongo DB
+|HTTP
+|Registro
+
+|Auth service - Mongo DB
+|HTTP
+|Inicio de sesión
+
+|LLM service - Mistral
+|HTTPS
+|Chat en tiempo real
+|===
