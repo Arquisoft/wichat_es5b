@@ -83,7 +83,7 @@ node "WIQ" {
 cloud "Wikidata" {
 }
 
-"User" --> "WIQ" : Interacciona
+"User" <--> "WIQ" : Interacciona
 "WIQ" <--> "Wikidata" : Recibe datos
 
 @enduml
@@ -100,14 +100,62 @@ cloud "Wikidata" {
 |===
 
 
-=== Front-End
+=== Nivel 2
 
 ifdef::arc42help[]
 [role="arc42help"]
 ****
-Visión de la parte front-end del proyecto
+Visión del segundo nivel del proyecto
 ****
 endif::arc42help[]
+
+[plantuml,"Nivel 2",png]
+----
+@startuml
+skinparam monochrome true
+left to right direction
+
+actor "User"
+
+frame "WIQ" {
+    node "Frontend" {
+    }
+
+    node "Backend" {
+    }
+
+    database "MongoDB" {
+    }
+}
+
+cloud "Wikidata" {
+}
+
+cloud "LLM" {
+}
+
+"User" <--> "Frontend" : Interacciona
+"Frontend"<--> "Backend" : Interacciona
+"Backend" <--> "MongoDB" : Almacena
+"Backend" <-down-> "Wikidata" : Recibe datos
+"Backend" <-down-> "LLM" : Utiliza
+
+@enduml
+----
+
+==== Componentes que intervienen:
+
+[options="header",cols="1,2"]
+|===
+|Componente|Descripción
+| _User_ | _Representa el usuario final de la aplicación. Este interactua con el frontend del sistema._
+| _Frontend_ | _Es el componente responsable de la iterfaz de usuario con la que el usuario final llevará a cabo la interacción. Se comunica con el backend para llevar a cabo el juego._
+| _Backend_ | _Es el componente que manejala parte lógica del juego. También se encarga de almacenar y recuperar los datos de la base de datos. Utiliza las APIs wikidata y la correspondiente al llm._
+| _MongoDB_ | _Sistema de base de datos NoSQL diseñado para almacenar grandes volúmenes de datos de manera flexible y escalable._
+| _Wikidata_ | _Base de conocimiento colaborativa y estructurada. Almacena datos y permite la utilización de estos al proyecto. Estos datos se obtienen a través de su API._
+| _LLM_ | _Modelo de lenguaje que permite a la aplicación interactuar con él a través de su API._
+
+|===
 
 
 === Back-End
