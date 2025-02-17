@@ -129,7 +129,9 @@ con una base de datos en la que almacenamos la información de los usuarios y de
 
 Características de calidad y/o rendimiento::
 
-_<explanation in text form>_
+Gracias al uso de docker nuestro sistema es portable (podriamos cambiarlo de maquina y seguiria funcionando sin 
+muchos cambios) y escalable ya que podemos crear nuevos contenedores y nuevas instancias en el caso de que sean 
+necesarias.
 
 Mapping of Building Blocks to Infrastructure::
 _<description of the mapping>_
