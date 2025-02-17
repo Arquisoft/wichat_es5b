@@ -56,7 +56,6 @@ endif::arc42help[]
 [plantuml,"Vision general",png]
 ----
 @startuml
-!pragma layout smenata
 skinparam monochrome true
 left to right direction
 
@@ -71,11 +70,9 @@ cloud "Wikidata" {
 cloud "Mistral" {
 }
 
-"Usuario" <-- "WiChat" : Muestra imágenes, respuestas y un chat interactuable
-"Usuario" --> "WiChat" : Interacciona con el chat y elige respuestas
+"Usuario" <--> "WiChat" : Interactúa
 "WiChat" <-- "Wikidata" : Recibe datos
-"WiChat" --> "Mistral" : Envía los mensajes del usuario
-"WiChat" <-- "Mistrtal" : Devuelve respuestas del LLM
+"WiChat" <--> "Mistral" : Intercambia mensajes del usuario
 
 @enduml
 ----
