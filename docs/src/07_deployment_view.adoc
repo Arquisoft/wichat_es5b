@@ -115,11 +115,19 @@ ause --> BBDD
 @enduml
 ----
 
-Motivation::
+Motivación::
 
-_<explanation in text form>_
+En el anterior diagrama podemos ver que cada componente se encuentra encapsulado en un Docker que son
+contenedores en los que se encapsula el software para simplificar su despliegue. La interfaz de nuestra 
+aplicación se encuentra en Webapp donde el usuario se conecta mediante un buscador desde su dispositivo.
+La aplicación se conecta con los servicios internos de la aplicación mediante Gatewayservice que distribuye
+las llamadas de la aplicación entre el resto de los servicios de la misma. Nuestra aplicacion tambien cuenta
+con una base de datos en la que almacenamos la información de los usuarios y de sus autenticaciones
 
-Quality and/or Performance Features::
+
+
+
+Características de calidad y/o rendimiento::
 
 _<explanation in text form>_
 
