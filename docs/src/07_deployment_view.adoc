@@ -64,36 +64,37 @@ endif::arc42help[]
 ----
 @startuml
 
-[Azure] as azure
+
 
 [Wikidata] as Wikidata
 actor usuario
 [LLM]
 
-node azure{
+node Azure{
+    node Docker{
+        node ContenedorDocker1{
+            [Webapp] as webapp
+        }
 
-    node Docker1{
-        [Webapp] as webapp
-    }
+        node ContenedorDocker2{
+            database "BBDD\nMongoDB" as BBDD
+        }
 
-    node Docker2{
-        database "BBDD\nMongoDB" as BBDD
-    }
+        node ContenedorDocker3{
+            [authservice] as ause
+        }
 
-    node Docker3{
-        [authservice] as ause
-    }
+        node ContenedorDocker4{
+            [LLMService] as LLMService
+        }
 
-    node Docker4{
-        [LLMService] as LLMService
-    }
+        node ContenedorDocker5{
+            [userservice] as userService
+        }
 
-    node Docker5{
-        [userservice] as userService
-    }
-
-    node Docker6{
-        [Gatewayservice] as gateway
+        node ContenedorDocker6{
+            [Gatewayservice] as gateway
+        }
     }
 }
 
@@ -134,16 +135,20 @@ muchos cambios) y escalable ya que podemos crear nuevos contenedores y nuevas in
 necesarias. Tambien gracias a que almacenamos la base de datos dentro de la misma maquina que nuestra aplicación
 las llamadas a la misma seran mas rapidas que si se encontrase fuera de la misma.
 
+
 Mapeo de los Bloques de Construcción a Infraestructura::
 [options="header",cols="1,2"]
 |===
 | Bloque de Construcción | Infraestructura
-| WebApp |
-| BBDD MongoDB |
-| Gatewayservice |
-| authservice |
-| userservice |
-| LLMService |
+| WebApp | Es el frontend de nuestra aplicación
+| BBDD MongoDB | Es la base de datos donde almacenaremos la información de los usuarios
+| Gatewayservice | Es el servicio mediante el cual llamamos al resto de los servicios de la aplicacion, tanto internos como externos
+| authservice | Es el servicio de autenticaciones de los usuarios
+| userservice | Es el servicio que almacena a los usuarios
+| LLMService | Es el servicio que realizará las llamadas al LLM
+| Azure | Es el servicio que va a hostear el servidor en el que estara almacenada nuestra aplicación
+| LLM | Es un modelo extenso de lenguaje localizado en un servidor ajeno al que accederemos mediante una API key
+| Wikidata | Es una base de datos externa de la cual sacaremos las posibles preguntas de la aplicación asi como las respuestas
 |===
 
 
