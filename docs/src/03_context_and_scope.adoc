@@ -1,7 +1,7 @@
 ifndef::imagesdir[:imagesdir: ../images]
 
 [[section-context-and-scope]]
-== Context and Scope
+== Alcance y Contexto del Sistema
 
 
 ifdef::arc42help[]
@@ -30,7 +30,9 @@ See https://docs.arc42.org/section-3/[Context and Scope] in the arc42 documentat
 ****
 endif::arc42help[]
 
-=== Business Context
+=== Contexto de Negocio
+
+Este apartado indica cómo se va a comunicar la aplicación con los diferentes actores y servicios:
 
 ifdef::arc42help[]
 [role="arc42help"]
@@ -51,11 +53,45 @@ The title of the table is the name of your system, the three columns contain the
 ****
 endif::arc42help[]
 
-**<Diagram or Table>**
+[plantuml,"Vision general",png]
+----
+@startuml
+skinparam monochrome true
+left to right direction
 
-**<optionally: Explanation of external domain interfaces>**
+actor "Usuario"
 
-=== Technical Context
+node "WiChat" {
+}
+
+cloud "Wikidata" {
+}
+
+node "Mistral" {
+}
+
+"Usuario" --> "WiChat" : Interactúa
+"WiChat" <--> "Wikidata" : Pide y recibe datos
+"WiChat" <--> "Mistral" : Intercambia mensajes del usuario
+
+@enduml
+----
+
+* Usuario
+
+Persona real que utilizará la aplicación. Interactuará con ella eligiendo una de las múltiples respuestas que se le presentarán según la imagen utilizada.
+
+* Wikidata
+
+Base de datos general de donde obtendremos las imágenes y datos relacionados con ellas.
+
+* Mistral
+
+Modelo de Lenguaje creado por Empathy. Es el modelo de lenguaje que usaremos para apoyar al usuario en caso de que necesite pistas.
+
+=== Contexto Técnico
+
+Este apartado indica cómo las diferentes partes de la aplicación se comunican entre sí:
 
 ifdef::arc42help[]
 [role="arc42help"]
@@ -73,8 +109,85 @@ together with a mapping table showing the relationships between channels and inp
 ****
 endif::arc42help[]
 
-**<Diagram or Table>**
+[plantuml,"Vision general",png]
+----
+@startuml
+skinparam monochrome true
+left to right direction
 
-**<optionally: Explanation of technical interfaces>**
+actor "Usuario"
 
-**<Mapping Input/Output to Channels>**
+frame WiChat {
+    node "Webapp"
+
+    node "Gateway"
+
+    node "User service"
+
+    node "Auth service"
+
+    node "LLM service"
+
+    database "Mongo DB"
+}
+
+cloud "Wikidata"
+
+cloud "Mistral"
+
+"Usuario" --> "Webapp"
+"Webapp" <--> "Gateway"
+"Gateway" <--> "User service"
+"Gateway" <--> "Auth service"
+"Gateway" <--> "LLM service"
+"User service" <--> "Mongo DB"
+"Auth service" <--> "Mongo DB"
+"LLM service" <--> "Mistral"
+"Gateway" <--> "Wikidata"
+
+
+@enduml
+----
+
+[cols="1,1,1"]
+|===
+|*Participantes*
+|*Vía de comunicación*
+|*Motivo de la comunicación*
+
+|Usuario - Webapp
+|HTTP
+|Interacción con la aplicación
+
+|Webapp - Gateway
+|Por determinar
+|Intercambio de datos entre Frontend y Backend
+
+|Gateway - User service
+|Por determinar
+|Registro
+
+|Gateway - Auth service
+|Por determinar
+|Inicio de sesión
+
+|Gateway - LLM service
+|Por determinar
+|Chat en tiempo real
+
+|Gateway - Wikidata
+|HTTPS
+|Obtención de imágenes y datos
+
+|User service - Mongo DB
+|Por determinar
+|Registro
+
+|Auth service - Mongo DB
+|Por determinar
+|Inicio de sesión
+
+|LLM service - Mistral
+|HTTPS
+|Chat en tiempo real
+|===
