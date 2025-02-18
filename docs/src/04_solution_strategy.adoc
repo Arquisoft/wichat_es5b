@@ -1,7 +1,7 @@
 ifndef::imagesdir[:imagesdir: ../images]
 
 [[section-solution-strategy]]
-== Estrategia de solución
+== Solution Strategy
 
 
 ifdef::arc42help[]
@@ -48,7 +48,12 @@ endif::arc42help[]
 * **Microsoft SQL Server**: sistema de Gestión de Bases de Datos SQL de Microsoft. Inicialmente lo habíamos elegido porque que es la única opción que ofrece Azure para crear una base de datos en la nube, pero finalmente decidimos que MongoDB era una mejor opción puesto que el despliegue ya estaba configurado para esa base de datos.
 
 === Decisiones acerca de la descomposición a alto nivel 
-=== Decisiones sobre cómo alcanzar objetivos clave de calidad 
+=== Decisiones sobre cómo alcanzar objetivos clave de calidad
+* **Usabilidad**: Las interfaces serán intuitivas, basándose en aplicaciones ya existentes, de modo que cualquier usuario pueda utilizarlas sin experiencia previa. Además, la comunicación con el LLM también deberá ser sencilla, de forma que todos los usuarios puedan utilizar la funcionalidad de las pistas sin tener conocimientos acerca cómo utilizar una IA.
+* **Rendimiento**: Para mejorar el rendimiento de la aplicación se reducirán lo máximo posible el número de llamadas a la API de SPARQL para obtener los datos de WikiData y generar las preguntas.
+* **Fiabilidad**: Con Azure podemos tener la aplicación desplegada en casi todo momento, si bien hay que tener en cuenta que las dependencias de servicios externos como MongoDB, la API de SPARQL, WikiData o la API del LLM pueden reducir la disponibilidad.
+* **Compatibilidad**: La aplicación deberá funcionar en los navegadores más utilizados (Chrome, Firefox, Edge...). Para ello, evitaremos usar tecnologías específicas de un navegador concreto, así como aquellas que no estén disponibles para todos los navegadores estándar.
+
 === Decisiones organizativas 
 * **GithHub**:
 ** **Issues**: Decidimos crear una issue por funcionalidad a desarrollar, asignando cada una a una única persona y en casos de funcionalidades más complejas a dos personas.  
