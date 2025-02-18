@@ -49,8 +49,8 @@ In any case the tree should include links to the scenarios of the following sect
 ****
 endif::arc42help[]
 
+@startuml
 @startmindmap
-
 + Atributos de calidad
 ++ Usabilidad
 +++ El juego debe ser fácil de jugar
@@ -59,13 +59,16 @@ endif::arc42help[]
 +++ Las preguntas deben cargar en poco tiempo
 ++ Compatibilidad
 +++ La aplicación debe funcionar en distintos navegadores
++++ La aplicación debe funcionar en distintos dispositivos
 ++ Privacidad
 +++ La contraseñas deben estar encriptadas
 +++ El usuario sólo tiene acceso a sus datos
+++ Accesibilidad
++++ Los textos de la iinterfaz tienen que tener un tamaño mínimo
 ++ Mantenibilidad
 +++ Las pruebas deben estar automatizadas
-
 @endmindmap
+@enduml
 
 === Escenarios de calidad
 
@@ -100,10 +103,12 @@ endif::arc42help[]
 | **Atributo de calidad** | **Escenario**
 | _Usabilidad_ | El usuario debe poder entender cómo jugar al juego en un máximo de 10 minutos sin tener conocimientos previos.
 | _Usabilidad_ | El usuario debe poder pedir pistas al LLM sin tener conocimientos previos acerca de cómo utilizar una IA. 
-| _Rendimiento_ | El sistema debe cargar las preguntas en menos de 2 s.
-| _Compatibilidad_ | La aplicación debe funcionar en distintos navegadores (Chrome, Firefox y Edge).
+| _Rendimiento_ | El sistema debe cargar las preguntas en menos de 2s.
+| _Compatibilidad_ | La aplicación debe funcionar en las versiones más nuevas de los navegadores más utilizados (Chrome, Firefox, Edge...).
+| _Compatibilidad_ | La aplicación debe funcionar en distintos dispositivos (móvil, tablet y ordenador).
 | _Privacidad_ | Las contraseñas de los usuarios deben guardarse encriptadas en la base de datos.
-| _Privacidad_ | El usuario sólo debe tener acceso a sus propios datos. El sistema debe evitar que un usuario intente acceder a los datos de otros usuarios.
+| _Privacidad_ | El usuario sólo debe tener acceso a sus propios datos. El sistema debe evitar que un usuario logre acceder a los datos de otros usuarios.
+| _Accesibilidad_ | Los textos de la interfaz deben tener un tamaño mínimo de 16px para garantizar que sean legibles.
 |===
 ==== Escenarios de cambios
 |===
