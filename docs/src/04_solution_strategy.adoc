@@ -33,17 +33,33 @@ See https://docs.arc42.org/section-4/[Solution Strategy] in the arc42 documentat
 ****
 endif::arc42help[]
 
-=== 4.1 Decisiones tecnológicas
+=== Decisiones tecnológicas
 * **API SPARQL**: API que permite obtener datos de WikiData mediante consultas parametrizables. Elegimos esta API debido a que otras alternativas no permiten consultas lo suficientemente específicas para generar las preguntas del juego.
 * **React**: biblioteca de JavaScript ampliamente utilizada para construir interfaces de usuario dinámicas. Elegimos usarla en el proyecto ya que permite la reutilización de componentes, y, al ser muy utilizada en la actualidad, hay mucha documentación y ejemplos disponibles.
 * **Node**: entorno de ejecución de JavaScript en el servidor. Lo elegimos debido a que al ejecutarse en el servidor y no en el cliente es más eficiente para aplicaciones de tiempo real.
 * **TypeScript**: lenguaje de programación utilizado para el desarrollo de aplicaciones web, tanto del lado del cliente como del servidor. Elegimos este lenguaje en vez de otras alternativas debido a su tipado dinámico, que facilita la detección de errores, además de la facilidad de usarlo tanto con Node como con React.
 * **Mistral**: modelo LLM de propósito general, diseñado para adaptarse a diversas tareas. Escogimos Mistral debido a que queremos participar en el concurso de Empathy, y consideramos es la más adecuada para el tipo de preguntas que se realizarán en la aplicación. Además, hay muchos recursos educativos que facilitan su uso e integración en proyectos. 
-* **Azure**: plataforma de computación en la nube que ofrece distintos servicios. En nuestro caso, la utilizaremos para tener una base de datos en la nube. Escogimos Azure para esto ya que permite tener una base de datos disponible en todo momento, además de que tenemos crédito para Azure proporcionado por la universidad.
-* **Microsoft SQL Server**: Sistema de Gestión de Bases de Datos SQL de Microsoft. Lo escogimos puesto que es la única opción que ofrece Azure para crear una base de datos en la nube.
+* **Azure**: plataforma de computación en la nube que ofrece distintos servicios. En nuestro caso, la utilizaremos para tener una máquina virtual en la que ejecutar la aplicación. Escogimos Azure para esto ya que ya tenemos experiencia con ella, además de que tenemos crédito para Azure proporcionado por la universidad.
+* **MongoDB**:  sistema de gestión de bases de datos NOSQL que utiliza esquemas flexibles. Decidimos utilizarlo porque se ajusta a nuestras necesidades y el despliegue ya estaba configurado para él.
 * **Docker**: herramienta para construir aplicaciones portátiles con todas sus dependencias. Escogimos Docker por la flexibilidad para desplegar aplicaciones en distintas plataformas.
+* **PlantUML**: herramienta de creación de diagramas por texto. Decidimos utilizarlo para crear los diagramas de la documentación debido a su simplicidad.
 
-=== 4.2 Decisiones sobre cómo alcanzar objetivos clave de calidad 
-=== 4.3 Decisiones organizativas 
+==== Decisiones descartadas
+* **Microsoft SQL Server**: sistema de Gestión de Bases de Datos SQL de Microsoft. Inicialmente lo habíamos elegido porque que es la única opción que ofrece Azure para crear una base de datos en la nube, pero finalmente decidimos que MongoDB era una mejor opción puesto que el despliegue ya estaba configurado para esa base de datos.
+
+=== Decisiones sobre cómo alcanzar objetivos clave de calidad
+* **Usabilidad**: las interfaces serán intuitivas, basándose en aplicaciones ya existentes, de modo que cualquier usuario pueda utilizarlas sin experiencia previa. Además, la comunicación con el LLM también deberá ser sencilla, de forma que todos los usuarios puedan utilizar la funcionalidad de las pistas sin tener conocimientos acerca cómo utilizar una IA.
+* **Rendimiento**: para mejorar el rendimiento de la aplicación se reducirán lo máximo posible el número de llamadas a la API de SPARQL para obtener los datos de WikiData y generar las preguntas.
+* **Fiabilidad**: con Azure podemos tener la aplicación desplegada en casi todo momento, si bien hay que tener en cuenta que las dependencias de servicios externos como MongoDB, la API de SPARQL, WikiData o la API del LLM pueden reducir la disponibilidad.
+* **Compatibilidad**: la aplicación deberá funcionar en los navegadores más utilizados (Chrome, Firefox, Edge...). Para ello, evitaremos usar tecnologías específicas de un navegador concreto, así como aquellas que no estén disponibles para todos los navegadores estándar.
+
+=== Decisiones organizativas 
+* **GithHub**:
+** **Issues**: decidimos crear una issue por funcionalidad a desarrollar, asignando cada una a una única persona y en casos de funcionalidades más complejas a dos personas.  
+** **Ramas de Github**: para el control de versiones decidimos utilizar ramas distintas por cada issue de GitHub a realizar, de modo que sólo haya una única persona trabajando sobre una misma rama. En caso de que varias personas trabajasen en una misma issue, decidimos crear también una rama por persona. 
+** **Pull Request**: decidimos utilizar Pull Request para la revisión del código, asignando dos revisores por miembro del equipo para asegurar tanto una mayor calidad del código como que no sólo el desarrollador de una funcionalidad concreta conozca el código de esa parte.
+* **Whatsapp**: utilizamos Whatsapp como medio de comunicación entre los miembros del equipo por la comunicación instantánea que permite.
+* **Reuniones semanales**: una vez a la semana nos reunimos entre todos los miembros del equipo para comunicar el trabajo realizado a lo largo de la semana y comentar problemas encontrados.
+
 
 
