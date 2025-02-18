@@ -151,28 +151,28 @@ cloud "Mistral"
 
 [cols="1,1,1"]
 |===
-|Participantes
-|Vía de comunicación
-|Motivo de la comunicación
+|*Participantes*
+|*Vía de comunicación*
+|*Motivo de la comunicación*
 
 |Usuario - Webapp
 |HTTP
 |Interacción con la aplicación
 
 |Webapp - Gateway
-|HTTP
+|Por determinar
 |Intercambio de datos entre Frontend y Backend
 
 |Gateway - User service
-|HTTP
+|Por determinar
 |Registro
 
 |Gateway - Auth service
-|HTTP
+|Por determinar
 |Inicio de sesión
 
 |Gateway - LLM service
-|HTTP
+|Por determinar
 |Chat en tiempo real
 
 |Gateway - Wikidata
@@ -180,11 +180,11 @@ cloud "Mistral"
 |Obtención de imágenes y datos
 
 |User service - Mongo DB
-|HTTP
+|Por determinar
 |Registro
 
 |Auth service - Mongo DB
-|HTTP
+|Por determinar
 |Inicio de sesión
 
 |LLM service - Mistral
