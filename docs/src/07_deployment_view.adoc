@@ -3,7 +3,7 @@ ifndef::imagesdir[:imagesdir: ../images]
 [[section-deployment-view]]
 
 
-== Deployment View
+== Vista de despliegue
 
 ifdef::arc42help[]
 [role="arc42help"]
@@ -44,7 +44,7 @@ See https://docs.arc42.org/section-7/[Deployment View] in the arc42 documentatio
 ****
 endif::arc42help[]
 
-=== Infrastructure Level 1
+=== Nivel de Infraestructura 1
 
 ifdef::arc42help[]
 [role="arc42help"]
@@ -60,41 +60,95 @@ For multiple environments or alternative deployments please copy and adapt this 
 ****
 endif::arc42help[]
 
-_**<Overview Diagram>**_
-
-Motivation::
-
-_<explanation in text form>_
-
-Quality and/or Performance Features::
-
-_<explanation in text form>_
-
-Mapping of Building Blocks to Infrastructure::
-_<description of the mapping>_
+[plantuml, arquitectura, png]
+----
+@startuml
 
 
-=== Infrastructure Level 2
 
-ifdef::arc42help[]
-[role="arc42help"]
-****
-Here you can include the internal structure of (some) infrastructure elements from level 1.
+[Wikidata] as Wikidata
+actor usuario
+[LLM]
 
-Please copy the structure from level 1 for each selected element.
-****
-endif::arc42help[]
+node Azure{
+    node Docker{
+        node ContenedorDocker1{
+            [Webapp] as webapp
+        }
 
-==== _<Infrastructure Element 1>_
+        node ContenedorDocker2{
+            database "BBDD\nMongoDB" as BBDD
+        }
 
-_<diagram + explanation>_
+        node ContenedorDocker3{
+            [authservice] as ause
+        }
 
-==== _<Infrastructure Element 2>_
+        node ContenedorDocker4{
+            [LLMService] as LLMService
+        }
 
-_<diagram + explanation>_
+        node ContenedorDocker5{
+            [userservice] as userService
+        }
 
-...
+        node ContenedorDocker6{
+            [Gatewayservice] as gateway
+        }
+    }
+}
 
-==== _<Infrastructure Element n>_
+node Dispositivo{
+    [Buscador] as buscador
+}
 
-_<diagram + explanation>_
+usuario --> buscador
+buscador --> webapp
+webapp --> gateway
+gateway --> LLMService
+LLMService --> LLM
+gateway --> ause
+gateway --> userService
+gateway --> Wikidata
+userService --> BBDD
+ause --> BBDD
+
+@enduml
+----
+
+Motivación::
+
+En el anterior diagrama podemos ver que cada componente se encuentra encapsulado en un Docker que son
+contenedores en los que se encapsula el software para simplificar su despliegue. La interfaz de nuestra 
+aplicación se encuentra en Webapp donde el usuario se conecta mediante un buscador desde su dispositivo.
+La aplicación se conecta con los servicios internos de la aplicación mediante Gatewayservice que distribuye
+las llamadas de la aplicación entre el resto de los servicios de la misma. Nuestra aplicacion tambien cuenta
+con una base de datos en la que almacenamos la información de los usuarios y de sus autenticaciones
+
+
+
+
+Características de calidad/rendimiento::
+
+Gracias al uso de docker nuestro sistema es portable (podriamos cambiarlo de maquina y seguiria funcionando sin 
+muchos cambios) y escalable ya que podemos crear nuevos contenedores y nuevas instancias en el caso de que sean 
+necesarias. Tambien gracias a que almacenamos la base de datos dentro de la misma maquina que nuestra aplicación
+las llamadas a la misma seran mas rapidas que si se encontrase fuera de la misma.
+
+
+Mapeo de los Bloques de Construcción a Infraestructura::
+[options="header",cols="1,2"]
+|===
+| Bloque de Construcción | Infraestructura
+| WebApp | Es el frontend de nuestra aplicación
+| BBDD MongoDB | Es la base de datos donde almacenaremos la información de los usuarios
+| Gatewayservice | Es el servicio mediante el cual llamamos al resto de los servicios de la aplicacion, tanto internos como externos
+| authservice | Es el servicio de autenticaciones de los usuarios
+| userservice | Es el servicio que almacena a los usuarios
+| LLMService | Es el servicio que realizará las llamadas al LLM
+| Azure | Es el servicio que va a hostear el servidor en el que estara almacenada nuestra aplicación
+| LLM | Es un modelo extenso de lenguaje localizado en un servidor ajeno al que accederemos mediante una API key
+| Wikidata | Es una base de datos externa de la cual sacaremos las posibles preguntas de la aplicación asi como las respuestas
+|===
+
+
