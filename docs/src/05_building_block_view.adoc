@@ -77,14 +77,14 @@ left to right direction
 
 actor "User"
 
-node "WIQ" {
+node "WiChat" {
 }
 
 cloud "Wikidata" {
 }
 
-"User" <--> "WIQ" : Interacciona
-"WIQ" <--> "Wikidata" : Recibe datos
+"User" <--> "WiChat" : Interacciona
+"WiChat" <--> "Wikidata" : Recibe datos
 
 @enduml
 ----
@@ -95,7 +95,7 @@ cloud "Wikidata" {
 |===
 |Componente|Descripción
 | _User_ | _Representa el usuario final de la aplicación. Este interactua con el sistema jugando al juego de preguntas_
-| _WIQ_ | _Es el componente principal de la aplicación. Este maneja la parte lógica del juego, la creación de preguntas a través de consultas a la API de wikidata, el envío y consultas de resultados a la base de datos, la interacción con el ranking y el login de la aplicación_
+| _WiChat_ | _Es el componente principal de la aplicación. Este maneja la parte lógica del juego, la creación de preguntas a través de consultas a la API de wikidata, el envío y consultas de resultados a la base de datos, la interacción con el ranking y el login de la aplicación_
 | _Wikidata_ | _Es un servicio externo a la aplicación, utilizado por esta, para obtener información y generar las preguntas._
 |===
 
@@ -117,7 +117,7 @@ left to right direction
 
 actor "User"
 
-frame "WIQ" {
+frame "WiChat" {
     node "Frontend" {
     }
 
@@ -156,23 +156,3 @@ cloud "LLM" {
 | _LLM_ | _Modelo de lenguaje que permite a la aplicación interactuar con él a través de su API._
 
 |===
-
-
-=== Back-End
-
-ifdef::arc42help[]
-[role="arc42help"]
-****
-Visión de la parte back-end del proyecto
-****
-endif::arc42help[]
-
-
-=== APIs
-
-ifdef::arc42help[]
-[role="arc42help"]
-****
-Información acerca de las APIs utilizadas en el proyecto
-****
-endif::arc42help[]
