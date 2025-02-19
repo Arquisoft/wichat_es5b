@@ -8,38 +8,40 @@ ifndef::imagesdir[:imagesdir: ../images]
 ifdef::arc42help[]
 [role="arc42help"]
 ****
-.Content
-The deployment view describes:
+.Contenido
+La vista de despliegue describe:
 
- 1. technical infrastructure used to execute your system, with infrastructure elements like geographical locations, environments, computers, processors, channels and net topologies as well as other infrastructure elements and
+. La infraestructura técnica usada para ejecutar el sistema, con elementos de infraestructura como locaciones geográficas,
+ambientes, computadoras, procesadores, canales y topologías de red así como otros elementos de infraestructura.
+. El mapeo de los bloques de construcción (software) en dichos elementos de infraestructura.
 
-2. mapping of (software) building blocks to that infrastructure elements.
+Comúnmente los sistemas son ejecutados en diferentes ambientes, por ejemplo, ambiente de desarrollo, de pruebas, de producción. En dichos casos deberían documentarse todos los ambientes relevantes.
 
-Often systems are executed in different environments, e.g. development environment, test environment, production environment. In such cases you should document all relevant environments.
+Deberá documentarse la vista de despliegue de manera especial cuando el software se ejecute como un sistema distribuido
+con mas de una computadora, procesador, servidor o contenedor o cuando se diseñen los procesadores y chips de hardware propios.
 
-Especially document a deployment view if your software is executed as distributed system with more than one computer, processor, server or container or when you design and construct your own hardware processors and chips.
+Desde una perspectiva de software es suficiente con capturar los elementos de la infraestructura necesarios para mostrar
+el despliegue de los bloques de construcción. Los arquitectos de hardware pueden ir más alla y describir la infraestructura
+a cualquier nivel de detalle que requieran.
 
-From a software perspective it is sufficient to capture only those elements of an infrastructure that are needed to show a deployment of your building blocks. Hardware architects can go beyond that and describe an infrastructure to any level of detail they need to capture.
+.Motivación
+El software no corre sin haardware.
+El hardware subyacente puede influenciar el sistema o algunos conceptos entrecruzados. Por ende, es necesario conocer
+la infraestructura.
 
-.Motivation
-Software does not run without hardware.
-This underlying infrastructure can and will influence a system and/or some
-cross-cutting concepts. Therefore, there is a need to know the infrastructure.
+.Forma
+Quizá el más alto nivel de diagrama de despliegue esté contenido en la sección 3.2. como contexto técnico con la 
+propia infraestructura como UNA caja negra. En esta sección se deberá realizar un acercamiento a ésta caja negra 
+utilizando diagramas de despliegue adicionales:
 
-.Form
-
-Maybe a highest level deployment diagram is already contained in section 3.2. as
-technical context with your own infrastructure as ONE black box. In this section one can
-zoom into this black box using additional deployment diagrams:
-
-* UML offers deployment diagrams to express that view. Use it, probably with nested diagrams,
-when your infrastructure is more complex.
-* When your (hardware) stakeholders prefer other kinds of diagrams rather than a deployment diagram, let them use any kind that is able to show nodes and channels of the infrastructure.
+* UML provee diagramas de despliegue para expresar la vista. Uselos, probablemente con diagramas anidados.
+* Cuando las partes relacionadas de Hardware prefieran otro tipo de diagramas además de los diagramas de despliegue,
+permítales usar cualquier tipo que permita mostrar los nodos y canales de la infraestructura.
 
 
-.Further Information
+.Más información
 
-See https://docs.arc42.org/section-7/[Deployment View] in the arc42 documentation.
+Ver https://docs.arc42.org/section-7/[Deployment View] en la documentación de arc42.
 
 ****
 endif::arc42help[]
@@ -49,14 +51,15 @@ endif::arc42help[]
 ifdef::arc42help[]
 [role="arc42help"]
 ****
-Describe (usually in a combination of diagrams, tables, and text):
+Describa (Usualmente en una combinación de diagramas, tablas y texto):
 
-* distribution of a system to multiple locations, environments, computers, processors, .., as well as physical connections between them
-* important justifications or motivations for this deployment structure
-* quality and/or performance features of this infrastructure
-* mapping of software artifacts to elements of this infrastructure
+* La distribución del sistema en múltiples ubicaciones, ambientes, computadoras, procesadores, ... así como las
+conexiones físicas entre ellos
+* La motivación o justificación de importancia para la estructura de despliegue
+* Características de Calidad y/o rendimiento de la infraestructura
+* El mapeo de los artefactos de software a los elementos de la infraestructura.
 
-For multiple environments or alternative deployments please copy and adapt this section of arc42 for all relevant environments.
+Para múltiples ambientes o despliegues alternativos copie esta sección para todos los ambientes relevantes.
 ****
 endif::arc42help[]
 
