@@ -8,21 +8,15 @@ ifdef::arc42help[]
 [role="arc42help"]
 ****
 
-.Content
-This section contains all quality requirements as quality tree with scenarios. The most important ones have already been described in section 1.2. (quality goals)
+Esta sección describe todos los requerimientos de calidad como un árbol de calidad con escenarios. Los más importantes ya han sido descritos en la sección 1.2 (Metas de Calidad).
+Aquí se capturan los requerimientos de calidad con menor prioridad, que no crearán altos riesgos en caso de que no sean cubiertos con totalidad.
 
-Here you can also capture quality requirements with lesser priority,
-which will not create high risks when they are not fully achieved.
+.Motivación
+Dado que los requerimientos de calidad tendrán mucha influencia en las decisiones arquitectónicas deben tomarse en cuenta los elementos importantes para las partes relacionadas que sean concretas y medibles.
 
-.Motivation
-Since quality requirements will have a lot of influence on architectural
-decisions you should know for every stakeholder what is really important to them,
-concrete and measurable.
+.Más información
 
-
-.Further Information
-
-See https://docs.arc42.org/section-10/[Quality Requirements] in the arc42 documentation.
+Vea  https://docs.arc42.org/section-10/[Quality Requirements] en la documentación de arc42.
 
 ****
 endif::arc42help[]
@@ -31,20 +25,17 @@ endif::arc42help[]
 ifdef::arc42help[]
 [role="arc42help"]
 ****
-.Content
-The quality tree (as defined in ATAM – Architecture Tradeoff Analysis Method) with quality/evaluation scenarios as leafs.
+.Contenido
+El árbol de calidad (Definido en ATAM - Método de análisis de compensación de arquitectura por sus silas en inglés) con escenarios de calidad/evaluación como hojas.
 
-.Motivation
-The tree structure with priorities provides an overview for a sometimes large number of quality requirements.
+.Motivación
+La estructura de árbol con prioridades provee un vistazo general para un gran número de requerimientos de calidad.
 
-.Form
-The quality tree is a high-level overview of the quality goals and requirements:
-
-* tree-like refinement of the term "quality". Use "quality" or "usefulness" as a root
-* a mind map with quality categories as main branches
-
-In any case the tree should include links to the scenarios of the following section.
-
+.Formato
+El árbol de calidad es un vistazo a alto nivel de las metas de calidad y requerimientos:
+* Un refinamiento del término de "calidad" a manera de árbol. Utilice "calidad" o "utilidad" como raíz.
+* Un mapa mental con categorías de calidad como ramas principales
+En cualquier caso incluya ligas a los escenarios de las siguientes secciones.
 
 ****
 endif::arc42help[]
@@ -66,7 +57,7 @@ endif::arc42help[]
 +++ La contraseñas deben estar encriptadas
 +++ El usuario sólo tiene acceso a sus datos
 ++ Accesibilidad
-+++ Los textos de la iinterfaz tienen que tener un tamaño mínimo
++++ Los textos de la interfaz deben tener un tamaño mínimo
 ++ Mantenibilidad
 +++ Las pruebas deben estar automatizadas
 @endmindmap
@@ -78,26 +69,19 @@ endif::arc42help[]
 ifdef::arc42help[]
 [role="arc42help"]
 ****
-.Contents
-Concretization of (sometimes vague or implicit) quality requirements using (quality) scenarios.
+.Contenido
+Concretización de requerimientos de calidad (que pueden ser vagos o implícitos) utilizando escenarios de calidad.
+Estos escenarios describen lo que debería pasar cuando un estímulo llega al sistema.
+Para los arquitectos, son importantes dos tipos de escenarios:
+* Escenarios de uso (también llamados escenarios de aplicación o escenarios de caso de uso), que describen la reacción en tiempo de ejecución de un sistema a un determinado estímulo. Esto incluye también escenarios que describen la eficiencia o el rendimiento del sistema. Por ejemplo: El sistema reacciona a la petición de un usuario en un segundo.
+* Escenarios de cambios, describen la modificación del sistema a su ambiente inmediato. Por ejemplo: Cuando se implementa funcionalidad adicional o requerimientos para el cambio de un atributo de calidad.
 
-These scenarios describe what should happen when a stimulus arrives at the system.
+.Motivación
+Los escenarios crean requerimientos de calidad concretos y permiten medirlos de manera más sencilla o decidir si han sido cumplidos.
+Cuando se requiere evaluar la arquitectura utilizando métodos como ATAM se necesitan describir las metas de calidad (de la sección 1.2) de manera más precisa hasta un nivel de escenarios que pueden ser discutidos y evaluados.
 
-For architects, two kinds of scenarios are important:
-
-* Usage scenarios (also called application scenarios or use case scenarios) describe the system’s runtime reaction to a certain stimulus. This also includes scenarios that describe the system’s efficiency or performance. Example: The system reacts to a user’s request within one second.
-* Change scenarios describe a modification of the system or of its immediate environment. Example: Additional functionality is implemented or requirements for a quality attribute change.
-
-.Motivation
-Scenarios make quality requirements concrete and allow to
-more easily measure or decide whether they are fulfilled.
-
-Especially when you want to assess your architecture using methods like
-ATAM you need to describe your quality goals (from section 1.2)
-more precisely down to a level of scenarios that can be discussed and evaluated.
-
-.Form
-Tabular or free form text.
+.Formato
+Texto en forma libre o tabular.
 ****
 endif::arc42help[]
 
@@ -119,5 +103,3 @@ endif::arc42help[]
 | _Mantenibilidad_ | Las pruebas deben estar automatizadas de modo que cuando se añada una nueva funcionalidad se pueda comprobar fácilmente que la funcionalidad anterior sigue funcionando. 
 | _Mantenibilidad_ | El código debe estar bien documentado y separado en distintos módulos, permitiendo fácilmente modificaciones.
 |===
-
-

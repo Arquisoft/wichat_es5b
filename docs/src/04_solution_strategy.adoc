@@ -1,34 +1,28 @@
 ifndef::imagesdir[:imagesdir: ../images]
 
 [[section-solution-strategy]]
-== Solution Strategy
+== Estrategia de solución
 
 
 ifdef::arc42help[]
 [role="arc42help"]
 ****
-.Contents
-A short summary and explanation of the fundamental decisions and solution strategies, that shape system architecture. It includes
+.Contenido
+Un resumen corto y explicación de las estrategias y decisiones fundamentales para la solución que le dan forma a la arquitectura del sistema. Estas incluyen:
+* Decisiones tecnológicas
+* Decisiones acerca de la descomposición a alto nivel de un sistema, por ejemplo, el uso de algún patrón de diseño o de arquitectura.
+* Decisiones en como alcanzar metas de calidad claves
+* Decisiones organizacionales relevantes, como el seleccionar un proceso de desarrollo o delegar ciertas tareas a terceros.
+.Motivación
+Estas decisiones son las piedras angulares de la arquitectura. Son la base de muchas otras decisiones detalladas o reglas de implementación.
+.Formato
+Realice la explicación de las deciciones clave de manera breve.
 
-* technology decisions
-* decisions about the top-level decomposition of the system, e.g. usage of an architectural pattern or design pattern
-* decisions on how to achieve key quality goals
-* relevant organizational decisions, e.g. selecting a development process or delegating certain tasks to third parties.
+Justifique las decisiones y porque se realizaron de esa manera, basado en el planteamiento del problema, las metas de calidad y restricciones clave. Refierase a los detalles en las secciones posteriores.
 
-.Motivation
-These decisions form the cornerstones for your architecture. They are the foundation for many other detailed decisions or implementation rules.
+.Más información
 
-.Form
-Keep the explanations of such key decisions short.
-
-Motivate what was decided and why it was decided that way,
-based upon problem statement, quality goals and key constraints.
-Refer to details in the following sections.
-
-
-.Further Information
-
-See https://docs.arc42.org/section-4/[Solution Strategy] in the arc42 documentation.
+Vea [https://docs.arc42.org/section-4/[Solution Strategy] en la documentación de arc42.
 
 ****
 endif::arc42help[]
@@ -60,6 +54,3 @@ endif::arc42help[]
 ** **Pull Request**: decidimos utilizar Pull Request para la revisión del código, asignando dos revisores por miembro del equipo para asegurar tanto una mayor calidad del código como que no sólo el desarrollador de una funcionalidad concreta conozca el código de esa parte.
 * **Whatsapp**: utilizamos Whatsapp como medio de comunicación entre los miembros del equipo por la comunicación instantánea que permite.
 * **Reuniones semanales**: una vez a la semana nos reunimos entre todos los miembros del equipo para comunicar el trabajo realizado a lo largo de la semana y comentar problemas encontrados.
-
-
-
