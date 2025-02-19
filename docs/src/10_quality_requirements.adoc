@@ -71,6 +71,7 @@ endif::arc42help[]
 +++ Las pruebas deben estar automatizadas
 @endmindmap
 @enduml
+----
 
 === Escenarios de calidad
 
