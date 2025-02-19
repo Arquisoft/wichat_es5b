@@ -1,52 +1,52 @@
 ifndef::imagesdir[:imagesdir: ../images]
 
 [[section-concepts]]
-== Cross-cutting Concepts
+== Conceptos Transversales (Cross-cutting)
 
 
 ifdef::arc42help[]
 [role="arc42help"]
 ****
-.Content
-This section describes overall, principal regulations and solution ideas that are relevant in multiple parts (= cross-cutting) of your system.
-Such concepts are often related to multiple building blocks.
-They can include many different topics, such as
+.Contenido
+Esta sección describe de manera general, las principales ideas de solución y regulación que 
+son relevantes en multiples partes (-> cross-cutting/transversales) del sistema.
+Dichos conceptos están relacionados usualmente a múltiples bloques de construcción.
+Pueden incluir diversos temas, tales como:
 
-* models, especially domain models
-* architecture or design patterns
-* rules for using specific technology
-* principal, often technical decisions of an overarching (= cross-cutting) nature
-* implementation rules
-
-
-.Motivation
-Concepts form the basis for _conceptual integrity_ (consistency, homogeneity) of the architecture. 
-Thus, they are an important contribution to achieve inner qualities of your system.
-
-Some of these concepts cannot be assigned to individual building blocks, e.g. security or safety. 
+* Modelos de dominio
+* Patrones de arquitectura o patrones de diseño
+* Reglas de uso para alguna tecnología específica.
+* Decisiones técnicas principales o generales
+* Reglas de implementación
 
 
-.Form
-The form can be varied:
+.Motivación
+Conceptos que forman la base para la _integridad conceptual_ (consistencia, homogeneidad) de la
+arquitectura. Entonces, son una contribución importante para alcanzar la calidad interna del sistema.
 
-* concept papers with any kind of structure
-* cross-cutting model excerpts or scenarios using notations of the architecture views
-* sample implementations, especially for technical concepts
-* reference to typical usage of standard frameworks (e.g. using Hibernate for object/relational mapping)
+Algunos de estos conceptos no pueden ser asignados a bloques de construcción individuales (por ejemplo
+seguridad). Este es el lugar en la plantilla provisto para una especificación cohesiva de dichos conceptos.
 
-.Structure
-A potential (but not mandatory) structure for this section could be:
+.Forma
+La forma puede ser variada:
 
-* Domain concepts
-* User Experience concepts (UX)
-* Safety and security concepts
-* Architecture and design patterns
-* "Under-the-hood"
-* development concepts
-* operational concepts
+* Papeles conceptuales con cualquier tipo de estructura
+* Modelo transversal (cross-cutting) de fragmentos o escenarios usando notación de las vistas arquitectónicas
+* Implementaciones de muestra, especialmente para conceptos técnicos.
+* Referencias a uso típico en frameworks estándar (por ejemplo, el uso de Hibernate para mapeo Objeto/Relacional)
 
-Note: it might be difficult to assign individual concepts to one specific topic
-on this list.
+.Estructura
+La estructura potencial (pero no obligatoria) para esta sección podría ser:
+
+* Conceptos de dominio
+* Conceptos de experiencia de usuario (UX)
+* Conceptos de seguridad
+* Patrones de diseño y arquitectura
+* "Bajo el capó"
+* Conceptos de desarrollo
+* Conceptos de operación
+
+Nota: Puede ser difícil asignar conceptos individuales a un tema específico de la lista
 
 image::08-concepts-EN.drawio.png["Possible topics for crosscutting concepts"]
 
@@ -57,18 +57,118 @@ See https://docs.arc42.org/section-8/[Concepts] in the arc42 documentation.
 ****
 endif::arc42help[]
 
-=== _<Concept 1>_
+=== Conceptos de dominio
 
-_<explanation>_
+En el siguiente diagrama se muestra el modelo de dominio.
+
+[plantuml, diagrama-clases, svg]
+----
+@startuml
+class Usuario {
+  +id: int
+  +nombre: string
+  +contraseña: string
+  +historial: Historial
+}
+
+class Historial {
+  +numPartidas: int
+  +respuestasCorrectas: int
+  +respuestasFalladas: int
+  +porcentajeAcierto: float
+  +puntosTotales: int
+  +tiempoMedio: float
+  +usuario: Usuario
+}
+
+class Partida {
+  +id: int
+  +fecha: Date
+  +respuestasAcertadas: int
+  +duracion: float
+  +usuario: Usuario
+  +preguntas: List<Pregunta>
+}
+
+class Pregunta {
+  +id: int
+  +enunciado: string
+  +opciones: List<Opcion>
+  +respuestaCorrecta: Opcion
+}
+
+class Opcion {
+  +texto: string
+  +esCorrecta: boolean
+}
+
+Usuario "1" --> "1" Historial : tiene
+Usuario "1" --> "*" Partida : juega
+Partida "1" --> "*" Pregunta : contiene
+Pregunta "1" --> "4" Opcion : tiene
+@enduml
+----
 
 
 
-=== _<Concept 2>_
 
-_<explanation>_
+=== Conceptos de experiencia de usuario (UX)
 
-...
+La usabilidad es un aspecto fundamental en el diseño de cualquier aplicación, ya que influye directamente en la satisfacción de los usuarios. 
+Crear interfaces intuitivas que permitan una interacción fluida y sin esfuerzo con el sistema es un factor clave para garantizar una experiencia positiva.
 
-=== _<Concept n>_
+[options="header", cols="1,3"]
+|===
+| Concepto | Descripción
 
-_<explanation>_
+| **Interfaz Usable** | La aplicación debe ofrecer una experiencia clara y accesible para todos los usuarios, priorizando la facilidad de navegación y evitando sobrecargar la interfaz con elementos innecesarios.
+
+| **Facilidad de Uso** | Se garantizará un diseño intuitivo y limpio, con una disposición lógica de los elementos. Las funciones más importantes estarán accesibles con el menor número de interacciones posible.
+
+| **Intuitiva** | La interfaz debe seguir principios de usabilidad, como consistencia en los diseños, reconocimiento sobre memorización y retroalimentación visual clara. 
+
+| **Solidez** | Se optimizará el rendimiento de la aplicación para minimizar tiempos de carga y evitar interrupciones en la experiencia de usuario. Se priorizará una arquitectura estable que prevenga errores y garantice un funcionamiento fluido.
+
+| **Retroalimentación Inmediata** | Tras cada respuesta, la aplicación debe proporcionar un feedback inmediato que indique si la opción seleccionada es correcta o incorrecta. Esto  mejora la experiencia del usuario.
+
+| **Indicadores de Progreso** | Es esencial proporcionar a los usuarios una representación visual de su avance dentro del juego. Mostrar el progreso ayuda a que comprendan en qué punto se encuentran y cuánto les falta por completar.
+|===
+
+
+=== Conceptos de seguridad
+
+La seguridad es un aspecto esencial en el diseño de aplicaciones, ya que protege la información sensible de los usuarios y asegura la integridad de los datos.
+A continuación se muestran algunos conceptos clave.
+
+[options="header", cols="1,3"]
+|===
+| Concepto | Descripción
+
+| **Control de Acceso Seguro** | Se implementará un sistema de autenticación robusto que valide correctamente las credenciales del usuario antes de conceder el acceso. En caso de datos incorrectos, se denegará el ingreso.
+
+| **Privacidad** | La información de los usuarios será completamente privada y no será visible para otros usuarios. 
+
+| **Almacenamiento Seguro** | Las contraseñas de los usuarios nunca serán almacenadas en texto plano. Se emplearán técnicas de cifrado y hash seguro para proteger la información sensible y evitar accesos no autorizados.
+|===
+
+
+=== Conceptos de Arquitectura
+
+* **Microservicios**:
+La arquitectura de microservicios es un enfoque en el desarrollo de software que organiza la aplicación como una colección de servicios pequeños e independientes. Estos microservicios se comunican entre sí a través de APIs bien definidas, lo que permite que cada uno cumpla funciones específicas y se enfoque en capacidades concretas.
+Al adoptar este patrón de diseño, nuestra aplicación se beneficia de una estructura flexible y escalable. La separación de responsabilidades entre servicios no solo facilita el mantenimiento y las actualizaciones, sino que también permite una mayor adaptabilidad ante cambios.
+
+=== Conceptos de Desarrollo
+
+* **Integración continua**:
+Para asegurar la calidad y la eficiencia del proceso, se implementará un sistema de Integración Continua, permitiendo que el código se despliegue de manera automática en una máquina virtual de Azure. 
+Esta práctica no solo optimiza el flujo de trabajo, sino que también garantiza que las nuevas funcionalidades y correcciones se integren de forma rápida y segura.
+
+* **Testing**:
+Para garantizar la robustez y el buen funcionamiento de la aplicación, y evitar errores, realizaremos distintos tipos de pruebas, 
+incluyendo pruebas unitarias, de aceptación, de carga y de cobertura. 
+Dado que la aplicación consiste en un juego de preguntas, es fundamental validar tanto la lógica del cuestionario como la interacción del usuario, 
+asegurando que la experiencia de juego sea fluida y atractiva. Esto incluye verificar que las preguntas se presenten correctamente, 
+que las respuestas se registren adecuadamente y que el sistema funcione sin interrupciones durante las partidas. 
+También llevaremos a cabo pruebas de usabilidad y adaptabilidad de la interfaz, 
+garantizando que los usuarios puedan interactuar con la aplicación de manera intuitiva y satisfactoria.
