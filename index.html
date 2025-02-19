@@ -476,8 +476,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_visión_general">5.1. Visión General</a></li>
 <li><a href="#_nivel_2">5.2. Nivel 2</a></li>
-<li><a href="#_back_end">5.3. Back-End</a></li>
-<li><a href="#_apis">5.4. APIs</a></li>
 </ul>
 </li>
 <li><a href="#section-runtime-view">6. Vista de Ejecución</a>
@@ -494,11 +492,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_nivel_de_infraestructura_1">7.1. Nivel de Infraestructura 1</a></li>
 </ul>
 </li>
-<li><a href="#section-concepts">8. Cross-cutting Concepts</a>
+<li><a href="#section-concepts">8. Conceptos Transversales (Cross-cutting)</a>
 <ul class="sectlevel2">
-<li><a href="#_concept_1">8.1. <em>&lt;Concept 1&gt;</em></a></li>
-<li><a href="#_concept_2">8.2. <em>&lt;Concept 2&gt;</em></a></li>
-<li><a href="#_concept_n">8.3. <em>&lt;Concept n&gt;</em></a></li>
+<li><a href="#_conceptos_de_dominio">8.1. Conceptos de dominio</a></li>
+<li><a href="#_conceptos_de_experiencia_de_usuario_ux">8.2. Conceptos de experiencia de usuario (UX)</a></li>
+<li><a href="#_conceptos_de_seguridad">8.3. Conceptos de seguridad</a></li>
+<li><a href="#_conceptos_de_arquitectura">8.4. Conceptos de Arquitectura</a></li>
+<li><a href="#_conceptos_de_desarrollo">8.5. Conceptos de Desarrollo</a></li>
 </ul>
 </li>
 <li><a href="#section-design-decisions">9. Decisiones de Diseño</a>
@@ -508,10 +508,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_despliegue">9.3. Despliegue</a></li>
 </ul>
 </li>
-<li><a href="#section-quality-scenarios">10. Quality Requirements</a>
+<li><a href="#section-quality-scenarios">10. Requerimientos de Calidad</a>
 <ul class="sectlevel2">
-<li><a href="#_quality_tree">10.1. Quality Tree</a></li>
-<li><a href="#_quality_scenarios">10.2. Quality Scenarios</a></li>
+<li><a href="#_árbol_de_calidad">10.1. Árbol de Calidad</a></li>
+<li><a href="#_escenarios_de_calidad">10.2. Escenarios de calidad</a></li>
 </ul>
 </li>
 <li><a href="#section-technical-risks">11. Risks and Technical Debts</a>
@@ -1458,7 +1458,7 @@ In the best case you will get away with examples or simple signatures.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Vision%20general.png" alt="Vision general" width="469" height="87">
+<img src="./images/Vision%20general.png" alt="Vision general" width="487" height="87">
 </div>
 </div>
 <div class="sect3">
@@ -1480,7 +1480,7 @@ In the best case you will get away with examples or simple signatures.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Representa el usuario final de la aplicación. Este interactua con el sistema jugando al juego de preguntas</em></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>WIQ</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>WiChat</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Es el componente principal de la aplicación. Este maneja la parte lógica del juego, la creación de preguntas a través de consultas a la API de wikidata, el envío y consultas de resultados a la base de datos, la interacción con el ranking y el login de la aplicación</em></p></td>
 </tr>
 <tr>
@@ -1545,28 +1545,8 @@ In the best case you will get away with examples or simple signatures.</p>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_back_end">5.3. Back-End</h3>
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<p>Visión de la parte back-end del proyecto</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_apis">5.4. APIs</h3>
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<p>Información acerca de las APIs utilizadas en el proyecto</p>
-</div>
-</div>
-</div>
 <div style="page-break-after: always;"></div>
+</div>
 </div>
 </div>
 </div>
@@ -1859,95 +1839,96 @@ las llamadas a la misma seran mas rapidas que si se encontrase fuera de la misma
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-concepts">8. Cross-cutting Concepts</h2>
+<h2 id="section-concepts">8. Conceptos Transversales (Cross-cutting)</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<div class="title">Content</div>
-<p>This section describes overall, principal regulations and solution ideas that are relevant in multiple parts (= cross-cutting) of your system.
-Such concepts are often related to multiple building blocks.
-They can include many different topics, such as</p>
+<div class="title">Contenido</div>
+<p>Esta sección describe de manera general, las principales ideas de solución y regulación que
+son relevantes en multiples partes (&#8594; cross-cutting/transversales) del sistema.
+Dichos conceptos están relacionados usualmente a múltiples bloques de construcción.
+Pueden incluir diversos temas, tales como:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>models, especially domain models</p>
+<p>Modelos de dominio</p>
 </li>
 <li>
-<p>architecture or design patterns</p>
+<p>Patrones de arquitectura o patrones de diseño</p>
 </li>
 <li>
-<p>rules for using specific technology</p>
+<p>Reglas de uso para alguna tecnología específica.</p>
 </li>
 <li>
-<p>principal, often technical decisions of an overarching (= cross-cutting) nature</p>
+<p>Decisiones técnicas principales o generales</p>
 </li>
 <li>
-<p>implementation rules</p>
+<p>Reglas de implementación</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<div class="title">Motivation</div>
-<p>Concepts form the basis for <em>conceptual integrity</em> (consistency, homogeneity) of the architecture.
-Thus, they are an important contribution to achieve inner qualities of your system.</p>
+<div class="title">Motivación</div>
+<p>Conceptos que forman la base para la <em>integridad conceptual</em> (consistencia, homogeneidad) de la
+arquitectura. Entonces, son una contribución importante para alcanzar la calidad interna del sistema.</p>
 </div>
 <div class="paragraph">
-<p>Some of these concepts cannot be assigned to individual building blocks, e.g. security or safety.</p>
+<p>Algunos de estos conceptos no pueden ser asignados a bloques de construcción individuales (por ejemplo
+seguridad). Este es el lugar en la plantilla provisto para una especificación cohesiva de dichos conceptos.</p>
 </div>
 <div class="paragraph">
-<div class="title">Form</div>
-<p>The form can be varied:</p>
+<div class="title">Forma</div>
+<p>La forma puede ser variada:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>concept papers with any kind of structure</p>
+<p>Papeles conceptuales con cualquier tipo de estructura</p>
 </li>
 <li>
-<p>cross-cutting model excerpts or scenarios using notations of the architecture views</p>
+<p>Modelo transversal (cross-cutting) de fragmentos o escenarios usando notación de las vistas arquitectónicas</p>
 </li>
 <li>
-<p>sample implementations, especially for technical concepts</p>
+<p>Implementaciones de muestra, especialmente para conceptos técnicos.</p>
 </li>
 <li>
-<p>reference to typical usage of standard frameworks (e.g. using Hibernate for object/relational mapping)</p>
+<p>Referencias a uso típico en frameworks estándar (por ejemplo, el uso de Hibernate para mapeo Objeto/Relacional)</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<div class="title">Structure</div>
-<p>A potential (but not mandatory) structure for this section could be:</p>
+<div class="title">Estructura</div>
+<p>La estructura potencial (pero no obligatoria) para esta sección podría ser:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Domain concepts</p>
+<p>Conceptos de dominio</p>
 </li>
 <li>
-<p>User Experience concepts (UX)</p>
+<p>Conceptos de experiencia de usuario (UX)</p>
 </li>
 <li>
-<p>Safety and security concepts</p>
+<p>Conceptos de seguridad</p>
 </li>
 <li>
-<p>Architecture and design patterns</p>
+<p>Patrones de diseño y arquitectura</p>
 </li>
 <li>
-<p>"Under-the-hood"</p>
+<p>"Bajo el capó"</p>
 </li>
 <li>
-<p>development concepts</p>
+<p>Conceptos de desarrollo</p>
 </li>
 <li>
-<p>operational concepts</p>
+<p>Conceptos de operación</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Note: it might be difficult to assign individual concepts to one specific topic
-on this list.</p>
+<p>Nota: Puede ser difícil asignar conceptos individuales a un tema específico de la lista</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1961,24 +1942,126 @@ on this list.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_concept_1">8.1. <em>&lt;Concept 1&gt;</em></h3>
+<h3 id="_conceptos_de_dominio">8.1. Conceptos de dominio</h3>
 <div class="paragraph">
-<p><em>&lt;explanation&gt;</em></p>
+<p>En el siguiente diagrama se muestra el modelo de dominio.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/diagrama-clases.svg" alt="diagrama clases" width="418" height="739">
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_concept_2">8.2. <em>&lt;Concept 2&gt;</em></h3>
+<h3 id="_conceptos_de_experiencia_de_usuario_ux">8.2. Conceptos de experiencia de usuario (UX)</h3>
 <div class="paragraph">
-<p><em>&lt;explanation&gt;</em></p>
+<p>La usabilidad es un aspecto fundamental en el diseño de cualquier aplicación, ya que influye directamente en la satisfacción de los usuarios.
+Crear interfaces intuitivas que permitan una interacción fluida y sin esfuerzo con el sistema es un factor clave para garantizar una experiencia positiva.</p>
 </div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Concepto</th>
+<th class="tableblock halign-left valign-top">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Interfaz Usable</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La aplicación debe ofrecer una experiencia clara y accesible para todos los usuarios, priorizando la facilidad de navegación y evitando sobrecargar la interfaz con elementos innecesarios.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Facilidad de Uso</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Se garantizará un diseño intuitivo y limpio, con una disposición lógica de los elementos. Las funciones más importantes estarán accesibles con el menor número de interacciones posible.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Intuitiva</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La interfaz debe seguir principios de usabilidad, como consistencia en los diseños, reconocimiento sobre memorización y retroalimentación visual clara.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Solidez</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Se optimizará el rendimiento de la aplicación para minimizar tiempos de carga y evitar interrupciones en la experiencia de usuario. Se priorizará una arquitectura estable que prevenga errores y garantice un funcionamiento fluido.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Retroalimentación Inmediata</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tras cada respuesta, la aplicación debe proporcionar un feedback inmediato que indique si la opción seleccionada es correcta o incorrecta. Esto  mejora la experiencia del usuario.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Indicadores de Progreso</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Es esencial proporcionar a los usuarios una representación visual de su avance dentro del juego. Mostrar el progreso ayuda a que comprendan en qué punto se encuentran y cuánto les falta por completar.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_conceptos_de_seguridad">8.3. Conceptos de seguridad</h3>
 <div class="paragraph">
-<p>&#8230;&#8203;</p>
+<p>La seguridad es un aspecto esencial en el diseño de aplicaciones, ya que protege la información sensible de los usuarios y asegura la integridad de los datos.
+A continuación se muestran algunos conceptos clave.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Concepto</th>
+<th class="tableblock halign-left valign-top">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Control de Acceso Seguro</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Se implementará un sistema de autenticación robusto que valide correctamente las credenciales del usuario antes de conceder el acceso. En caso de datos incorrectos, se denegará el ingreso.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Privacidad</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La información de los usuarios será completamente privada y no será visible para otros usuarios.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Almacenamiento Seguro</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Las contraseñas de los usuarios nunca serán almacenadas en texto plano. Se emplearán técnicas de cifrado y hash seguro para proteger la información sensible y evitar accesos no autorizados.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_conceptos_de_arquitectura">8.4. Conceptos de Arquitectura</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Microservicios</strong>:
+La arquitectura de microservicios es un enfoque en el desarrollo de software que organiza la aplicación como una colección de servicios pequeños e independientes. Estos microservicios se comunican entre sí a través de APIs bien definidas, lo que permite que cada uno cumpla funciones específicas y se enfoque en capacidades concretas.
+Al adoptar este patrón de diseño, nuestra aplicación se beneficia de una estructura flexible y escalable. La separación de responsabilidades entre servicios no solo facilita el mantenimiento y las actualizaciones, sino que también permite una mayor adaptabilidad ante cambios.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_concept_n">8.3. <em>&lt;Concept n&gt;</em></h3>
-<div class="paragraph">
-<p><em>&lt;explanation&gt;</em></p>
+<h3 id="_conceptos_de_desarrollo">8.5. Conceptos de Desarrollo</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Integración continua</strong>:
+Para asegurar la calidad y la eficiencia del proceso, se implementará un sistema de Integración Continua, permitiendo que el código se despliegue de manera automática en una máquina virtual de Azure.
+Esta práctica no solo optimiza el flujo de trabajo, sino que también garantiza que las nuevas funcionalidades y correcciones se integren de forma rápida y segura.</p>
+</li>
+<li>
+<p><strong>Testing</strong>:
+Para garantizar la robustez y el buen funcionamiento de la aplicación, y evitar errores, realizaremos distintos tipos de pruebas,
+incluyendo pruebas unitarias, de aceptación, de carga y de cobertura.
+Dado que la aplicación consiste en un juego de preguntas, es fundamental validar tanto la lógica del cuestionario como la interacción del usuario,
+asegurando que la experiencia de juego sea fluida y atractiva. Esto incluye verificar que las preguntas se presenten correctamente,
+que las respuestas se registren adecuadamente y que el sistema funcione sin interrupciones durante las partidas.
+También llevaremos a cabo pruebas de usabilidad y adaptabilidad de la interfaz,
+garantizando que los usuarios puedan interactuar con la aplicación de manera intuitiva y satisfactoria.</p>
+</li>
+</ul>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -2094,7 +2177,7 @@ La aplicación se desplegará usando Docker por la flexibilidad para desplegar e
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-quality-scenarios">10. Quality Requirements</h2>
+<h2 id="section-quality-scenarios">10. Requerimientos de Calidad</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
@@ -2119,7 +2202,7 @@ concrete and measurable.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_quality_tree">10.1. Quality Tree</h3>
+<h3 id="_árbol_de_calidad">10.1. Árbol de Calidad</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -2149,9 +2232,14 @@ concrete and measurable.</p>
 </div>
 </div>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/árbol%20de%20calidad.png" alt="árbol de calidad" width="761" height="539">
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_quality_scenarios">10.2. Quality Scenarios</h3>
+<h3 id="_escenarios_de_calidad">10.2. Escenarios de calidad</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -2190,7 +2278,77 @@ more precisely down to a level of scenarios that can be discussed and evaluated.
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_escenarios_de_uso">10.2.1. Escenarios de uso</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Atributo de calidad</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Escenario</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Usabilidad</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">El usuario debe poder entender cómo jugar al juego en un máximo de 10 minutos sin tener conocimientos previos.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Usabilidad</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">El usuario debe poder pedir pistas al LLM sin tener conocimientos previos acerca de cómo utilizar una IA.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Rendimiento</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">El sistema debe cargar las preguntas en menos de 2s.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Compatibilidad</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La aplicación debe funcionar en las versiones más nuevas de los navegadores más utilizados (Chrome, Firefox, Edge&#8230;&#8203;).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Compatibilidad</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La aplicación debe funcionar en distintos dispositivos (móvil, tablet y ordenador).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Privacidad</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Las contraseñas de los usuarios deben guardarse encriptadas en la base de datos.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Privacidad</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">El usuario sólo debe tener acceso a sus propios datos. El sistema debe evitar que un usuario logre acceder a los datos de otros usuarios.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Accesibilidad</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Los textos de la interfaz deben tener un tamaño mínimo de 16px para garantizar que sean legibles.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_escenarios_de_cambios">10.2.2. Escenarios de cambios</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Atributo de calidad</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Escenario</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Mantenibilidad</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Las pruebas deben estar automatizadas de modo que cuando se añada una nueva funcionalidad se pueda comprobar fácilmente que la funcionalidad anterior sigue funcionando.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Mantenibilidad</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">El código debe estar bien documentado y separado en distintos módulos, permitiendo fácilmente modificaciones.</p></td>
+</tr>
+</tbody>
+</table>
 <div style="page-break-after: always;"></div>
+</div>
 </div>
 </div>
 </div>
