@@ -140,6 +140,7 @@ cloud "Mistral"
 "Gateway" <--> "User service"
 "Gateway" <--> "Auth service"
 "Gateway" <--> "LLM service"
+"Gateway" <--> "Query service"
 "User service" <--> "Mongo DB"
 "Auth service" <--> "Mongo DB"
 "LLM service" <--> "Mistral"
@@ -174,6 +175,10 @@ cloud "Mistral"
 |Gateway - LLM service
 |Por determinar
 |Chat en tiempo real
+
+|Gateway - Query service
+|Por determinar
+|Interacción con Wikidata
 
 |Gateway - Wikidata
 |HTTPS
