@@ -3,41 +3,41 @@ ifndef::imagesdir[:imagesdir: ../images]
 [[section-building-block-view]]
 
 
-== Building Block View
+== Vista de Bloques
 
 ifdef::arc42help[]
 [role="arc42help"]
 ****
-.Content
-The building block view shows the static decomposition of the system into building blocks (modules, components, subsystems, classes, interfaces, packages, libraries, frameworks, layers, partitions, tiers, functions, macros, operations, data structures, ...) as well as their dependencies (relationships, associations, ...)
+.Contenido
+La vista de bloques muestra la descomposición estática del sistema en bloques de construcción (módulos, componentes, 
+subsistemas, clases, interfases, paquetes, bibliotecas, marcos de desarrollo, capas, particiones, funciones, macros, 
+operaciones, estructuras de datos,…) así como sus dependencias (relaciones, asociaciones,…)
 
-This view is mandatory for every architecture documentation.
-In analogy to a house this is the _floor plan_.
+Esta vista es obligatoria para cualquier documentación de arquitectura. Es la analogía al plano de una casa.
 
-.Motivation
-Maintain an overview of your source code by making its structure understandable through
-abstraction.
 
-This allows you to communicate with your stakeholder on an abstract level without disclosing implementation details.
+.Motivación
+Mantener una visión general de su código fuente haciendo su estructura comprensible de manera abstracta.
 
-.Form
-The building block view is a hierarchical collection of black boxes and white boxes
-(see figure below) and their descriptions.
+Esto permite comunicar a las partes interesades en un nivel abstracto sin entrar en detalles de implementación.
+
+
+.Forma
+La vista de bloques comprende una colección jerárquica de cajas negras y cajas blancas (ver figura de abajo) 
+y sus descripciones.
 
 image::05_building_blocks-EN.png["Hierarchy of building blocks"]
 
-*Level 1* is the white box description of the overall system together with black
-box descriptions of all contained building blocks.
+*Vista General* comprende la descripción de Caja Blanca del sistema en general junto con las descripciones de 
+Caja Negra de todos los bloques contenidos.
 
-*Level 2* zooms into some building blocks of level 1.
-Thus it contains the white box description of selected building blocks of level 1, together with black box descriptions of their internal building blocks.
-
-*Level 3* zooms into selected building blocks of level 2, and so on.
+*Nivel 2* hace zoom a los bloques de construcción del Nivel 1. Entonces contiene la descripción de Caja Blanca de los 
+bloques de construcción selecionadas del nivel 1,junto con las descripciones de caja negra de sus bloques de construcción internas.
 
 
-.Further Information
+.Más Información
 
-See https://docs.arc42.org/section-5/[Building Block View] in the arc42 documentation.
+Ver https://docs.arc42.org/section-5/[Building Block View] en la documentación arc42.
 
 ****
 endif::arc42help[]
@@ -47,22 +47,22 @@ endif::arc42help[]
 ifdef::arc42help[]
 [role="arc42help"]
 ****
-Here you describe the decomposition of the overall system using the following white box template. It contains
+Aquí se describe la descomposición del sistema en general usando la siguiente plantilla de caja blanca. Contiene:
 
- * an overview diagram
- * a motivation for the decomposition
- * black box descriptions of the contained building blocks. For these we offer you alternatives:
+ * Un diagrama general
+ * La motivación para la descomposición
+ * Descripciones de caja negra de los bloques de construcción contenidos. Para estos se ofrecen las siguientes alternativas:
 
-   ** use _one_ table for a short and pragmatic overview of all contained building blocks and their interfaces
-   ** use a list of black box descriptions of the building blocks according to the black box template (see below).
-   Depending on your choice of tool this list could be sub-chapters (in text files), sub-pages (in a Wiki) or nested elements (in a modeling tool).
+   ** Usar una tabla para una revisión pragmática y corta de todos los bloques de construcción contenidos y sus interfaces
+   ** Usar una lista de descripciones de caja negra de los bloques de construcción acorde a la plantilla de caja negra (ver abajo). 
+   Dependiendo de la herramienta utilizada, esta lista podría constar de sub-capítulos (en archivos de texto), sub-páginas (en un wiki) o 
+   elementos anidados (en una herramienta de modelado).
 
 
- * (optional:) important interfaces, that are not explained in the black box templates of a building block, but are very important for understanding the white box.
-Since there are so many ways to specify interfaces why do not provide a specific template for them.
- In the worst case you have to specify and describe syntax, semantics, protocols, error handling,
- restrictions, versions, qualities, necessary compatibilities and many things more.
-In the best case you will get away with examples or simple signatures.
+ * Interfases importantes, que no están explicadas en las plantillas de caja negra de un bloque de construcción, 
+ pero que son muy importantes para entender la caja blanca. En el peor de los casos se deberá especificar y desribir la sintaxis, 
+ semántica, protocolos, manejo de errores, restricciones, versiones, calidades, compatibilidades necesarias, entre otras. En el 
+ mejor de los casos bastará con ejemplos o la firma de los mismos.
 
 ****
 endif::arc42help[]
