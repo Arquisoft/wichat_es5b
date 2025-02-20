@@ -445,11 +445,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#section-introduction-and-goals">1. Introduction and Goals</a>
+<li><a href="#section-introduction-and-goals">1. Introducción y Metas</a>
 <ul class="sectlevel2">
-<li><a href="#_requirements_overview">1.1. Requirements Overview</a></li>
-<li><a href="#_quality_goals">1.2. Quality Goals</a></li>
-<li><a href="#_stakeholders">1.3. Stakeholders</a></li>
+<li><a href="#_vista_de_requerimientos">1.1. Vista de Requerimientos</a></li>
+<li><a href="#_metas_de_calidad">1.2. Metas de Calidad</a></li>
+<li><a href="#_partes_interesadas_stakeholders">1.3. Partes interesadas (Stakeholders)</a></li>
 </ul>
 </li>
 <li><a href="#section-architecture-constraints">2. Restricciones de la Arquitectura</a>
@@ -465,14 +465,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_contexto_técnico">3.2. Contexto Técnico</a></li>
 </ul>
 </li>
-<li><a href="#section-solution-strategy">4. Solution Strategy</a>
+<li><a href="#section-solution-strategy">4. Estrategia de solución</a>
 <ul class="sectlevel2">
 <li><a href="#_decisiones_tecnológicas">4.1. Decisiones tecnológicas</a></li>
 <li><a href="#_decisiones_sobre_cómo_alcanzar_objetivos_clave_de_calidad">4.2. Decisiones sobre cómo alcanzar objetivos clave de calidad</a></li>
 <li><a href="#_decisiones_organizativas">4.3. Decisiones organizativas</a></li>
 </ul>
 </li>
-<li><a href="#section-building-block-view">5. Building Block View</a>
+<li><a href="#section-building-block-view">5. Vista de Bloques</a>
 <ul class="sectlevel2">
 <li><a href="#_visión_general">5.1. Visión General</a></li>
 <li><a href="#_nivel_2">5.2. Nivel 2</a></li>
@@ -514,7 +514,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_escenarios_de_calidad">10.2. Escenarios de calidad</a></li>
 </ul>
 </li>
-<li><a href="#section-technical-risks">11. Risks and Technical Debts</a>
+<li><a href="#section-technical-risks">11. Riesgos y Deuda Técnica</a>
 <ul class="sectlevel2">
 <li><a href="#_riesgos">11.1. Riesgos</a></li>
 <li><a href="#_deuda_técnica">11.2. Deuda Técnica</a></li>
@@ -574,30 +574,24 @@ For documentation of your own system you use better the <em>plain</em> version.<
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-introduction-and-goals">1. Introduction and Goals</h2>
+<h2 id="section-introduction-and-goals">1. Introducción y Metas</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<p>Describes the relevant requirements and the driving forces that software architects and development team must consider.
-These include</p>
+<p>Describe los requerimientos relevantes y las directrices que los arquitectos de software y el equipo de desarrollo
+deben considerar. Entre estas se incluyen:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>underlying business goals,</p>
+<p>Objetivos empresariales subyacentes, características esenciales y requerimientos funcionales para el sistema</p>
 </li>
 <li>
-<p>essential features,</p>
+<p>Metas de calidad para la arquitectura</p>
 </li>
 <li>
-<p>essential functional requirements,</p>
-</li>
-<li>
-<p>quality goals for the architecture and</p>
-</li>
-<li>
-<p>relevant stakeholders and their expectations</p>
+<p>Las partes interesadas pertinentes y sus expectativas</p>
 </li>
 </ul>
 </div>
@@ -610,31 +604,33 @@ La aplicación cuenta con una imagen y los usuarios deberan constestar diferente
 sobre las imagenes.</p>
 </div>
 <div class="sect2">
-<h3 id="_requirements_overview">1.1. Requirements Overview</h3>
+<h3 id="_vista_de_requerimientos">1.1. Vista de Requerimientos</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<div class="title">Contents</div>
-<p>Short description of the functional requirements, driving forces, extract (or abstract)
-of requirements. Link to (hopefully existing) requirements documents
-(with version number and information where to find it).</p>
+<div class="title">Contenido</div>
+<p>Descripción corta de los requerimientos funcionales, motivaciones, extracto (o resumen) de los
+requerimientos. Ligar a los documentos de requerimientos determinados (Con número de versión e
+información de donde encontrarla).</p>
 </div>
 <div class="paragraph">
-<div class="title">Motivation</div>
-<p>From the point of view of the end users a system is created or modified to
-improve support of a business activity and/or improve the quality.</p>
+<div class="title">Motivación</div>
+<p>Desde el punto de vista de los usuarios finales un sistema es creado o modificado para
+mejorar el soporte a una actividad de negocio o incrementar su calidad</p>
 </div>
 <div class="paragraph">
-<div class="title">Form</div>
-<p>Short textual description, probably in tabular use-case format.
-If requirements documents exist this overview should refer to these documents.</p>
+<div class="title">Forma</div>
+<p>Descripción corta textual, probablemente en un formato de caso de uso tabular.
+Si existen documentos de requerimientos esta vista debe referir a dichos requerimientos</p>
 </div>
 <div class="paragraph">
-<p>Keep these excerpts as short as possible. Balance readability of this document with potential redundancy w.r.t to requirements documents.</p>
+<p>Mantenga estos extractos tan cortos como sea posible. Encuentre el balance entre la legibilidad y
+la redundancia de este documento respecto a los documentos de requerimientos que se encuentren
+relacionados.</p>
 </div>
 <div class="paragraph">
-<div class="title">Further Information</div>
-<p>See <a href="https://docs.arc42.org/section-1/">Introduction and Goals</a> in the arc42 documentation.</p>
+<div class="title">Más infromación</div>
+<p>Ver <a href="https://docs.arc42.org/section-1/">Introduction and Goals</a> en la documentación de arc42.</p>
 </div>
 </div>
 </div>
@@ -741,17 +737,17 @@ If requirements documents exist this overview should refer to these documents.</
 </div>
 </div>
 <div class="sect2">
-<h3 id="_quality_goals">1.2. Quality Goals</h3>
+<h3 id="_metas_de_calidad">1.2. Metas de Calidad</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<div class="title">Contents</div>
-<p>The top three (max five) quality goals for the architecture whose fulfillment is of highest importance to the major stakeholders.
-We really mean quality goals for the architecture. Don&#8217;t confuse them with project goals.
-They are not necessarily identical.</p>
+<div class="title">Contenido</div>
+<p>Las tres metas de calidad principales (o hasta cinco) cuyo cumplimiento sea de la mayor importancia para las
+principales partes interesadas. Nos referimos a las metas de calidad para la arquitectura. No confundir
+con las metas del proyecto. No necesariamente son idénticas.</p>
 </div>
 <div class="paragraph">
-<p>Consider this overview of potential topics (based upon the ISO 25010 standard):</p>
+<p>Considera este resumen de posibles temas (basado en la norma ISO 25010):</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -759,14 +755,14 @@ They are not necessarily identical.</p>
 </div>
 </div>
 <div class="paragraph">
-<div class="title">Motivation</div>
-<p>You should know the quality goals of your most important stakeholders, since they will influence fundamental architectural decisions.
-Make sure to be very concrete about these qualities, avoid buzzwords.
-If you as an architect do not know how the quality of your work will be judged&#8230;&#8203;</p>
+<div class="title">Motivación</div>
+<p>Debe conocer las metas de calidad de las partes interesadas más importantes, ya que ellos influenciarán
+las decisiones arquitectónicas principales. Asegúrese de ser muy concreto con las descripciones, evitando buzzwords.
+Si como arquitecto no conoce la calidad de su trabajo, será juzgado&#8230;&#8203;</p>
 </div>
 <div class="paragraph">
-<div class="title">Form</div>
-<p>A table with quality goals and concrete scenarios, ordered by priorities</p>
+<div class="title">Forma</div>
+<p>Una tabla con metas de calidad y escenarios concretos, ordenados por prioridades</p>
 </div>
 </div>
 </div>
@@ -814,41 +810,43 @@ If you as an architect do not know how the quality of your work will be judged&#
 </table>
 </div>
 <div class="sect2">
-<h3 id="_stakeholders">1.3. Stakeholders</h3>
+<h3 id="_partes_interesadas_stakeholders">1.3. Partes interesadas (Stakeholders)</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<div class="title">Contents</div>
-<p>Explicit overview of stakeholders of the system, i.e. all person, roles or organizations that</p>
+<div class="title">Contenido</div>
+<p>Vista detallada de las partes intersadas del sistema, es decir, toda persona, rol u organización que:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>should know the architecture</p>
+<p>Debe conocer la arquitectura</p>
 </li>
 <li>
-<p>have to be convinced of the architecture</p>
+<p>Debe estar convencida de la arquitectura</p>
 </li>
 <li>
-<p>have to work with the architecture or with code</p>
+<p>Tiene que trabajar con la arquitectura o con el código</p>
 </li>
 <li>
-<p>need the documentation of the architecture for their work</p>
+<p>Necesitan la documentación de la arquitectura para su trabajo</p>
 </li>
 <li>
-<p>have to come up with decisions about the system or its development</p>
+<p>Intervienen en las decisiones acerca del sistema o su desarrollo</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<div class="title">Motivation</div>
-<p>You should know all parties involved in development of the system or affected by the system.
-Otherwise, you may get nasty surprises later in the development process.
-These stakeholders determine the extent and the level of detail of your work and its results.</p>
+<div class="title">Motivación</div>
+<p>Debe conocer a todas las partes involucradas en el desarrollo del sistema o que son afectadas
+por el sistema. De otro modo, se topará con sorpresas desagradables durante el proceso de desarrollo.
+Estas partes relacionadas o stakeholders determinarán la extensión y el nivel de detalle del trabajo
+y sus resultados</p>
 </div>
 <div class="paragraph">
-<div class="title">Form</div>
-<p>Table with role names, person names, and their expectations with respect to the architecture and its documentation.</p>
+<div class="title">Forma</div>
+<p>Tabla con nombres de los roles, personas, y sus expectativas con respecto a la arquitectura y su
+documentación</p>
 </div>
 </div>
 </div>
@@ -1043,34 +1041,33 @@ A continuación, se presentan los principales aspectos que influirán en el desa
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<div class="title">Contents</div>
-<p>Context and scope - as the name suggests - delimits your system (i.e. your scope) from all its communication partners
-(neighboring systems and users, i.e. the context of your system). It thereby specifies the external interfaces.</p>
+<div class="title">Contenido</div>
+<p>El alcance y contexto del sistema - como lo sugiere el nombre - delimita al sistema (es decir, el alcance) de todos sus
+socios de comunicación (Usuarios y sistemas vecinos, es decir, el contexto del sistema).
+Con ello se especifican las interfaces externas.</p>
 </div>
 <div class="paragraph">
-<p>If necessary, differentiate the business context (domain specific inputs and outputs) from the technical context (channels, protocols, hardware).</p>
+<p>Si es necesario, diferenciar el contexto de negocio (Entradas y salidas específicas del dominio) del contexto técnico
+(canales, protocolos, hardware).</p>
 </div>
 <div class="paragraph">
-<div class="title">Motivation</div>
-<p>The domain interfaces and technical interfaces to communication partners are among your system&#8217;s most critical aspects. Make sure that you completely understand them.</p>
+<div class="title">Motivación</div>
+<p>Las interfases de dominio y las interfases técnicas a los socios de comunicación son de los aspectos más críticos del sistema.
+Se debe asegurar el entendimiento de ellos.</p>
 </div>
 <div class="paragraph">
-<div class="title">Form</div>
-<p>Various options:</p>
+<div class="title">Forma</div>
+<p>Varias opciones:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Context diagrams</p>
+<p>Diagramas de contexto</p>
 </li>
 <li>
-<p>Lists of communication partners and their interfaces.</p>
+<p>Listas de socios de comunicación y sus interfases.</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<div class="title">Further Information</div>
-<p>See <a href="https://docs.arc42.org/section-3/">Context and Scope</a> in the arc42 documentation.</p>
 </div>
 </div>
 </div>
@@ -1082,21 +1079,24 @@ A continuación, se presentan los principales aspectos que influirán en el desa
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<div class="title">Contents</div>
-<p>Specification of <strong>all</strong> communication partners (users, IT-systems, &#8230;&#8203;) with explanations of domain specific inputs and outputs or interfaces.
-Optionally you can add domain specific formats or communication protocols.</p>
+<div class="title">Contenido</div>
+<p>La especificación de <strong>todos</strong> los socios de comunicación (usuarios, sistemas, &#8230;&#8203;) con explicaciones de las entradas y salidas
+específicas del dominio o interfases.
+Opcionalmente puede agregar formatos específicos de dominio o protocolos de comunicación</p>
 </div>
 <div class="paragraph">
-<div class="title">Motivation</div>
-<p>All stakeholders should understand which data are exchanged with the environment of the system.</p>
+<div class="title">Motivación</div>
+<p>Todas las partes interesadas deben entender que datos son intercambiados con el ambiente del sistema.</p>
 </div>
 <div class="paragraph">
-<div class="title">Form</div>
-<p>All kinds of diagrams that show the system as a black box and specify the domain interfaces to communication partners.</p>
+<div class="title">Forma</div>
+<p>Cualquier forma de diagramas que muestren al sistema como una caja negra y especifiquen las interfases de dominio a los
+socios de comunicación.</p>
 </div>
 <div class="paragraph">
-<p>Alternatively (or additionally) you can use a table.
-The title of the table is the name of your system, the three columns contain the name of the communication partner, the inputs, and the outputs.</p>
+<p>De manera alternativa (o adicional) se puede utilizar una tabla.
+El título de la tabla es el nombre del sistema, las tres columnas contienen el nombre del socio de comunicación, las
+entradas y las salidas</p>
 </div>
 </div>
 </div>
@@ -1144,17 +1144,20 @@ The title of the table is the name of your system, the three columns contain the
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<div class="title">Contents</div>
-<p>Technical interfaces (channels and transmission media) linking your system to its environment. In addition a mapping of domain specific input/output to the channels, i.e. an explanation which I/O uses which channel.</p>
+<div class="title">Contenido</div>
+<p>Las interfases técnicas (medios de transmisión y canales) enlanzando al sistema con su ambiente. De manera adicional
+el mapeo de las entradas/salidas específicas del dominio a los canales, es decir, una explicación acerca de que entrada/salida
+utiliza cual canal.</p>
 </div>
 <div class="paragraph">
-<div class="title">Motivation</div>
-<p>Many stakeholders make architectural decision based on the technical interfaces between the system and its context. Especially infrastructure or hardware designers decide these technical interfaces.</p>
+<div class="title">Motivación</div>
+<p>Muchas partes relacionadas realizan decisiones arquitectónicas basadas en las interfases técnicas entre el sistema y
+su contexto. Especialmente los diseñadores de infraestructura o hardware deciden estas interfases técnicas.</p>
 </div>
 <div class="paragraph">
-<div class="title">Form</div>
-<p>E.g. UML deployment diagram describing channels to neighboring systems,
-together with a mapping table showing the relationships between channels and input/output.</p>
+<div class="title">Forma</div>
+<p>Por ejemplo, diagramas UML de despligue describiendo los canales a sistemas vecinos, junto con una tabla de
+mapeo mostrando las relaciones entre los canales y las entradas/salidas.</p>
 </div>
 </div>
 </div>
@@ -1227,46 +1230,28 @@ together with a mapping table showing the relationships between channels and inp
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-solution-strategy">4. Solution Strategy</h2>
+<h2 id="section-solution-strategy">4. Estrategia de solución</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<div class="title">Contents</div>
-<p>A short summary and explanation of the fundamental decisions and solution strategies, that shape system architecture. It includes</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>technology decisions</p>
-</li>
-<li>
-<p>decisions about the top-level decomposition of the system, e.g. usage of an architectural pattern or design pattern</p>
-</li>
-<li>
-<p>decisions on how to achieve key quality goals</p>
-</li>
-<li>
-<p>relevant organizational decisions, e.g. selecting a development process or delegating certain tasks to third parties.</p>
-</li>
-</ul>
+<div class="title">Contenido</div>
+<p>Un resumen corto y explicación de las estrategias y decisiones fundamentales para la solución que le dan forma a la arquitectura del sistema. Estas incluyen:
+* Decisiones tecnológicas
+* Decisiones acerca de la descomposición a alto nivel de un sistema, por ejemplo, el uso de algún patrón de diseño o de arquitectura.
+* Decisiones en como alcanzar metas de calidad claves
+* Decisiones organizacionales relevantes, como el seleccionar un proceso de desarrollo o delegar ciertas tareas a terceros.
+.Motivación
+Estas decisiones son las piedras angulares de la arquitectura. Son la base de muchas otras decisiones detalladas o reglas de implementación.
+.Formato
+Realice la explicación de las deciciones clave de manera breve.</p>
 </div>
 <div class="paragraph">
-<div class="title">Motivation</div>
-<p>These decisions form the cornerstones for your architecture. They are the foundation for many other detailed decisions or implementation rules.</p>
+<p>Justifique las decisiones y porque se realizaron de esa manera, basado en el planteamiento del problema, las metas de calidad y restricciones clave. Refierase a los detalles en las secciones posteriores.</p>
 </div>
 <div class="paragraph">
-<div class="title">Form</div>
-<p>Keep the explanations of such key decisions short.</p>
-</div>
-<div class="paragraph">
-<p>Motivate what was decided and why it was decided that way,
-based upon problem statement, quality goals and key constraints.
-Refer to details in the following sections.</p>
-</div>
-<div class="paragraph">
-<div class="title">Further Information</div>
-<p>See <a href="https://docs.arc42.org/section-4/">Solution Strategy</a> in the arc42 documentation.</p>
+<div class="title">Más información</div>
+<p>Vea [<a href="https://docs.arc42.org/section-4/">Solution Strategy</a> en la documentación de arc42.</p>
 </div>
 </div>
 </div>
@@ -1366,30 +1351,30 @@ Refer to details in the following sections.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-building-block-view">5. Building Block View</h2>
+<h2 id="section-building-block-view">5. Vista de Bloques</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<div class="title">Content</div>
-<p>The building block view shows the static decomposition of the system into building blocks (modules, components, subsystems, classes, interfaces, packages, libraries, frameworks, layers, partitions, tiers, functions, macros, operations, data structures, &#8230;&#8203;) as well as their dependencies (relationships, associations, &#8230;&#8203;)</p>
+<div class="title">Contenido</div>
+<p>La vista de bloques muestra la descomposición estática del sistema en bloques de construcción (módulos, componentes,
+subsistemas, clases, interfases, paquetes, bibliotecas, marcos de desarrollo, capas, particiones, funciones, macros,
+operaciones, estructuras de datos,…) así como sus dependencias (relaciones, asociaciones,…)</p>
 </div>
 <div class="paragraph">
-<p>This view is mandatory for every architecture documentation.
-In analogy to a house this is the <em>floor plan</em>.</p>
+<p>Esta vista es obligatoria para cualquier documentación de arquitectura. Es la analogía al plano de una casa.</p>
 </div>
 <div class="paragraph">
-<div class="title">Motivation</div>
-<p>Maintain an overview of your source code by making its structure understandable through
-abstraction.</p>
+<div class="title">Motivación</div>
+<p>Mantener una visión general de su código fuente haciendo su estructura comprensible de manera abstracta.</p>
 </div>
 <div class="paragraph">
-<p>This allows you to communicate with your stakeholder on an abstract level without disclosing implementation details.</p>
+<p>Esto permite comunicar a las partes interesades en un nivel abstracto sin entrar en detalles de implementación.</p>
 </div>
 <div class="paragraph">
-<div class="title">Form</div>
-<p>The building block view is a hierarchical collection of black boxes and white boxes
-(see figure below) and their descriptions.</p>
+<div class="title">Forma</div>
+<p>La vista de bloques comprende una colección jerárquica de cajas negras y cajas blancas (ver figura de abajo)
+y sus descripciones.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1397,19 +1382,16 @@ abstraction.</p>
 </div>
 </div>
 <div class="paragraph">
-<p><strong>Level 1</strong> is the white box description of the overall system together with black
-box descriptions of all contained building blocks.</p>
+<p><strong>Vista General</strong> comprende la descripción de Caja Blanca del sistema en general junto con las descripciones de
+Caja Negra de todos los bloques contenidos.</p>
 </div>
 <div class="paragraph">
-<p><strong>Level 2</strong> zooms into some building blocks of level 1.
-Thus it contains the white box description of selected building blocks of level 1, together with black box descriptions of their internal building blocks.</p>
+<p><strong>Nivel 2</strong> hace zoom a los bloques de construcción del Nivel 1. Entonces contiene la descripción de Caja Blanca de los
+bloques de construcción selecionadas del nivel 1,junto con las descripciones de caja negra de sus bloques de construcción internas.</p>
 </div>
 <div class="paragraph">
-<p><strong>Level 3</strong> zooms into selected building blocks of level 2, and so on.</p>
-</div>
-<div class="paragraph">
-<div class="title">Further Information</div>
-<p>See <a href="https://docs.arc42.org/section-5/">Building Block View</a> in the arc42 documentation.</p>
+<div class="title">Más Información</div>
+<p>Ver <a href="https://docs.arc42.org/section-5/">Building Block View</a> en la documentación arc42.</p>
 </div>
 </div>
 </div>
@@ -1418,36 +1400,36 @@ Thus it contains the white box description of selected building blocks of level 
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<p>Here you describe the decomposition of the overall system using the following white box template. It contains</p>
+<p>Aquí se describe la descomposición del sistema en general usando la siguiente plantilla de caja blanca. Contiene:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>an overview diagram</p>
+<p>Un diagrama general</p>
 </li>
 <li>
-<p>a motivation for the decomposition</p>
+<p>La motivación para la descomposición</p>
 </li>
 <li>
-<p>black box descriptions of the contained building blocks. For these we offer you alternatives:</p>
+<p>Descripciones de caja negra de los bloques de construcción contenidos. Para estos se ofrecen las siguientes alternativas:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>use <em>one</em> table for a short and pragmatic overview of all contained building blocks and their interfaces</p>
+<p>Usar una tabla para una revisión pragmática y corta de todos los bloques de construcción contenidos y sus interfaces</p>
 </li>
 <li>
-<p>use a list of black box descriptions of the building blocks according to the black box template (see below).
-Depending on your choice of tool this list could be sub-chapters (in text files), sub-pages (in a Wiki) or nested elements (in a modeling tool).</p>
+<p>Usar una lista de descripciones de caja negra de los bloques de construcción acorde a la plantilla de caja negra (ver abajo).
+Dependiendo de la herramienta utilizada, esta lista podría constar de sub-capítulos (en archivos de texto), sub-páginas (en un wiki) o
+elementos anidados (en una herramienta de modelado).</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>(optional:) important interfaces, that are not explained in the black box templates of a building block, but are very important for understanding the white box.
-Since there are so many ways to specify interfaces why do not provide a specific template for them.
- In the worst case you have to specify and describe syntax, semantics, protocols, error handling,
- restrictions, versions, qualities, necessary compatibilities and many things more.
-In the best case you will get away with examples or simple signatures.</p>
+<p>Interfases importantes, que no están explicadas en las plantillas de caja negra de un bloque de construcción,
+pero que son muy importantes para entender la caja blanca. En el peor de los casos se deberá especificar y desribir la sintaxis,
+semántica, protocolos, manejo de errores, restricciones, versiones, calidades, compatibilidades necesarias, entre otras. En el
+mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 </li>
 </ul>
 </div>
@@ -1679,54 +1661,58 @@ Principalmente capturarás escenarios en tu documentación para comunicar tu arq
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<div class="title">Content</div>
-<p>The deployment view describes:</p>
+<div class="title">Contenido</div>
+<p>La vista de despliegue describe:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>technical infrastructure used to execute your system, with infrastructure elements like geographical locations, environments, computers, processors, channels and net topologies as well as other infrastructure elements and</p>
+<p>La infraestructura técnica usada para ejecutar el sistema, con elementos de infraestructura como locaciones geográficas,
+ambientes, computadoras, procesadores, canales y topologías de red así como otros elementos de infraestructura.</p>
 </li>
 <li>
-<p>mapping of (software) building blocks to that infrastructure elements.</p>
+<p>El mapeo de los bloques de construcción (software) en dichos elementos de infraestructura.</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>Often systems are executed in different environments, e.g. development environment, test environment, production environment. In such cases you should document all relevant environments.</p>
+<p>Comúnmente los sistemas son ejecutados en diferentes ambientes, por ejemplo, ambiente de desarrollo, de pruebas, de producción. En dichos casos deberían documentarse todos los ambientes relevantes.</p>
 </div>
 <div class="paragraph">
-<p>Especially document a deployment view if your software is executed as distributed system with more than one computer, processor, server or container or when you design and construct your own hardware processors and chips.</p>
+<p>Deberá documentarse la vista de despliegue de manera especial cuando el software se ejecute como un sistema distribuido
+con mas de una computadora, procesador, servidor o contenedor o cuando se diseñen los procesadores y chips de hardware propios.</p>
 </div>
 <div class="paragraph">
-<p>From a software perspective it is sufficient to capture only those elements of an infrastructure that are needed to show a deployment of your building blocks. Hardware architects can go beyond that and describe an infrastructure to any level of detail they need to capture.</p>
+<p>Desde una perspectiva de software es suficiente con capturar los elementos de la infraestructura necesarios para mostrar
+el despliegue de los bloques de construcción. Los arquitectos de hardware pueden ir más alla y describir la infraestructura
+a cualquier nivel de detalle que requieran.</p>
 </div>
 <div class="paragraph">
-<div class="title">Motivation</div>
-<p>Software does not run without hardware.
-This underlying infrastructure can and will influence a system and/or some
-cross-cutting concepts. Therefore, there is a need to know the infrastructure.</p>
+<div class="title">Motivación</div>
+<p>El software no corre sin haardware.
+El hardware subyacente puede influenciar el sistema o algunos conceptos entrecruzados. Por ende, es necesario conocer
+la infraestructura.</p>
 </div>
 <div class="paragraph">
-<div class="title">Form</div>
-<p>Maybe a highest level deployment diagram is already contained in section 3.2. as
-technical context with your own infrastructure as ONE black box. In this section one can
-zoom into this black box using additional deployment diagrams:</p>
+<div class="title">Forma</div>
+<p>Quizá el más alto nivel de diagrama de despliegue esté contenido en la sección 3.2. como contexto técnico con la
+propia infraestructura como UNA caja negra. En esta sección se deberá realizar un acercamiento a ésta caja negra
+utilizando diagramas de despliegue adicionales:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>UML offers deployment diagrams to express that view. Use it, probably with nested diagrams,
-when your infrastructure is more complex.</p>
+<p>UML provee diagramas de despliegue para expresar la vista. Uselos, probablemente con diagramas anidados.</p>
 </li>
 <li>
-<p>When your (hardware) stakeholders prefer other kinds of diagrams rather than a deployment diagram, let them use any kind that is able to show nodes and channels of the infrastructure.</p>
+<p>Cuando las partes relacionadas de Hardware prefieran otro tipo de diagramas además de los diagramas de despliegue,
+permítales usar cualquier tipo que permita mostrar los nodos y canales de la infraestructura.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<div class="title">Further Information</div>
-<p>See <a href="https://docs.arc42.org/section-7/">Deployment View</a> in the arc42 documentation.</p>
+<div class="title">Más información</div>
+<p>Ver <a href="https://docs.arc42.org/section-7/">Deployment View</a> en la documentación de arc42.</p>
 </div>
 </div>
 </div>
@@ -1735,26 +1721,27 @@ when your infrastructure is more complex.</p>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<p>Describe (usually in a combination of diagrams, tables, and text):</p>
+<p>Describa (Usualmente en una combinación de diagramas, tablas y texto):</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>distribution of a system to multiple locations, environments, computers, processors, .., as well as physical connections between them</p>
+<p>La distribución del sistema en múltiples ubicaciones, ambientes, computadoras, procesadores, &#8230;&#8203; así como las
+conexiones físicas entre ellos</p>
 </li>
 <li>
-<p>important justifications or motivations for this deployment structure</p>
+<p>La motivación o justificación de importancia para la estructura de despliegue</p>
 </li>
 <li>
-<p>quality and/or performance features of this infrastructure</p>
+<p>Características de Calidad y/o rendimiento de la infraestructura</p>
 </li>
 <li>
-<p>mapping of software artifacts to elements of this infrastructure</p>
+<p>El mapeo de los artefactos de software a los elementos de la infraestructura.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>For multiple environments or alternative deployments please copy and adapt this section of arc42 for all relevant environments.</p>
+<p>Para múltiples ambientes o despliegues alternativos copie esta sección para todos los ambientes relevantes.</p>
 </div>
 </div>
 </div>
@@ -2073,44 +2060,39 @@ garantizando que los usuarios puedan interactuar con la aplicación de manera in
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<div class="title">Contents</div>
-<p>Important, expensive, large scale or risky architecture decisions including rationales.
-With "decisions" we mean selecting one alternative based on given criteria.</p>
+<div class="title">Contenido</div>
+<p>Decisiones arquitectónicas importantes, costosas, a larga escala o riesgosas incluyendo sus razonamientos.
+Con "Decisiones" nos referimos a la elección de una alternativa basada en cierto criterio.</p>
 </div>
 <div class="paragraph">
-<p>Please use your judgement to decide whether an architectural decision should be documented
-here in this central section or whether you better document it locally
-(e.g. within the white box template of one building block).</p>
+<p>Se debe usar el juicio para decidir si una decisión arquitectónica debe ser documentada en esta sección
+central o si sería preferible documentarla localmente (Por ejemplo, dentro de una plantilla de caja blanca
+de un bloque de construcción).</p>
 </div>
 <div class="paragraph">
-<p>Avoid redundancy.
-Refer to section 4, where you already captured the most important decisions of your architecture.</p>
+<p>Evite la redundancia. Tomar de referencia la sección 4, donde ya se capturaron las decisiones más importantes
+para la arquitectura.</p>
 </div>
 <div class="paragraph">
-<div class="title">Motivation</div>
-<p>Stakeholders of your system should be able to comprehend and retrace your decisions.</p>
+<div class="title">Motivación</div>
+<p>Las partes relacionadas del sistema deben comprender y trazar las decisiones.</p>
 </div>
 <div class="paragraph">
-<div class="title">Form</div>
-<p>Various options:</p>
+<div class="title">Forma</div>
+<p>Varias opciones:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>ADR (<a href="https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions">Documenting Architecture Decisions</a>) for every important decision</p>
+<p>Lista o tabla, ordenada por importancia y consecuencias o:</p>
 </li>
 <li>
-<p>List or table, ordered by importance and consequences or:</p>
+<p>Mayor detalle en secciones separadas por cada sección.</p>
 </li>
 <li>
-<p>more detailed in form of separate sections per decision</p>
+<p>Registro de Decisiones de Arquitectura (ADR por sus siglas en inglés) para cada decisión importante.</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<div class="title">Further Information</div>
-<p>See <a href="https://docs.arc42.org/section-9/">Architecture Decisions</a> in the arc42 documentation.
-There you will find links and examples about ADR.</p>
 </div>
 </div>
 </div>
@@ -2182,22 +2164,16 @@ La aplicación se desplegará usando Docker por la flexibilidad para desplegar e
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<div class="title">Content</div>
-<p>This section contains all quality requirements as quality tree with scenarios. The most important ones have already been described in section 1.2. (quality goals)</p>
+<p>Esta sección describe todos los requerimientos de calidad como un árbol de calidad con escenarios. Los más importantes ya han sido descritos en la sección 1.2 (Metas de Calidad).
+Aquí se capturan los requerimientos de calidad con menor prioridad, que no crearán altos riesgos en caso de que no sean cubiertos con totalidad.</p>
 </div>
 <div class="paragraph">
-<p>Here you can also capture quality requirements with lesser priority,
-which will not create high risks when they are not fully achieved.</p>
+<div class="title">Motivación</div>
+<p>Dado que los requerimientos de calidad tendrán mucha influencia en las decisiones arquitectónicas deben tomarse en cuenta los elementos importantes para las partes relacionadas que sean concretas y medibles.</p>
 </div>
 <div class="paragraph">
-<div class="title">Motivation</div>
-<p>Since quality requirements will have a lot of influence on architectural
-decisions you should know for every stakeholder what is really important to them,
-concrete and measurable.</p>
-</div>
-<div class="paragraph">
-<div class="title">Further Information</div>
-<p>See <a href="https://docs.arc42.org/section-10/">Quality Requirements</a> in the arc42 documentation.</p>
+<div class="title">Más información</div>
+<p>Vea  <a href="https://docs.arc42.org/section-10/">Quality Requirements</a> en la documentación de arc42.</p>
 </div>
 </div>
 </div>
@@ -2206,35 +2182,25 @@ concrete and measurable.</p>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<div class="title">Content</div>
-<p>The quality tree (as defined in ATAM – Architecture Tradeoff Analysis Method) with quality/evaluation scenarios as leafs.</p>
+<div class="title">Contenido</div>
+<p>El árbol de calidad (Definido en ATAM - Método de análisis de compensación de arquitectura por sus silas en inglés) con escenarios de calidad/evaluación como hojas.</p>
 </div>
 <div class="paragraph">
-<div class="title">Motivation</div>
-<p>The tree structure with priorities provides an overview for a sometimes large number of quality requirements.</p>
+<div class="title">Motivación</div>
+<p>La estructura de árbol con prioridades provee un vistazo general para un gran número de requerimientos de calidad.</p>
 </div>
 <div class="paragraph">
-<div class="title">Form</div>
-<p>The quality tree is a high-level overview of the quality goals and requirements:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>tree-like refinement of the term "quality". Use "quality" or "usefulness" as a root</p>
-</li>
-<li>
-<p>a mind map with quality categories as main branches</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>In any case the tree should include links to the scenarios of the following section.</p>
+<div class="title">Formato</div>
+<p>El árbol de calidad es un vistazo a alto nivel de las metas de calidad y requerimientos:
+* Un refinamiento del término de "calidad" a manera de árbol. Utilice "calidad" o "utilidad" como raíz.
+* Un mapa mental con categorías de calidad como ramas principales
+En cualquier caso incluya ligas a los escenarios de las siguientes secciones.</p>
 </div>
 </div>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/árbol%20de%20calidad.png" alt="árbol de calidad" width="761" height="539">
+<img src="./images/árbol%20de%20calidad.png" alt="árbol de calidad" width="734" height="539">
 </div>
 </div>
 </div>
@@ -2243,38 +2209,21 @@ concrete and measurable.</p>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<div class="title">Contents</div>
-<p>Concretization of (sometimes vague or implicit) quality requirements using (quality) scenarios.</p>
+<div class="title">Contenido</div>
+<p>Concretización de requerimientos de calidad (que pueden ser vagos o implícitos) utilizando escenarios de calidad.
+Estos escenarios describen lo que debería pasar cuando un estímulo llega al sistema.
+Para los arquitectos, son importantes dos tipos de escenarios:
+* Escenarios de uso (también llamados escenarios de aplicación o escenarios de caso de uso), que describen la reacción en tiempo de ejecución de un sistema a un determinado estímulo. Esto incluye también escenarios que describen la eficiencia o el rendimiento del sistema. Por ejemplo: El sistema reacciona a la petición de un usuario en un segundo.
+* Escenarios de cambios, describen la modificación del sistema a su ambiente inmediato. Por ejemplo: Cuando se implementa funcionalidad adicional o requerimientos para el cambio de un atributo de calidad.</p>
 </div>
 <div class="paragraph">
-<p>These scenarios describe what should happen when a stimulus arrives at the system.</p>
+<div class="title">Motivación</div>
+<p>Los escenarios crean requerimientos de calidad concretos y permiten medirlos de manera más sencilla o decidir si han sido cumplidos.
+Cuando se requiere evaluar la arquitectura utilizando métodos como ATAM se necesitan describir las metas de calidad (de la sección 1.2) de manera más precisa hasta un nivel de escenarios que pueden ser discutidos y evaluados.</p>
 </div>
 <div class="paragraph">
-<p>For architects, two kinds of scenarios are important:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Usage scenarios (also called application scenarios or use case scenarios) describe the system’s runtime reaction to a certain stimulus. This also includes scenarios that describe the system’s efficiency or performance. Example: The system reacts to a user’s request within one second.</p>
-</li>
-<li>
-<p>Change scenarios describe a modification of the system or of its immediate environment. Example: Additional functionality is implemented or requirements for a quality attribute change.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<div class="title">Motivation</div>
-<p>Scenarios make quality requirements concrete and allow to
-more easily measure or decide whether they are fulfilled.</p>
-</div>
-<div class="paragraph">
-<p>Especially when you want to assess your architecture using methods like
-ATAM you need to describe your quality goals (from section 1.2)
-more precisely down to a level of scenarios that can be discussed and evaluated.</p>
-</div>
-<div class="paragraph">
-<div class="title">Form</div>
-<p>Tabular or free form text.</p>
+<div class="title">Formato</div>
+<p>Texto en forma libre o tabular.</p>
 </div>
 </div>
 </div>
@@ -2353,28 +2302,29 @@ more precisely down to a level of scenarios that can be discussed and evaluated.
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-technical-risks">11. Risks and Technical Debts</h2>
+<h2 id="section-technical-risks">11. Riesgos y Deuda Técnica</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<div class="title">Contents</div>
-<p>A list of identified technical risks or technical debts, ordered by priority</p>
+<div class="title">Contenido</div>
+<p>Una lista de los riesgos técnicos o deuda técnica identificada, ordenada por prioridad.</p>
 </div>
 <div class="paragraph">
-<div class="title">Motivation</div>
-<p>“Risk management is project management for grown-ups” (Tim Lister, Atlantic Systems Guild.)</p>
+<div class="title">Motivación</div>
+<p>"El manejo de riesgos es administración de proyectos para gente adulta" (Tim Lister, Atlantic Systems Guild.)
+Esto debiera ser el lema para la detección sistemática y la evaluación de riesgos y deuda técnica en la arquitectura,
+que será requerida por las partes relacionadas administrativas (por ejemplo, administradores de proyectoes, propietarios
+de producto) como parte de la planeación y medición de riesgos en general.</p>
 </div>
 <div class="paragraph">
-<p>This should be your motto for systematic detection and evaluation of risks and technical debts in the architecture, which will be needed by management stakeholders (e.g. project managers, product owners) as part of the overall risk analysis and measurement planning.</p>
+<div class="title">Forma</div>
+<p>Lista de riesgos y/o deuda técnica, que podría incluir una medidas sugeridas para minimizar, mitigar o evitar riesgos o
+reducir la deuda técnica.</p>
 </div>
 <div class="paragraph">
-<div class="title">Form</div>
-<p>List of risks and/or technical debts, probably including suggested measures to minimize, mitigate or avoid risks or reduce technical debts.</p>
-</div>
-<div class="paragraph">
-<div class="title">Further Information</div>
-<p>See <a href="https://docs.arc42.org/section-11/">Risks and Technical Debt</a> in the arc42 documentation.</p>
+<div class="title">Más Información</div>
+<p>Ver <a href="https://docs.arc42.org/section-11/">Risks and Technical Debt</a> en la documentación arc42.</p>
 </div>
 </div>
 </div>
