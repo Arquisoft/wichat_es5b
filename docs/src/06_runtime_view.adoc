@@ -46,28 +46,18 @@ Este diagrama de secuencia representa el flujo que tendra la peticion de un usua
 [plantuml,"Registro de nuevo usuario",png]
 ----
 @startuml
-skinparam backgroundColor #F2F9FF
-skinparam sequence {
-    ActorBackgroundColor #CCE5FF
-    ParticipantBackgroundColor #E6F3FF
-    ParticipantBorderColor #0056B3
-    LifeLineBorderColor #0056B3
-    LifeLineBackgroundColor #CCE5FF
-    ArrowColor #0056B3
-    ArrowThickness 2
-}
 
 actor Usuario
-participant "Aplicación Web" as Aplicacion_Web
-participant "Servidor Backend" as Servidor_Backend
-database "Base de Datos" as Base_Datos
 
-Usuario -> Aplicacion_Web : Solicita registrarse
-Aplicacion_Web -> Servidor_Backend : Envía datos de registro
-Servidor_Backend -> Base_Datos : Almacena los datos del usuario
-Base_Datos --> Servidor_Backend : Confirma almacenamiento
-Servidor_Backend -> Aplicacion_Web : Confirma registro exitoso
-Aplicacion_Web -> Usuario : Notifica registro exitoso
+Usuario -> WebApp: Solicitar registro
+WebApp -> Gateway: Enviar solicitud de registro
+Gateway -> UserService: Reenviar solicitud de registro
+UserService -> BaseDatos: Guardar datos del usuario
+BaseDatos --> UserService: Confirmar almacenamiento
+UserService --> Gateway: Confirmar registro exitoso
+Gateway --> WebApp: Respuesta de registro exitoso
+WebApp --> Usuario: Confirmar registro completado
+
 @enduml
 ----
 
@@ -78,32 +68,25 @@ Este diagrama de secuencia hace referencia a las llamadas entre los distintos ob
 [plantuml,"Inicio de sesion",png]
 ----
 @startuml
-skinparam backgroundColor #F2F9FF
-skinparam sequence {
-    ActorBackgroundColor #CCE5FF
-    ParticipantBackgroundColor #E6F3FF
-    ParticipantBorderColor #0056B3
-    LifeLineBorderColor #0056B3
-    LifeLineBackgroundColor #CCE5FF
-    ArrowColor #0056B3
-    ArrowThickness 2
-}
-actor Usuario
-participant Navegador
-participant "Servidor Web" as Servidor_Web
-database "Base de datos" as Base_de_Datos
 
-Usuario -> Navegador: Introduce credenciales
-Navegador -> Servidor_Web: Envía credenciales (POST)
-Servidor_Web -> Base_de_Datos: Verifica credenciales
-Base_de_Datos --> Servidor_Web: Respuesta (válida/errónea)
-alt Credenciales válidas
-    Servidor_Web -> Navegador: Respuesta con token/sesión
-    Navegador -> Usuario: Inicio de sesión exitoso
-else Credenciales erróneas
-    Servidor_Web -> Navegador: Respuesta con error
-    Navegador -> Usuario: Mensaje de error
+actor Usuario
+
+Usuario -> WebApp: Solicitar inicio de sesión
+WebApp -> Gateway: Enviar credenciales
+Gateway -> AuthService: Validar credenciales
+AuthService -> BaseDatos: Comprobar credenciales
+BaseDatos --> AuthService: Respuesta de validación
+
+alt Credenciales correctas
+    AuthService --> Gateway: Autenticación exitosa
+    Gateway --> WebApp: Respuesta de autenticación exitosa
+    WebApp --> Usuario: Confirmar inicio de sesión
+else Credenciales incorrectas
+    AuthService --> Gateway: Autenticación fallida
+    Gateway --> WebApp: Respuesta de autenticación fallida
+    WebApp --> Usuario: Notificar error de inicio de sesión
 end
+
 @enduml
 ----
 
