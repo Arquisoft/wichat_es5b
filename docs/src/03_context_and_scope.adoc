@@ -52,7 +52,7 @@ entradas y las salidas
 ****
 endif::arc42help[]
 
-[plantuml,"Vision general",png]
+[plantuml,"Contexto negocio",png]
 ----
 @startuml
 skinparam monochrome true
@@ -110,7 +110,7 @@ mapeo mostrando las relaciones entre los canales y las entradas/salidas.
 ****
 endif::arc42help[]
 
-[plantuml,"Vision general",png]
+[plantuml,"Contexto tecnico",png]
 ----
 @startuml
 skinparam monochrome true
