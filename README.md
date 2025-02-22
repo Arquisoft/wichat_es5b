@@ -38,9 +38,9 @@ First, clone the project:
 In order to communicate with the LLM integrated in this project, we need to setup an API key. Two integrations are available in this propotipe: gemini and empaphy. The API key provided must match the LLM provider used.
 
 We need to create two .env files. 
-- The first one in the webapp directory (for executing the webapp using ```npm start```). The content of this .env file should be as follows:
+- The first one in the llmservice directory (for executing the llmservice using ```npm start```). The content of this .env file should be as follows:
 ```
-REACT_APP_LLM_API_KEY="YOUR-API-KEY"
+LLM_API_KEY="YOUR-API-KEY"
 ```
 - The second one located in the root of the project (along the docker-compose.yml). This .env file is used for the docker-compose when launching the app with docker. The content of this .env file should be as follows:
 ```
