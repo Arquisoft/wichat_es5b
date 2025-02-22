@@ -6,8 +6,6 @@ const port = 8003;
 
 // Middleware to parse JSON in request body
 app.use(express.json());
-// Load enviornment variables
-require('dotenv').config();
 
 // Define configurations for different LLM APIs
 const llmConfigs = {
@@ -21,7 +19,7 @@ const llmConfigs = {
   empathy: {
     url: () => 'https://empathyai.prod.empathy.co/v1/chat/completions',
     transformRequest: (question) => ({
-      model: "mistralai/Mistral-7B-Instruct-v0.3",
+      model: "qwen/Qwen2.5-Coder-7B-Instruct",
       messages: [
         { role: "system", content: "You are a helpful assistant." },
         { role: "user", content: question }
@@ -73,14 +71,9 @@ async function sendQuestionToLLM(question, apiKey, model = 'gemini') {
 app.post('/ask', async (req, res) => {
   try {
     // Check if required fields are present in the request body
-    validateRequiredFields(req, ['question', 'model']);
+    validateRequiredFields(req, ['question', 'model', 'apiKey']);
 
-    const { question, model } = req.body;
-    //load the api key from an environment variable
-    const apiKey = process.env.LLM_API_KEY;
-    if (!apiKey) {
-      return res.status(400).json({ error: 'API key is missing.' });
-    }
+    const { question, model, apiKey } = req.body;
     const answer = await sendQuestionToLLM(question, apiKey, model);
     res.json({ answer });
 

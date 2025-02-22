@@ -54,13 +54,14 @@ jobs:
       uses: elgohr/Publish-Docker-Github-Action@v5
       env:
         API_URI: http://${{ secrets.DEPLOY_HOST }}:8000
+        LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
       with:
           name: arquisoft/wichat_es5b/webapp
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
           workdir: webapp
-          buildargs: API_URI
+          buildargs: API_URI,LLM_API_KEY
   docker-push-authservice:
     name: Push auth service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
@@ -111,15 +112,12 @@ jobs:
     - uses: actions/checkout@v4
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
-      env:
-        LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
       with:
         name: arquisoft/wichat_es5b/llmservice
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
         workdir: llmservice
-        buildargs: LLM_API_KEY
 
   docker-push-gatewayservice:
     name: Push gateway service Docker Image to GitHub Packages
