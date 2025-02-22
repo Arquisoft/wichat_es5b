@@ -1,6 +1,3 @@
-//set a fake api key
-process.env.LLM_API_KEY = 'test-api-key';
-
 const request = require('supertest');
 const axios = require('axios');
 const app = require('./llm-service'); 
@@ -25,7 +22,7 @@ describe('LLM Service', () => {
   it('the llm should reply', async () => {
     const response = await request(app)
       .post('/ask')
-      .send({ question: 'a question', model: 'gemini' });
+      .send({ question: 'a question', apiKey: 'apiKey', model: 'gemini' });
 
     expect(response.statusCode).toBe(200);
     expect(response.body.answer).toBe('llmanswer');

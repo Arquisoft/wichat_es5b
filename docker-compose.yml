@@ -42,10 +42,7 @@ services:
     container_name: llmservice-wichat_es5b
     image: ghcr.io/arquisoft/wichat_es5b/llmservice:latest
     profiles: ["dev", "prod"]
-    build: 
-      context: ./llmservice
-      args:
-          LLM_API_KEY: ${LLM_API_KEY}
+    build: ./llmservice
     ports:
       - "8003:8003"
     networks:
@@ -74,7 +71,10 @@ services:
     container_name: webapp-wichat_es5b
     image: ghcr.io/arquisoft/wichat_es5b/webapp:latest
     profiles: ["dev", "prod"]
-    build: ./webapp
+    build: 
+      context: ./webapp
+      args:
+        LLM_API_KEY: ${LLM_API_KEY}
     depends_on:
       - gatewayservice
     ports:
