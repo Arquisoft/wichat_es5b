@@ -46,6 +46,19 @@ const Login = () => {
     setOpenSnackbar(false);
   };
 
+  const handleAskLLM = async () => {
+    const question = "Nombre del actor protagonista de Kill Bill, no digas el nombre de la pelicula (Formato: El actor protagonista es {nombre del actor}.)";
+    const model = "empathy"
+
+    if (apiKey==='None'){
+      setMessage("LLM API key is not set. Cannot contact the LLM.");
+    }
+    else{
+      const message = await axios.post(`${apiEndpoint}/askllm`, { question, model, apiKey })
+      setMessage(message.data.answer);
+    }
+  }
+
   return (
     <Container component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
       {loginSuccess ? (
@@ -59,6 +72,9 @@ const Login = () => {
           <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
             Your account was created on {new Date(createdAt).toLocaleDateString()}.
           </Typography>
+          <Button variant="outlined" color="secondary" onClick={handleAskLLM} sx={{ mt: 2, width: '100%' }}>
+            Primera Pista
+          </Button>
         </div>
       ) : (
         <div>
@@ -83,6 +99,7 @@ const Login = () => {
           <Button variant="contained" color="primary" onClick={loginUser}>
             Login
           </Button>
+
           <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />
           {error && (
             <Snackbar open={!!error} autoHideDuration={6000} onClose={() => setError('')} message={`Error: ${error}`} />
