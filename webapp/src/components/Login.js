@@ -83,15 +83,27 @@ const Login = () => {
           
           <Container> 
           { hints[0] ? ( 
-            <Typography variant="p" sx={{ textAlign: 'center', marginTop: 2 }}>
-              {hints[0]} {} 
-            </Typography>
-          ) : (
-            <Button variant="outlined" color="secondary" onClick={() => handleAskLLM("El Resplandor", 0)} sx={{ mt: 2, width: '100%' }}>
-              Primera Pista
-            </Button>
-          )
+              <Typography variant="p" sx={{ textAlign: 'center', marginTop: 2 }}>
+                {hints[0]} {} 
+              </Typography>
+            ) : (
+              <Button variant="outlined" color="secondary" onClick={() => handleAskLLM("El Resplandor", 0)} sx={{ mt: 2, width: '100%' }}>
+                Primera Pista
+              </Button>
+            )
+          }
+          </Container>
 
+          <Container> 
+          { hints[1] ? ( 
+              <Typography variant="p" sx={{ textAlign: 'center', marginTop: 2 }}>
+                {hints[1]} {} 
+              </Typography>
+            ) : (
+              <Button variant="outlined" color="secondary" onClick={() => handleAskLLM("El Resplandor", 1)} sx={{ mt: 2, width: '100%' }}>
+                Segunda Pista
+              </Button>
+            )
           }
           </Container>
 
