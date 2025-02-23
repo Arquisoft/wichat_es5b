@@ -12,6 +12,8 @@ const Login = () => {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [createdAt, setCreatedAt] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [hints, setHints] = useState([]);
+
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
   const apiKey = process.env.REACT_APP_LLM_API_KEY || 'None';
@@ -46,17 +48,22 @@ const Login = () => {
     setOpenSnackbar(false);
   };
 
-  const handleAskLLM = async () => {
-    const question = "Nombre del actor protagonista de Kill Bill, no digas el nombre de la pelicula (Formato: El actor protagonista es {nombre del actor}.)";
+  const handleAskLLM = async (movieName, numPista) => {
+    const questions = [
+      "De que año y genero es la pelicula " + movieName +" , dame solamente el año y el genero y evita decir el nombre de la pelicula (formato: Fue estrenada en {año})",
+      "Nombre del actor protagonista de " + movieName + ", no digas el nombre de la pelicula (Formato: El actor protagonista es {nombre del actor}.)"
+    ];
     const model = "empathy"
 
     if (apiKey==='None'){
       setMessage("LLM API key is not set. Cannot contact the LLM.");
     }
     else{
+      const question = questions[numPista];
       const message = await axios.post(`${apiEndpoint}/askllm`, { question, model, apiKey })
-      setMessage(message.data.answer);
+      setHints([...hints, message.data.answer]);
     }
+
   }
 
   return (
@@ -72,9 +79,23 @@ const Login = () => {
           <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
             Your account was created on {new Date(createdAt).toLocaleDateString()}.
           </Typography>
-          <Button variant="outlined" color="secondary" onClick={handleAskLLM} sx={{ mt: 2, width: '100%' }}>
-            Primera Pista
-          </Button>
+
+          
+          <Container> 
+          { hints[0] ? ( 
+            <Typography variant="p" sx={{ textAlign: 'center', marginTop: 2 }}>
+              {hints[0]} {} 
+            </Typography>
+          ) : (
+            <Button variant="outlined" color="secondary" onClick={() => handleAskLLM("El Resplandor", 0)} sx={{ mt: 2, width: '100%' }}>
+              Primera Pista
+            </Button>
+          )
+
+          }
+          </Container>
+
+          
         </div>
       ) : (
         <div>
