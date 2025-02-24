@@ -13,6 +13,9 @@ const Login = () => {
   const [createdAt, setCreatedAt] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [hints, setHints] = useState([]);
+  
+  //TODO: eliminar esta constante cuando tengamos hecha la comunicacion con wikidata
+  const pelicula = "El Resplandor";
 
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
@@ -48,7 +51,8 @@ const Login = () => {
     setOpenSnackbar(false);
   };
 
-  const handleAskLLM = async (movieName, numPista) => {
+  //metodo para preguntarle a la LLM las pistas
+  const handleAskForHint = async (movieName, numHint) => {
     const questions = [
       "De que año y genero es la pelicula " + movieName +" , dame solamente el año y el genero y evita decir el nombre de la pelicula (formato: Fue estrenada en {año})",
       "Nombre del actor protagonista de " + movieName + ", no digas el nombre de la pelicula (Formato: El actor protagonista es {nombre del actor}.)"
@@ -59,13 +63,15 @@ const Login = () => {
       setMessage("LLM API key is not set. Cannot contact the LLM.");
     }
     else{
-      const question = questions[numPista];
+      const question = questions[numHint];
       const message = await axios.post(`${apiEndpoint}/askllm`, { question, model, apiKey })
       setHints([...hints, message.data.answer]);
+      
     }
 
   }
 
+  //TODO: la parte de los botones de pista habrá que modificarla cuando tengamos la parte de wikidata
   return (
     <Container component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
       {loginSuccess ? (
@@ -87,7 +93,7 @@ const Login = () => {
                 {hints[0]} {} 
               </Typography>
             ) : (
-              <Button variant="outlined" color="secondary" onClick={() => handleAskLLM("El Resplandor", 0)} sx={{ mt: 2, width: '100%' }}>
+              <Button variant="outlined" color="secondary" onClick={() => handleAskForHint(pelicula, 0)} sx={{ mt: 2, width: '100%' }}>
                 Primera Pista
               </Button>
             )
@@ -100,7 +106,7 @@ const Login = () => {
                 {hints[1]} {} 
               </Typography>
             ) : (
-              <Button variant="outlined" color="secondary" onClick={() => handleAskLLM("El Resplandor", 1)} sx={{ mt: 2, width: '100%' }}>
+              <Button variant="outlined" color="secondary" onClick={() => handleAskForHint(pelicula, 1)} sx={{ mt: 2, width: '100%' }}>
                 Segunda Pista
               </Button>
             )
