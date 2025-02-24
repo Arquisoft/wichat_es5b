@@ -15,7 +15,7 @@ const questions = [
   }
 ];
 
-export default function QuizGame() {
+export default function GameQuestion() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [timeLeft, setTimeLeft] = useState(60);
