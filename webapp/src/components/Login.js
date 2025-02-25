@@ -14,6 +14,7 @@ const Login = () => {
   const [createdAt, setCreatedAt] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [hints, setHints] = useState([]);
+  const [unlockedIndex, setUnlockedIndex] = useState(0); //estado para el indice desbloqueado
   
   //TODO: eliminar esta constante cuando tengamos hecha la comunicacion con wikidata
   const pelicula = "El Resplandor";
@@ -72,112 +73,87 @@ const Login = () => {
       const message = await axios.post(`${apiEndpoint}/askllm`, { question, model, apiKey });
       setHints([...hints, message.data.answer]);
       
+
+      //desbloqueo siguiente boton
+      if (numHint + 1 < questions.length) {
+        setUnlockedIndex(numHint + 1);
+      }
     }
 
   }
 
-  //TODO: la parte de los botones de pista habrá que modificarla cuando tengamos la parte de wikidata
-  return (
-    <Container component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
-      {loginSuccess ? (
-        <div>
+  
+return (
+  <Container component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
+    {loginSuccess ? (
+      <div>
 
-          <Typewriter
-            words={[message]} // Pass your message as an array of strings
-            cursor
-            cursorStyle="|"
-            typeSpeed={50} // Typing speed in ms
-          />
+        <Typewriter
+          words={[message]}
+          cursor
+          cursorStyle="|"
+          typeSpeed={50}
+        />
 
-          <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
-            Your account was created on {new Date(createdAt).toLocaleDateString()}.
-          </Typography>
+        <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
+          Your account was created on {new Date(createdAt).toLocaleDateString()}.
+        </Typography>
 
-          <Container> 
-          { hints[0] ? ( 
-              <Typography variant="p" sx={{ textAlign: 'center', marginTop: 2 }}>
-                {hints[0]} {} 
-              </Typography>
-            ) : (
-              <Button variant="outlined" color="secondary" onClick={() => handleAskForHint(pelicula, 0)} sx={{ mt: 2, width: '100%' }}>
-                Primera Pista
-              </Button>
-            )
-          }
-          </Container>
-
-          <Container> 
-          { hints[1] ? ( 
-              <Typography variant="p" sx={{ textAlign: 'center', marginTop: 2 }}>
-                {hints[1]} {} 
-              </Typography>
-            ) : (
-              <Button variant="outlined" color="secondary" onClick={() => handleAskForHint(pelicula, 1)} sx={{ mt: 2, width: '100%' }}>
-                Segunda Pista
-              </Button>
-            )
-          }
-          </Container>
-
-          <Container> 
-            { hints[2] ? ( 
-                <Typography variant="p" sx={{ textAlign: 'center', marginTop: 2 }}>
-                  {hints[2]} 
-                </Typography>
-              ) : (
-                <Button variant="outlined" color="secondary" onClick={() => handleAskForHint(pelicula, 2)} sx={{ mt: 2, width: '100%' }}>
-                  Tercera Pista
-                </Button>
-              )
-            }
-          </Container>
-
-          <Container> 
-            { hints[3] ? ( 
-                <Typography variant="p" sx={{ textAlign: 'center', marginTop: 2 }}>
-                  {hints[3]} 
-                </Typography>
-              ) : (
-                <Button variant="outlined" color="secondary" onClick={() => handleAskForHint(pelicula, 3)} sx={{ mt: 2, width: '100%' }}>
-                  Cuarta Pista
-                </Button>
-              )
-            }
-          </Container>
+        {['Primera Pista', 'Segunda Pista', 'Tercera Pista', 'Cuarta Pista'].map((label, index) => (
           
-        </div>
-      ) : (
-        <div>
-          <Typography component="h1" variant="h5">
-            Login
-          </Typography>
-          <TextField
-            margin="normal"
-            fullWidth
-            label="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            fullWidth
-            label="Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button variant="contained" color="primary" onClick={loginUser}>
-            Login
-          </Button>
+          <Container key={index}>
+            {hints[index] ? (
 
-          <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />
-          {error && (
-            <Snackbar open={!!error} autoHideDuration={6000} onClose={() => setError('')} message={`Error: ${error}`} />
-          )}
-        </div>
-      )}
-    </Container>
-  );
+              <Typography variant="p" sx={{ textAlign: 'center', marginTop: 2 }}>
+                {hints[index]}
+              </Typography>
+
+            ) : (
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={() => handleAskForHint(pelicula, index)}
+                sx={{ mt: 2, width: '100%' }}
+                disabled={index > unlockedIndex} //deshabilitar botones segun el indice desbloqueado
+              >
+                {label}
+              </Button>
+            )}
+          </Container>
+        ))}
+      </div>
+    ) : (
+      <div>
+        <Typography component="h1" variant="h5">
+          Login
+        </Typography>
+        <TextField
+          margin="normal"
+          fullWidth
+          label="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <TextField
+          margin="normal"
+          fullWidth
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button variant="contained" color="primary" onClick={loginUser}>
+          Login
+        </Button>
+
+        <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />
+        {error && (
+          <Snackbar open={!!error} autoHideDuration={6000} onClose={() => setError('')} message={`Error: ${error}`} />
+        )}
+      </div>
+    )}
+  </Container>
+);
 };
 
 export default Login;
