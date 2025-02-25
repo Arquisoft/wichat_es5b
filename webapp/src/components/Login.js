@@ -12,6 +12,11 @@ const Login = () => {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [createdAt, setCreatedAt] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [hints, setHints] = useState([]);
+  
+  //TODO: eliminar esta constante cuando tengamos hecha la comunicacion con wikidata
+  const pelicula = "El Resplandor";
+
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
   const apiKey = process.env.REACT_APP_LLM_API_KEY || 'None';
@@ -46,6 +51,27 @@ const Login = () => {
     setOpenSnackbar(false);
   };
 
+  //metodo para preguntarle a la LLM las pistas
+  const handleAskForHint = async (movieName, numHint) => {
+    const questions = [
+      "De que año y genero es la pelicula " + movieName +" , dame solamente el año y el genero y evita decir el nombre de la pelicula (formato: Fue estrenada en {año})",
+      "Nombre del actor protagonista de " + movieName + ", no digas el nombre de la pelicula (Formato: El actor protagonista es {nombre del actor}.)"
+    ];
+    const model = "empathy"
+
+    if (apiKey==='None'){
+      setMessage("LLM API key is not set. Cannot contact the LLM.");
+    }
+    else{
+      const question = questions[numHint];
+      const message = await axios.post(`${apiEndpoint}/askllm`, { question, model, apiKey })
+      setHints([...hints, message.data.answer]);
+      
+    }
+
+  }
+
+  //TODO: la parte de los botones de pista habrá que modificarla cuando tengamos la parte de wikidata
   return (
     <Container component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
       {loginSuccess ? (
@@ -59,6 +85,35 @@ const Login = () => {
           <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
             Your account was created on {new Date(createdAt).toLocaleDateString()}.
           </Typography>
+
+          
+          <Container> 
+          { hints[0] ? ( 
+              <Typography variant="p" sx={{ textAlign: 'center', marginTop: 2 }}>
+                {hints[0]} {} 
+              </Typography>
+            ) : (
+              <Button variant="outlined" color="secondary" onClick={() => handleAskForHint(pelicula, 0)} sx={{ mt: 2, width: '100%' }}>
+                Primera Pista
+              </Button>
+            )
+          }
+          </Container>
+
+          <Container> 
+          { hints[1] ? ( 
+              <Typography variant="p" sx={{ textAlign: 'center', marginTop: 2 }}>
+                {hints[1]} {} 
+              </Typography>
+            ) : (
+              <Button variant="outlined" color="secondary" onClick={() => handleAskForHint(pelicula, 1)} sx={{ mt: 2, width: '100%' }}>
+                Segunda Pista
+              </Button>
+            )
+          }
+          </Container>
+
+          
         </div>
       ) : (
         <div>
@@ -83,6 +138,7 @@ const Login = () => {
           <Button variant="contained" color="primary" onClick={loginUser}>
             Login
           </Button>
+
           <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />
           {error && (
             <Snackbar open={!!error} autoHideDuration={6000} onClose={() => setError('')} message={`Error: ${error}`} />
