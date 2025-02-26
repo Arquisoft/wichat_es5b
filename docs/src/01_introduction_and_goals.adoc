@@ -65,12 +65,12 @@ Los requerimientos funcionales describen que debe hacer el sistema.
 . Sistema de preguntas y respuestas
 .. El sistema generará automáticamente preguntas a partir de Wikidata
 .. El sistema creará una respuesta correcta para cada pregunta
-.. El sistema generará una respuestas incorrectas para cada pregunta
+.. El sistema generará respuestas incorrectas para cada pregunta
 .. Los usuarios podrán contestar a las preguntas dentro de un plazo de tiempo determinado
 .. El sistema debe garantizar que no se repitan preguntas en una misma sesión de juego
 . Sistema de pistas
 .. El sistema contará con un sistema de pistas
-.. El sistema permitirá a los usuarios solicitar pistas de forma opcional, sin obligarlos a usarlas
+.. El sistema permitirá a los usuarios solicitar pistas de forma opcional, sin obligarles a usarlas
 .. El sistema de pistas permitirá a los usuarios obtener pistas sobre las imágenes
 .. Las pistas se generarán utilizando un LLM
 .. El sistema generará las pistas mediante la información de Wikidata
@@ -81,7 +81,7 @@ Los requerimientos funcionales describen que debe hacer el sistema.
 ... Número de juegos jugados
 ... Preguntas falladas
 ... Pregunatas acertadas
-.APIs
+. APIs
 .. El sistema permitirá acceder a la información del usuario mediante una API
 .. El sistema permitirá acceder a la información de las preguntas mediante una API
 
@@ -142,7 +142,7 @@ endif::arc42help[]
 |Caracteristica de calidad|Prioridad|Motivación|Escenario
 | Usabilidad | Alta | El sistema debe de ser intuitivo para que todos los usuarios usen la aplicacion. | _Si un usuario no entiende la aplicacion y no encuentra lo que necesita es posible que este deje de utilizar nuestra aplicacion_
 | Rendimiento | Alta | La aplicacion deberá realizar la mayoria de las peticiones dentro de un marco de tiempo razonable y no debera verse afectado cuando haya varios usuarios utilizando el sistema.| _Si en algun momento un usuario o varios no reciben respuesta del sistema dentro de un marco de tiempo razonable es posible que piensen que no funciona y dejen de usarla_
-| Fiabilidad | Alta | El sistema debe de estar disponible para el usuario la mayoria de las veces que el usuario quiera utilizarla|_Si un usuario quiere entrar en el sistema pero este no esta disponible en varias ocasiones en las que lo intente esto podria llevarnos a que ese usuario no vuelva a intentarlo cuando si que este disponible perdiendo un potencial usuario_
+| Fiabilidad | Alta | El sistema debe de estar disponible para el usuario la mayoria de las veces que el usuario quiera utilizarla (> 99% de las veces)|_Si un usuario quiere entrar en el sistema pero este no esta disponible en varias ocasiones en las que lo intente esto podria llevarnos a que ese usuario no vuelva a intentarlo cuando si que este disponible perdiendo un potencial usuario_
 | Compatibilidad | Media | El sistema debera poder utilizarse en todos los navegadores, ya sean Chrome, Firefox...|_Los usuarios usan diversos buscadores, si un usuario que dispone de un Mac intenta acceder a nuestro sistema pero este o no funciona o se encuentra todo descolocado el usuario es probable que no lo intente con otro buscador y que perdamos a un usuario_
 |===
 
@@ -178,10 +178,20 @@ endif::arc42help[]
 |===
 |Rol/Nombre|Contacto|Expectativas
 | RTVE | _Equipo de RTVE_ |  Esperamos que RTVE nos facilite la suficiente informacion de que se espera de la aplicacion 
-| Equipo de desarrollo | Alberto Martinez Olivar - uo282069@uniovi.es//Pablo Jose Perez Diaz - uo282440@uniovi.es
-                        //Marcos Gonzalez Garcia - uo282587@uniovi.es//Celia Bobo Rodriguez Noriega - uo222898@uniovi.es
-                        //Javier Monte Guillem - uo283951@uniovi.es//Pelayo Palacios Suarez - uo274408@uniovi.es 
-                        |  Se espera que el grupo de desarrollo realice todas las actividades asignadas a tiempo y en caso de no realizarlas en el plazo asignado que esten finalizadas lo antes posible. Tambien se espera que el equipo de desarrollo aprenda lo suficiente de las tecnlogias escogidas para que puedan realizar correctamente el sistema deseado.
+| Equipo de desarrollo | 
+Alberto Martinez Olivar - uo282069@uniovi.es +
+Pablo Jose Perez Diaz - uo282440@uniovi.es +
+Marcos Gonzalez Garcia - uo282587@uniovi.es +
+Javier Monte Guillem - uo283951@uniovi.es +
+Pelayo Palacios Suarez - uo274408@uniovi.es + 
+Celia Bobo Rodriguez Noriega - uo222898@uniovi.es
+|  Se espera que el grupo de desarrollo realice todas las actividades asignadas a tiempo y en caso de no realizarlas en el plazo asignado que esten finalizadas lo antes posible. Tambien se espera que el equipo de desarrollo aprenda lo suficiente de las tecnlogias escogidas para que puedan realizar correctamente el sistema deseado.
 | Empathy | https://www.empathy.ai/ | Esperamos que empathy mantenga disponible su LLM lo maximo posble para que podamos realizar este proyecto con su tecnologia. 
 | Usuarios | Todo usuario que utilice la aplicación |  Se espera que los usuarios ayuden a los desarrolladores avisando en caso de encontrar algun error o bug para poder solucionarlos rapidamente.
+| Profesores | 
+Jose Emilio Labra Gayo - labra@uniovi.es +
+Irene Cid Rico - cidirene@uniovi.es +
+Diego Martín Fernández - martinfdiego@uniovi.es +
+Pablo González González - gonzalezgpablo@uniovi.es 
+| Son los encargados de evaluar el proyecto realizado por el equipo de desarrollo, asi como la organización del grupo, y el trabajo cooperativo de todos los miembros del equipo.
 |===
