@@ -36,9 +36,7 @@ A continuación, se presentan los principales aspectos que influirán en el desa
 | Restricción       | Explicación
 | Wikidata         | La información de las preguntas será generada automáticamente a partir de los datos de Wikidata.
 | LLM             | Será posible interactuar con la aplicación en cada pregunta para poder obtener pistas sobre las mismas. Para ello se utilizará un modelo de lenguaje (LLM).
-| Docker         | La aplicación deberá utilizar contenedores para garantizar su portabilidad y facilidad de despliegue.
 | Frontend       | El sistema contará al menos con un frontend web que mostrará las imágenes, preguntas y respuestas.
-| Gestión de Usuarios | Los usuarios podrán registrarse en el sistema y consultar el histórico de su participación en el sistema.
 | Despliegue     | La web deberá estar desplegada y accesible a través de la Web.
 | Pruebas        | El proyecto deberá incluir distintos tipos de pruebas para garantizar el resultado esperado y un producto de calidad (pruebas de aceptación, de carga, cobertura, etc.).
 |===
