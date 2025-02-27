@@ -42,10 +42,10 @@ services:
     container_name: llmservice-wichat_es5b
     image: ghcr.io/arquisoft/wichat_es5b/llmservice:latest
     profiles: ["dev", "prod"]
+    env_file:
+      - .env
     build: 
       context: ./llmservice
-      args:
-          LLM_API_KEY: ${LLM_API_KEY}
     ports:
       - "8003:8003"
     networks:
