@@ -49,7 +49,7 @@ const Login = () => {
   };
 
   if (startGame) {
-    return <Game username={username} />;
+    return <Game/>;
   }
 
   return (
