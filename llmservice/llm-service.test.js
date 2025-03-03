@@ -5,6 +5,9 @@ const request = require('supertest');
 const axios = require('axios');
 const app = require('./llm-service'); 
 
+
+
+
 afterAll(async () => {
     app.close();
   });
@@ -16,16 +19,26 @@ describe('LLM Service', () => {
   axios.post.mockImplementation((url, data) => {
     if (url.startsWith('https://generativelanguage')) {
       return Promise.resolve({ data: { candidates: [{ content: { parts: [{ text: 'llmanswer' }] } }] } });
-    } else if (url.endsWith('https://empathyai')) {
-      return Promise.resolve({ data: { answer: 'llmanswer' } });
+    } else if (url.startsWith('https://empathyai')) {
+      return Promise.resolve({ data: { choices: [{message: {content: 'llmanswer'}}] } });
     }
   });
 
   // Test /ask endpoint
-  it('the llm should reply', async () => {
+  it('the gemini llm should reply', async () => {
     const response = await request(app)
       .post('/ask')
       .send({ question: 'a question', model: 'gemini' });
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.answer).toBe('llmanswer');
+  });
+
+  // Test /ask endpoint
+  it('the empathy llm should reply', async () => {
+    const response = await request(app)
+      .post('/ask')
+      .send({ question: 'a question', model: 'empathy' });
 
     expect(response.statusCode).toBe(200);
     expect(response.body.answer).toBe('llmanswer');
