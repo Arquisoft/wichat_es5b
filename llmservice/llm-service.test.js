@@ -44,4 +44,27 @@ describe('LLM Service', () => {
     expect(response.body.answer).toBe('llmanswer');
   });
 
+
+});
+
+//Test to check the requiered fields
+describe('validateRequiredFields', () =>{
+  it('the field model is not set', async () => {
+    const response = await request(app)
+      .post('/ask')
+      .send({ question: 'a question'});
+
+    expect(response.statusCode).toBe(400);
+    expect(response.body.error).toBe('Missing required field: model');
+  });
+
+  it('the field question is not set', async () => {
+    const response = await request(app)
+      .post('/ask')
+      .send({ model: 'empathy'});
+
+    expect(response.statusCode).toBe(400);
+    expect(response.body.error).toBe('Missing required field: question');
+  });
+
 });
