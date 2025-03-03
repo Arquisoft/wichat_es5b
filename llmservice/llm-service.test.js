@@ -24,7 +24,7 @@ describe('LLM Service', () => {
     }
   });
 
-  // Test /ask endpoint
+  // Test /ask endpoint with gemini
   it('the gemini llm should reply', async () => {
     const response = await request(app)
       .post('/ask')
@@ -34,7 +34,7 @@ describe('LLM Service', () => {
     expect(response.body.answer).toBe('llmanswer');
   });
 
-  // Test /ask endpoint
+  // Test /ask endpoint with empathy
   it('the empathy llm should reply', async () => {
     const response = await request(app)
       .post('/ask')
