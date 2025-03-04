@@ -21,7 +21,7 @@ describe('LLM Service', () => {
       return Promise.resolve({ data: { candidates: [{ content: { parts: [{ text: 'llmanswer' }] } }] } });
     } else if (url.startsWith('https://empathyai')) {
       return Promise.resolve({ data: { choices: [{message: {content: 'llmanswer'}}] } });
-    }
+    } 
   });
 
   // Test /ask endpoint with gemini
@@ -44,11 +44,10 @@ describe('LLM Service', () => {
     expect(response.body.answer).toBe('llmanswer');
   });
 
-
 });
 
 //Test to check the requiered fields
-describe('validateRequiredFields', () =>{
+describe('Validate Required Fields', () =>{
   it('the field model is not set', async () => {
     const response = await request(app)
       .post('/ask')
@@ -68,3 +67,34 @@ describe('validateRequiredFields', () =>{
   });
 
 });
+
+  //Test to check the exceptions
+  describe('Check exceptions', () => {
+    it('the model is not supported', async () => {
+      jest.spyOn(console, 'error');
+
+      const response = await request(app)
+        .post('/ask')
+        .send({question: 'a question', model: 'unknown'});
+
+      expect(response.statusCode).toBe(200);
+      expect(console.error).toHaveBeenCalledWith('Error sending question to unknown:', 'Model "unknown" is not supported.');
+    })
+  });
+
+  //Test to check the API key if missing
+  describe('Validate missing API key', () => {
+    it('API key is missing', async () => {
+      process.env.LLM_API_KEY="";
+
+      const response = await request(app)
+        .post('/ask')
+        .send({question: 'a question', model: 'empathy'});
+
+      expect(response.statusCode).toBe(400);
+      expect(response.body.error).toBe('API key is missing.');
+    })
+  });
+
+  
+
