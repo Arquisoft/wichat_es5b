@@ -83,13 +83,13 @@ describe('Login component', () => {
       });
       
     //despues de etrar correctamente checkeamos la funcionalidad
-    
     const buttonsBeforeClick = await screen.findAllByRole('button');
   
     //verificar que inicialmente haya 4 botones
-    expect(buttonsBeforeClick).toHaveLength(4);
+    //expect(buttonsBeforeClick).toHaveLength(4);
+    await waitFor(() => expect(buttonsBeforeClick).toHaveLength(4));
   
-    const firstHintButton = buttonsBeforeClick.find(button => button.textContent === 'Primera Pista');
+    const firstHintButton = buttonsBeforeClick.find(button => button.textContent === 'Primera Pista' && !button.disabled);
   
     //simular el clic en el primer boton
     await act(async () => {
@@ -100,7 +100,8 @@ describe('Login component', () => {
     const buttonsAfterClick = await screen.findAllByRole('button');
   
     //verificar que despues del clic hay un boton menos
-    expect(buttonsAfterClick).toHaveLength(3); 
+    //expect(buttonsAfterClick).toHaveLength(3); 
+    await waitFor(() => expect(buttonsAfterClick).toHaveLength(3));
   });
   
   
@@ -137,7 +138,12 @@ describe('Login component', () => {
     });
   
     //verificar que el segundo boton ya no tiene la clase Mui-disabled (ahora deberia estar habilitado)
-    expect(secondHintButton).not.toHaveClass('Mui-disabled');
+    //expect(secondHintButton).not.toHaveClass('Mui-disabled');
+    const updatedSecondHintButton = await screen.findByRole('button', { name: /Segunda Pista/i });
+
+    await waitFor(() => {
+      expect(updatedSecondHintButton).not.toHaveClass('Mui-disabled');
+    });
   });
   
 
