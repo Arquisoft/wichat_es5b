@@ -3,12 +3,14 @@ import { AnswerGenerator } from "./AnswerGenerator";
 import { AnswerVerifier } from "./AnswerVerifier";
 import { Question } from "./questions/Question";
 
-class GameController {
+export class GameController {
     private score: number;
     private questionGenerator: QuestionGenerator;
     private answerGenerator: AnswerGenerator;
     private answerVerifier: AnswerVerifier;
     private currentQuestion: Question | null;
+
+    private hasGameEnded: boolean = false;
   
     constructor(
       questionGenerator: QuestionGenerator,
@@ -26,6 +28,11 @@ class GameController {
       this.score = 0;
       console.log("Inicio del juego");
       this.nextQuestion();
+    }
+
+    endGame(): void {
+      console.log("Fin del juego. Puntuación:", this.score);
+      this.hasGameEnded = true;
     }
   
     nextQuestion(): void {
@@ -52,14 +59,19 @@ class GameController {
       if (isCorrect) {
         this.score++;
         console.log("¡Respuesta correcta! Puntuación:", this.score);
+        this.nextQuestion();
       } else {
-        console.log("Respuesta incorrecta. Puntuación:", this.score);
+        console.log("Respuesta incorrecta.");
+        this.endGame();
       }
   
-      this.nextQuestion();
     }
   
     getScore(): number {
       return this.score;
+    }
+
+    isGameEnded(): boolean {
+      return this.hasGameEnded;
     }
   }
