@@ -21,22 +21,17 @@ const Login = () => {
 
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
-  const apiKey = process.env.REACT_APP_LLM_API_KEY || 'None';
+  
 
   const loginUser = async () => {
     try {
       const response = await axios.post(`${apiEndpoint}/login`, { username, password });
 
       const question = "Please, generate a greeting message for a student called " + username + " that is a student of the Software Architecture course in the University of Oviedo. Be nice and polite. Two to three sentences max.";
-      const model = "empathy";
+      const model = "empathy"
+      const message = await axios.post(`${apiEndpoint}/askllm`, { question, model })
+      setMessage(message.data.answer);
 
-      if (apiKey==='None'){
-        setMessage("LLM API key is not set. Cannot contact the LLM.");
-      }
-      else{
-        const message = await axios.post(`${apiEndpoint}/askllm`, { question, model, apiKey });
-        setMessage(message.data.answer);
-      }
       // Extract data from the response
       const { createdAt: userCreatedAt } = response.data;
 
@@ -63,21 +58,16 @@ const Login = () => {
     ];
     const model = "empathy";
 
-    if (apiKey==='None'){
-      setMessage("LLM API key is not set. Cannot contact the LLM.");
-    }
+    
 
-    else{
-
-      const question = questions[numHint];
-      const message = await axios.post(`${apiEndpoint}/askllm`, { question, model, apiKey });
-      setHints([...hints, message.data.answer]);
+    const question = questions[numHint];
+    const message = await axios.post(`${apiEndpoint}/askllm`, { question, model });
+    setHints([...hints, message.data.answer]);
       
 
-      //desbloqueo siguiente boton
-      if (numHint + 1 < questions.length) {
-        setUnlockedIndex(numHint + 1);
-      }
+    //desbloqueo siguiente boton
+    if (numHint + 1 < questions.length) {
+      setUnlockedIndex(numHint + 1);
     }
 
   }
