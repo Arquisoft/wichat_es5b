@@ -17,12 +17,17 @@ deben considerar. Entre estas se incluyen:
 
 endif::arc42help[]
 
-El proposito de este proyecto es agregar a una aplicacion ya existente sobre preguntas con respuestas donde una es la verdadera y el resto no, la posibilidad
-de recibir pistas mediante un LLM.
-La aplicación cuenta con una imagen y los usuarios deberan constestar diferentes preguntas de varias tematicas
-sobre las imagenes.
+El propósito de este proyecto es mejorar una aplicación existente de preguntas y respuestas, donde los usuarios deben 
+responder correctamente entre varias opciones, de las cuales solo una es la correcta. La aplicación se basa en imágenes, 
+presentando a los jugadores diversas temáticas sobre las cuales deberán responder preguntas relacionadas con el contenido 
+visual.
 
-=== Vista de Requerimientos
+Como nueva funcionalidad, este proyecto integrará un modelo de lenguaje (LLM) que permitirá ofrecer pistas a los jugadores. 
+Estas pistas estarán basadas en la imagen y en el contexto de la pregunta, ayudando a los usuarios a deducir la respuesta 
+correcta sin revelar directamente la solución. Esto no solo aumentará la accesibilidad y la experiencia del usuario, sino 
+que también fomentará el aprendizaje y el razonamiento.
+
+=== Requerimientos Funcionales
 
 ifdef::arc42help[]
 [role="arc42help"]
@@ -51,29 +56,58 @@ Ver https://docs.arc42.org/section-1/[Introduction and Goals] en la documentaci�
 ****
 endif::arc42help[]
 
-. El sistema contará con un frontend web
-.. El frontend mostrará imagenes
+Los requerimientos funcionales describen que debe hacer el sistema.
+
+. Interfaz de usuario
+.. El sistema contará con un frontend web
+.. El frontend mostrará imágenes
 .. El frontend mostrará respuestas
-. El sistema contará con un sistema de pistas
-.. El sistema de pistas permitirá a los usuarios obtener pistas sobre las imagenes
-. La web deberá estar desplegada
-. La web deberá estar disponible en la web
-. Los usuarios deberán poder registrarse
-.. Los usuarios registrados deberan poder consultar su historico de participación
-... El historico contendrá el numero de juegos
-... El historico contendrá las preguntas falladas
-... El historico contendrá las preguntas acertadas
-... El historico mostrará los tiempos
-. El sistema generará las preguntas de manera automatica a partir de Wikidata
-.. El sistema creará una respuesta correcta
-.. El sistema creará respuestas incorrectas
-. El sistema permitirá acceder a pistas en cada preguntas
-.. El sistema de pistas se obtendran mediante un LLM
-. El sistema de pistas tendra una tecnica para generar las preguntas
-.. El sistema de pistas generará las pistas mediante la informacion de Wikidata
-. El sistema permitirá contestar a las preguntas dentro de un plazo de tiempo determinado
-. El sistema permitirá acceder a la informacion del usuario mediante un API
-. El sistema permitirá acceder a la informacion de las preguntas medinate un API
+. Sistema de preguntas y respuestas
+.. El sistema generará automáticamente preguntas a partir de Wikidata
+.. El sistema creará una respuesta correcta para cada pregunta
+.. El sistema generará respuestas incorrectas para cada pregunta
+.. Los usuarios podrán contestar a las preguntas dentro de un plazo de tiempo determinado
+.. El sistema debe garantizar que no se repitan preguntas en una misma sesión de juego
+. Sistema de pistas
+.. El sistema contará con un sistema de pistas
+.. El sistema permitirá a los usuarios solicitar pistas de forma opcional, sin obligarles a usarlas
+.. El sistema de pistas permitirá a los usuarios obtener pistas sobre las imágenes
+.. Las pistas se generarán utilizando un LLM
+.. El sistema generará las pistas mediante la información de Wikidata
+. Registro e historial del usuario
+.. Los usuarios deberán poder registrarse
+.. Los usuarios registrados deberán poder consultar su histórico de participación
+.. El histórico mostrará
+... Número de juegos jugados
+... Preguntas falladas
+... Pregunatas acertadas
+. APIs
+.. El sistema permitirá acceder a la información del usuario mediante una API
+.. El sistema permitirá acceder a la información de las preguntas mediante una API
+
+
+=== Requerimientos No Funcionales
+
+Los requerimientos no funcionales describen cómo debe comportarse el sistema y aspectos técnicos.
+
+. Disponibilidad y despliegue
+.. La web deberá estar desplegada
+.. La web deberá estar disponible en la web
+. Rendimiento y tiempos de respuesta
+.. El sistema deberá generar automáticamente las preguntas en tiempo razonable (<1s)
+.. Las pistas deben generarse en un tiempo óptimo para no afectar la experiencia del usuario
+.. Los tiempos de carga del sistema deben ser mínimos para garantizar una experiencia fluida
+. Escalabilidad y mantenimiento
+.. El sistema debe poder escalar para soportar un gran número de usuarios concurrentes
+.. El uso del LLM y Wikidata debe ser eficiente en términos de consumo de recursos
+.. La arquitectura del sistema debe ser modular, permitiendo la fácil actualización de preguntas, pistas o la integración de otros modelos de IA en el futuro
+. Seguridad y acceso
+.. El sistema debe asegurar que los datos de los usuarios estén protegidos
+.. Solo los usuarios autenticados podrán acceder a su historial de participación
+.. La API debe contar con mecanismos de autenticación y control de acceso
+. Accesibilidad y Usabilidad
+.. El diseño debe ser intuitivo y accesible
+.. La interfaz debe ser responsiva
 
 
 === Metas de Calidad
@@ -108,7 +142,7 @@ endif::arc42help[]
 |Caracteristica de calidad|Prioridad|Motivación|Escenario
 | Usabilidad | Alta | El sistema debe de ser intuitivo para que todos los usuarios usen la aplicacion. | _Si un usuario no entiende la aplicacion y no encuentra lo que necesita es posible que este deje de utilizar nuestra aplicacion_
 | Rendimiento | Alta | La aplicacion deberá realizar la mayoria de las peticiones dentro de un marco de tiempo razonable y no debera verse afectado cuando haya varios usuarios utilizando el sistema.| _Si en algun momento un usuario o varios no reciben respuesta del sistema dentro de un marco de tiempo razonable es posible que piensen que no funciona y dejen de usarla_
-| Fiabilidad | Alta | El sistema debe de estar disponible para el usuario la mayoria de las veces que el usuario quiera utilizarla|_Si un usuario quiere entrar en el sistema pero este no esta disponible en varias ocasiones en las que lo intente esto podria llevarnos a que ese usuario no vuelva a intentarlo cuando si que este disponible perdiendo un potencial usuario_
+| Fiabilidad | Alta | El sistema debe de estar disponible para el usuario la mayoria de las veces que el usuario quiera utilizarla (> 99% de las veces)|_Si un usuario quiere entrar en el sistema pero este no esta disponible en varias ocasiones en las que lo intente esto podria llevarnos a que ese usuario no vuelva a intentarlo cuando si que este disponible perdiendo un potencial usuario_
 | Compatibilidad | Media | El sistema debera poder utilizarse en todos los navegadores, ya sean Chrome, Firefox...|_Los usuarios usan diversos buscadores, si un usuario que dispone de un Mac intenta acceder a nuestro sistema pero este o no funciona o se encuentra todo descolocado el usuario es probable que no lo intente con otro buscador y que perdamos a un usuario_
 |===
 
@@ -144,10 +178,20 @@ endif::arc42help[]
 |===
 |Rol/Nombre|Contacto|Expectativas
 | RTVE | _Equipo de RTVE_ |  Esperamos que RTVE nos facilite la suficiente informacion de que se espera de la aplicacion 
-| Equipo de desarrollo | Alberto Martinez Olivar - uo282069@uniovi.es//Pablo Jose Perez Diaz - uo282440@uniovi.es
-                        //Marcos Gonzalez Garcia - uo282587@uniovi.es//Celia Bobo Rodriguez Noriega - uo222898@uniovi.es
-                        //Javier Monte Guillem - uo283951@uniovi.es//Pelayo Palacios Suarez - uo274408@uniovi.es 
-                        |  Se espera que el grupo de desarrollo realice todas las actividades asignadas a tiempo y en caso de no realizarlas en el plazo asignado que esten finalizadas lo antes posible. Tambien se espera que el equipo de desarrollo aprenda lo suficiente de las tecnlogias escogidas para que puedan realizar correctamente el sistema deseado.
+| Equipo de desarrollo | 
+Alberto Martinez Olivar - uo282069@uniovi.es +
+Pablo Jose Perez Diaz - uo282440@uniovi.es +
+Marcos Gonzalez Garcia - uo282587@uniovi.es +
+Javier Monte Guillem - uo283951@uniovi.es +
+Pelayo Palacios Suarez - uo274408@uniovi.es + 
+Celia Bobo Rodriguez Noriega - uo222898@uniovi.es
+|  Se espera que el grupo de desarrollo realice todas las actividades asignadas a tiempo y en caso de no realizarlas en el plazo asignado que esten finalizadas lo antes posible. Tambien se espera que el equipo de desarrollo aprenda lo suficiente de las tecnlogias escogidas para que puedan realizar correctamente el sistema deseado.
 | Empathy | https://www.empathy.ai/ | Esperamos que empathy mantenga disponible su LLM lo maximo posble para que podamos realizar este proyecto con su tecnologia. 
 | Usuarios | Todo usuario que utilice la aplicación |  Se espera que los usuarios ayuden a los desarrolladores avisando en caso de encontrar algun error o bug para poder solucionarlos rapidamente.
+| Profesores | 
+Jose Emilio Labra Gayo - labra@uniovi.es +
+Irene Cid Rico - cidirene@uniovi.es +
+Diego Martín Fernández - martinfdiego@uniovi.es +
+Pablo González González - gonzalezgpablo@uniovi.es 
+| Son los encargados de evaluar el proyecto realizado por el equipo de desarrollo, asi como la organización del grupo, y el trabajo cooperativo de todos los miembros del equipo.
 |===
