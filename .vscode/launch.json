@@ -1,0 +1,61 @@
+{
+    "version": "0.2.0",
+    "compounds": [
+      {
+        "name": "Start Full Stack",
+        "configurations": [
+          "Start MongoDB",
+          "Start Auth Service",
+          "Start User Service",
+          "Start LLM Service",
+          "Start Gateway Service",
+          "Start WebApp"
+        ]
+      }
+    ],
+    "configurations": [
+      {
+        "name": "Start MongoDB",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "docker run -d -p 27017:27017 --name=my-mongo mongo:latest",
+        "cwd": "${workspaceFolder}"
+      },
+      {
+        "name": "Start Auth Service",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "npm install && npm start",
+        "cwd": "${workspaceFolder}/users/authservice"
+      },
+      {
+        "name": "Start User Service",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "npm install && npm start",
+        "cwd": "${workspaceFolder}/users/userservice"
+      },
+      {
+        "name": "Start LLM Service",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "npm install && npm start",
+        "cwd": "${workspaceFolder}/llmservice"
+      },
+      {
+        "name": "Start Gateway Service",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "npm install && npm start",
+        "cwd": "${workspaceFolder}/gatewayservice"
+      },
+      {
+        "name": "Start WebApp",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "npm install && npm start",
+        "cwd": "${workspaceFolder}/webapp"
+      }
+    ]
+  }
+  
