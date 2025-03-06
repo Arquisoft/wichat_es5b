@@ -88,10 +88,13 @@ export default function MovieQuiz() {
 
   useEffect(() => {
     if (timeLeft === 0) {
+      setWrongAnswers(wrongAnswers + 1);
       nextQuestion();
     }
     const timer = setInterval(() => {
-      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+      if (!gameFinished) {
+        setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+      } 
     }, 1000);
     return () => clearInterval(timer);
   });
