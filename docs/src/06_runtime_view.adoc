@@ -48,14 +48,18 @@ Este diagrama de secuencia representa el flujo que tendra la peticion de un usua
 @startuml
 
 actor Usuario
+participant "WebApp" as WebApp
+participant "GatewayService" as GatewayService
+participant "UserService" as UserService
+database "Base de datos" as BaseDatos
 
 Usuario -> WebApp: Solicitar registro
-WebApp -> Gateway: Enviar solicitud de registro
-Gateway -> UserService: Reenviar solicitud de registro
+WebApp -> GatewayService: Enviar solicitud de registro
+GatewayService -> UserService: Reenviar solicitud de registro
 UserService -> BaseDatos: Guardar datos del usuario
 BaseDatos --> UserService: Confirmar almacenamiento
-UserService --> Gateway: Confirmar registro exitoso
-Gateway --> WebApp: Respuesta de registro exitoso
+UserService --> GatewayService: Confirmar registro exitoso
+GatewayService --> WebApp: Respuesta de registro exitoso
 WebApp --> Usuario: Confirmar registro completado
 
 @enduml
@@ -70,20 +74,24 @@ Este diagrama de secuencia hace referencia a las llamadas entre los distintos ob
 @startuml
 
 actor Usuario
+participant "WebApp" as WebApp
+participant "GatewayService" as GatewayService
+participant "AuthService" as AuthService
+database "Base de datos" as BaseDatos
 
 Usuario -> WebApp: Solicitar inicio de sesión
-WebApp -> Gateway: Enviar credenciales
-Gateway -> AuthService: Validar credenciales
+WebApp -> GatewayService: Enviar credenciales
+GatewayService -> AuthService: Validar credenciales
 AuthService -> BaseDatos: Comprobar credenciales
 BaseDatos --> AuthService: Respuesta de validación
 
 alt Credenciales correctas
-    AuthService --> Gateway: Autenticación exitosa
-    Gateway --> WebApp: Respuesta de autenticación exitosa
+    AuthService --> GatewayService: Autenticación exitosa
+    GatewayService --> WebApp: Respuesta exitosa
     WebApp --> Usuario: Confirmar inicio de sesión
 else Credenciales incorrectas
-    AuthService --> Gateway: Autenticación fallida
-    Gateway --> WebApp: Respuesta de autenticación fallida
+    AuthService --> GatewayService: Autenticación fallida
+    GatewayService --> WebApp: Respuesta fallida
     WebApp --> Usuario: Notificar error de inicio de sesión
 end
 
@@ -97,30 +105,32 @@ Este driagrama de secuencia resume el flujo de la aplicacion web para generar la
 [plantuml,"Generacion de pregunta",png]
 ----
 @startuml
-skinparam backgroundColor #F2F9FF
-skinparam sequence {
-    ActorBackgroundColor #CCE5FF
-    ParticipantBackgroundColor #E6F3FF
-    ParticipantBorderColor #0056B3
-    LifeLineBorderColor #0056B3
-    LifeLineBackgroundColor #CCE5FF
-    ArrowColor #0056B3
-    ArrowThickness 2
-}
 
 actor Usuario
-participant "Aplicación Web" as Aplicacion_Web
-participant "Servidor Backend" as Servidor_Backend
-participant "Endpoint SPARQL" as Endpoint_SPARQL
+participant "WebApp" as WebApp
+participant "GatewayService" as GatewayService
+participant "GameService" as GameService
+participant "WikidataService" as WikidataService
+database "Base de datos" as BaseDatos
 
-Usuario -> Aplicacion_Web : Inicia el juego
-Aplicacion_Web -> Servidor_Backend : Solicita una pregunta
-Servidor_Backend -> Servidor_Backend : Genera consulta SPARQL para la pregunta
-Servidor_Backend -> Endpoint_SPARQL : Envía consulta SPARQL para obtener pregunta
-Endpoint_SPARQL --> Servidor_Backend : Devuelve pregunta y posibles respuestas
-Servidor_Backend -> Servidor_Backend : Procesa los datos recibidos
-Servidor_Backend -> Aplicacion_Web : Envía la pregunta y respuestas
-Aplicacion_Web -> Usuario : Muestra la pregunta y respuestas
+Usuario -> WebApp: Iniciar juego
+WebApp -> GatewayService: Solicitar pregunta
+GatewayService -> GameService: Redirigir la peticion
+GameService -> WikidataService: Peticion para generar pregunta
+
+alt Wikidata responde correctamente
+    WikidataService --> WikidataService: Generar pregunta con SPARQL
+    WikidataService --> GameService: Devuelve pregunta generada
+    GameService -> BaseDatos: Guardar pregunta generada
+else Wikidata falla
+    GameService -> BaseDatos: Obtener pregunta almacenada
+end
+
+BaseDatos --> GameService: Devolver pregunta
+GameService --> GatewayService: Respuesta con pregunta
+GatewayService --> WebApp: Respuesta con pregunta
+WebApp --> Usuario: Mostrar pregunta
+
 @enduml
 ----
 
@@ -131,28 +141,16 @@ Este diagrama de secuencia representa como se genera una pista para una pregunta
 [plantuml,"Generacion de pista",png]
 ----
 @startuml
-skinparam backgroundColor #F2F9FF
-skinparam sequence {
-    ActorBackgroundColor #CCE5FF
-    ParticipantBackgroundColor #E6F3FF
-    ParticipantBorderColor #0056B3
-    LifeLineBorderColor #0056B3
-    LifeLineBackgroundColor #CCE5FF
-    ArrowColor #0056B3
-    ArrowThickness 2
-}
 
 actor Usuario
-participant "Aplicación Web" as Aplicacion_Web
-participant "Servidor Backend" as Servidor_Backend
-participant "Mistral AI" as LLM
 
-Usuario -> Aplicacion_Web : Solicita una pista
-Aplicacion_Web -> Servidor_Backend : Envía solicitud de pista
-Servidor_Backend -> LLM : Solicita pista para la pregunta (a Mistral AI)
-LLM --> Servidor_Backend : Devuelve la pista generada
-Servidor_Backend -> Aplicacion_Web : Envía la pista generada
-Aplicacion_Web -> Usuario : Muestra la pista
+Usuario -> WebApp: Solicita una nueva pista
+WebApp -> GatewayService: Enviar solicitud de generación
+GatewayService -> LLMService: Generar pista
+LLMService --> GatewayService: Devolver pista generada
+GatewayService --> WebApp: Respuesta con la pista
+WebApp --> Usuario: Mostrar pista generada
+
 @enduml
 ----
 
@@ -163,27 +161,21 @@ Este diagrama de secuencia representa el flujo de la peticion de un usuario que 
 [plantuml,"Consulta de estadisticas",png]
 ----
 @startuml
-skinparam backgroundColor #F2F9FF
-skinparam sequence {
-    ActorBackgroundColor #CCE5FF
-    ParticipantBackgroundColor #E6F3FF
-    ParticipantBorderColor #0056B3
-    LifeLineBorderColor #0056B3
-    LifeLineBackgroundColor #CCE5FF
-    ArrowColor #0056B3
-    ArrowThickness 2
-}
 
 actor Usuario
-participant "Aplicación Web" as Aplicacion_Web
-participant "Servidor Backend" as Servidor_Backend
-database "Base de Datos" as Base_Datos
+participant "WebApp" as WebApp
+participant "GatewayService" as GatewayService
+participant "StatsService" as StatsService
+database "Base de datos" as BaseDatos
 
-Usuario -> Aplicacion_Web : Solicita estadísticas
-Aplicacion_Web -> Servidor_Backend : Solicita datos de estadísticas
-Servidor_Backend -> Base_Datos : Consulta estadísticas del usuario
-Base_Datos --> Servidor_Backend : Devuelve datos de estadísticas
-Servidor_Backend -> Aplicacion_Web : Envía datos de estadísticas
-Aplicacion_Web -> Usuario : Muestra estadísticas
+Usuario -> WebApp: Solicitar estadísticas
+WebApp -> GatewayService: Enviar solicitud de estadísticas
+GatewayService -> StatsService: Consultar estadísticas
+StatsService -> BaseDatos: Obtener datos estadísticos
+BaseDatos --> StatsService: Devolver datos
+StatsService --> GatewayService: Respuesta con estadísticas
+GatewayService --> WebApp: Respuesta con estadísticas
+WebApp --> Usuario: Mostrar estadísticas
+
 @enduml
 ----
