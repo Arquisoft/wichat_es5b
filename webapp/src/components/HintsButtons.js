@@ -3,6 +3,7 @@ import Container from '@mui/material/Container';
 import { Typewriter } from "react-simple-typewriter";
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import './game/GameQuestion.css';
 
 
 const HintsButtons = (props) =>{
@@ -37,24 +38,22 @@ const HintsButtons = (props) =>{
       }
 
       return (
-        <Container component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
+        <Container component="main" maxWidth="xs" sx={{ mt: 4 }}>
             {['Primera Pista', 'Segunda Pista', 'Tercera Pista', 'Cuarta Pista'].map((label, index) => (
                 
                 <Container key={index}>
                 {hints[index] ? (
     
                     <Typewriter
-                      sx={{mb:4}}
+                      sx={{mt:4,mb:4}}
                       words={[hints[index]]}
                       typeSpeed={20}
                     />
     
                 ) : (
                     <Button
-                        variant="outlined"
-                        color="secondary"
                         onClick={() => handleAskForHint(props.movieName, index)}
-                        sx={{ mt: 2, width: '100%' }}
+                        sx={{ mt: 1, mb: 1, width:'75%', color:'black', backgroundColor: '#FFE501', '&:hover':{backgroundColor:'orange'} }}
                         disabled={index > unlockedIndex} //deshabilitar botones segun el indice desbloqueado
                     >
                     {label}
