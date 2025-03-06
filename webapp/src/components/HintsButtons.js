@@ -3,7 +3,6 @@ import Container from '@mui/material/Container';
 import { Typewriter } from "react-simple-typewriter";
 import Button from '@mui/material/Button';
 import axios from 'axios';
-import './game/GameQuestion.css';
 
 
 const HintsButtons = (props) =>{
