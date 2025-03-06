@@ -5,11 +5,11 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 
 
-const HintsButtons = () =>{
+const HintsButtons = (props) =>{
     const [hints, setHints] = useState([]);
     const [unlockedIndex, setUnlockedIndex] = useState(0); //estado para el indice desbloqueado
 
-    const pelicula = "El Resplandor";
+    //const pelicula = "El Resplandor";
     const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
 
@@ -44,6 +44,7 @@ const HintsButtons = () =>{
                 {hints[index] ? (
     
                     <Typewriter
+                      sx={{mb:4}}
                       words={[hints[index]]}
                       typeSpeed={20}
                     />
@@ -52,7 +53,7 @@ const HintsButtons = () =>{
                     <Button
                         variant="outlined"
                         color="secondary"
-                        onClick={() => handleAskForHint(pelicula, index)}
+                        onClick={() => handleAskForHint(props.movieName, index)}
                         sx={{ mt: 2, width: '100%' }}
                         disabled={index > unlockedIndex} //deshabilitar botones segun el indice desbloqueado
                     >

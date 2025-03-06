@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Container, Typography, TextField, Button, Snackbar } from '@mui/material';
 import { Typewriter } from "react-simple-typewriter";
-import HintsButtons from './HintsButtons';
+import Game from './game/GameQuestion';
 
 
 const Login = () => {
@@ -15,7 +15,7 @@ const Login = () => {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [createdAt, setCreatedAt] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  
+  const [startGame, setStartGame] = useState(false);
 
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
@@ -46,61 +46,59 @@ const Login = () => {
     setOpenSnackbar(false);
   };
 
-  
+  if (startGame) {
+    return <Game/>;
+  }
 
-  
-return (
-  <Container component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
-    {loginSuccess ? (
-      <div>
+  return (
+    <Container component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
+      {loginSuccess ? (
+        <div>
+          <Typewriter
+            words={[message]} // Pass your message as an array of strings
+            cursor
+            cursorStyle="|"
+            typeSpeed={50} // Typing speed in ms
+          />
+          <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
+            Your account was created on {new Date(createdAt).toLocaleDateString()}.
+          </Typography>
+          <Button variant="contained" color="primary" onClick={() => setStartGame(true)} sx={{ marginTop: 2 }}>
+            Start Game
+          </Button>
+        </div>
+      ) : (
+        <div>
+          <Typography component="h1" variant="h5">
+            Login
+          </Typography>
+          <TextField
+            margin="normal"
+            fullWidth
+            label="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <TextField
+            margin="normal"
+            fullWidth
+            label="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button variant="contained" color="primary" onClick={loginUser}>
+            Login
+          </Button>
+          <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />
+          {error && (
+            <Snackbar open={!!error} autoHideDuration={6000} onClose={() => setError('')} message={`Error: ${error}`} />
+          )}
+        </div>
+      )}
+    </Container>
+  );
 
-        <Typewriter
-          words={[message]}
-          cursor
-          cursorStyle="|"
-          typeSpeed={50}
-        />
-
-        <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
-          Your account was created on {new Date(createdAt).toLocaleDateString()}.
-        </Typography>
-
-        <HintsButtons /> 
-
-        
-      </div>
-    ) : (
-      <div>
-        <Typography component="h1" variant="h5">
-          Login
-        </Typography>
-        <TextField
-          margin="normal"
-          fullWidth
-          label="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <TextField
-          margin="normal"
-          fullWidth
-          label="Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button variant="contained" color="primary" onClick={loginUser}>
-          Login
-        </Button>
-
-        <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />
-        {error && (
-          <Snackbar open={!!error} autoHideDuration={6000} onClose={() => setError('')} message={`Error: ${error}`} />
-        )}
-      </div>
-    )}
-  </Container>
-);
 };
 
 export default Login;
