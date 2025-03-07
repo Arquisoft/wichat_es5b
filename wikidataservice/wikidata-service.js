@@ -1,11 +1,7 @@
 const axios = require('axios');
-const express = require('express');
-
-const app = express();
-const port = 8004;
 
 const query = `
-SELECT DISTINCT ?item ?itemLabel (SAMPLE(?pic) AS ?pic) (SAMPLE(?publication_date) AS ?publication_date) WHERE {
+SELECT DISTINCT ?itemLabel (SAMPLE(?pic) AS ?pic) WHERE {
   ?item wdt:P31 wd:Q11424;
   wdt:P577 ?publication_date;
   wdt:P18 ?pic.
@@ -29,20 +25,13 @@ async function executeSparqlQuery() {
           format: 'json',
         },
       });
-      console.debug(response.data);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error('Se ha producido un error al ejecutar la query de SPARQL:', error.message);
       throw error;
+
     }
 }
-
-app.post('/ask', async (req, res) => {
-  try {
-    const answer = await executeSparqlQuery();
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
 
 module.exports = { executeSparqlQuery };
