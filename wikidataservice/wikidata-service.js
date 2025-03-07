@@ -1,4 +1,8 @@
 const axios = require('axios');
+const express = require('express');
+
+const app = express();
+const port = 8004;
 
 const query = `
 SELECT DISTINCT ?item ?itemLabel (SAMPLE(?pic) AS ?pic) (SAMPLE(?publication_date) AS ?publication_date) WHERE {
@@ -32,5 +36,13 @@ async function executeSparqlQuery() {
       throw error;
     }
 }
+
+app.post('/ask', async (req, res) => {
+  try {
+    const answer = await executeSparqlQuery();
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
 
 module.exports = { executeSparqlQuery };
