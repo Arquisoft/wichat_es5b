@@ -28,14 +28,24 @@ Vea [https://docs.arc42.org/section-4/[Solution Strategy] en la documentación d
 endif::arc42help[]
 
 === Decisiones tecnológicas
-* **API SPARQL**: API que permite obtener datos de WikiData mediante consultas parametrizables. Elegimos esta API debido a que otras alternativas no permiten consultas lo suficientemente específicas para generar las preguntas del juego.
-* **React**: biblioteca de JavaScript ampliamente utilizada para construir interfaces de usuario dinámicas. Elegimos usarla en el proyecto ya que permite la reutilización de componentes, y, al ser muy utilizada en la actualidad, hay mucha documentación y ejemplos disponibles.
-* **Node**: entorno de ejecución de JavaScript en el servidor. Lo elegimos debido a que al ejecutarse en el servidor y no en el cliente es más eficiente para aplicaciones de tiempo real.
+==== Lenguajes y Frameworks
 * **TypeScript**: lenguaje de programación utilizado para el desarrollo de aplicaciones web, tanto del lado del cliente como del servidor. Elegimos este lenguaje en vez de otras alternativas debido a su tipado dinámico, que facilita la detección de errores, además de la facilidad de usarlo tanto con Node como con React.
+* **React**: biblioteca de JavaScript ampliamente utilizada para construir interfaces de usuario dinámicas. Elegimos usarla en el proyecto ya que permite la reutilización de componentes, y, al ser muy utilizada en la actualidad, hay mucha documentación y ejemplos disponibles.
+* **Express**: es un framework minimalista y flexible para aplicaciones web en Node.js. Permite construir APIs y servidores web de manera sencilla y eficiente. Elegimos este framework por su sencillez y rapidez.
+
+==== Backend y APIs
+* **Node**: entorno de ejecución de JavaScript en el servidor. Lo elegimos debido a que al ejecutarse en el servidor y no en el cliente es más eficiente para aplicaciones de tiempo real.
+* **API SPARQL**: API que permite obtener datos de WikiData mediante consultas parametrizables. Elegimos esta API debido a que otras alternativas no permiten consultas lo suficientemente específicas para generar las preguntas del juego.
 * **Mistral**: modelo LLM de propósito general, diseñado para adaptarse a diversas tareas. Escogimos Mistral debido a que queremos participar en el concurso de Empathy, y consideramos es la más adecuada para el tipo de preguntas que se realizarán en la aplicación. Además, hay muchos recursos educativos que facilitan su uso e integración en proyectos. 
+
+==== Despliegue
 * **Azure**: plataforma de computación en la nube que ofrece distintos servicios. En nuestro caso, la utilizaremos para tener una máquina virtual en la que ejecutar la aplicación. Escogimos Azure para esto ya que ya tenemos experiencia con ella, además de que tenemos crédito para Azure proporcionado por la universidad.
-* **MongoDB**:  sistema de gestión de bases de datos NOSQL que utiliza esquemas flexibles. Decidimos utilizarlo porque se ajusta a nuestras necesidades y el despliegue ya estaba configurado para él.
 * **Docker**: herramienta para construir aplicaciones portátiles con todas sus dependencias. Escogimos Docker por la flexibilidad para desplegar aplicaciones en distintas plataformas.
+
+==== Bases de datos
+* **MongoDB**:  sistema de gestión de bases de datos NOSQL que utiliza esquemas flexibles. Decidimos utilizarlo porque se ajusta a nuestras necesidades y el despliegue ya estaba configurado para él.
+
+==== Herramientas de documentación
 * **PlantUML**: herramienta de creación de diagramas por texto. Decidimos utilizarlo para crear los diagramas de la documentación debido a su simplicidad.
 
 ==== Decisiones descartadas
