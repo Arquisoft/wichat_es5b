@@ -4,7 +4,7 @@
 }
 
 .bg-white {
-  background-color: #ffffff;
+  background-color: #a9c8c4;
 }
 
 .shadow-lg {
@@ -60,16 +60,20 @@
   gap: 0.5rem;
 }
 
-.bg-blue-500 {
-  background-color: #3b82f6;
+.bg-option-500 {
+  background-color: #faf5ea;
 }
 
 .text-white {
   color: white;
 }
 
-.hover\:bg-blue-700:hover {
-  background-color: #1e40af;
+.text-black {
+  color: black;
+}
+
+.hover\:bg-option-700:hover {
+  background-color: #fbdd9a;
 }
 
 .py-2 {
@@ -180,4 +184,8 @@ button:active {
 
 button:disabled:hover {
   transform: none;
+}
+
+.corporative-orange {
+  background-color: #c46331;
 }

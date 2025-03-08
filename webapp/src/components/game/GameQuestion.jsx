@@ -140,9 +140,9 @@ export default function MovieQuiz() {
 
   return (
     <div className="max-w-lg mx-auto p-5 bg-white shadow-lg rounded-lg text-center">
-      <h2 className="text-2xl font-bold">{questions[currentQuestion].question}</h2>
+      <h2 className="corporative-orange text-2xl font-bold">{questions[currentQuestion].question}</h2>
       <img src={questions[currentQuestion].image} alt="Pregunta" className="w-full h-48 object-cover my-3 rounded" />
-      <div className="grid grid-cols-2 gap-2">
+      <div className="corporative-orange grid grid-cols-2 gap-2">
         {questions[currentQuestion].options.map((option, index) => (
           <button
             key={index}
@@ -154,7 +154,7 @@ export default function MovieQuiz() {
                   : index === selectedOption
                   ? "bg-red-500 text-white"
                   : "bg-gray-200"
-                : "bg-blue-500 text-white hover:bg-blue-700"
+                : "bg-option-500 text-black hover:bg-option-700"
             }`}
           >
             {option}
@@ -164,12 +164,12 @@ export default function MovieQuiz() {
       <p className="mt-4 text-lg font-semibold">Tiempo restante: {timeLeft} s</p>
       <p className="mt-2 text-lg font-semibold">Pregunta {currentQuestion + 1} de {questions.length}</p>
       <p className="mt-2 text-lg font-semibold">Aciertos: {correctAnswers}</p>
-      <div className="mt-3 flex justify-center gap-2">
+      <div className="corporative-orange mt-3 flex justify-center gap-2">
         {questions[currentQuestion].hints.map((hint, index) => (
           <button
             key={index}
             onClick={() => revealHint(index)}
-            className="bg-yellow-400 text-white px-3 py-1 rounded shadow hover:bg-yellow-500"
+            className="bg-option-500 text-black px-3 py-1 rounded shadow hover:bg-option-700"
             disabled={showHint[index]}
           >
             Pista {index + 1}
