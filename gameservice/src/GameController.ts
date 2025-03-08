@@ -4,10 +4,11 @@ import { AnswerVerifier } from "./AnswerVerifier";
 import { Question } from "./questions/Question";
 
 export class GameController {
-    private score: number;
     private questionGenerator: QuestionGenerator;
     private answerGenerator: AnswerGenerator;
     private answerVerifier: AnswerVerifier;
+    
+    private score: number;
     private currentQuestion: Question | null;
 
     private hasGameEnded: boolean = false;
@@ -35,12 +36,19 @@ export class GameController {
       this.hasGameEnded = true;
     }
   
+    /**
+     * Obtiene la siguiente pregunta y la prepara para su uso
+     * (establece las opciones de respuesta y la registra como la pregunta actual)
+     * 
+     * @returns {void} 
+     */
     nextQuestion(): void {
-      this.currentQuestion = this.questionGenerator.generateQuestion();
+      this.currentQuestion = this.questionGenerator.getNextQuestion();
       if (this.currentQuestion) {
-        this.currentQuestion.options = this.answerGenerator.generateAnswers(
-          this.currentQuestion.correctAnswer
-        );
+        let question = this.currentQuestion;
+        question.setOptions(this.answerGenerator.generateAnswers(
+          question.getCorrectAnswer()
+        ));
         console.log("Nueva pregunta:", this.currentQuestion);
       }
     }
@@ -53,7 +61,7 @@ export class GameController {
   
       const isCorrect = this.answerVerifier.verifyAnswer(
         selectedAnswer,
-        this.currentQuestion.correctAnswer
+        this.currentQuestion.getCorrectAnswer()
       );
   
       if (isCorrect) {
@@ -73,5 +81,9 @@ export class GameController {
 
     isGameEnded(): boolean {
       return this.hasGameEnded;
+    }
+
+    getCurrentQuestion(): Question | null {
+      return this.currentQuestion;
     }
   }
