@@ -5,7 +5,9 @@ import { Container, Typography, TextField, Button, Snackbar } from '@mui/materia
 import { Typewriter } from "react-simple-typewriter";
 import Game from './game/GameQuestion';
 
+
 const Login = () => {
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -14,6 +16,7 @@ const Login = () => {
   const [createdAt, setCreatedAt] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [startGame, setStartGame] = useState(false);
+
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
   
@@ -26,6 +29,7 @@ const Login = () => {
       const model = "empathy"
       const message = await axios.post(`${apiEndpoint}/askllm`, { question, model })
       setMessage(message.data.answer);
+
       // Extract data from the response
       const { createdAt: userCreatedAt } = response.data;
 
@@ -94,6 +98,7 @@ const Login = () => {
       )}
     </Container>
   );
+
 };
 
 export default Login;
