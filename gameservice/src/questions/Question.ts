@@ -1,15 +1,16 @@
 
 
 export class Question {
-    constructor(imageUrl: string, options: string[], correctAnswer: string) {
+
+    constructor(imageUrl: string, correctAnswer: string) {
         this.imageUrl = imageUrl;
-        this.options = options;
+        this.options = [];
         this.correctAnswer = correctAnswer;
     }
 
-    private imageUrl: string;
+    private readonly imageUrl: string;
     private options: string[];
-    private correctAnswer: string;
+    private readonly correctAnswer: string;
 
     /**
      * Establece las opciones para esta pregunta.
@@ -26,6 +27,15 @@ export class Question {
      */
     getCorrectAnswer(): string {
         return this.correctAnswer;
+    }
+
+    /**
+     * Devuelve las opciones de respuesta para esta pregunta.
+     * 
+     * @returns Un array de cadenas que representa las opciones de respuesta.
+     */
+    getOptions(): string[] {
+        return this.options;
     }
 
     /**

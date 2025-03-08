@@ -4,9 +4,9 @@ import { AnswerVerifier } from "./AnswerVerifier";
 import { Question } from "./questions/Question";
 
 export class GameController {
-    private questionGenerator: QuestionGenerator;
-    private answerGenerator: AnswerGenerator;
-    private answerVerifier: AnswerVerifier;
+    private readonly questionGenerator: QuestionGenerator;
+    private readonly answerGenerator: AnswerGenerator;
+    private readonly answerVerifier: AnswerVerifier;
     
     private score: number;
     private currentQuestion: Question | null;
@@ -51,6 +51,21 @@ export class GameController {
         ));
         console.log("Nueva pregunta:", this.currentQuestion);
       }
+    }
+
+    /**
+     * Establece una pregunta personalizada con la URL y respuesta correcta proporcionadas.
+     * 
+     * FUNCION PARA TESTING
+     * PARA OBTENER LA SIGUIENTE PREGUNTA USAR nextQuestion()
+     * 
+     * @param {string} URL - La URL de la imagen de la pregunta
+     * @param {string} correctAnswer - La respuesta correcta para la pregunta
+     * @returns {void} 
+     */
+    setQuestion(URL: string, options: string[], correctAnswer: string): void {
+      this.currentQuestion = new Question(URL, correctAnswer);
+      this.currentQuestion.setOptions(options);
     }
   
     submitAnswer(selectedAnswer: string): void {

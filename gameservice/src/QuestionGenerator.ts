@@ -1,5 +1,4 @@
 import {Question} from "./questions/Question";
-import {MovieQuestion} from "./questions/MovieQuestion";
 
 export class QuestionGenerator {
 
@@ -11,6 +10,7 @@ export class QuestionGenerator {
 
   generateQuestions() {
     // TODO: Generar las preguntas según lo que llegue de Wikidata
+    this.questions.push(new Question("", "Interstellar"));
   }
 
   /**
@@ -19,18 +19,19 @@ export class QuestionGenerator {
    * @returns {Question} Una pregunta aleatoria de la lista.
    * Si la lista de preguntas es vacia, puede devolver un error.
    */
-
   getNextQuestion(): Question {
     if (this.questions.length == 0) this.generateQuestions();
-    return this.questions[Math.random() * this.questions.length];
+    let index = Math.random() * this.questions.length;
+    let question = this.questions[index];
+    this.questions.splice(index, 1);
+    return question;
   }
 
-/**
- * Devuelve la lista de preguntas disponibles.
- * 
- * @returns {Question[]} Un array de preguntas.
- */
-
+  /**
+   * Devuelve la lista de preguntas disponibles.
+   * 
+   * @returns {Question[]} Un array de preguntas.
+   */
   getQuestionList(): Question[] {
     return this.questions;
   }
