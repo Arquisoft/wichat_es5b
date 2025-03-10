@@ -1,16 +1,17 @@
 
 
 export class Question {
+     private readonly imageUrl: string;
+    private options: string[];
+    private readonly correctAnswer: string;
 
-    constructor(imageUrl: string, correctAnswer: string) {
+    public static readonly NUMBER_OF_OPTIONS = 4;
+
+    constructor(imageUrl: string, correctAnswer: string, options: string[]) {
         this.imageUrl = imageUrl;
         this.options = [];
         this.correctAnswer = correctAnswer;
     }
-
-    private readonly imageUrl: string;
-    private options: string[];
-    private readonly correctAnswer: string;
 
     /**
      * Establece las opciones para esta pregunta.
