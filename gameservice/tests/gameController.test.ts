@@ -1,15 +1,13 @@
 import {GameController} from "../src/GameController";
-import {QuestionGenerator} from "../src/QuestionGenerator";
-import {AnswerGenerator} from "../src/AnswerGenerator";
+import {QuestionManager} from "../src/QuestionManager";
 import {AnswerVerifier} from "../src/AnswerVerifier";
 
 let gameController: GameController;
 
 beforeEach(() => {
-    const questionGenerator = new QuestionGenerator();
-    const answerGenerator = new AnswerGenerator();
+    const questionGenerator = new QuestionManager();
     const answerVerifier = new AnswerVerifier();
-    gameController = new GameController(questionGenerator, answerGenerator, answerVerifier);
+    gameController = new GameController(questionGenerator, answerVerifier);
 });
 
 test("Inicio del juego", () => {

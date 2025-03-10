@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 const query = `
 SELECT DISTINCT ?itemLabel (SAMPLE(?pic) AS ?pic) WHERE {
@@ -13,7 +13,7 @@ SELECT DISTINCT ?itemLabel (SAMPLE(?pic) AS ?pic) WHERE {
 GROUP BY ?item ?itemLabel
 `
 
-async function executeSparqlQuery() {
+export async function executeSparqlQuery() {
     try {
       const response = await axios.get('https://query.wikidata.org/sparql', {
         headers: {
@@ -25,13 +25,10 @@ async function executeSparqlQuery() {
           format: 'json',
         },
       });
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.error('Se ha producido un error al ejecutar la query de SPARQL:', error.message);
+      console.error('Se ha producido un error al ejecutar la query de SPARQL:', error);
       throw error;
 
     }
 }
-
-module.exports = { executeSparqlQuery };

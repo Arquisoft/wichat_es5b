@@ -1,26 +1,24 @@
-import { QuestionGenerator } from "./QuestionGenerator";
-import { AnswerGenerator } from "./AnswerGenerator";
+import { QuestionManager } from "./QuestionManager";
 import { AnswerVerifier } from "./AnswerVerifier";
 import { Question } from "./questions/Question";
 
 export class GameController {
-    private readonly questionGenerator: QuestionGenerator;
-    private readonly answerGenerator: AnswerGenerator;
+    private readonly questionManager: QuestionManager;
     private readonly answerVerifier: AnswerVerifier;
     
     private score: number;
     private currentQuestion: Question | null;
 
     private hasGameEnded: boolean = false;
+
+    public static NUMBER_OF_QUESTIONS = 6;
   
     constructor(
-      questionGenerator: QuestionGenerator,
-      answerGenerator: AnswerGenerator,
+      questionManager: QuestionManager,
       answerVerifier: AnswerVerifier
     ) {
       this.score = 0;
-      this.questionGenerator = questionGenerator;
-      this.answerGenerator = answerGenerator;
+      this.questionManager = questionManager;
       this.answerVerifier = answerVerifier;
       this.currentQuestion = null;
     }
@@ -28,6 +26,7 @@ export class GameController {
     startGame(): void {
       this.score = 0;
       console.log("Inicio del juego");
+      this.questionManager.generateQuestions(GameController.NUMBER_OF_QUESTIONS);
       this.nextQuestion();
     }
 
@@ -43,14 +42,9 @@ export class GameController {
      * @returns {void} 
      */
     nextQuestion(): void {
-      this.currentQuestion = this.questionGenerator.getNextQuestion();
-      if (this.currentQuestion) {
-        let question = this.currentQuestion;
-        question.setOptions(this.answerGenerator.generateAnswers(
-          question.getCorrectAnswer()
-        ));
-        console.log("Nueva pregunta:", this.currentQuestion);
-      }
+      this.currentQuestion = this.questionManager.getNextQuestion();
+      
+      console.log("Nueva pregunta:", this.currentQuestion);
     }
 
     /**
@@ -64,7 +58,7 @@ export class GameController {
      * @returns {void} 
      */
     setQuestion(URL: string, options: string[], correctAnswer: string): void {
-      this.currentQuestion = new Question(URL, correctAnswer);
+      this.currentQuestion = new Question(URL, correctAnswer, []);
       this.currentQuestion.setOptions(options);
     }
   
@@ -87,7 +81,6 @@ export class GameController {
         console.log("Respuesta incorrecta.");
         this.endGame();
       }
-  
     }
   
     getScore(): number {
