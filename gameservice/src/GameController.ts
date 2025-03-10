@@ -23,10 +23,10 @@ export class GameController {
       this.currentQuestion = null;
     }
   
-    startGame(): void {
+    async startGame(): Promise<void> {
       this.score = 0;
       console.log("Inicio del juego");
-      this.questionManager.generateQuestions(GameController.NUMBER_OF_QUESTIONS);
+      await this.questionManager.generateQuestions(GameController.NUMBER_OF_QUESTIONS);
       this.nextQuestion();
     }
 
@@ -77,6 +77,7 @@ export class GameController {
         this.score++;
         console.log("¡Respuesta correcta! Puntuación:", this.score);
         this.nextQuestion();
+        console.log(this.hasGameEnded);
       } else {
         console.log("Respuesta incorrecta.");
         this.endGame();

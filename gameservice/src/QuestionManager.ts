@@ -16,7 +16,6 @@ export class QuestionManager {
   async generateQuestions(nQuestions: number) {
     const queryResult = await executeSparqlQuery();
     const movies = new Map<string, string>();
-
     queryResult.results.bindings.forEach((entry: any) => {
         const movieName = entry.itemLabel.value;
         const image = entry.pic.value;
@@ -34,7 +33,7 @@ export class QuestionManager {
    * Si la lista de preguntas es vacia, puede devolver un error.
    */
   getNextQuestion(): Question {
-      let index = Math.random() * this.questions.length;
+      let index = Math.floor(Math.random() * this.questions.length);
       let question = this.questions[index];
       this.questions.splice(index, 1);
       return question;
