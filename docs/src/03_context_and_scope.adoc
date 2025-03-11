@@ -83,7 +83,7 @@ Persona real que utilizará la aplicación. Interactuará con ella eligiendo una
 
 * Wikidata
 
-Base de datos general de donde obtendremos las imágenes y datos relacionados con ellas.
+Base de datos general de donde obtendremos las imágenes y datos relacionados con ellas. La aplicación se comunica y obtiene información de Wikidata a través de su API.
 
 * Mistral
 
