@@ -37,7 +37,11 @@ export async function executeSparqlQuery() {
     }
 }
 
-// Start the gateway service
+app.get("/query", async (_req: any, res: any) => {
+  res.status(200).json(await executeSparqlQuery());
+})
+
+// Start the wikidata service
 const server = app.listen(port, () => {
   console.log(`Wikidata Service listening at http://localhost:${port}`);
 });

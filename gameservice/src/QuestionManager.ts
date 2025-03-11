@@ -1,5 +1,4 @@
 import {Question} from "./questions/Question";
-import { executeSparqlQuery } from '../../wikidataservice/wikidata-service';
 import { QuestionGenerator } from "./QuestionGenerator";
 import { MovieQuestionGenerator } from "./generators/MovieQuestionGenerator";
 
@@ -14,7 +13,7 @@ export class QuestionManager {
   }
 
   async generateQuestions(nQuestions: number) {
-    const queryResult = await executeSparqlQuery();
+    const queryResult = await this.executeQuery();
     const movies = new Map<string, string>();
     queryResult.results.bindings.forEach((entry: any) => {
         const movieName = entry.itemLabel.value;
@@ -53,5 +52,10 @@ export class QuestionManager {
   getQuestionList(): Question[] {
     return this.questions;
   }
+
+  async executeQuery() : Promise<any> {
+    return (await fetch("http://localhost:8004/query")).json()
+  }
+
 
 }
