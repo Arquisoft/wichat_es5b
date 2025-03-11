@@ -1,4 +1,8 @@
 import axios from 'axios';
+const express = require('express');
+
+const app = express();
+const port = 8004;
 
 const query = `
 SELECT DISTINCT ?itemLabel (SAMPLE(?pic) AS ?pic) WHERE {
@@ -32,3 +36,10 @@ export async function executeSparqlQuery() {
 
     }
 }
+
+// Start the gateway service
+const server = app.listen(port, () => {
+  console.log(`Wikidata Service listening at http://localhost:${port}`);
+});
+
+module.exports = server
