@@ -138,3 +138,7 @@ app.post("/answer", (req: any, res: any) => {
   gameController.submitAnswer(selectedAnswer);
   res.sendStatus(200);
 });
+
+app.listen(8005, () => {
+  console.log("Servidor iniciado en el puerto 8005");
+});
