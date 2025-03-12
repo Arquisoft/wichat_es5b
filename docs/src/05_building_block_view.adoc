@@ -83,12 +83,12 @@ node "WiChat" {
 cloud "Wikidata" {
 }
 
-cloud "LLM" {
+cloud "Mistral" {
 }
 
 "User" <--> "WiChat" : Interacciona
 "WiChat" <--> "Wikidata" : Recibe datos
-"WiChat" <--> "LLM" : Obtiene pistas
+"WiChat" <--> "Mistral" : Obtiene pistas
 
 @enduml
 ----
@@ -101,7 +101,7 @@ cloud "LLM" {
 | _User_ | _Representa el usuario final de la aplicación. Este interactua con el sistema jugando al juego de preguntas_
 | _WiChat_ | _Es el componente principal de la aplicación. Este maneja la parte lógica del juego, la creación de preguntas a través de consultas a la API de wikidata, el envío y consultas de resultados a la base de datos, la interacción con el ranking y el login de la aplicación_
 | _Wikidata_ | _Es un servicio externo a la aplicación, utilizado por esta, para obtener información y generar las preguntas._
-| _LLM_ | _s un servicio externo a la aplicación, utilizado por esta, para obtener pistas a partir de la información de wikidata._
+| _Mistral_ | _Es un servicio externo a la aplicación, utilizado por esta, para obtener pistas a partir de la información de wikidata._
 |===
 
 
@@ -136,14 +136,14 @@ frame "WiChat" {
 cloud "Wikidata" {
 }
 
-cloud "LLM" {
+cloud "Mistral" {
 }
 
 "User" <--> "Frontend" : Interacciona
 "Frontend"<--> "Backend" : Interacciona
 "Backend" <--> "MongoDB" : Almacena
 "Backend" <-down-> "Wikidata" : Recibe datos
-"Backend" <-down-> "LLM" : Utiliza
+"Backend" <-down-> "Mistral" : Utiliza
 
 @enduml
 ----
@@ -158,6 +158,70 @@ cloud "LLM" {
 | _Backend_ | _Es el componente que manejala parte lógica del juego. También se encarga de almacenar y recuperar los datos de la base de datos. Utiliza las APIs wikidata y la correspondiente al llm._
 | _MongoDB_ | _Sistema de base de datos NoSQL diseñado para almacenar grandes volúmenes de datos de manera flexible y escalable._
 | _Wikidata_ | _Base de conocimiento colaborativa y estructurada. Almacena datos y permite la utilización de estos al proyecto. Estos datos se obtienen a través de su API._
-| _LLM_ | _Modelo de lenguaje que permite a la aplicación interactuar con él a través de su API._
+| _Mistral_ | _Modelo de lenguaje que permite a la aplicación interactuar con él a través de su API._
+
+|===
+
+=== Nivel 3: Backend
+
+ifdef::arc42help[]
+[role="arc42help"]
+****
+Visión del backend del proyecto
+****
+endif::arc42help[]
+
+[plantuml,"Backend",png]
+----
+@startuml
+skinparam monochrome true
+left to right direction
+
+actor "Usuario"
+
+frame WiChat {
+  node "Frontend"
+
+  frame Backend {
+    node "Gateway"
+
+    node "User service"
+
+    node "Auth service"
+
+    node "LLM service"
+  }
+
+  database "Mongo DB"
+}
+
+cloud "Wikidata"
+
+cloud "Mistral"
+
+"Usuario" --> "Frontend"
+"Frontend" <--> "Gateway"
+"Gateway" <--> "User service"
+"Gateway" <--> "Auth service"
+"Gateway" <--> "LLM service"
+"User service" <--> "Mongo DB"
+"Auth service" <--> "Mongo DB"
+"LLM service" <--> "Mistral"
+"Gateway" <--> "Wikidata"
+
+
+@enduml
+----
+
+
+==== Componentes que intervienen en el backend:
+
+[options="header",cols="1,2"]
+|===
+|Componente|Descripción
+| _Gateway_ | _Punto de acceso al backend de la aplicación. A traves de ella, el frontend se comunicará con las distintas partes del backend que intervienen en la aplicación._
+| _User service_ | _Servicio utilizado para el registro de nuevos usuarios en la aplicación._
+| _Auth service_ | _Servicio utilizado para la autenticación de usuarios en la aplicación._
+| _LLM service_ | _Servicio de modelo de lenguaje, utilizado para la generación de pistas a partir de la información obtenido de wikidata._
 
 |===
