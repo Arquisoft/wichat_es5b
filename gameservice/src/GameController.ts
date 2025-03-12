@@ -102,6 +102,10 @@ export class GameController {
     getCurrentQuestion(): Question | null {
       return this.currentQuestion;
     }
+
+    getQuestionManager(): QuestionManager {
+      return this.questionManager;
+    }
   }
 
 const questionGen = new QuestionManager();

@@ -38,9 +38,11 @@ export class MovieQuestionGenerator implements QuestionGenerator {
     }
 
     getUnusedIndex(array : [string, string][], generatedIndex: number[]): number{
-        let index = this.getRandomIndex(array);    
-        while(generatedIndex.includes(index)) {
+        let index = this.getRandomIndex(array);
+        let count = 0;
+        while(generatedIndex.includes(index) && count < array.length) {
             index = this.getRandomIndex(array);
+            count++;
         }
         generatedIndex.push(index);
         return index;
