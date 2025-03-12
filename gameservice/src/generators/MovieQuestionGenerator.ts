@@ -32,8 +32,9 @@ export class MovieQuestionGenerator implements QuestionGenerator {
         for(let i = 0; i< Question.NUMBER_OF_OPTIONS;i++){
             randomIndex = this.getUnusedIndex(moviesArray, optionsIndex);
             const [incorrectName, incorrectImage] = moviesArray[randomIndex];
-            options.push("incorrectName");
+            options.push(incorrectName);
         }
+        options = this.shuffleOptions(options);
         return new MovieQuestion(correctImage, correctName, options);
     }
 
@@ -49,5 +50,19 @@ export class MovieQuestionGenerator implements QuestionGenerator {
     getRandomIndex(array : [string, string][] ): number{
         return Math.floor(Math.random() * array.length);
     }
+
+    shuffleOptions(options: string[]): string[] {
+        const shuffled = options.slice(); // hacemos copia para no modificar el original
+      
+        for (let i = shuffled.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          
+          // Intercambiar elementos en las posiciones i y j
+          const temp = shuffled[i];
+          shuffled[i] = shuffled[j];
+          shuffled[j] = temp;
+        }    
+        return shuffled;
+      }
 }
   

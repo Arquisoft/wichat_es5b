@@ -78,8 +78,17 @@ export class GameController {
       if (isCorrect) {
         this.score++;
       }
+      else{
+        this.score--;
+      }
       console.log(isCorrect);
       return isCorrect;
+    }
+
+    timeOver(){
+      this.score--;
+      console.log("time over");
+      gameController.nextQuestion();
     }
   
     getScore(): number {
@@ -136,6 +145,13 @@ app.post("/answer", async (req: any, res: any) => {
   gameController.nextQuestion();
   console.log(result);
   res.status(200).json({ result: result });
+});
+
+// Petición para cuando finaliza el tiempo
+app.get("/timeOver", async (req: any, res: any) => {
+  console.log("time over");
+  gameController.timeOver();
+  console.log(gameController.getCurrentQuestion());
 });
 
 const server = app.listen(8005, () => {

@@ -6,6 +6,7 @@ export class QuestionManager {
 
   private questions: Question[];
   private generator: QuestionGenerator;
+  private currentQuestion: number =0;
 
   constructor() {
     this.questions = [];
@@ -23,6 +24,7 @@ export class QuestionManager {
 
     let generatedQuestions = this.generator.generateQuestions(movies, nQuestions);
     generatedQuestions.forEach(q => this.questions.push(q));
+    this.currentQuestion = 0;
   }
 
   /**
@@ -32,9 +34,8 @@ export class QuestionManager {
    * Si la lista de preguntas es vacia, puede devolver un error.
    */
   getNextQuestion(): Question { 
-      let index = Math.floor(Math.random() * this.questions.length);
-      let question = this.questions[index];
-      this.questions.splice(index, 1);
+      this.currentQuestion++;
+      let question = this.questions[this.currentQuestion];
       return question;
   }
 
@@ -56,6 +57,5 @@ export class QuestionManager {
   async executeQuery() : Promise<any> {
     return (await fetch("http://localhost:8004/query")).json()
   }
-
 
 }
