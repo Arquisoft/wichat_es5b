@@ -83,8 +83,12 @@ node "WiChat" {
 cloud "Wikidata" {
 }
 
+cloud "LLM" {
+}
+
 "User" <--> "WiChat" : Interacciona
 "WiChat" <--> "Wikidata" : Recibe datos
+"WiChat" <--> "LLM" : Obtiene pistas
 
 @enduml
 ----
@@ -97,6 +101,7 @@ cloud "Wikidata" {
 | _User_ | _Representa el usuario final de la aplicación. Este interactua con el sistema jugando al juego de preguntas_
 | _WiChat_ | _Es el componente principal de la aplicación. Este maneja la parte lógica del juego, la creación de preguntas a través de consultas a la API de wikidata, el envío y consultas de resultados a la base de datos, la interacción con el ranking y el login de la aplicación_
 | _Wikidata_ | _Es un servicio externo a la aplicación, utilizado por esta, para obtener información y generar las preguntas._
+| _LLM_ | _s un servicio externo a la aplicación, utilizado por esta, para obtener pistas a partir de la información de wikidata._
 |===
 
 
