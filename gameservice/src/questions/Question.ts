@@ -1,11 +1,9 @@
-
-
 export class Question {
      private readonly imageUrl: string;
     private options: string[];
     private readonly correctAnswer: string;
 
-    public static readonly NUMBER_OF_OPTIONS = 4;
+    public static readonly NUMBER_OF_OPTIONS = 3;
 
     constructor(imageUrl: string, correctAnswer: string, options?: string[]) {
         this.imageUrl = imageUrl;

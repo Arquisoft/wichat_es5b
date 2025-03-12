@@ -6,9 +6,8 @@
     "ts-jest": "^29.2.6"
   },
   "scripts": {
-    "start" : "ts-node wikidata-service.ts",
-    "test": "jest --coverage",
-    "test-logica": "jest --coverage"
+    "start" : "ts-node GameController.ts",
+    "test": "jest --coverage"
   },
   "dependencies": {
     "@types/cors": "^2.8.17",

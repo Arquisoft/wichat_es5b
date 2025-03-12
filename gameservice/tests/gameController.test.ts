@@ -12,7 +12,7 @@ beforeEach(() => {
 });
 
 test("Inicio del juego", () => {
-    gameController.getQuestionManager().pushQuestion(new MovieQuestion("", "The Matrix"));
+    gameController.getQuestionManager().pushQuestion(new MovieQuestion("", "The Matrix", []));
 
     gameController.startGame();
 
@@ -33,7 +33,7 @@ test("Test de Question", () => {
 test("Selección de respuesta correcta", () => {
     gameController.startGame();
     gameController.setQuestion("", ["Star Wars", "Inception", "The Matrix", "Interstellar"], "Interstellar");
-    gameController.getQuestionManager().pushQuestion(new MovieQuestion("", "The Matrix"));
+    gameController.getQuestionManager().pushQuestion(new MovieQuestion("", "The Matrix", []));
     gameController.submitAnswer("Interstellar");
 
     expect(gameController.getScore()).toBe(1);

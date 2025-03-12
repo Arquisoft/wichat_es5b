@@ -10,11 +10,14 @@ SELECT DISTINCT ?itemLabel (SAMPLE(?pic) AS ?pic) WHERE {
   wdt:P577 ?publication_date;
   wdt:P18 ?pic.
   
-   FILTER (?publication_date >= "2000-00-00T00:00:00Z"^^xsd:dateTime)
+   FILTER (?publication_date >= "2025-00-00T00:00:00Z"^^xsd:dateTime)
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+  
 }
+
 GROUP BY ?item ?itemLabel
+
 `
 
 export async function executeSparqlQuery() {
