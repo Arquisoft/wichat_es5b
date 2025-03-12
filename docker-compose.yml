@@ -51,6 +51,16 @@ services:
     networks:
       - mynetwork
 
+  wikidataservice:
+    container_name: wikidataservice-wichat_es5b
+    image: ghcr.io/arquisoft/wichat_es5b/wikidataservice:latest
+    profiles: ["dev", "prod"]
+    build: ./wikidataservice
+    ports:
+      - "8004:8004"
+    networks:
+      - mynetwork
+
   gatewayservice:
     container_name: gatewayservice-wichat_es5b
     image: ghcr.io/arquisoft/wichat_es5b/gatewayservice:latest
@@ -61,6 +71,7 @@ services:
       - userservice
       - authservice
       - llmservice
+      - wikidataservice
     ports:
       - "8000:8000"
     networks:
@@ -69,6 +80,7 @@ services:
       AUTH_SERVICE_URL: http://authservice:8002
       USER_SERVICE_URL: http://userservice:8001
       LLM_SERVICE_URL: http://llmservice:8003
+      WIKIDATA_SERVICE_URL: http://llmservice:8004
 
   webapp:
     container_name: webapp-wichat_es5b
