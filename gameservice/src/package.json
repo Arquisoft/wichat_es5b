@@ -6,7 +6,7 @@
     "ts-jest": "^29.2.6"
   },
   "scripts": {
-    "start" : "ts-node wikidata-service.ts",
+    "start" : "ts-node GameController.ts",
     "test": "jest --coverage"
   },
   "dependencies": {

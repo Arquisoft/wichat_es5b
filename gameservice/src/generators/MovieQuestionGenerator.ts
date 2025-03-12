@@ -32,7 +32,7 @@ export class MovieQuestionGenerator implements QuestionGenerator {
         for(let i = 0; i< Question.NUMBER_OF_OPTIONS;i++){
             randomIndex = this.getUnusedIndex(moviesArray, optionsIndex);
             const [incorrectName, incorrectImage] = moviesArray[randomIndex];
-            options.push(incorrectName);
+            options.push("incorrectName");
         }
         return new MovieQuestion(correctImage, correctName, options);
     }

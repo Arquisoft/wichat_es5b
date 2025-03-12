@@ -65,10 +65,10 @@ export class GameController {
       this.currentQuestion.setOptions(options);
     }
   
-    submitAnswer(selectedAnswer: string): void {
+    submitAnswer(selectedAnswer: string): boolean {
       if (!this.currentQuestion) {
         console.log("No hay una pregunta activa.");
-        return;
+        return false;
       }
   
       const isCorrect = this.answerVerifier.verifyAnswer(
@@ -76,19 +76,11 @@ export class GameController {
         this.currentQuestion.getCorrectAnswer()
       );
       
-      if (!isCorrect) {
-        console.log("Respuesta incorrecta.");
-        this.endGame();
-      } else {
+      if (isCorrect) {
         this.score++;
-        console.log("¡Respuesta correcta! Puntuación:", this.score);
-        if(!this.questionManager.areThereQuestionsLeft()){
-          this.endGame();
-        } else {
-          this.nextQuestion();
-          console.log(this.hasGameEnded);
-        }
       }
+      console.log(isCorrect);
+      return isCorrect;
     }
   
     getScore(): number {
@@ -113,30 +105,35 @@ app.use(express.json());
 app.use(cors());
 
 // Petición para iniciar el juego
-app.post("/start", (req: any, res: any) => {
+app.get("/start", async (req: any, res: any) => {
   gameController.startGame();
   res.sendStatus(200);
 });
 
 // Petición para terminar el juego
-app.post("/end", (req: any, res: any) => {
+app.post("/end", async (req: any, res: any) => {
   gameController.endGame();
   res.sendStatus(200);
 });
 
 // Petición para obtener la pregunta actual
-app.get("/question", (req: any, res: any) => {
+app.get("/question", async (req: any, res: any) => {
   const question = gameController.getCurrentQuestion();
   res.json(question);
 });
 
+
 // Petición para obtener respuesta
-app.post("/answer", (req: any, res: any) => {
+app.post("/answer", async (req: any, res: any) => {
   const selectedAnswer = req.body.answer;
-  gameController.submitAnswer(selectedAnswer);
-  res.sendStatus(200);
+  const result = gameController.submitAnswer(selectedAnswer);
+  gameController.nextQuestion();
+  console.log(result);
+  res.status(200).json({ result: result });
 });
 
-app.listen(8005, () => {
-  console.log("Servidor iniciado en el puerto 8005");
+const server = app.listen(8005, () => {
+  console.log("Servidor de juego iniciado en el puerto 8005");
 });
+
+module.exports = server
