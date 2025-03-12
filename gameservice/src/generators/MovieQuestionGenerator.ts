@@ -34,7 +34,7 @@ export class MovieQuestionGenerator implements QuestionGenerator {
             const [incorrectName, incorrectImage] = moviesArray[randomIndex];
             options.push(incorrectName);
         }
-        return new MovieQuestion(correctImage, correctName);
+        return new MovieQuestion(correctImage, correctName, options);
     }
 
     getUnusedIndex(array : [string, string][], generatedIndex: number[]): number{
