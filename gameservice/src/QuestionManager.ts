@@ -53,9 +53,12 @@ export class QuestionManager {
     return this.questions;
   }
 
+  pushQuestion(question: Question): void {
+    this.questions.push(question);
+  }
+
   async executeQuery() : Promise<any> {
     return (await fetch("http://localhost:8004/query")).json()
   }
-
 
 }

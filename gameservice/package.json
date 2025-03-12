@@ -6,7 +6,7 @@
     "ts-jest": "^29.2.6"
   },
   "scripts": {
-    "test": "jest --coverage"
+    "test-logica": "jest --coverage"
   },
   "dependencies": {
     "@types/cors": "^2.8.17",

@@ -34,13 +34,15 @@ export class MovieQuestionGenerator implements QuestionGenerator {
             const [incorrectName, incorrectImage] = moviesArray[randomIndex];
             options.push(incorrectName);
         }
-        return new MovieQuestion(correctImage, correctName, options);
+        return new MovieQuestion(correctImage, correctName);
     }
 
     getUnusedIndex(array : [string, string][], generatedIndex: number[]): number{
-        let index = this.getRandomIndex(array);    
-        while(generatedIndex.includes(index)) {
+        let index = this.getRandomIndex(array);
+        let count = 0;
+        while(generatedIndex.includes(index) && count < array.length) {
             index = this.getRandomIndex(array);
+            count++;
         }
         generatedIndex.push(index);
         return index;

@@ -3,7 +3,7 @@ import { Question } from "./Question";
 export class MovieQuestion extends Question {
     private question = "De qué película es esta imagen?"
     
-    constructor(url: string, correctAnswer: string, [] ) {
+    constructor(url: string, correctAnswer: string) {
         super(url, correctAnswer, []);
     }
 
