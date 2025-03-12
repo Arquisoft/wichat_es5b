@@ -31,7 +31,7 @@ export class QuestionManager {
    * @returns {Question} Una pregunta aleatoria de la lista.
    * Si la lista de preguntas es vacia, puede devolver un error.
    */
-  getNextQuestion(): Question {
+  getNextQuestion(): Question { 
       let index = Math.floor(Math.random() * this.questions.length);
       let question = this.questions[index];
       this.questions.splice(index, 1);
@@ -40,7 +40,7 @@ export class QuestionManager {
 
   /*
   */
-  areThereQuestionsLeft(){
+  areThereQuestionsLeft() {
     return this.questions.length !=0;
   }
 

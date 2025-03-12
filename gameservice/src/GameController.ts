@@ -111,7 +111,7 @@ app.get("/start", async (req: any, res: any) => {
 });
 
 // Petición para terminar el juego
-app.post("/end", async (req: any, res: any) => {
+app.get("/end", async (req: any, res: any) => {
   gameController.endGame();
   res.sendStatus(200);
 });

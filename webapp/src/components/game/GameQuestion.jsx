@@ -56,11 +56,22 @@ export default function MovieQuiz() {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
   const [gameFinished, setGameFinished] = useState(false);
+  const [questionsResponded, setQuestionsResponded] = useState(0);
   const [loading, setLoading] = useState(true);
 
 
+  const nextQuestion = async () => {
+    setLoading(true);
+      const question = await getQuestion();
+      setCurrentQuestion(question);
+      setSelectedOption(null);
+      setTimeLeft(10);
+    setLoading(false);
+    
+  };
 
   useEffect(() => {
+    
     if (timeLeft === 0) {
       nextQuestion();
     }
@@ -71,31 +82,29 @@ export default function MovieQuiz() {
   });
 
   const handleOptionClick = async (selectedAnswer) => {
+
     setSelectedOption(selectedAnswer)
     const res = await answer();
-    console.log(res.data.result);
+    setQuestionsResponded(questionsResponded + 1);
+    if(res)
+      setCorrectAnswers(correctAnswers + 1)
+    else
+      setWrongAnswers(wrongAnswers + 1)
+    if(questionsResponded>=5)
+      setGameFinished(true);
+    else
+      nextQuestion();
   };
 
   if (gameFinished) {
+    endGame();
     return <GameOver correct={correctAnswers} wrong={wrongAnswers} restart={() => {
-      setCurrentQuestion(0);
-      setCorrectAnswers(0);
-      setWrongAnswers(0);
-      setGameFinished(false);
-      setSelectedOption(null);
-      setTimeLeft(60);
     }} />;
   }
 
 
-  const nextQuestion = async () => {
-    setLoading(true);
-      const question = await getQuestion();
-      setCurrentQuestion(question);
-      setSelectedOption(null);
-      setTimeLeft(60);
-    setLoading(false);
-  };
+  
+
 
   async function getQuestion() {
     return (await fetch("http://localhost:8005/question")).json()
@@ -105,15 +114,19 @@ export default function MovieQuiz() {
     return await axios.post("http://localhost:8005/answer", {answer: selectedOption});
   } 
 
+  async function endGame() {
+    return await axios.get("http://localhost:8005/end")
+  }
+
   
 
   return (
     <div>
-      {loading ? (<p>Cargando...</p>) :(<div className="max-w-xl mx-auto p-10 bg-white shadow-lg rounded-lg text-center">
+      {loading ? (<p>Cargando...</p>) :  (<div className="max-w-xl mx-auto p-10 bg-white shadow-lg rounded-lg text-center">
       <h2 className="text-2xl font-bold">{currentQuestion.question}</h2>
       <img src={currentQuestion.imageUrl} alt="Pregunta" className="w-full h-48 object-cover my-3 rounded" />
       <div className="grid grid-cols-2 gap-2">
-        {[currentQuestion.correctAnswer, "b", "c", "d"].map((option, index) => (
+        {currentQuestion.options.map((option, index) => (
           <button
             key={index}
             onClick={() => handleOptionClick(option)}
@@ -133,7 +146,7 @@ export default function MovieQuiz() {
         ))}
 </div>
       <p className="mt-4 text-lg font-semibold">Tiempo restante: {timeLeft} s</p>
-      <p className="mt-2 text-lg font-semibold">Pregunta 1 de {questions.length}</p>
+      <p className="mt-2 text-lg font-semibold">Pregunta {questionsResponded} de {questions.length}</p>
       <p className="mt-2 text-lg font-semibold">Aciertos: {correctAnswers}</p>
       
       <HintsButtons key={currentQuestion} movieName={currentQuestion.correctAnswer} />
