@@ -1,5 +1,3 @@
-
-
 export class Question {
      private readonly imageUrl: string;
     private options: string[];
@@ -7,9 +5,10 @@ export class Question {
 
     public static readonly NUMBER_OF_OPTIONS = 3;
 
-    constructor(imageUrl: string, correctAnswer: string, options: string[]) {
+    constructor(imageUrl: string, correctAnswer: string, options?: string[]) {
         this.imageUrl = imageUrl;
-        this.options = options;
+        if (options != undefined) this.options = options;
+        else this.options = [];
         this.correctAnswer = correctAnswer;
     }
 
