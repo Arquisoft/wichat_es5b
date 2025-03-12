@@ -25,7 +25,7 @@ export default function MovieQuiz() {
 
     setCurrentQuestion(question);
     setSelectedOption(null);
-    setTimeLeft(10);
+    setTimeLeft(30);
     setLoading(false);
     
   };
