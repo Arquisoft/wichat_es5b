@@ -36,7 +36,7 @@ describe('GameQuestion Component', () => {
     //seleccionamos el primer boton de respuesta
     const firstOptionButton = screen.getAllByRole("button")[0];
   
-    // clic en la opcion
+    //clic en la opcion
     fireEvent.click(firstOptionButton);
   
     //esperamos a que cambie de color
@@ -60,5 +60,45 @@ describe('GameQuestion Component', () => {
   
     expect(hintButtons.length).toBe(4);
   });
+
+
+  test('el tiempo restante se actualiza correctamente', async () => {
+    render(<GameQuestion />);
+    
+    //verificamos que t0 es 60
+    const timerText = screen.getByText(/^Tiempo restante:/);
+    expect(timerText).toHaveTextContent("Tiempo restante: 60");
+  
+    //esperamos un segundo y verificamos que el tiempo ha cambiado
+    jest.advanceTimersByTime(1000);  //el paso de 1 segundo
+    await waitFor(() => {
+      expect(screen.getByText(/^Tiempo restante:/)).toHaveTextContent("Tiempo restante: 59");
+    });
+
+  });
+  
+
+  test('solo 3 botones están deshabilitados al iniciar el juego', () => {
+    render(<GameQuestion />);
+  
+    const optionButtons = screen.getAllByRole("button");
+  
+    //todos los botones deshabilitados
+    const disabledButtons = optionButtons.filter(button => button.disabled);
+  
+    //verificamos que haya exactamente 3 botones deshabilitados
+    expect(disabledButtons.length).toBe(3);
+  
+    // el resto de los botones deberian estar habilitados
+    optionButtons.forEach(button => {
+      if (!button.disabled) {
+        expect(button).not.toBeDisabled();
+      }
+    });
+
+  });
+  
+  
+
   
 });
