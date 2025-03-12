@@ -16,6 +16,7 @@ const Login = () => {
   const [createdAt, setCreatedAt] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [startGame, setStartGame] = useState(false);
+  const [keyReinicio, setKeyReinicio] = useState(0);
 
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
@@ -50,8 +51,18 @@ const Login = () => {
     return (await fetch("http://localhost:8005/start"))
   } 
 
+  const reinicio = () => {
+    setKeyReinicio(keyReinicio + 1);
+    start();
+  }
+
   if (startGame) {
-    return <Game/>;
+    return (
+      <div>
+      <Game key={keyReinicio}/>
+      <Button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => reinicio()}>Reiniciar</Button>
+      </div>
+    );
   }
 
   return (

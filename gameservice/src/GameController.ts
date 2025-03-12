@@ -70,7 +70,6 @@ export class GameController {
         console.log("No hay una pregunta activa.");
         return false;
       }
-  
       const isCorrect = this.answerVerifier.verifyAnswer(
         selectedAnswer,
         this.currentQuestion.getCorrectAnswer()
@@ -118,6 +117,13 @@ app.get("/end", async (req: any, res: any) => {
 
 // Petición para obtener la pregunta actual
 app.get("/question", async (req: any, res: any) => {
+  const question = gameController.getCurrentQuestion();
+  res.json(question);
+});
+
+// Petición para obtener la pregunta siguiente
+app.get("/nextquestion", async (req: any, res: any) => {
+  gameController.nextQuestion();
   const question = gameController.getCurrentQuestion();
   res.json(question);
 });

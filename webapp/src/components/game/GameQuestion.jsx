@@ -4,68 +4,28 @@ import GameOver from "./GameOver";
 import HintsButtons from '../HintsButtons';
 import axios from 'axios';
 
-const questions = [
-  {
-    "question": "¿A qué película pertenece esta escena?",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Ben_hur_1959_poster.jpg/1280px-Ben_hur_1959_poster.jpg",
-    "options": ["Titanic", "El Señor de los Anillos: El Retorno del Rey", "Ben-Hur", "Lo que el viento se llevó"],
-    "correct": 2,
-    
-  },
-  {
-    "question": "¿A qué película pertenece esta escena?",
-    "image": "https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg",
-    "options": ["Jurassic Park", "Harry Potter y la Piedra Filosofal", "El Señor de los Anillos: La Comunidad del Anillo", "Gladiador"],
-    "correct": 2,
-    
-  },
-  {
-    "question": "¿A qué película pertenece esta escena?",
-    "image": "https://imagenes.20minutos.es/files/image_1920_1080/uploads/imagenes/2021/11/11/detalle-del-poster-de-harry-potter-y-la-piedra-filosofal.jpeg",
-    "options": ["El Hobbit", "Harry Potter y la Piedra Filosofal", "Las Crónicas de Narnia", "Animales Fantásticos"],
-    "correct": 1,
-    
-  },
-  {
-    "question": "¿A qué película pertenece esta escena?",
-    "image": "https://image.tmdb.org/t/p/w500/iB64vpL3dIObOtMZgX3RqdVdQDc.jpg",
-    "options": ["El Rey León", "Shrek", "Mulán", "Frozen"],
-    "correct": 1,
-    
-  },
-  {
-    "question": "¿A qué película pertenece esta escena?",
-    "image": "https://image.tmdb.org/t/p/w500/hbhFnRzzg6ZDmm8YAmxBnQpQIPh.jpg",
-    "options": ["Interstellar", "Wall-E", "Star Wars", "Blade Runner 2049"],
-    "correct": 1,
-    
-  },
-  {
-    "question": "¿A qué película pertenece esta escena?",
-    "image": "https://media.vandalsports.com/i/640x360/2-2025/2025219102618_1.jpg",
-    "options": ["Piratas del Caribe", "Los Goonies", "Peter Pan", "El Capitán Garfio"],
-    "correct": 0,
-    
-  }
-];
+const gameUrl = process.env.GAMECONTROLLER_URL || 'http://localhost:8005';
 
 export default function MovieQuiz() {
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState(30);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
   const [gameFinished, setGameFinished] = useState(false);
-  const [questionsResponded, setQuestionsResponded] = useState(0);
+  const [questionsAnswered, setQuestionsAnswered] = useState(0);
   const [loading, setLoading] = useState(true);
+  const PREGUNTASNUM = 6;
 
 
   const nextQuestion = async () => {
+    
     setLoading(true);
-      const question = await getQuestion();
-      setCurrentQuestion(question);
-      setSelectedOption(null);
-      setTimeLeft(10);
+    const question = await getQuestion();
+
+    setCurrentQuestion(question);
+    setSelectedOption(null);
+    setTimeLeft(10);
     setLoading(false);
     
   };
@@ -73,7 +33,9 @@ export default function MovieQuiz() {
   useEffect(() => {
     
     if (timeLeft === 0) {
-      nextQuestion();
+      if(!gameFinished){
+        nextQuestion();
+      } 
     }
     const timer = setInterval(() => {
       setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
@@ -82,40 +44,46 @@ export default function MovieQuiz() {
   });
 
   const handleOptionClick = async (selectedAnswer) => {
+    setSelectedOption(selectedAnswer);
+    
+    
+    const res = await answer(selectedAnswer);
+    setQuestionsAnswered(questionsAnswered + 1);
+    console.log(res.data.result);
+    if(res.data.result)
+      setCorrectAnswers(correctAnswers + 1);
+    else
+      setWrongAnswers(wrongAnswers + 1);
 
-    setSelectedOption(selectedAnswer)
-    const res = await answer();
-    setQuestionsResponded(questionsResponded + 1);
-    if(res)
-      setCorrectAnswers(correctAnswers + 1)
-    else
-      setWrongAnswers(wrongAnswers + 1)
-    if(questionsResponded>=5)
-      setGameFinished(true);
-    else
-      nextQuestion();
+    setTimeout(() => {
+      if(questionsAnswered>=PREGUNTASNUM-1)
+        setGameFinished(true);
+      else
+        nextQuestion();
+    }, 500);
+    
   };
 
   if (gameFinished) {
     endGame();
-    return <GameOver correct={correctAnswers} wrong={wrongAnswers} restart={() => {
-    }} />;
+    return <GameOver correct={correctAnswers} wrong={wrongAnswers} />
   }
 
-
-  
-
+  async function start(){
+    return (await fetch(gameUrl+"start"))
+  }
 
   async function getQuestion() {
-    return (await fetch("http://localhost:8005/question")).json()
+    return (await fetch(gameUrl + "/question")).json()
   } 
 
-  async function answer() {
-    return await axios.post("http://localhost:8005/answer", {answer: selectedOption});
+  async function answer(selectedAnswer) {
+    console.log(selectedAnswer)
+    return await axios.post(gameUrl +"/answer", {answer: selectedAnswer});;
   } 
 
   async function endGame() {
-    return await axios.get("http://localhost:8005/end")
+    return await axios.get(gameUrl + "/end")
   }
 
   
@@ -146,7 +114,7 @@ export default function MovieQuiz() {
         ))}
 </div>
       <p className="mt-4 text-lg font-semibold">Tiempo restante: {timeLeft} s</p>
-      <p className="mt-2 text-lg font-semibold">Pregunta {questionsResponded} de {questions.length}</p>
+      <p className="mt-2 text-lg font-semibold">Pregunta {questionsAnswered + 1} de {PREGUNTASNUM}</p>
       <p className="mt-2 text-lg font-semibold">Aciertos: {correctAnswers}</p>
       
       <HintsButtons key={currentQuestion} movieName={currentQuestion.correctAnswer} />
