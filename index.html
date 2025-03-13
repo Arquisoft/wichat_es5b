@@ -477,6 +477,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_visión_general">5.1. Visión General</a></li>
 <li><a href="#_nivel_2">5.2. Nivel 2</a></li>
+<li><a href="#_nivel_3_backend">5.3. Nivel 3: Backend</a></li>
 </ul>
 </li>
 <li><a href="#section-runtime-view">6. Vista de Ejecución</a>
@@ -1225,7 +1226,7 @@ entradas y las salidas</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>Base de datos general de donde obtendremos las imágenes y datos relacionados con ellas.</p>
+<p>Base de datos general de donde obtendremos las imágenes y datos relacionados con ellas. La aplicación se comunica y obtiene información de Wikidata a través de su API.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1265,7 +1266,7 @@ mapeo mostrando las relaciones entre los canales y las entradas/salidas.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Contexto%20tecnico.png" alt="Contexto tecnico" width="706" height="347">
+<img src="./images/Contexto%20tecnico.png" alt="Contexto tecnico" width="900" height="510">
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1287,37 +1288,42 @@ mapeo mostrando las relaciones entre los canales y las entradas/salidas.</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Webapp - Gateway</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Por determinar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Intercambio de datos entre Frontend y Backend</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Gateway - User service</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Por determinar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Registro</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Gateway - Auth service</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Por determinar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Inicio de sesión</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Gateway - LLM service</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Por determinar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Chat en tiempo real</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Gateway - Wikidata</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gateway - Query service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interacción con Wikidata</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Query service - Wikidata</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HTTPS</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Obtención de imágenes y datos</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">User service - Mongo DB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Por determinar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Registro</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Auth service - Mongo DB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Por determinar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Inicio de sesión</p></td>
 </tr>
 <tr>
@@ -1576,7 +1582,7 @@ mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Vision%20general.png" alt="Vision general" width="487" height="87">
+<img src="./images/Vision%20general.png" alt="Vision general" width="495" height="144">
 </div>
 </div>
 <div class="sect3">
@@ -1605,6 +1611,10 @@ mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Wikidata</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Es un servicio externo a la aplicación, utilizado por esta, para obtener información y generar las preguntas.</em></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Mistral</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Es un servicio externo a la aplicación, utilizado por esta, para obtener pistas a partir de la información de wikidata.</em></p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1620,7 +1630,7 @@ mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Nivel%202.png" alt="Nivel 2" width="733" height="270">
+<img src="./images/Nivel%202.png" alt="Nivel 2" width="733" height="266">
 </div>
 </div>
 <div class="sect3">
@@ -1658,8 +1668,56 @@ mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Base de conocimiento colaborativa y estructurada. Almacena datos y permite la utilización de estos al proyecto. Estos datos se obtienen a través de su API.</em></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>LLM</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Mistral</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Modelo de lenguaje que permite a la aplicación interactuar con él a través de su API.</em></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_nivel_3_backend">5.3. Nivel 3: Backend</h3>
+<div class="sidebarblock arc42help">
+<div class="content">
+<div class="paragraph">
+<p>Visión del backend del proyecto</p>
+</div>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/Backend.png" alt="Backend" width="710" height="412">
+</div>
+</div>
+<div class="sect3">
+<h4 id="_componentes_que_intervienen_en_el_backend">5.3.1. Componentes que intervienen en el backend:</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Componente</th>
+<th class="tableblock halign-left valign-top">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Gateway</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Punto de acceso al backend de la aplicación. A traves de ella, el frontend se comunicará con las distintas partes del backend que intervienen en la aplicación.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>User service</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Servicio utilizado para el registro de nuevos usuarios en la aplicación.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Auth service</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Servicio utilizado para la autenticación de usuarios en la aplicación.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>LLM service</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Servicio de modelo de lenguaje, utilizado para la generación de pistas a partir de la información obtenido de wikidata.</em></p></td>
 </tr>
 </tbody>
 </table>
@@ -1740,7 +1798,7 @@ Principalmente capturarás escenarios en tu documentación para comunicar tu arq
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Registro%20de%20nuevo%20usuario.png" alt="Registro de nuevo usuario" width="613" height="365">
+<img src="./images/Registro%20de%20nuevo%20usuario.png" alt="Registro de nuevo usuario" width="846" height="426">
 </div>
 </div>
 </div>
@@ -1751,7 +1809,7 @@ Principalmente capturarás escenarios en tu documentación para comunicar tu arq
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Inicio%20de%20sesion.png" alt="Inicio de sesion" width="621" height="474">
+<img src="./images/Inicio%20de%20sesion.png" alt="Inicio de sesion" width="758" height="565">
 </div>
 </div>
 </div>
@@ -1762,7 +1820,7 @@ Principalmente capturarás escenarios en tu documentación para comunicar tu arq
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Generacion%20de%20pregunta.png" alt="Generacion de pregunta" width="820" height="452">
+<img src="./images/Generacion%20de%20pregunta.png" alt="Generacion de pregunta" width="950" height="609">
 </div>
 </div>
 </div>
@@ -1773,7 +1831,7 @@ Principalmente capturarás escenarios en tu documentación para comunicar tu arq
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Generacion%20de%20pista.png" alt="Generacion de pista" width="628" height="365">
+<img src="./images/Generacion%20de%20pista.png" alt="Generacion de pista" width="604" height="365">
 </div>
 </div>
 </div>
@@ -1784,7 +1842,7 @@ Principalmente capturarás escenarios en tu documentación para comunicar tu arq
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Consulta%20de%20estadisticas.png" alt="Consulta de estadisticas" width="630" height="365">
+<img src="./images/Consulta%20de%20estadisticas.png" alt="Consulta de estadisticas" width="785" height="426">
 </div>
 </div>
 <div style="page-break-after: always;"></div>
