@@ -74,7 +74,16 @@ export default function MovieQuiz() {
   }
 
   async function getQuestion() {
-    return (await fetch(gameUrl + "/question")).json()
+    try {
+      const response = await fetch(gameUrl + "/question");
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Error al obtener la pregunta:", error);
+      return {}; // Objeto vacío
+    }
   } 
 
   async function answer(selectedAnswer) {
