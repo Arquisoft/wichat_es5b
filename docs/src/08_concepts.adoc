@@ -93,6 +93,7 @@ class Partida {
 class Pregunta {
   +id: int
   +enunciado: string
+  +imagen: string
   +opciones: List<Opcion>
   +respuestaCorrecta: Opcion
 }
