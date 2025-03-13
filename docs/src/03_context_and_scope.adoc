@@ -82,7 +82,7 @@ Persona real que utilizará la aplicación. Interactuará con ella eligiendo una
 
 * Wikidata
 
-Base de datos general de donde obtendremos las imágenes y datos relacionados con ellas.
+Base de datos general de donde obtendremos las imágenes y datos relacionados con ellas. La aplicación se comunica y obtiene información de Wikidata a través de su API.
 
 * Mistral
 
@@ -129,6 +129,10 @@ frame WiChat {
 
     node "LLM service"
 
+    node "Query service"
+
+    node "Game service"
+
     database "Mongo DB"
 }
 
@@ -136,15 +140,16 @@ cloud "Wikidata"
 
 cloud "Mistral"
 
-"Usuario" --> "Webapp"
-"Webapp" <--> "Gateway"
-"Gateway" <--> "User service"
-"Gateway" <--> "Auth service"
-"Gateway" <--> "LLM service"
-"User service" <--> "Mongo DB"
-"Auth service" <--> "Mongo DB"
-"LLM service" <--> "Mistral"
-"Gateway" <--> "Wikidata"
+"Usuario" --> "Webapp" : HTTP
+"Webapp" <--> "Gateway" : HTTP
+"Gateway" <--> "User service" : HTTP
+"Gateway" <--> "Auth service" : HTTP
+"Gateway" <--> "LLM service" : HTTP
+"Gateway" <--> "Query service" : HTTP
+"User service" <--> "Mongo DB" : HTTP
+"Auth service" <--> "Mongo DB" : HTTP
+"LLM service" <--> "Mistral" : HTTPS
+"Query service" <--> "Wikidata" : HTTPS
 
 
 @enduml
@@ -161,31 +166,35 @@ cloud "Mistral"
 |Interacción con la aplicación
 
 |Webapp - Gateway
-|Por determinar
+|HTTP
 |Intercambio de datos entre Frontend y Backend
 
 |Gateway - User service
-|Por determinar
+|HTTP
 |Registro
 
 |Gateway - Auth service
-|Por determinar
+|HTTP
 |Inicio de sesión
 
 |Gateway - LLM service
-|Por determinar
+|HTTP
 |Chat en tiempo real
 
-|Gateway - Wikidata
+|Gateway - Query service
+|HTTP
+|Interacción con Wikidata
+
+|Query service - Wikidata
 |HTTPS
 |Obtención de imágenes y datos
 
 |User service - Mongo DB
-|Por determinar
+|HTTP
 |Registro
 
 |Auth service - Mongo DB
-|Por determinar
+|HTTP
 |Inicio de sesión
 
 |LLM service - Mistral

@@ -1,16 +1,16 @@
-
-
 export class Question {
-
-    constructor(imageUrl: string, correctAnswer: string) {
-        this.imageUrl = imageUrl;
-        this.options = [];
-        this.correctAnswer = correctAnswer;
-    }
-
-    private readonly imageUrl: string;
+     private readonly imageUrl: string;
     private options: string[];
     private readonly correctAnswer: string;
+
+    public static readonly NUMBER_OF_OPTIONS = 3;
+
+    constructor(imageUrl: string, correctAnswer: string, options?: string[]) {
+        this.imageUrl = imageUrl;
+        if (options != undefined) this.options = options;
+        else this.options = [];
+        this.correctAnswer = correctAnswer;
+    }
 
     /**
      * Establece las opciones para esta pregunta.
