@@ -75,7 +75,16 @@ export default function MovieQuiz() {
   }
 
   async function getQuestion() {
-    return (await fetch(gameUrl + "/question")).json()
+    try {
+      const response = await fetch(gameUrl + "/question");
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Error al obtener la pregunta:", error);
+      return {}; // Objeto vacío
+    }
   } 
 
   async function answer(selectedAnswer) {
@@ -94,7 +103,7 @@ export default function MovieQuiz() {
       {loading ? (<p>Cargando...</p>) :  (<div className="max-w-xl mx-auto p-10 bg-white shadow-lg rounded-lg text-center">
       <h2 className="text-2xl font-bold">{currentQuestion.question}</h2>
       <img src={currentQuestion.imageUrl} alt="Pregunta" className="w-full h-48 object-cover my-3 rounded" />
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 gap-2">
         {currentQuestion.options.map((option, index) => (
           <button
             key={index}
@@ -113,19 +122,15 @@ export default function MovieQuiz() {
           </button>
           
         ))}
-</div>
-      <p className="mt-4 text-lg font-semibold">Tiempo restante: {timeLeft} s</p>
-      <p className="mt-2 text-lg font-semibold">Pregunta {questionsAnswered + 1} de {PREGUNTASNUM}</p>
-      <p className="mt-2 text-lg font-semibold">Aciertos: {correctAnswers}</p>
-      
-      <HintsButtons key={currentQuestion} movieName={currentQuestion.correctAnswer} />
+      </div>
+        <p className="mt-4 text-lg font-semibold">Tiempo restante: {timeLeft} s</p>
+        <p className="mt-2 text-lg font-semibold">Pregunta {questionsAnswered + 1} de {PREGUNTASNUM}</p>
+        <p className="mt-2 text-lg font-semibold">Aciertos: {correctAnswers}</p>
+        
+        <HintsButtons key={currentQuestion} movieName={currentQuestion.correctAnswer} />
       
       </div>
       )}
-
-      
-      
-      
     </div>
   );
 }
