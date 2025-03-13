@@ -31,6 +31,7 @@ export default function MovieQuiz() {
   };
 
   useEffect(() => {
+    
     if (timeLeft === 0) {
       setWrongAnswers(wrongAnswers + 1);
       nextQuestion();

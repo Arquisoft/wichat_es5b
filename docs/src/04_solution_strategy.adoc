@@ -31,6 +31,7 @@ endif::arc42help[]
 ==== Lenguajes y Frameworks
 * **TypeScript**: lenguaje de programación utilizado para el desarrollo de aplicaciones web, tanto del lado del cliente como del servidor. Elegimos este lenguaje en vez de otras alternativas debido a su tipado dinámico, que facilita la detección de errores, además de la facilidad de usarlo tanto con Node como con React.
 * **React**: biblioteca de JavaScript ampliamente utilizada para construir interfaces de usuario dinámicas. Elegimos usarla en el proyecto ya que permite la reutilización de componentes, y, al ser muy utilizada en la actualidad, hay mucha documentación y ejemplos disponibles.
+* **Express**: es un framework minimalista y flexible para aplicaciones web en Node.js. Permite construir APIs y servidores web de manera sencilla y eficiente. Elegimos este framework por su sencillez y rapidez.
 
 ==== Backend y APIs
 * **Node**: entorno de ejecución de JavaScript en el servidor. Lo elegimos debido a que al ejecutarse en el servidor y no en el cliente es más eficiente para aplicaciones de tiempo real.
