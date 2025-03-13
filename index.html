@@ -447,9 +447,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel1">
 <li><a href="#section-introduction-and-goals">1. Introducción y Metas</a>
 <ul class="sectlevel2">
-<li><a href="#_vista_de_requerimientos">1.1. Vista de Requerimientos</a></li>
-<li><a href="#_metas_de_calidad">1.2. Metas de Calidad</a></li>
-<li><a href="#_partes_interesadas_stakeholders">1.3. Partes interesadas (Stakeholders)</a></li>
+<li><a href="#_requerimientos_funcionales">1.1. Requerimientos Funcionales</a></li>
+<li><a href="#_requerimientos_no_funcionales">1.2. Requerimientos No Funcionales</a></li>
+<li><a href="#_metas_de_calidad">1.3. Metas de Calidad</a></li>
+<li><a href="#_partes_interesadas_stakeholders">1.4. Partes interesadas (Stakeholders)</a></li>
 </ul>
 </li>
 <li><a href="#section-architecture-constraints">2. Restricciones de la Arquitectura</a>
@@ -476,6 +477,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_visión_general">5.1. Visión General</a></li>
 <li><a href="#_nivel_2">5.2. Nivel 2</a></li>
+<li><a href="#_nivel_3_backend">5.3. Nivel 3: Backend</a></li>
 </ul>
 </li>
 <li><a href="#section-runtime-view">6. Vista de Ejecución</a>
@@ -505,7 +507,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_acceso_a_wikidata">9.1. Acceso a Wikidata</a></li>
 <li><a href="#_modelo_de_lenguaje_usado">9.2. Modelo de lenguaje usado</a></li>
-<li><a href="#_despliegue">9.3. Despliegue</a></li>
+<li><a href="#_despliegue_2">9.3. Despliegue</a></li>
 </ul>
 </li>
 <li><a href="#section-quality-scenarios">10. Requerimientos de Calidad</a>
@@ -598,13 +600,19 @@ deben considerar. Entre estas se incluyen:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>El proposito de este proyecto es agregar a una aplicacion ya existente sobre preguntas con respuestas donde una es la verdadera y el resto no, la posibilidad
-de recibir pistas mediante un LLM.
-La aplicación cuenta con una imagen y los usuarios deberan constestar diferentes preguntas de varias tematicas
-sobre las imagenes.</p>
+<p>El propósito de este proyecto es mejorar una aplicación existente de preguntas y respuestas, donde los usuarios deben
+responder correctamente entre varias opciones, de las cuales solo una es la correcta. La aplicación se basa en imágenes,
+presentando a los jugadores diversas temáticas sobre las cuales deberán responder preguntas relacionadas con el contenido
+visual.</p>
+</div>
+<div class="paragraph">
+<p>Como nueva funcionalidad, este proyecto integrará un modelo de lenguaje (LLM) que permitirá ofrecer pistas a los jugadores.
+Estas pistas estarán basadas en la imagen y en el contexto de la pregunta, ayudando a los usuarios a deducir la respuesta
+correcta sin revelar directamente la solución. Esto no solo aumentará la accesibilidad y la experiencia del usuario, sino
+que también fomentará el aprendizaje y el razonamiento.</p>
 </div>
 <div class="sect2">
-<h3 id="_vista_de_requerimientos">1.1. Vista de Requerimientos</h3>
+<h3 id="_requerimientos_funcionales">1.1. Requerimientos Funcionales</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -634,14 +642,20 @@ relacionados.</p>
 </div>
 </div>
 </div>
+<div class="paragraph">
+<p>Los requerimientos funcionales describen que debe hacer el sistema.</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>El sistema contará con un frontend web</p>
+<p>Interfaz de usuario</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>El frontend mostrará imagenes</p>
+<p>El sistema contará con un frontend web</p>
+</li>
+<li>
+<p>El frontend mostrará imágenes</p>
 </li>
 <li>
 <p>El frontend mostrará respuestas</p>
@@ -650,94 +664,180 @@ relacionados.</p>
 </div>
 </li>
 <li>
-<p>El sistema contará con un sistema de pistas</p>
+<p>Sistema de preguntas y respuestas</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>El sistema de pistas permitirá a los usuarios obtener pistas sobre las imagenes</p>
+<p>El sistema generará automáticamente preguntas a partir de Wikidata</p>
+</li>
+<li>
+<p>El sistema creará una respuesta correcta para cada pregunta</p>
+</li>
+<li>
+<p>El sistema generará respuestas incorrectas para cada pregunta</p>
+</li>
+<li>
+<p>Los usuarios podrán contestar a las preguntas dentro de un plazo de tiempo determinado</p>
+</li>
+<li>
+<p>El sistema debe garantizar que no se repitan preguntas en una misma sesión de juego</p>
 </li>
 </ol>
 </div>
 </li>
+<li>
+<p>Sistema de pistas</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>El sistema contará con un sistema de pistas</p>
+</li>
+<li>
+<p>El sistema permitirá a los usuarios solicitar pistas de forma opcional, sin obligarles a usarlas</p>
+</li>
+<li>
+<p>El sistema de pistas permitirá a los usuarios obtener pistas sobre las imágenes</p>
+</li>
+<li>
+<p>Las pistas se generarán utilizando un LLM</p>
+</li>
+<li>
+<p>El sistema generará las pistas mediante la información de Wikidata</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Registro e historial del usuario</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Los usuarios deberán poder registrarse</p>
+</li>
+<li>
+<p>Los usuarios registrados deberán poder consultar su histórico de participación</p>
+</li>
+<li>
+<p>El histórico mostrará</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Número de juegos jugados</p>
+</li>
+<li>
+<p>Preguntas falladas</p>
+</li>
+<li>
+<p>Pregunatas acertadas</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>APIs</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>El sistema permitirá acceder a la información del usuario mediante una API</p>
+</li>
+<li>
+<p>El sistema permitirá acceder a la información de las preguntas mediante una API</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_requerimientos_no_funcionales">1.2. Requerimientos No Funcionales</h3>
+<div class="paragraph">
+<p>Los requerimientos no funcionales describen cómo debe comportarse el sistema y aspectos técnicos.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Disponibilidad y despliegue</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
 <li>
 <p>La web deberá estar desplegada</p>
 </li>
 <li>
 <p>La web deberá estar disponible en la web</p>
 </li>
+</ol>
+</div>
+</li>
 <li>
-<p>Los usuarios deberán poder registrarse</p>
+<p>Rendimiento y tiempos de respuesta</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Los usuarios registrados deberan poder consultar su historico de participación</p>
-<div class="olist lowerroman">
-<ol class="lowerroman" type="i">
-<li>
-<p>El historico contendrá el numero de juegos</p>
+<p>El sistema deberá generar automáticamente las preguntas en tiempo razonable (&lt;1s)</p>
 </li>
 <li>
-<p>El historico contendrá las preguntas falladas</p>
+<p>Las pistas deben generarse en un tiempo óptimo para no afectar la experiencia del usuario</p>
 </li>
 <li>
-<p>El historico contendrá las preguntas acertadas</p>
-</li>
-<li>
-<p>El historico mostrará los tiempos</p>
-</li>
-</ol>
-</div>
+<p>Los tiempos de carga del sistema deben ser mínimos para garantizar una experiencia fluida</p>
 </li>
 </ol>
 </div>
 </li>
 <li>
-<p>El sistema generará las preguntas de manera automatica a partir de Wikidata</p>
+<p>Escalabilidad y mantenimiento</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>El sistema creará una respuesta correcta</p>
+<p>El sistema debe poder escalar para soportar un gran número de usuarios concurrentes</p>
 </li>
 <li>
-<p>El sistema creará respuestas incorrectas</p>
+<p>El uso del LLM y Wikidata debe ser eficiente en términos de consumo de recursos</p>
+</li>
+<li>
+<p>La arquitectura del sistema debe ser modular, permitiendo la fácil actualización de preguntas, pistas o la integración de otros modelos de IA en el futuro</p>
 </li>
 </ol>
 </div>
 </li>
 <li>
-<p>El sistema permitirá acceder a pistas en cada preguntas</p>
+<p>Seguridad y acceso</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>El sistema de pistas se obtendran mediante un LLM</p>
+<p>El sistema debe asegurar que los datos de los usuarios estén protegidos</p>
+</li>
+<li>
+<p>Solo los usuarios autenticados podrán acceder a su historial de participación</p>
+</li>
+<li>
+<p>La API debe contar con mecanismos de autenticación y control de acceso</p>
 </li>
 </ol>
 </div>
 </li>
 <li>
-<p>El sistema de pistas tendra una tecnica para generar las preguntas</p>
+<p>Accesibilidad y Usabilidad</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>El sistema de pistas generará las pistas mediante la informacion de Wikidata</p>
+<p>El diseño debe ser intuitivo y accesible</p>
+</li>
+<li>
+<p>La interfaz debe ser responsiva</p>
 </li>
 </ol>
 </div>
-</li>
-<li>
-<p>El sistema permitirá contestar a las preguntas dentro de un plazo de tiempo determinado</p>
-</li>
-<li>
-<p>El sistema permitirá acceder a la informacion del usuario mediante un API</p>
-</li>
-<li>
-<p>El sistema permitirá acceder a la informacion de las preguntas medinate un API</p>
 </li>
 </ol>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_metas_de_calidad">1.2. Metas de Calidad</h3>
+<h3 id="_metas_de_calidad">1.3. Metas de Calidad</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -797,7 +897,7 @@ Si como arquitecto no conoce la calidad de su trabajo, será juzgado&#8230;&#820
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Fiabilidad</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Alta</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">El sistema debe de estar disponible para el usuario la mayoria de las veces que el usuario quiera utilizarla</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">El sistema debe de estar disponible para el usuario la mayoria de las veces que el usuario quiera utilizarla (&gt; 99% de las veces)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Si un usuario quiere entrar en el sistema pero este no esta disponible en varias ocasiones en las que lo intente esto podria llevarnos a que ese usuario no vuelva a intentarlo cuando si que este disponible perdiendo un potencial usuario</em></p></td>
 </tr>
 <tr>
@@ -810,7 +910,7 @@ Si como arquitecto no conoce la calidad de su trabajo, será juzgado&#8230;&#820
 </table>
 </div>
 <div class="sect2">
-<h3 id="_partes_interesadas_stakeholders">1.3. Partes interesadas (Stakeholders)</h3>
+<h3 id="_partes_interesadas_stakeholders">1.4. Partes interesadas (Stakeholders)</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -871,9 +971,12 @@ documentación</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Equipo de desarrollo</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Alberto Martinez Olivar - <a href="mailto:uo282069@uniovi.es">uo282069@uniovi.es</a>//Pablo Jose Perez Diaz - <a href="mailto:uo282440@uniovi.es">uo282440@uniovi.es</a>
-                        //Marcos Gonzalez Garcia - <a href="mailto:uo282587@uniovi.es">uo282587@uniovi.es</a>//Celia Bobo Rodriguez Noriega - <a href="mailto:uo222898@uniovi.es">uo222898@uniovi.es</a>
-                        //Javier Monte Guillem - <a href="mailto:uo283951@uniovi.es">uo283951@uniovi.es</a>//Pelayo Palacios Suarez - <a href="mailto:uo274408@uniovi.es">uo274408@uniovi.es</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alberto Martinez Olivar - <a href="mailto:uo282069@uniovi.es">uo282069@uniovi.es</a><br>
+Pablo Jose Perez Diaz - <a href="mailto:uo282440@uniovi.es">uo282440@uniovi.es</a><br>
+Marcos Gonzalez Garcia - <a href="mailto:uo282587@uniovi.es">uo282587@uniovi.es</a><br>
+Javier Monte Guillem - <a href="mailto:uo283951@uniovi.es">uo283951@uniovi.es</a><br>
+Pelayo Palacios Suarez - <a href="mailto:uo274408@uniovi.es">uo274408@uniovi.es</a><br>
+Celia Bobo Rodriguez Noriega - <a href="mailto:uo222898@uniovi.es">uo222898@uniovi.es</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Se espera que el grupo de desarrollo realice todas las actividades asignadas a tiempo y en caso de no realizarlas en el plazo asignado que esten finalizadas lo antes posible. Tambien se espera que el equipo de desarrollo aprenda lo suficiente de las tecnlogias escogidas para que puedan realizar correctamente el sistema deseado.</p></td>
 </tr>
 <tr>
@@ -885,6 +988,14 @@ documentación</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Usuarios</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Todo usuario que utilice la aplicación</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Se espera que los usuarios ayuden a los desarrolladores avisando en caso de encontrar algun error o bug para poder solucionarlos rapidamente.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Profesores</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jose Emilio Labra Gayo - <a href="mailto:labra@uniovi.es">labra@uniovi.es</a><br>
+Irene Cid Rico - <a href="mailto:cidirene@uniovi.es">cidirene@uniovi.es</a><br>
+Diego Martín Fernández - <a href="mailto:martinfdiego@uniovi.es">martinfdiego@uniovi.es</a><br>
+Pablo González González - <a href="mailto:gonzalezgpablo@uniovi.es">gonzalezgpablo@uniovi.es</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Son los encargados de evaluar el proyecto realizado por el equipo de desarrollo, asi como la organización del grupo, y el trabajo cooperativo de todos los miembros del equipo.</p></td>
 </tr>
 </tbody>
 </table>
@@ -948,16 +1059,8 @@ A continuación, se presentan los principales aspectos que influirán en el desa
 <td class="tableblock halign-left valign-top"><p class="tableblock">Será posible interactuar con la aplicación en cada pregunta para poder obtener pistas sobre las mismas. Para ello se utilizará un modelo de lenguaje (LLM).</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Docker</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">La aplicación deberá utilizar contenedores para garantizar su portabilidad y facilidad de despliegue.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Frontend</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">El sistema contará al menos con un frontend web que mostrará las imágenes, preguntas y respuestas.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Gestión de Usuarios</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Los usuarios podrán registrarse en el sistema y consultar el histórico de su participación en el sistema.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Despliegue</p></td>
@@ -1123,7 +1226,7 @@ entradas y las salidas</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>Base de datos general de donde obtendremos las imágenes y datos relacionados con ellas.</p>
+<p>Base de datos general de donde obtendremos las imágenes y datos relacionados con ellas. La aplicación se comunica y obtiene información de Wikidata a través de su API.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1163,7 +1266,7 @@ mapeo mostrando las relaciones entre los canales y las entradas/salidas.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Contexto%20tecnico.png" alt="Contexto tecnico" width="722" height="344">
+<img src="./images/Contexto%20tecnico.png" alt="Contexto tecnico" width="915" height="502">
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1185,37 +1288,42 @@ mapeo mostrando las relaciones entre los canales y las entradas/salidas.</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Webapp - Gateway</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Por determinar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Intercambio de datos entre Frontend y Backend</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Gateway - User service</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Por determinar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Registro</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Gateway - Auth service</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Por determinar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Inicio de sesión</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Gateway - LLM service</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Por determinar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Chat en tiempo real</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Gateway - Wikidata</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gateway - Query service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interacción con Wikidata</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Query service - Wikidata</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HTTPS</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Obtención de imágenes y datos</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">User service - Mongo DB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Por determinar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Registro</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Auth service - Mongo DB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Por determinar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Inicio de sesión</p></td>
 </tr>
 <tr>
@@ -1257,39 +1365,73 @@ Realice la explicación de las deciciones clave de manera breve.</p>
 </div>
 <div class="sect2">
 <h3 id="_decisiones_tecnológicas">4.1. Decisiones tecnológicas</h3>
+<div class="sect3">
+<h4 id="_lenguajes_y_frameworks">4.1.1. Lenguajes y Frameworks</h4>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>API SPARQL</strong>: API que permite obtener datos de WikiData mediante consultas parametrizables. Elegimos esta API debido a que otras alternativas no permiten consultas lo suficientemente específicas para generar las preguntas del juego.</p>
+<p><strong>TypeScript</strong>: lenguaje de programación utilizado para el desarrollo de aplicaciones web, tanto del lado del cliente como del servidor. Elegimos este lenguaje en vez de otras alternativas debido a su tipado dinámico, que facilita la detección de errores, además de la facilidad de usarlo tanto con Node como con React.</p>
 </li>
 <li>
 <p><strong>React</strong>: biblioteca de JavaScript ampliamente utilizada para construir interfaces de usuario dinámicas. Elegimos usarla en el proyecto ya que permite la reutilización de componentes, y, al ser muy utilizada en la actualidad, hay mucha documentación y ejemplos disponibles.</p>
 </li>
 <li>
+<p><strong>Express</strong>: es un framework minimalista y flexible para aplicaciones web en Node.js. Permite construir APIs y servidores web de manera sencilla y eficiente. Elegimos este framework por su sencillez y rapidez.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_backend_y_apis">4.1.2. Backend y APIs</h4>
+<div class="ulist">
+<ul>
+<li>
 <p><strong>Node</strong>: entorno de ejecución de JavaScript en el servidor. Lo elegimos debido a que al ejecutarse en el servidor y no en el cliente es más eficiente para aplicaciones de tiempo real.</p>
 </li>
 <li>
-<p><strong>TypeScript</strong>: lenguaje de programación utilizado para el desarrollo de aplicaciones web, tanto del lado del cliente como del servidor. Elegimos este lenguaje en vez de otras alternativas debido a su tipado dinámico, que facilita la detección de errores, además de la facilidad de usarlo tanto con Node como con React.</p>
+<p><strong>API SPARQL</strong>: API que permite obtener datos de WikiData mediante consultas parametrizables. Elegimos esta API debido a que otras alternativas no permiten consultas lo suficientemente específicas para generar las preguntas del juego.</p>
 </li>
 <li>
 <p><strong>Mistral</strong>: modelo LLM de propósito general, diseñado para adaptarse a diversas tareas. Escogimos Mistral debido a que queremos participar en el concurso de Empathy, y consideramos es la más adecuada para el tipo de preguntas que se realizarán en la aplicación. Además, hay muchos recursos educativos que facilitan su uso e integración en proyectos.</p>
 </li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_despliegue">4.1.3. Despliegue</h4>
+<div class="ulist">
+<ul>
 <li>
 <p><strong>Azure</strong>: plataforma de computación en la nube que ofrece distintos servicios. En nuestro caso, la utilizaremos para tener una máquina virtual en la que ejecutar la aplicación. Escogimos Azure para esto ya que ya tenemos experiencia con ella, además de que tenemos crédito para Azure proporcionado por la universidad.</p>
 </li>
 <li>
-<p><strong>MongoDB</strong>:  sistema de gestión de bases de datos NOSQL que utiliza esquemas flexibles. Decidimos utilizarlo porque se ajusta a nuestras necesidades y el despliegue ya estaba configurado para él.</p>
-</li>
-<li>
 <p><strong>Docker</strong>: herramienta para construir aplicaciones portátiles con todas sus dependencias. Escogimos Docker por la flexibilidad para desplegar aplicaciones en distintas plataformas.</p>
 </li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_bases_de_datos">4.1.4. Bases de datos</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>MongoDB</strong>:  sistema de gestión de bases de datos NOSQL que utiliza esquemas flexibles. Decidimos utilizarlo porque se ajusta a nuestras necesidades y el despliegue ya estaba configurado para él.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_herramientas_de_documentación">4.1.5. Herramientas de documentación</h4>
+<div class="ulist">
+<ul>
 <li>
 <p><strong>PlantUML</strong>: herramienta de creación de diagramas por texto. Decidimos utilizarlo para crear los diagramas de la documentación debido a su simplicidad.</p>
 </li>
 </ul>
 </div>
+</div>
 <div class="sect3">
-<h4 id="_decisiones_descartadas">4.1.1. Decisiones descartadas</h4>
+<h4 id="_decisiones_descartadas">4.1.6. Decisiones descartadas</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1440,7 +1582,7 @@ mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Vision%20general.png" alt="Vision general" width="501" height="86">
+<img src="./images/Vision%20general.png" alt="Vision general" width="511" height="150">
 </div>
 </div>
 <div class="sect3">
@@ -1469,6 +1611,10 @@ mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Wikidata</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Es un servicio externo a la aplicación, utilizado por esta, para obtener información y generar las preguntas.</em></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Mistral</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Es un servicio externo a la aplicación, utilizado por esta, para obtener pistas a partir de la información de wikidata.</em></p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1484,7 +1630,7 @@ mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Nivel%202.png" alt="Nivel 2" width="761" height="265">
+<img src="./images/Nivel%202.png" alt="Nivel 2" width="761" height="269">
 </div>
 </div>
 <div class="sect3">
@@ -1522,8 +1668,56 @@ mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Base de conocimiento colaborativa y estructurada. Almacena datos y permite la utilización de estos al proyecto. Estos datos se obtienen a través de su API.</em></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>LLM</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Mistral</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Modelo de lenguaje que permite a la aplicación interactuar con él a través de su API.</em></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_nivel_3_backend">5.3. Nivel 3: Backend</h3>
+<div class="sidebarblock arc42help">
+<div class="content">
+<div class="paragraph">
+<p>Visión del backend del proyecto</p>
+</div>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/Backend.png" alt="Backend" width="729" height="411">
+</div>
+</div>
+<div class="sect3">
+<h4 id="_componentes_que_intervienen_en_el_backend">5.3.1. Componentes que intervienen en el backend:</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Componente</th>
+<th class="tableblock halign-left valign-top">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Gateway</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Punto de acceso al backend de la aplicación. A traves de ella, el frontend se comunicará con las distintas partes del backend que intervienen en la aplicación.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>User service</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Servicio utilizado para el registro de nuevos usuarios en la aplicación.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Auth service</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Servicio utilizado para la autenticación de usuarios en la aplicación.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>LLM service</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Servicio de modelo de lenguaje, utilizado para la generación de pistas a partir de la información obtenido de wikidata.</em></p></td>
 </tr>
 </tbody>
 </table>
@@ -1604,7 +1798,7 @@ Principalmente capturarás escenarios en tu documentación para comunicar tu arq
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Registro%20de%20nuevo%20usuario.png" alt="Registro de nuevo usuario" width="668" height="357">
+<img src="./images/Registro%20de%20nuevo%20usuario.png" alt="Registro de nuevo usuario" width="918" height="415">
 </div>
 </div>
 </div>
@@ -1615,7 +1809,7 @@ Principalmente capturarás escenarios en tu documentación para comunicar tu arq
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Inicio%20de%20sesion.png" alt="Inicio de sesion" width="665" height="462">
+<img src="./images/Inicio%20de%20sesion.png" alt="Inicio de sesion" width="814" height="550">
 </div>
 </div>
 </div>
@@ -1626,7 +1820,7 @@ Principalmente capturarás escenarios en tu documentación para comunicar tu arq
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Generacion%20de%20pregunta.png" alt="Generacion de pregunta" width="866" height="441">
+<img src="./images/Generacion%20de%20pregunta.png" alt="Generacion de pregunta" width="1009" height="592">
 </div>
 </div>
 </div>
@@ -1637,7 +1831,7 @@ Principalmente capturarás escenarios en tu documentación para comunicar tu arq
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Generacion%20de%20pista.png" alt="Generacion de pista" width="673" height="357">
+<img src="./images/Generacion%20de%20pista.png" alt="Generacion de pista" width="644" height="357">
 </div>
 </div>
 </div>
@@ -1648,7 +1842,7 @@ Principalmente capturarás escenarios en tu documentación para comunicar tu arq
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Consulta%20de%20estadisticas.png" alt="Consulta de estadisticas" width="673" height="357">
+<img src="./images/Consulta%20de%20estadisticas.png" alt="Consulta de estadisticas" width="837" height="415">
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1935,7 +2129,7 @@ seguridad). Este es el lugar en la plantilla provisto para una especificación c
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/diagrama-clases.svg" alt="diagrama clases" width="449" height="717">
+<img src="./images/diagrama-clases.svg" alt="diagrama clases" width="449" height="733">
 </div>
 </div>
 </div>
@@ -2145,7 +2339,7 @@ El Modelo de Lenguaje que decidimos usar será Mistral de la empresa Empathy.</p
 </div>
 </div>
 <div class="sect2">
-<h3 id="_despliegue">9.3. Despliegue</h3>
+<h3 id="_despliegue_2">9.3. Despliegue</h3>
 <div class="paragraph">
 <p><strong>Problema:</strong>
 Necesitamos desplegar la aplicación para su uso.</p>
@@ -2548,7 +2742,7 @@ reducir la deuda técnica.</p>
 <div id="footer">
 <div id="footer-text">
 Version 8.2 EN<br>
-Last updated 2025-02-06 09:20:24 +0100
+Last updated 2025-02-06 09:54:08 +0100
 </div>
 </div>
 </body>
