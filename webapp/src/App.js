@@ -30,7 +30,7 @@ function App() {
         Welcome to the 2025 edition of the Software Architecture course
       </Typography>
       {showLogin ? <Login /> : <AddUser />}
-      <Typography component="div" align="center" sx={{ marginTop: 2 }}>
+      <Typography component="div" align="center" sx={{ marginTop: 1}}>
         {showLogin ? (
           <Link name="gotoregister" component="button" variant="body2" onClick={handleToggleView}>
             Don't have an account? Register here.
