@@ -149,6 +149,7 @@ cloud "Mistral"
 "Auth service" <--> "Mongo DB" : HTTP
 "LLM service" <--> "Mistral" : HTTPS
 "Query service" <--> "Wikidata" : HTTPS
+"Game service" <--> "Gateway" : HTTP
 
 
 @enduml
@@ -199,4 +200,8 @@ cloud "Mistral"
 |LLM service - Mistral
 |HTTPS
 |Chat en tiempo real
+
+|Game service - Gateway
+|HTTP
+|Comunicación con la lógica
 |===
