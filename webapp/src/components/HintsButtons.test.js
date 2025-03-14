@@ -78,4 +78,5 @@ describe('HintsButtons component', () => {
       expect(updatedSecondHintButton).not.toHaveClass('Mui-disabled');
     });
   });*/
+
 });
