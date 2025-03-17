@@ -45,7 +45,7 @@ export default function MovieQuiz() {
 
       handleOptionClick();
       
-      if (questionsAnswered >= PREGUNTASNUM - 1) {
+      if (questionsAnswered >= PREGUNTASNUM) {
         setGameFinished(true);
       } else {
         nextQuestion();
