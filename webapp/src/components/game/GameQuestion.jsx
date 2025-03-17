@@ -23,6 +23,13 @@ export default function MovieQuiz() {
     setLoading(true);
     const question = await getQuestion();
 
+    if (!question || Object.keys(question).length === 0) {
+      console.error("Error: no se recibió una nueva pregunta.");
+      return;
+    }
+
+    console.log("Nueva pregunta obtenida:", question);
+
     setCurrentQuestion(question);
     setSelectedOption(null);
     setTimeLeft(10);
@@ -56,11 +63,10 @@ export default function MovieQuiz() {
 
   const handleOptionClick = async (selectedAnswer) => {
     setSelectedOption(selectedAnswer);
-    
-    
+  
     const res = await answer(selectedAnswer);
-    setQuestionsAnswered(questionsAnswered + 1);
-
+    setQuestionsAnswered((prev) => prev + 1);
+  
     if (res && res.result !== undefined) {
       console.log(res.result);
       if (res.result) setCorrectAnswers((prev) => prev + 1);
@@ -68,19 +74,14 @@ export default function MovieQuiz() {
     } else {
       console.error("Error: respuesta inesperada del servidor", res);
     }
-
-    if(res.data.result)
-      setCorrectAnswers(correctAnswers + 1);
-    else
-      setWrongAnswers(wrongAnswers + 1);
-
+  
     setTimeout(() => {
-      if(questionsAnswered>=PREGUNTASNUM-1)
+      if (questionsAnswered >= PREGUNTASNUM - 1) {
         setGameFinished(true);
-      else
+      } else {
         nextQuestion();
+      }
     }, 500);
-    
   };
 
   if (gameFinished) {
