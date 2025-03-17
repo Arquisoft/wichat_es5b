@@ -38,9 +38,12 @@ export default function MovieQuiz() {
   };
 
   useEffect(() => {
+    
     if (timeLeft === 0) {
-      setWrongAnswers((prev) => prev + 1);
-      setQuestionsAnswered((prev) => prev + 1);
+      // setWrongAnswers((prev) => prev + 1);
+      // setQuestionsAnswered((prev) => prev + 1);
+
+      handleOptionClick();
       
       if (questionsAnswered >= PREGUNTASNUM - 1) {
         setGameFinished(true);
