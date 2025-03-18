@@ -29,6 +29,7 @@ export default function MovieQuiz() {
 
     if (!question || Object.keys(question).length === 0) {
       console.error("Error: no se recibió una nueva pregunta.");
+      setLoading(false);
       return;
     }
 
@@ -44,8 +45,6 @@ export default function MovieQuiz() {
     if (timeLeft === null || loading) return;
     
     if (timeLeft === 0) {
-      // setWrongAnswers((prev) => prev + 1);
-      // setQuestionsAnswered((prev) => prev + 1);
 
       handleOptionClick();
       
@@ -103,6 +102,7 @@ export default function MovieQuiz() {
   async function getQuestion() {
     try {
       const response = await fetch(gameUrl + "/question");
+      console.log("Respuesta de la pregunta:", response); 
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.statusText}`);
       }
