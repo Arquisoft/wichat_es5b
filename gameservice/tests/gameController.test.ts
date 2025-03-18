@@ -4,21 +4,26 @@ import {AnswerVerifier} from "../src/AnswerVerifier";
 import {MovieQuestion} from "../src/questions/MovieQuestion"
 
 let gameController: GameController;
+let questionManager: QuestionManager;
+let answerVerifier: AnswerVerifier;
 
 beforeEach(() => {
-    const questionGenerator = new QuestionManager();
-    const answerVerifier = new AnswerVerifier();
-    gameController = new GameController(questionGenerator, answerVerifier);
+    questionManager = new QuestionManager();
+    answerVerifier = new AnswerVerifier();
+    gameController = new GameController(questionManager, answerVerifier);
 });
 
-test("Inicio del juego", () => {
-    gameController.getQuestionManager().pushQuestion(new MovieQuestion("", "The Matrix"));
+test("Inicio del juego", async () => {
+    gameController.getQuestionManager().pushQuestion(new MovieQuestion("", "The Matrix", ["Star Wars", "Inception", "The Matrix", "Interstellar"]));
 
-    gameController.startGame();
+    jest.spyOn(gameController.getQuestionManager(), 'generateQuestions').mockImplementation((nQuestions: number) => {
+        return Promise.resolve();
+    });
+    await gameController.startGame();
 
     expect(gameController.getScore()).toBe(0);
     expect(gameController.isGameEnded()).toBe(false);
-    // expect(gameController.getCurrentQuestion()).not.toBeNull();
+    expect(gameController.getCurrentQuestion()).not.toBeNull();
 });
 
 test("Test de Question", () => {
@@ -31,9 +36,8 @@ test("Test de Question", () => {
 });
 
 test("Selección de respuesta correcta", () => {
-    gameController.startGame();
     gameController.setQuestion("", ["Star Wars", "Inception", "The Matrix", "Interstellar"], "Interstellar");
-    gameController.getQuestionManager().pushQuestion(new MovieQuestion("", "The Matrix"));
+    gameController.getQuestionManager().pushQuestion(new MovieQuestion("", "The Matrix", ["Star Wars", "Inception", "The Matrix", "Interstellar"]));
     gameController.submitAnswer("Interstellar");
 
     expect(gameController.getScore()).toBe(1);
@@ -42,7 +46,6 @@ test("Selección de respuesta correcta", () => {
 });
 
 test("Selección de respuesta incorrecta", () => {
-    gameController.startGame();
     gameController.setQuestion("", ["Star Wars", "Inception", "The Matrix", "Interstellar"], "Interstellar");
     gameController.submitAnswer("Star Wars");
 
@@ -51,7 +54,6 @@ test("Selección de respuesta incorrecta", () => {
 });
 
 test("Fin del juego", () => {
-    gameController.startGame();
     gameController.setQuestion("", ["Star Wars", "Inception", "The Matrix", "Interstellar"], "Interstellar");
     gameController.submitAnswer("Interstellar");
 
