@@ -13,8 +13,6 @@ const LoadingScreen = () => {
                 <PacmanLoader color="#c46331" size={30} />
             </div>
            
-        
-           
         </div>
     );
 }
