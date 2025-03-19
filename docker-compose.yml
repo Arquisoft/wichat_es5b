@@ -60,6 +60,20 @@ services:
       - "8004:8004"
     networks:
       - mynetwork
+    
+  gameservice:
+    container_name: gameservice-wichat_es5b
+    image: ghcr.io/arquisoft/wichat_es5b/gameservice:latest
+    profiles: ["dev", "prod"]
+    build: ./gameservice
+    depends_on:
+      - wikidataservice
+    ports:
+      - "8005:8005"
+    networks:
+      - mynetwork
+    environment:
+      WIKIDATA_SERVICE_URL: http://llmservice:8004 
 
   gatewayservice:
     container_name: gatewayservice-wichat_es5b
@@ -72,6 +86,7 @@ services:
       - authservice
       - llmservice
       - wikidataservice
+      - gameservice
     ports:
       - "8000:8000"
     networks:
@@ -81,6 +96,7 @@ services:
       USER_SERVICE_URL: http://userservice:8001
       LLM_SERVICE_URL: http://llmservice:8003
       WIKIDATA_SERVICE_URL: http://llmservice:8004
+      GAME_SERVICE_URL: http://llmservice:8005
 
   webapp:
     container_name: webapp-wichat_es5b
@@ -89,8 +105,11 @@ services:
     build: ./webapp
     depends_on:
       - gatewayservice
+      - gameservice
     ports:
       - "3000:3000"
+    environment:
+      GAME_SERVICE_URL: http://llmservice:8005
 
   prometheus:
     image: prom/prometheus

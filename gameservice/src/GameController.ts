@@ -62,30 +62,30 @@ export class GameController {
       this.currentQuestion.setOptions(options);
     }
   
-    submitAnswer(selectedAnswer: string): void {
+    submitAnswer(selectedAnswer: string): boolean {
       if (!this.currentQuestion) {
         console.log("No hay una pregunta activa.");
-        return;
+        return false;
       }
-  
       const isCorrect = this.answerVerifier.verifyAnswer(
         selectedAnswer,
         this.currentQuestion.getCorrectAnswer()
       );
       
-      if (!isCorrect) {
-        console.log("Respuesta incorrecta.");
-        this.endGame();
-      } else {
+      if (isCorrect) {
         this.score++;
-        console.log("¡Respuesta correcta! Puntuación:", this.score);
-        if(!this.questionManager.areThereQuestionsLeft()){
-          this.endGame();
-        } else {
-          this.nextQuestion();
-          console.log(this.hasGameEnded);
-        }
       }
+      else{
+        this.score--;
+      }
+      console.log(isCorrect);
+      return isCorrect;
+    }
+
+    timeOver(){
+      this.score--;
+      console.log("time over");
+      this.nextQuestion();
     }
   
     getScore(): number {

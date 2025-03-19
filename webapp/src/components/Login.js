@@ -16,6 +16,7 @@ const Login = () => {
   const [createdAt, setCreatedAt] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [startGame, setStartGame] = useState(false);
+  const [keyReinicio, setKeyReinicio] = useState(0);
 
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
@@ -46,12 +47,39 @@ const Login = () => {
     setOpenSnackbar(false);
   };
 
+  async function start() {
+    return (await fetch("http://localhost:8005/start"))
+  } 
+
+  const reinicio = () => {
+    setKeyReinicio(keyReinicio + 1);
+    start();
+  }
+
   if (startGame) {
-    return <Game/>;
+    return (
+      <div>
+      <Game key={keyReinicio}/>
+      <Button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => reinicio()}>Reiniciar</Button>
+      </div>
+    );
   }
 
   return (
-    <Container component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
+    <Container
+  component="main"
+  sx={{
+    marginTop: 4,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#a9c8c4",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "4px solid #c46331",
+    boxSizing: "border-box"
+  }}
+  >
       {loginSuccess ? (
         <div>
           <Typewriter
@@ -63,13 +91,13 @@ const Login = () => {
           <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
             Your account was created on {new Date(createdAt).toLocaleDateString()}.
           </Typography>
-          <Button variant="contained" color="primary" onClick={() => setStartGame(true)} sx={{ marginTop: 2 }}>
+          <Button variant="contained" color="primary" onClick={() => {setStartGame(true); start();}} sx={{ marginTop: 2 }}>
             Start Game
           </Button>
         </div>
       ) : (
         <div>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" sx={{color: "#d87152"}}>
             Login
           </Typography>
           <TextField
@@ -87,7 +115,7 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button variant="contained" color="primary" onClick={loginUser}>
+          <Button variant="contained" color="primary" onClick={loginUser} sx={{color: "#d87152", backgroundColor: "#faf5ea"}}>
             Login
           </Button>
           <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />

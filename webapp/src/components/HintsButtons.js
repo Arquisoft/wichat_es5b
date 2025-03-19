@@ -37,10 +37,10 @@ const HintsButtons = (props) =>{
       }
 
       return (
-        <Container component="main" maxWidth="xs" sx={{ mt: 4 }}>
+        <Container component="main" maxWidth="xs" sx={{ mt: 4, display: "flex", justifyContent:"center", alignContent: "center"}}>
             {['Primera Pista', 'Segunda Pista', 'Tercera Pista', 'Cuarta Pista'].map((label, index) => (
                 
-                <Container key={index}>
+                <Container key={index} >
                 {hints[index] ? (
     
                     <Typewriter
@@ -52,7 +52,15 @@ const HintsButtons = (props) =>{
                 ) : (
                     <Button
                         onClick={() => handleAskForHint(props.movieName, index)}
-                        sx={{ mt: 1, mb: 1, width:'75%', color:'black', backgroundColor: '#FFE501', '&:hover':{backgroundColor:'orange'} }}
+                        sx={{ 
+                          mt: 1,
+                          mb: 1, 
+                          width:'75%', 
+                          minWidth:'150px',
+                          color:'black', 
+                          backgroundColor: '#faf5ea', 
+                          '&:hover':{backgroundColor:'orange'} 
+                        }}
                         disabled={index > unlockedIndex} //deshabilitar botones segun el indice desbloqueado
                     >
                     {label}
