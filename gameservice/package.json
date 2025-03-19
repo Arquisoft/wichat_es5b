@@ -8,7 +8,7 @@
     "typescript": "^5.8.2"
   },
   "scripts": {
-    "start": "ts-node wikidata-service.ts",
+    "start": "ts-node ./src/Game.ts",
     "test": "jest --coverage",
     "test-logica": "jest --coverage"
   },
