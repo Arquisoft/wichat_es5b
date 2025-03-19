@@ -28,3 +28,7 @@ const GameHistorySchema = new Schema({
     wrongAnswers: { type: Number, required: true }
 });
   
+const Ranking = mongoose.model('Ranking', RankingSchema);
+const GameHistory = mongoose.model('GameHistory', GameHistorySchema);
+
+module.exports = { Ranking, GameHistory };
