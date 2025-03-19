@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
+import axios from 'axios';
+
+const databaseServiceUrl = process.env.DATABASE_URL || 'http://localhost:8006';
+
 
 const historial =[
     {username:"username", date:"2024-03-19", correctAnswers: 4, wrongAnswers: 2},
@@ -18,6 +22,7 @@ const historial =[
 
 
 
+
 const History = () => {
     const [show, setShow] = useState(false);
 
@@ -28,7 +33,7 @@ const History = () => {
 
     return(
         <div>
-            <Button onClick= {() => mostrarHistorial()}>Historial</Button>
+            <Button sx={{"mt":2}} variant="contained" color="primary" onClick= {() => mostrarHistorial()}>Historial</Button>
             <Dialog open={show} onClose={()=> setShow(false)}>
                 <DialogTitle>
                     <h2>Historial</h2>
@@ -43,8 +48,8 @@ const History = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                        {historial.map((user)=>(
-                            <TableRow key={user}>
+                        {historial.map((user,index)=>(
+                            <TableRow key={index}>
                                 <TableCell>{user.date}</TableCell>
                                 <TableCell>{user.correctAnswers}</TableCell>
                                 <TableCell>{user.wrongAnswers}</TableCell>
