@@ -13,6 +13,11 @@ El historia de partidas almacenará el usuario, la fecha de la partida, el núme
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+mongoose.connect('mongodb://localhost:27017/my-mongo', { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
+  })
+
 // Esquema para el ranking
 const RankingSchema = new Schema({
     username: { type: String, required: true },

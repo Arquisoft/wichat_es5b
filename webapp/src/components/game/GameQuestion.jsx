@@ -3,6 +3,7 @@ import './GameQuestion.css';
 import GameOver from "./GameOver";
 import HintsButtons from '../HintsButtons';
 import LoadingScreen from '../LoadingScreen';
+import History from '../History';
 import axios from 'axios';
 
 const gameUrl = process.env.GAMECONTROLLER_URL || 'http://localhost:8005';
@@ -160,6 +161,7 @@ export default function MovieQuiz() {
         
         <HintsButtons key={currentQuestion} movieName={currentQuestion.correctAnswer} />
       
+
       </div>
       )}
     </div>

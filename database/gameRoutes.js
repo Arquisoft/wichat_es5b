@@ -7,6 +7,20 @@ Archivo para implementar las rutas de la API de la bbdd
 const express = require('express');
 const router = express.Router();
 const { Ranking, GameHistory } = require('./gameModels');
+const cors = require('cors');
+
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/my-mongo', { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
+  })
+
+const app = express();
+app.use(cors());
+
+app.use(express.json());
+
+const port=8006
 
 // Ruta para obtener el ranking
 router.get('/ranking', async (req, res) => {
@@ -19,7 +33,7 @@ router.get('/ranking', async (req, res) => {
 });
 
 // Ruta para agregar una nueva entrada al ranking
-router.post('/ranking', async (req, res) => {
+router.post('/newRanking', async (req, res) => {
     const rankingEntry = new Ranking({
       username: req.body.username,
       correctAnswers: req.body.correctAnswers,
@@ -45,7 +59,7 @@ router.get('/history', async (req, res) => {
 });
 
 // Ruta para agregar una nueva entrada al historial de partidas
-router.post('/history', async (req, res) => {
+router.post('/newHistory', async (req, res) => {
     const historyEntry = new GameHistory({
       username: req.body.username,
       date: req.body.date,
@@ -61,4 +75,8 @@ router.post('/history', async (req, res) => {
     }
 });
 
-module.exports = router;
+const server = app.listen(port, () => {
+  console.log(`DataBase service listening at http://localhost:${port}`);
+});
+
+module.exports = server;
