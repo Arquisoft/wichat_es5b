@@ -32,13 +32,13 @@ describe('Game Routes', () => {
   it('should POST a new ranking entry', async () => {
     const ranking = {
       username: 'testuser',
-      correctAnswers: 10,
+      correctAnswers: 4,
       wrongAnswers: 2
     };
     const res = await request(server).post('/api/game/ranking').send(ranking);
     expect(res.statusCode).toEqual(201);
     expect(res.body).toHaveProperty('username', 'testuser');
-    expect(res.body).toHaveProperty('correctAnswers', 10);
+    expect(res.body).toHaveProperty('correctAnswers', 4);
     expect(res.body).toHaveProperty('wrongAnswers', 2);
   });
 
@@ -53,13 +53,13 @@ describe('Game Routes', () => {
     const history = {
       username: 'testuser',
       date: new Date(),
-      correctAnswers: 8,
+      correctAnswers:3,
       wrongAnswers: 3
     };
     const res = await request(server).post('/api/game/history').send(history);
     expect(res.statusCode).toEqual(201);
     expect(res.body).toHaveProperty('username', 'testuser');
-    expect(res.body).toHaveProperty('correctAnswers', 8);
+    expect(res.body).toHaveProperty('correctAnswers', 3);
     expect(res.body).toHaveProperty('wrongAnswers', 3);
   });
 });
