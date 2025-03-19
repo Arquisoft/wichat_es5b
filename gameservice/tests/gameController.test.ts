@@ -69,3 +69,12 @@ test("Se devuelve una respuesta sin haber pregunta", () => {
     expect(gameController.getCurrentQuestion()).toBeNull();
     expect(gameController.getScore()).toBe(0);
 });
+
+test("Se acaba el tiempo", () => {
+    gameController.getQuestionManager().pushQuestion(new MovieQuestion("", "The Matrix", ["Star Wars", "Inception", "The Matrix", "Interstellar"]));
+    gameController.getQuestionManager().pushQuestion(new MovieQuestion("", "Inception", ["Star Wars", "Inception", "The Matrix", "Interstellar"]));
+    gameController.timeOver();
+
+    expect(gameController.getScore()).toBe(-1);
+    expect(gameController.getCurrentQuestion()).not.toBeNull(); 
+})
