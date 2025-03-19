@@ -60,3 +60,12 @@ test("Fin del juego", () => {
     gameController.endGame();
     expect(gameController.isGameEnded()).toBe(true);
 });
+
+test("Se devuelve una respuesta sin haber pregunta", () => {
+    expect(gameController.getCurrentQuestion()).toBeNull();
+
+    gameController.submitAnswer("Interstellar");
+
+    expect(gameController.getCurrentQuestion()).toBeNull();
+    expect(gameController.getScore()).toBe(0);
+});
