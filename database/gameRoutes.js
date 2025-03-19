@@ -8,6 +8,11 @@ const express = require('express');
 const router = express.Router();
 const { Ranking, GameHistory } = require('./gameModels');
 
+const app = express();
+app.use(express.json());
+
+const port=8006
+
 // Ruta para obtener el ranking
 router.get('/ranking', async (req, res) => {
     try {
@@ -61,4 +66,8 @@ router.post('/history', async (req, res) => {
     }
 });
 
-module.exports = router;
+const server = app.listen(port, () => {
+  console.log(`DataBase service listening at http://localhost:${port}`);
+});
+
+module.exports = server;

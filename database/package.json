@@ -1,0 +1,22 @@
+{
+  "name": "database",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node gameRoutes.js",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "homepage": "https://github.com/arquisoft/wichat_es5b#readme",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.12.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
+}
