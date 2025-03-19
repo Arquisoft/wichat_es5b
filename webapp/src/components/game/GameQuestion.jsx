@@ -16,10 +16,29 @@ export default function MovieQuiz() {
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
   const [loading, setLoading] = useState(true);
   const PREGUNTASNUM = 6;
+  
+  useEffect(() => {
+    nextQuestion();
+  }, []);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (!gameFinished) {
+        setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [gameFinished]);
+
+  useEffect(() => {
+    if (timeLeft === 0 && !gameFinished) {
+      setWrongAnswers(wrongAnswers + 1);
+      nextQuestion();
+    }
+  }, [timeLeft]);
 
   const nextQuestion = async () => {
-    
+      
     setLoading(true);
     const question = await getQuestion();
 
@@ -29,20 +48,6 @@ export default function MovieQuiz() {
     setLoading(false);
     
   };
-
-  useEffect(() => {
-    
-    if (timeLeft === 0) {
-      setWrongAnswers(wrongAnswers + 1);
-      nextQuestion();
-    }
-    const timer = setInterval(() => {
-      if (!gameFinished) {
-        setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
-      } 
-    }, 1000);
-    return () => clearInterval(timer);
-  });
 
   const handleOptionClick = async (selectedAnswer) => {
     setSelectedOption(selectedAnswer);
@@ -87,7 +92,7 @@ export default function MovieQuiz() {
     return await axios.get(gameUrl + "/end")
   }
 
-  
+
 
   return (
     <div>
