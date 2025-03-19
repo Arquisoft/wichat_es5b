@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Container, Typography, TextField, Button, Snackbar } from '@mui/material';
 import { Typewriter } from "react-simple-typewriter";
 import Game from './game/GameQuestion';
+import History from './History';
 
 
 const Login = () => {
@@ -94,6 +95,9 @@ const Login = () => {
           <Button variant="contained" color="primary" onClick={() => {setStartGame(true); start();}} sx={{ marginTop: 2 }}>
             Start Game
           </Button>
+
+          
+          <History />
         </div>
       ) : (
         <div>
