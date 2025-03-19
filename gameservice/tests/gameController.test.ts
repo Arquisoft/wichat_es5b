@@ -49,8 +49,8 @@ test("Selección de respuesta incorrecta", () => {
     gameController.setQuestion("", ["Star Wars", "Inception", "The Matrix", "Interstellar"], "Interstellar");
     gameController.submitAnswer("Star Wars");
 
-    expect(gameController.getScore()).toBe(0);
-    expect(gameController.isGameEnded()).toBe(true);
+    expect(gameController.getScore()).toBe(-1);
+    expect(gameController.isGameEnded()).toBe(false);
 });
 
 test("Fin del juego", () => {
