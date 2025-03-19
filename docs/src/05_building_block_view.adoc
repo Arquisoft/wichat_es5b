@@ -183,13 +183,15 @@ frame WiChat {
   node "Frontend"
 
   frame Backend {
-    node "Gateway"
+    node "GatewayService"
 
-    node "User service"
+    node "UserService"
 
-    node "Auth service"
+    node "AuthService"
 
-    node "LLM service"
+    node "LLMService"
+
+    node "WikidataService"
   }
 
   database "Mongo DB"
@@ -200,14 +202,15 @@ cloud "Wikidata"
 cloud "Mistral"
 
 "Usuario" --> "Frontend"
-"Frontend" <--> "Gateway"
-"Gateway" <--> "User service"
-"Gateway" <--> "Auth service"
-"Gateway" <--> "LLM service"
-"User service" <--> "Mongo DB"
-"Auth service" <--> "Mongo DB"
-"LLM service" <--> "Mistral"
-"Gateway" <--> "Wikidata"
+"Frontend" <--> "GatewayService"
+"GatewayService" <--> "UserService"
+"GatewayService" <--> "AuthService"
+"GatewayService" <--> "LLMService"
+"GatewayService" <--> "WikidataService"
+"UserService" <--> "Mongo DB"
+"AuthService" <--> "Mongo DB"
+"LLMService" <--> "Mistral"
+"WikidataService" <--> "Wikidata"
 
 
 @enduml
@@ -219,9 +222,9 @@ cloud "Mistral"
 [options="header",cols="1,2"]
 |===
 |Componente|Descripción
-| _Gateway_ | _Punto de acceso al backend de la aplicación. A traves de ella, el frontend se comunicará con las distintas partes del backend que intervienen en la aplicación._
-| _User service_ | _Servicio utilizado para el registro de nuevos usuarios en la aplicación._
-| _Auth service_ | _Servicio utilizado para la autenticación de usuarios en la aplicación._
-| _LLM service_ | _Servicio de modelo de lenguaje, utilizado para la generación de pistas a partir de la información obtenido de wikidata._
-
+| _GatewayService_ | _Punto de acceso al backend de la aplicación. A traves de ella, el frontend se comunicará con las distintas partes del backend que intervienen en la aplicación._
+| _UserService_ | _Servicio utilizado para el registro de nuevos usuarios en la aplicación._
+| _AuthService_ | _Servicio utilizado para la autenticación de usuarios en la aplicación._
+| _LLMService_ | _Servicio de modelo de lenguaje, utilizado para la generación de pistas a partir de la información obtenido de wikidata._
+| _WikidataService_ | _Servicio utilizado para la obtención de información de wikidata._
 |===
