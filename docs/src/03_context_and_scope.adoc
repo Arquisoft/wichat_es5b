@@ -121,17 +121,17 @@ actor "Usuario"
 frame WiChat {
     node "Webapp"
 
-    node "Gateway"
+    node "GatewayService"
 
-    node "User service"
+    node "UserService"
 
-    node "Auth service"
+    node "AuthService"
 
-    node "LLM service"
+    node "LLMService"
 
-    node "Query service"
+    node "WikidataService"
 
-    node "Game service"
+    node "GameService"
 
     database "Mongo DB"
 }
@@ -141,15 +141,15 @@ cloud "Wikidata"
 cloud "Mistral"
 
 "Usuario" --> "Webapp" : HTTP
-"Webapp" <--> "Gateway" : HTTP
-"Gateway" <--> "User service" : HTTP
-"Gateway" <--> "Auth service" : HTTP
-"Gateway" <--> "LLM service" : HTTP
-"Gateway" <--> "Query service" : HTTP
-"User service" <--> "Mongo DB" : HTTP
-"Auth service" <--> "Mongo DB" : HTTP
-"LLM service" <--> "Mistral" : HTTPS
-"Query service" <--> "Wikidata" : HTTPS
+"Webapp" <--> "GatewayService" : HTTP
+"GatewayService" <--> "UserService" : HTTP
+"GatewayService" <--> "AuthService" : HTTP
+"GatewayService" <--> "LLMService" : HTTP
+"GatewayService" <--> "WikidataService" : HTTP
+"UserService" <--> "Mongo DB" : HTTP
+"AuthService" <--> "Mongo DB" : HTTP
+"LLMService" <--> "Mistral" : HTTPS
+"WikidataService" <--> "Wikidata" : HTTPS
 
 
 @enduml
@@ -165,39 +165,39 @@ cloud "Mistral"
 |HTTP
 |Interacción con la aplicación
 
-|Webapp - Gateway
+|Webapp - GatewayService
 |HTTP
 |Intercambio de datos entre Frontend y Backend
 
-|Gateway - User service
+|GatewayService - UserService
 |HTTP
 |Registro
 
-|Gateway - Auth service
+|GatewayService - AuthService
 |HTTP
 |Inicio de sesión
 
-|Gateway - LLM service
+|GatewayService - LLMService
 |HTTP
 |Chat en tiempo real
 
-|Gateway - Query service
+|GatewayService - WikidataService
 |HTTP
 |Interacción con Wikidata
 
-|Query service - Wikidata
+|WikidataService - Wikidata
 |HTTPS
 |Obtención de imágenes y datos
 
-|User service - Mongo DB
+|UserService - Mongo DB
 |HTTP
 |Registro
 
-|Auth service - Mongo DB
+|AuthService - Mongo DB
 |HTTP
 |Inicio de sesión
 
-|LLM service - Mistral
+|LLMService - Mistral
 |HTTPS
 |Chat en tiempo real
 |===

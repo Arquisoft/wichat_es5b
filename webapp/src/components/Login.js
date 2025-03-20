@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Container, Typography, TextField, Button, Snackbar } from '@mui/material';
 import { Typewriter } from "react-simple-typewriter";
 import Game from './game/GameQuestion';
+import History from './History';
 
 
 const Login = () => {
@@ -66,7 +67,20 @@ const Login = () => {
   }
 
   return (
-    <Container component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
+    <Container
+  component="main"
+  sx={{
+    marginTop: 4,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#a9c8c4",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "4px solid #c46331",
+    boxSizing: "border-box"
+  }}
+  >
       {loginSuccess ? (
         <div>
           <Typewriter
@@ -81,10 +95,13 @@ const Login = () => {
           <Button variant="contained" color="primary" onClick={() => {setStartGame(true); start();}} sx={{ marginTop: 2 }}>
             Start Game
           </Button>
+
+          
+          <History />
         </div>
       ) : (
         <div>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" sx={{color: "#d87152"}}>
             Login
           </Typography>
           <TextField
@@ -102,7 +119,7 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button variant="contained" color="primary" onClick={loginUser}>
+          <Button variant="contained" color="primary" onClick={loginUser} sx={{color: "#d87152", backgroundColor: "#faf5ea"}}>
             Login
           </Button>
           <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />

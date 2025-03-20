@@ -1,6 +1,3 @@
-import express from "express";
-import cors from "cors";
-
 import { QuestionManager } from "./QuestionManager";
 import { AnswerVerifier } from "./AnswerVerifier";
 import { Question } from "./questions/Question";
@@ -88,7 +85,7 @@ export class GameController {
     timeOver(){
       this.score--;
       console.log("time over");
-      gameController.nextQuestion();
+      this.nextQuestion();
     }
   
     getScore(): number {
@@ -107,59 +104,3 @@ export class GameController {
       return this.questionManager;
     }
   }
-
-const questionGen = new QuestionManager();
-const answerVer = new AnswerVerifier();
-const gameController = new GameController(questionGen, answerVer);
-
-const app = express();
-app.use(express.json());
-app.use(cors());
-
-// Petición para iniciar el juego
-app.get("/start", async (req: any, res: any) => {
-  gameController.startGame();
-  res.sendStatus(200);
-});
-
-// Petición para terminar el juego
-app.get("/end", async (req: any, res: any) => {
-  gameController.endGame();
-  res.sendStatus(200);
-});
-
-// Petición para obtener la pregunta actual
-app.get("/question", async (req: any, res: any) => {
-  const question = gameController.getCurrentQuestion();
-  res.json(question);
-});
-
-// Petición para obtener la pregunta siguiente
-app.get("/nextquestion", async (req: any, res: any) => {
-  gameController.nextQuestion();
-  const question = gameController.getCurrentQuestion();
-  res.json(question);
-});
-
-
-// Petición para obtener respuesta
-app.post("/answer", async (req: any, res: any) => {
-  const selectedAnswer = req.body.answer;
-  const result = gameController.submitAnswer(selectedAnswer);
-  gameController.nextQuestion();
-  console.log(result);
-  res.status(200).json({ result: result });
-});
-
-// Petición para cuando finaliza el tiempo
-app.get("/timeOver", async (req: any, res: any) => {
-  console.log("time over");
-  gameController.timeOver();
-  console.log(gameController.getCurrentQuestion());
-});
-
-const server = app.listen(8005, () => {
-  console.log("Servidor de juego iniciado en el puerto 8005");
-});
-
-module.exports = server
