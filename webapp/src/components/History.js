@@ -17,6 +17,16 @@ const historial =[
     {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
     {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
     {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
+    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
+    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
+    {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
+    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
+    {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
+    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
+    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
+    {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
+    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
+    {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
     {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5}
 ];
 
@@ -28,6 +38,12 @@ const History = () => {
 
     const mostrarHistorial = () =>{
         setShow(true);
+        getHistorial();
+    }
+
+    const getHistorial = async () =>{
+        await axios.post(databaseServiceUrl + "/newHistory", {username:"username", date:"2024-03-19", correctAnswers: 4, wrongAnswers: 2});
+        await axios.get(databaseServiceUrl + "/history");
     }
 
 
