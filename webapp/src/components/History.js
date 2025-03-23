@@ -1,50 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
 import axios from 'axios';
 
 const databaseServiceUrl = process.env.DATABASE_URL || 'http://localhost:8006';
 
 
-const historial =[
-    {username:"username", date:"2024-03-19", correctAnswers: 4, wrongAnswers: 2},
-    {username:"username", date:"2024-03-18", correctAnswers: 5, wrongAnswers: 1},
-    {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
-    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
-    {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
-    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
-    {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
-    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
-    {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
-    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
-    {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
-    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
-    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
-    {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
-    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
-    {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
-    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
-    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
-    {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
-    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
-    {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
-    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5}
-];
 
 
 
-
-const History = () => {
+const History = ({username}) => {
     const [show, setShow] = useState(false);
+    const [historial, setHistorial] = useState([])
+
 
     const mostrarHistorial = () =>{
         setShow(true);
-        getHistorial();
     }
 
     const getHistorial = async () =>{
-        await axios.post(databaseServiceUrl + "/newHistory", {username:"username", date:"2024-03-19", correctAnswers: 4, wrongAnswers: 2});
-        await axios.get(databaseServiceUrl + "/history");
+        const res= await axios.post(databaseServiceUrl + "/history", {username: username});
+        return setHistorial(res.data);
     }
+
+    useEffect(() => {
+        getHistorial();
+    }, []);
 
 
     return(

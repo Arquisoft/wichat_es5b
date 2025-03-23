@@ -48,9 +48,11 @@ app.post('/newRanking', async (req, res) => {
 });
 
 // Ruta para obtener el historial de partidas
-app.get('/history', async (req, res) => {
+app.post('/history', async (req, res) => {
     try {
-      const history = await GameHistory.find().sort({ date: -1 });
+      const { username } = req.body;
+      console.log(username);
+      const history = await GameHistory.find({username}).sort({ date: -1 });
       res.json(history);
     } catch (err) {
       res.status(500).json({ message: err.message });

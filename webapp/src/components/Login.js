@@ -97,7 +97,7 @@ const Login = () => {
           </Button>
 
           
-          <History />
+          <History username={username} />
         </div>
       ) : (
         <div>
