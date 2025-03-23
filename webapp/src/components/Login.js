@@ -60,7 +60,7 @@ const Login = () => {
   if (startGame) {
     return (
       <div>
-      <Game key={keyReinicio}/>
+      <Game username={username} key={keyReinicio}/>
       <Button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => reinicio()}>Reiniciar</Button>
       </div>
     );
