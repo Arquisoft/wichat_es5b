@@ -23,7 +23,7 @@ app.use(express.json());
 const port=8006
 
 // Ruta para obtener el ranking
-router.get('/ranking', async (req, res) => {
+app.get('/ranking', async (req, res) => {
     try {
       const ranking = await Ranking.find().sort({ correctAnswers: -1 });
       res.json(ranking);
@@ -33,7 +33,7 @@ router.get('/ranking', async (req, res) => {
 });
 
 // Ruta para agregar una nueva entrada al ranking
-router.post('/newRanking', async (req, res) => {
+app.post('/newRanking', async (req, res) => {
     const { username, correctAnswers, wrongAnswers } = req.body;
 
     // Conversión a número
@@ -63,7 +63,7 @@ router.post('/newRanking', async (req, res) => {
 });
 
 // Ruta para actualizar el ranking de un usuario
-router.put('/updateRanking/:username', async (req, res) => {
+app.put('/updateRanking/:username', async (req, res) => {
   const { correctAnswers, wrongAnswers } = req.body;
   const username = req.params.username;
 
@@ -102,7 +102,7 @@ router.put('/updateRanking/:username', async (req, res) => {
 
 
 // Ruta para obtener el historial de partidas
-router.get('/history', async (req, res) => {
+app.get('/history', async (req, res) => {
     try {
       const history = await GameHistory.find().sort({ date: -1 });
       res.json(history);
@@ -112,7 +112,7 @@ router.get('/history', async (req, res) => {
 });
 
 // Ruta para agregar una nueva entrada al historial de partidas
-router.post('/newHistory', async (req, res) => {
+app.post('/newHistory', async (req, res) => {
   const { username, date, correctAnswers, wrongAnswers } = req.body;
 
     // Conversión a número
@@ -145,7 +145,7 @@ router.post('/newHistory', async (req, res) => {
 });
 
 // Ruta para actualizar el historial de un usuario
-router.put('/updateHistory/:id', async (req, res) => {
+app.put('/updateHistory/:id', async (req, res) => {
   const { username, correctAnswers, wrongAnswers } = req.body;
   const id = req.params.id;
 
