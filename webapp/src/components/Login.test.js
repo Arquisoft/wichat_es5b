@@ -14,7 +14,9 @@ describe('Login component', () => {
   
 
   it('should log in successfully', async () => {
+    await mockAxios.onPost('http://localhost:8006/history').reply(200, [{date: "2024-01-01T12:34:56Z", correctAnswers: 4, wrongAnswers:2}]);
     render(<Login />);
+    
 
     const usernameInput = screen.getByLabelText(/Username/i);
     const passwordInput = screen.getByLabelText(/Password/i);

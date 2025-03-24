@@ -5,7 +5,6 @@ Archivo para implementar las rutas de la API de la bbdd
 */
 
 const express = require('express');
-const router = express.Router();
 const { Ranking, GameHistory } = require('./gameModels');
 const cors = require('cors');
 
@@ -104,7 +103,9 @@ app.put('/updateRanking/:username', async (req, res) => {
 // Ruta para obtener el historial de partidas
 app.post('/history', async (req, res) => {
     try {
-      const history = await GameHistory.find().sort({ date: -1 });
+      const { username } = req.body;
+      console.log(username);
+      const history = await GameHistory.find({username}).sort({ date: -1 });
       res.json(history);
     } catch (err) {
       res.status(500).json({ message: err.message });
