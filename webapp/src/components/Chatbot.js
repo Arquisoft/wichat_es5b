@@ -112,7 +112,7 @@ const Chatbot = ({ movieName }) => {
                                             maxWidth: '85%',  
                                             display: 'inline-block',
                                             color: msg.sender === 'user' ? '#5a2d16' : '#4a2512',
-                                            border: msg.sender === 'user' ? '1px solid #d4b8a8' : '1px solid #d4b8a8',
+                                            border: '1px solid #d4b8a8',
                                             wordBreak: 'break-word' 
                                         }}
                                     />
