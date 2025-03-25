@@ -50,7 +50,7 @@ const Chatbot = ({ movieName }) => {
             position: 'fixed',
             left: '20px',
             bottom: '20px',
-            width: '380px',  // Aumentado de 300px a 380px
+            width: '380px',  
             zIndex: 1000,
             borderRadius: '8px',
             overflow: 'hidden'
@@ -59,7 +59,7 @@ const Chatbot = ({ movieName }) => {
             <Paper elevation={3} sx={{ 
                 display: 'flex',
                 flexDirection: 'column',
-                height: isMinimized ? '40px' : '520px',  // Aumentado de 400px a 500px
+                height: isMinimized ? '40px' : '520px',  
                 transition: 'height 0.3s ease',
                 overflow: 'hidden',
                 border: '2px solid #c46331',
@@ -83,6 +83,7 @@ const Chatbot = ({ movieName }) => {
                     }}
                 >
                     {isMinimized ? 'Chat de Pistas ▲' : 'Chat de Pistas ▼'}
+
                 </Button>
 
                 {!isMinimized && (
@@ -92,7 +93,7 @@ const Chatbot = ({ movieName }) => {
                             overflowY: 'auto',
                             p: 1.5,
                             backgroundColor: '#f8f1eb',
-                            minHeight: '400px'  // Altura mínima para el área de mensajes
+                            minHeight: '400px'  
                         }}>
                             {messages.map((msg, index) => (
 
@@ -108,11 +109,11 @@ const Chatbot = ({ movieName }) => {
                                             bgcolor: msg.sender === 'user' ? '#e8d5c9' : '#f0e6de',
                                             p: 1.5,
                                             borderRadius: '12px',
-                                            maxWidth: '85%',  // Aumentado para aprovechar el nuevo ancho
+                                            maxWidth: '85%',  
                                             display: 'inline-block',
                                             color: msg.sender === 'user' ? '#5a2d16' : '#4a2512',
                                             border: msg.sender === 'user' ? '1px solid #d4b8a8' : '1px solid #d4b8a8',
-                                            wordBreak: 'break-word'  // Para que los mensajes largos no desborden
+                                            wordBreak: 'break-word' 
                                         }}
                                     />
                                 </ListItem>
@@ -125,10 +126,10 @@ const Chatbot = ({ movieName }) => {
                              p: 2,
                              backgroundColor: '#f8f1eb',
                              borderTop: '2px solid #c46331',
-                             paddingBottom: '40px',  // Aumentado de 20px a 30px
-                             marginBottom: '0',      // Eliminado el margin-bottom
-                             position: 'relative',   // Añadido
-                             '&:after': {            // Añadido pseudo-elemento para espacio extra
+                             paddingBottom: '40px',  
+                             marginBottom: '0',      
+                             position: 'relative',   
+                             '&:after': {            
                                  content: '""',
                                  position: 'absolute',
                                  bottom: '0',
