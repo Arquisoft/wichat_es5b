@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const gameUrl = process.env.GAMECONTROLLER_URL || 'http://localhost:8005';
 
-export default function MovieQuiz() {
+export default function MovieQuiz({username}) {
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [timeLeft, setTimeLeft] = useState(30);
@@ -17,6 +17,7 @@ export default function MovieQuiz() {
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
   const [loading, setLoading] = useState(true);
   const PREGUNTASNUM = 6;
+  const user = {username}.username
 
 
   const nextQuestion = async () => {
@@ -39,7 +40,6 @@ export default function MovieQuiz() {
   };
 
   useEffect(() => {
-    
     if (timeLeft === 0) {
       // setWrongAnswers((prev) => prev + 1);
       // setQuestionsAnswered((prev) => prev + 1);
@@ -90,7 +90,7 @@ export default function MovieQuiz() {
 
   if (gameFinished) {
     endGame();
-    return <GameOver correct={correctAnswers} wrong={wrongAnswers} />
+    return <GameOver correct={correctAnswers} wrong={wrongAnswers} username ={user} />
   }
 
   async function start(){
@@ -160,6 +160,7 @@ export default function MovieQuiz() {
         
         <HintsButtons key={currentQuestion} movieName={currentQuestion.correctAnswer} />
       
+
       </div>
       )}
     </div>

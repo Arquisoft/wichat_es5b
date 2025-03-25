@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Container, Typography, TextField, Button, Snackbar } from '@mui/material';
 import { Typewriter } from "react-simple-typewriter";
 import Game from './game/GameQuestion';
+import History from './History';
 
 
 const Login = () => {
@@ -59,7 +60,7 @@ const Login = () => {
   if (startGame) {
     return (
       <div>
-      <Game key={keyReinicio}/>
+      <Game username={username} key={keyReinicio}/>
       <Button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => reinicio()}>Reiniciar</Button>
       </div>
     );
@@ -94,6 +95,9 @@ const Login = () => {
           <Button variant="contained" color="primary" onClick={() => {setStartGame(true); start();}} sx={{ marginTop: 2 }}>
             Start Game
           </Button>
+
+          
+          <History username={username} />
         </div>
       ) : (
         <div>

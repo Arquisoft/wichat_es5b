@@ -5,11 +5,24 @@ Archivo para implementar las rutas de la API de la bbdd
 */
 
 const express = require('express');
-const router = express.Router();
 const { Ranking, GameHistory } = require('./gameModels');
+const cors = require('cors');
+
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/my-mongo', { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
+  })
+
+const app = express();
+app.use(cors());
+
+app.use(express.json());
+
+const port=8006
 
 // Ruta para obtener el ranking
-router.get('/ranking', async (req, res) => {
+app.get('/ranking', async (req, res) => {
     try {
       const ranking = await Ranking.find().sort({ correctAnswers: -1 });
       res.json(ranking);
@@ -19,7 +32,7 @@ router.get('/ranking', async (req, res) => {
 });
 
 // Ruta para agregar una nueva entrada al ranking
-router.post('/ranking', async (req, res) => {
+app.post('/newRanking', async (req, res) => {
     const rankingEntry = new Ranking({
       username: req.body.username,
       correctAnswers: req.body.correctAnswers,
@@ -35,9 +48,11 @@ router.post('/ranking', async (req, res) => {
 });
 
 // Ruta para obtener el historial de partidas
-router.get('/history', async (req, res) => {
+app.post('/history', async (req, res) => {
     try {
-      const history = await GameHistory.find().sort({ date: -1 });
+      const { username } = req.body;
+      console.log(username);
+      const history = await GameHistory.find({username}).sort({ date: -1 });
       res.json(history);
     } catch (err) {
       res.status(500).json({ message: err.message });
@@ -45,7 +60,7 @@ router.get('/history', async (req, res) => {
 });
 
 // Ruta para agregar una nueva entrada al historial de partidas
-router.post('/history', async (req, res) => {
+app.post('/newHistory', async (req, res) => {
     const historyEntry = new GameHistory({
       username: req.body.username,
       date: req.body.date,
@@ -61,4 +76,8 @@ router.post('/history', async (req, res) => {
     }
 });
 
-module.exports = router;
+const server = app.listen(port, () => {
+  console.log(`DataBase service listening at http://localhost:${port}`);
+});
+
+module.exports = server;
