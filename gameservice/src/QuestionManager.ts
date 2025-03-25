@@ -34,8 +34,8 @@ export class QuestionManager {
    * Si la lista de preguntas es vacia, puede devolver un error.
    */
   getNextQuestion(): Question { 
-      this.currentQuestion++;
       let question = this.questions[this.currentQuestion];
+      this.currentQuestion++;
       return question;
   }
 
