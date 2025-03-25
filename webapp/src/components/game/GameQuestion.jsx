@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import './GameQuestion.css';
 import GameOver from "./GameOver";
 import HintsButtons from '../HintsButtons';
+import Chatbot from '../Chatbot';
 import LoadingScreen from '../LoadingScreen';
 import axios from 'axios';
 
@@ -34,7 +35,7 @@ export default function MovieQuiz({username}) {
 
     setCurrentQuestion(question);
     setSelectedOption(null);
-    setTimeLeft(10);
+    setTimeLeft(60);
     setLoading(false);
     
   };
@@ -162,7 +163,9 @@ export default function MovieQuiz({username}) {
         <p className="mt-2 text-lg font-semibold">Aciertos: {correctAnswers}</p>
         
         <HintsButtons key={currentQuestion} movieName={currentQuestion.correctAnswer} />
-      
+        
+        <Chatbot movieName={currentQuestion.correctAnswer} />
+        
 
       </div>
       )}
