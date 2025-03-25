@@ -59,10 +59,11 @@ const Chatbot = ({ movieName }) => {
             <Paper elevation={3} sx={{ 
                 display: 'flex',
                 flexDirection: 'column',
-                height: isMinimized ? '40px' : '500px',  // Aumentado de 400px a 500px
+                height: isMinimized ? '40px' : '520px',  // Aumentado de 400px a 500px
                 transition: 'height 0.3s ease',
                 overflow: 'hidden',
-                border: '2px solid #c46331'
+                border: '2px solid #c46331',
+                paddingBottom: '0'
             }}>
                 {/* Botón de minimizar/expandir */}
                 <Button 
@@ -120,10 +121,22 @@ const Chatbot = ({ movieName }) => {
                         </List>
 
                         <Box sx={{ 
-                            display: 'flex', 
-                            p: 1.5,
-                            backgroundColor: '#f8f1eb',
-                            borderTop: '2px solid #c46331'
+                             display: 'flex', 
+                             p: 2,
+                             backgroundColor: '#f8f1eb',
+                             borderTop: '2px solid #c46331',
+                             paddingBottom: '40px',  // Aumentado de 20px a 30px
+                             marginBottom: '0',      // Eliminado el margin-bottom
+                             position: 'relative',   // Añadido
+                             '&:after': {            // Añadido pseudo-elemento para espacio extra
+                                 content: '""',
+                                 position: 'absolute',
+                                 bottom: '0',
+                                 left: '0',
+                                 right: '0',
+                                 height: '30px',
+                                 backgroundColor: '#f8f1eb'
+                             }
                         }}>
                             
                             <TextField
@@ -131,7 +144,7 @@ const Chatbot = ({ movieName }) => {
                                 size="medium"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
-                                placeholder="Escribe tu pregunta sobre la película..."
+                                placeholder="Escribe tu pregunta..."
                                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                                 sx={{
                                     '& .MuiOutlinedInput-root': {
@@ -144,7 +157,8 @@ const Chatbot = ({ movieName }) => {
                                     },
                                     '& .MuiInputBase-input': {
                                         padding: '12px'
-                                    }
+                                    },
+                                    height: '45px'
                                 }}
                             />
 
@@ -159,12 +173,16 @@ const Chatbot = ({ movieName }) => {
                                         backgroundColor: '#a6532a' 
                                     },
                                     padding: '0 20px',
-                                    fontSize: '1rem'
+                                    fontSize: '1rem',
+                                    height: '45px'
                                 }}
                             >
                                 Enviar
                             </Button>
                         </Box>
+                         <div>
+                            <p></p>
+                         </div>
                     </>
                 )}
             </Paper>
