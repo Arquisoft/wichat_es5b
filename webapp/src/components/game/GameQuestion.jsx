@@ -124,7 +124,10 @@ export default function MovieQuiz({username}) {
   
 
   async function endGame() {
-    return await axios.get(gameUrl + "/end")
+    // return await axios.get(gameUrl + "/end");
+    return (await fetch(gameUrl + "/end", {
+      method: 'POST',
+    }))
   }
 
   

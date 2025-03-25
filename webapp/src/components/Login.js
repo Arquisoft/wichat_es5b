@@ -49,7 +49,9 @@ const Login = () => {
   };
 
   async function start() {
-    return (await fetch("http://localhost:8005/start"))
+    return (await fetch("http://localhost:8005/start", {
+      method: 'POST',
+    }))
   } 
 
   const reinicio = () => {
