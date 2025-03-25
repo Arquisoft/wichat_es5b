@@ -8,8 +8,12 @@ export default function GameOver({ correct, wrong, username }) {
   const saveHistorial = async () =>{
     await axios.post(databaseServiceUrl + "/newHistory", {username: username, date: new Date().toISOString(), correctAnswers: correct, wrongAnswers: wrong});
   }
+  const saveRanking = async () =>{
+    await axios.post(databaseServiceUrl + "/newRanking", {username: username, correctAnswers: correct, wrongAnswers: wrong});
+  }
   useEffect(()=>{
     saveHistorial();
+    saveRanking();
   });
 
     return (
@@ -17,7 +21,6 @@ export default function GameOver({ correct, wrong, username }) {
         <h2 className="text-2xl font-bold">Fin de la partida</h2>
         <p className="mt-4 text-lg font-semibold">Respuestas correctas: {correct}</p>
         <p className="mt-2 text-lg font-semibold">Respuestas incorrectas: {wrong}</p>
-
       </div>
     );
   }
