@@ -23,14 +23,14 @@ describe('AddUser component', () => {
 
     // Simulate user input
     fireEvent.change(usernameInput, { target: { value: 'testUser' } });
-    fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
+    fireEvent.change(passwordInput, { target: { value: 'TestPassword1' } });
 
     // Trigger the add user button click
     fireEvent.click(addUserButton);
 
     // Wait for the Snackbar to be open
     await waitFor(() => {
-      expect(screen.getByText(/User added successfully/i)).toBeInTheDocument();
+      expect(screen.getByText(/Usuario añadido correctamente/i)).toBeInTheDocument();
     });
   });
 
@@ -46,14 +46,14 @@ describe('AddUser component', () => {
 
     // Simulate user input
     fireEvent.change(usernameInput, { target: { value: 'testUser' } });
-    fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
+    fireEvent.change(passwordInput, { target: { value: 'TestPassword1' } });
 
     // Trigger the add user button click
     fireEvent.click(addUserButton);
 
     // Wait for the error Snackbar to be open
     await waitFor(() => {
-      expect(screen.getByText(/Error: Internal Server Error/i)).toBeInTheDocument();
+      expect(screen.getByText(/Internal Server Error/i)).toBeInTheDocument();
     });
   });
 });

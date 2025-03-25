@@ -4,6 +4,7 @@
     {
       "name": "Start Full Stack",
       "configurations": [
+        "Start Historial Service",
         "Start Wikidata Service",
         "Start Game Service",
         "Start MongoDB",
@@ -89,6 +90,16 @@
       "request": "launch",
       "command": "npm install && npm start",
       "cwd": "${workspaceFolder}/wikidataservice",
+      "windows": {
+        "command": "npm install; npm start"
+      }
+    },
+    {
+      "name": "Start Historial Service",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm install && npm start",
+      "cwd": "${workspaceFolder}/database",
       "windows": {
         "command": "npm install; npm start"
       }
