@@ -8,7 +8,7 @@ WORKDIR /usr/src/wikidataservice
 COPY package*.json ./
 
 # Install app dependencies
-RUN npm install --save-dev ts-node typescript
+RUN npm install
 
 # Copy the app source code to the working directory
 COPY . .
@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8004
 
 # Define the command to run your app
-CMD ["node", "wikidata-service.ts"]
+CMD ["npx","ts-node", "wikidata-service.ts"]
