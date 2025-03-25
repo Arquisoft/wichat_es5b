@@ -161,9 +161,8 @@ export default function MovieQuiz({username}) {
         
         <HintsButtons key={currentQuestion} movieName={currentQuestion.correctAnswer} />
         
-        <div className="mt-4">
-            <Chatbot movieName={currentQuestion.correctAnswer} />
-        </div>
+        <Chatbot movieName={currentQuestion.correctAnswer} />
+        
 
       </div>
       )}
