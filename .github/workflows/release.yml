@@ -12,7 +12,6 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: 22
-    - run: npm --prefix database ci
     - run: npm --prefix gameservice ci   
     - run: npm --prefix wikidataservice ci   
     - run: npm --prefix users/authservice ci
@@ -196,12 +195,11 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       with:
-        name: arquisoft/wichat_es5b/authservice
+        name: arquisoft/wichat_es5b/database
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
         workdir: database
-        platforms: linux/amd64,linux/arm64
 
   deploy:
     name: Deploy over SSH
