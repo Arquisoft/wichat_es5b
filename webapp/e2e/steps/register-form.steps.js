@@ -27,6 +27,7 @@ defineFeature(feature, test => {
   beforeEach(async () => {
     await page.waitForTimeout(1500);
     await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
+    // await page.waitForNavigation({ waitUntil: "domcontentloaded" });
   });
 
   test('The user is not registered in the site', ({given,when,then}) => {
@@ -64,8 +65,8 @@ defineFeature(feature, test => {
       await expect(page).toClick('button', { text: 'Add User' });
     });
 
-    then('A validation message "Username and password are required" should be displayed', async () => {
-      await expect(page).toMatchElement("div", { text: "Error: User validation failed: username: Path `username` is required." });
+    then('A validation message "Error: Username and password are required" should be displayed', async () => {
+      await expect(page).toMatchElement("div", { text: "Error: Username and password are required" });
     });
 
   })
@@ -85,8 +86,8 @@ defineFeature(feature, test => {
       await expect(page).toClick('button', { text: 'Add User' });
     });
 
-    then('A validation message "Username is required" should be displayed', async () => {
-      await expect(page).toMatchElement("div", { text: "Error: User validation failed: username: Path `username` is required." });
+    then('A validation message "Error: Username and password are required" should be displayed', async () => {
+      await expect(page).toMatchElement("div", { text: "Error: Username and password are required" });
     });
 
   })
@@ -106,11 +107,39 @@ defineFeature(feature, test => {
       await expect(page).toClick('button', { text: 'Add User' });
     });
 
-    then('A validation message "Password is required" should be displayed', async () => {
-      await expect(page).toMatchElement("div", { text: "Error: User validation failed: username: Path `password` is required." });
+    then('A validation message "Error: Username and password are required" should be displayed', async () => {
+      await expect(page).toMatchElement("div", { text: "Error: Username and password are required" });
     });
 
   })
+
+  test('The user submits the form with a username already registered', ({ given, when, then }) => {
+
+    let username;
+    let password
+  
+    given('A user with username "existinguser" is already registered', async () => {
+      username = "existinguser";
+      password = "correctpassword";
+      await expect(page).toClick("button", { text: "Don't have an account? Register here." });
+      await expect(page).toFill('input[name="username"]', username);
+      await expect(page).toFill('input[name="password"]', password);
+      await expect(page).toClick('button', { text: 'Add User' });
+      await expect(page).toMatchElement("div", { text: "User created successfully" });
+    });
+  
+    when('I fill the username field with "existinguser" and I fill the password field and I press submit', async () => {
+      await expect(page).toFill('input[name="username"]', username);
+      await expect(page).toFill('input[name="password"]', password);
+      await expect(page).toClick('button', { text: 'Add User' });
+    });
+  
+    then('A validation message "Username is already taken" should be displayed', async () => {
+      await expect(page).toMatchElement("div", { text: "Error: Username is already taken" });
+    });
+  
+  });
+  
 
   afterAll(async ()=>{
     if (page) {

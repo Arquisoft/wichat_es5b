@@ -24,6 +24,12 @@ const Login = () => {
   
 
   const loginUser = async () => {
+    // Verifica si los campos están vacíos
+    if (!username || !password) {
+      setError("Username and password are required");
+      return; // Detiene la ejecución si hay campos vacíos
+    }
+
     try {
       const response = await axios.post(`${apiEndpoint}/login`, { username, password });
 
