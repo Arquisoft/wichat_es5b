@@ -9,7 +9,10 @@ const { Ranking, GameHistory } = require('./gameModels');
 const cors = require('cors');
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/my-mongo', { 
+
+const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/game';
+
+mongoose.connect(mongoUri, { 
     useNewUrlParser: true, 
     useUnifiedTopology: true 
   })

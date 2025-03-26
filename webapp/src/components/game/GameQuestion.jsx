@@ -6,7 +6,7 @@ import Chatbot from '../Chatbot';
 import LoadingScreen from '../LoadingScreen';
 import axios from 'axios';
 
-const gameUrl = process.env.GAMECONTROLLER_URL || 'http://localhost:8005';
+const gameUrl = process.env.GAMECONTROLLER_URI || 'http://localhost:8005';
 
 export default function MovieQuiz({username}) {
   const [currentQuestion, setCurrentQuestion] = useState("");
