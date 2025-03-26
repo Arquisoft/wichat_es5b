@@ -10,6 +10,13 @@ const mockAxios = new MockAdapter(axios);
 describe('Chatbot Component', () => {
   const movieName = 'Inception';
   
+  // Función helper para expandir el chat (reducirá duplicación sin perder líneas)
+  const expandChat = () => {
+    const toggleButton = screen.getByRole('button', { name: /Chat de Pistas ▲/i });
+    fireEvent.click(toggleButton);
+    return toggleButton;
+  };
+
   beforeEach(() => {
     mockAxios.reset();
     cleanup();
@@ -55,14 +62,16 @@ describe('Chatbot Component', () => {
   });
 
   describe('Toggle Functionality', () => {
-
-    it('should expand when clicking the toggle button', () => {
+    beforeEach(() => {
         cleanup();
-
         render(<Chatbot movieName={movieName} />);
 
-        const toggleButton = screen.getByRole('button', { name: /Chat de Pistas ▲/i });
-        fireEvent.click(toggleButton);
+      });
+
+    it('should expand when clicking the toggle button', () => {
+        
+
+        const toggleButton = expandChat();
         
         expect(toggleButton).toHaveTextContent(/▼/i);
         const paperComponent = screen.getByRole('region');
@@ -71,10 +80,7 @@ describe('Chatbot Component', () => {
 
     it('should show chat interface when expanded', () => {
 
-        cleanup();
-        render(<Chatbot movieName={movieName} />);
-
-        fireEvent.click(screen.getByRole('button', { name: /▲/i }));
+        expandChat();
         
         expect(screen.getByRole('list')).toBeInTheDocument();
         expect(screen.getByPlaceholderText('Escribe tu pregunta...')).toBeInTheDocument();
@@ -82,10 +88,7 @@ describe('Chatbot Component', () => {
     });
 
     it('should minimize when clicking the toggle button twice', async () => {
-        cleanup();
-
-        
-        const { container } = render(<Chatbot movieName={movieName} />);
+       
         
         //localizar el botón correctamente
         const toggleButton = await screen.findByRole('button', { 
@@ -115,17 +118,13 @@ describe('Chatbot Component', () => {
   describe('Chat Interface Appearance', () => {
 
     beforeEach(() => {
-      fireEvent.click(screen.getByRole('button', { name: /▲/i }));
+      cleanup();
+      render(<Chatbot movieName={movieName} />);
+      expandChat();
     });
 
     it('should have correct styles for expanded state', () => {
 
-        cleanup();
-
-        render(<Chatbot movieName={movieName} />);
-
-        fireEvent.click(screen.getByRole('button', { name: /▲/i }));
-        
         const sendButton = screen.getByRole('button', { name: /Enviar/i });
         
         //verificar los estilos reales que aplica Material-UI
@@ -168,12 +167,6 @@ describe('Chatbot Component', () => {
 
     it('should have proper send button hover state', async () => {
 
-        cleanup();
-
-        render(<Chatbot movieName={movieName} />);
-
-        fireEvent.click(screen.getByRole('button', { name: /▲/i }));
-        
         const sendButton = screen.getByRole('button', { name: /Enviar/i });
         
         //forzar estado no-hover
@@ -205,8 +198,9 @@ describe('Chatbot Component', () => {
   describe('Message Functionality', () => {
 
     beforeEach(() => {
-
-      fireEvent.click(screen.getByRole('button', { name: /▲/i }));
+      cleanup();
+      render(<Chatbot movieName={movieName} />);
+      expandChat();
       mockAxios.onPost(/askllm/).reply(200, { answer: 'Esta es una pista sobre la película' });
     });
 
@@ -318,9 +312,14 @@ describe('Chatbot Component', () => {
   });
 
   describe('Error Handling', () => {
+
+    beforeEach(() => {
+        cleanup();
+      });
+
     it('should display error message when API call fails', async () => {
 
-        cleanup();
+        //cleanup();
 
         //configurar el mock para que falle
         mockAxios.onPost(/askllm/).reply(500);
@@ -350,7 +349,6 @@ describe('Chatbot Component', () => {
 
     it('should maintain chat history after error', async () => {
 
-        cleanup();
       
         mockAxios.onPost(/askllm/)
           .replyOnce(200, { answer: 'Respuesta exitosa' });
@@ -396,18 +394,17 @@ describe('Chatbot Component', () => {
 
   describe('API Interaction', () => {
 
+    beforeEach(() => {
+        cleanup();
+        const { container } = render(<Chatbot movieName={movieName} />);
+        expandChat();
+        mockAxios.onPost(/askllm/).reply(200, { answer: 'Respuesta' });
+      });
+
     it('should include movie name in API request', async () => {
 
         const testQuestion = '¿De qué año es?';
-        mockAxios.onPost(/askllm/).reply(200, { answer: 'Respuesta' });
-
-        cleanup();
         
-        render(<Chatbot movieName={movieName} />);
-        
-        // expandir el chat
-        const toggleButton = screen.getByRole('button', { name: /Chat de Pistas ▲/i });
-        fireEvent.click(toggleButton);
         
         //buscar los elementos del chat expandido
         const inputField = await screen.findByPlaceholderText('Escribe tu pregunta...');
@@ -434,9 +431,7 @@ describe('Chatbot Component', () => {
     it('should use correct API endpoint', async () => {
 
         process.env.REACT_APP_API_ENDPOINT = 'https://custom-api.example.com';
-        mockAxios.onPost(/askllm/).reply(200, { answer: 'Respuesta' });
         
-        cleanup();
         
         const { container } = render(<Chatbot movieName={movieName} />);
         
@@ -465,12 +460,17 @@ describe('Chatbot Component', () => {
 
   describe('Edge Cases', () => {
 
+    beforeEach(() => {
+        cleanup();
+        render(<Chatbot movieName={movieName} />);
+        expandChat();
+      });
+
     it('should handle very long messages without breaking layout', async () => {
 
         const longMessage = 'Este es un mensaje muy largo '.repeat(50);
         mockAxios.onPost(/askllm/).reply(200, { answer: longMessage });
         
-        fireEvent.click(screen.getByRole('button', { name: /▲/i }));
         
         const inputField = screen.getByPlaceholderText('Escribe tu pregunta...');
         const sendButton = screen.getByRole('button', { name: /Enviar/i });
@@ -495,7 +495,6 @@ describe('Chatbot Component', () => {
 
       mockAxios.onPost(/askllm/).reply(200, { answer: 'Respuesta' });
       
-      fireEvent.click(screen.getByRole('button', { name: /▲/i }));
       
       const listContainer = screen.getByRole('list');
       jest.spyOn(listContainer, 'scrollHeight', 'get').mockImplementation(() => 1000);
