@@ -1,13 +1,15 @@
 {
   "dependencies": {
-    "concurrently": "^9.1.2",
-    "axios": "^1.8.2"
+    "axios": "^1.8.2",
+    "concurrently": "^9.1.2"
   },
   "devDependencies": {
+    "jest-cucumber": "^4.5.0",
+    "puppeteer": "^24.4.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
   },
   "scripts": {
-    "startAll": "concurrently -n userservice,authservice,llmservice,wikidataservice,gameservice,gatewayservice,webapp \"npm --prefix users/userservice start\" \"npm --prefix users/authservice start\" \"npm --prefix llmservice start\" \"npm --prefix wikidataservice start\" \"npm --prefix gameservice/src start\" \"npm --prefix gatewayservice start\" \"npm --prefix webapp start\""
+    "startAll": "concurrently -n userservice,authservice,llmservice,wikidataservice,gameservice,gatewayservice,webapp \"npm --prefix users/userservice start\" \"npm --prefix users/authservice start\" \"npm --prefix llmservice start\" \"npm --prefix wikidataservice start\" \"npm --prefix gameservice start\" \"npm --prefix gatewayservice start\" \"npm --prefix webapp start\""
   }
 }

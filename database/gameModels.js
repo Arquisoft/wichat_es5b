@@ -13,7 +13,10 @@ El historia de partidas almacenará el usuario, la fecha de la partida, el núme
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-mongoose.connect('mongodb://localhost:27017/my-mongo', { 
+const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/game';
+
+
+mongoose.connect(mongoUri, { 
     useNewUrlParser: true, 
     useUnifiedTopology: true 
   })
@@ -35,5 +38,8 @@ const GameHistorySchema = new Schema({
   
 const Ranking = mongoose.model('Ranking', RankingSchema);
 const GameHistory = mongoose.model('GameHistory', GameHistorySchema);
+
+Ranking.create({ username: 'user1', correctAnswers: 5, wrongAnswers: 1 });
+GameHistory.create({ username: 'user1', correctAnswers: 5, wrongAnswers: 1 });
 
 module.exports = { Ranking, GameHistory };

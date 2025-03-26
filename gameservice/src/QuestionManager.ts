@@ -2,7 +2,11 @@ import {Question} from "./questions/Question";
 import { QuestionGenerator } from "./QuestionGenerator";
 import { MovieQuestionGenerator } from "./generators/MovieQuestionGenerator";
 
+
 export class QuestionManager {
+
+  private wikidataUri = process.env.WIKIDATA_SERVICE_URI || 'http://localhost:8004';
+
 
   private questions: Question[];
   private generator: QuestionGenerator;
@@ -34,8 +38,8 @@ export class QuestionManager {
    * Si la lista de preguntas es vacia, puede devolver un error.
    */
   getNextQuestion(): Question { 
-      this.currentQuestion++;
       let question = this.questions[this.currentQuestion];
+      this.currentQuestion++;
       return question;
   }
 
@@ -59,7 +63,7 @@ export class QuestionManager {
   }
 
   async executeQuery() : Promise<any> {
-    return (await fetch("http://localhost:8004/query")).json()
+    return (await fetch(this.wikidataUri + "/query")).json()
   }
 
 }

@@ -16,11 +16,11 @@ mongoose.connect(mongoUri);
 
 // Function to validate required fields in the request body
 function validateRequiredFields(req, requiredFields) {
-    for (const field of requiredFields) {
-      if (!(field in req.body)) {
-        throw new Error(`Missing required field: ${field}`);
-      }
+  for (const field of requiredFields) {
+    if (!req.body[field] || req.body[field].trim() === '') {
+      throw new Error(`Invalid credentials`);
     }
+  }
 }
 
 // Route for user login
@@ -53,7 +53,7 @@ app.post('/login',  [
       res.status(401).json({ error: 'Invalid credentials' });
     }
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(401).json({ error: 'Invalid credentials' });
   }
 });
 

@@ -15,6 +15,7 @@ app.use(cors());
 
 // Petición para iniciar el juego
 app.post("/start", (req: any, res: any) => {
+  console.log("Juego iniciado");
   gameController.startGame();
   res.sendStatus(200);
 });
@@ -28,6 +29,7 @@ app.post("/end", (req: any, res: any) => {
 // Petición para obtener la pregunta actual
 app.get("/question", (req: any, res: any) => {
   const question = gameController.getCurrentQuestion();
+  console.log("Pregunta enviada:", question);
   res.json(question);
 });
 

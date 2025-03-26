@@ -1,45 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
 import axios from 'axios';
 
 const databaseServiceUrl = process.env.DATABASE_URL || 'http://localhost:8006';
 
 
-const historial =[
-    {username:"username", date:"2024-03-19", correctAnswers: 4, wrongAnswers: 2},
-    {username:"username", date:"2024-03-18", correctAnswers: 5, wrongAnswers: 1},
-    {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
-    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
-    {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
-    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
-    {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
-    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
-    {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
-    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5},
-    {username:"username", date:"2024-03-16", correctAnswers: 4, wrongAnswers: 2},
-    {username:"username", date:"2024-03-02", correctAnswers: 1, wrongAnswers: 5}
-];
-
-
-
-
-const History = () => {
+const History = ({username}) => {
     const [show, setShow] = useState(false);
+    const [historial, setHistorial] = useState([])
+
+    useEffect(() => {
+        console.log(username)
+        if (username) 
+            getHistorial();
+        
+    }, [username]);
+
 
     const mostrarHistorial = () =>{
         setShow(true);
     }
 
+    const getHistorial = async () =>{
+        const res= await axios.post(databaseServiceUrl + "/history", {username: username});
+        setHistorial(res.data);
+    }
+
+
 
     return(
         <div>
-            <Button sx={{"mt":2}} variant="contained" color="primary" onClick= {() => mostrarHistorial()}>Historial</Button>
+            <Button variant="primary" sx={{color:"#fecd24",fontSize: "1.1rem"}} onClick= {() => mostrarHistorial()}>HISTORIAL</Button>
             <Dialog open={show} onClose={()=> setShow(false)}>
                 <DialogTitle>
                     <h2>Historial</h2>
                 </DialogTitle>
                 <DialogContent>
-                    <Table>
+                    {username ? (<Table>
                         <TableHead>
                             <TableRow>
                                 <TableCell>Fecha</TableCell>
@@ -57,7 +54,9 @@ const History = () => {
                         ))}
 
                         </TableBody>
-                    </Table>
+                    </Table>):(
+                        <p>Debe iniciar sesión para ver su historial</p>
+                )}
                     
                 </DialogContent>
                 <DialogActions>

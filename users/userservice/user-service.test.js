@@ -24,7 +24,7 @@ describe('User Service', () => {
   it('should add a new user on POST /adduser', async () => {
     const newUser = {
       username: 'testuser',
-      password: 'testpassword',
+      password: 'Testpassword1',
     };
 
     const response = await request(app).post('/adduser').send(newUser);
@@ -39,7 +39,39 @@ describe('User Service', () => {
     expect(userInDb.username).toBe('testuser');
 
     // Assert that the password is encrypted
-    const isPasswordValid = await bcrypt.compare('testpassword', userInDb.password);
+    const isPasswordValid = await bcrypt.compare('Testpassword1', userInDb.password);
     expect(isPasswordValid).toBe(true);
+  });
+
+  it('should not allow empty fields', async () => {
+    const response = await request(app).post('/adduser').send({ username: '', password: '' });
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe("El campo nombre de usuario es obligatorio y no puede estar vacío");
+  });
+
+  it('should not allow empty fields', async () => {
+    const response = await request(app).post('/adduser').send({ username: 'testuser', password: '' });
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe("El campo contraseña es obligatorio y no puede estar vacío");
+  });
+
+  it('should not allow duplicate usernames', async () => {
+    const newUser = { username: 'duplicateUser', password: 'TestPassword1' };
+
+    await request(app).post('/adduser').send(newUser); // Primer registro correcto
+    const response = await request(app).post('/adduser').send(newUser); // Segundo intento debe fallar
+
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe('El nombre de usuario ya está en uso');
+  });
+
+  it('should not allow weak passwords', async () => {
+    const weakPasswords = ['abcdef', 'password', '12345678', 'noNumberA'];
+
+    for (const weakPassword of weakPasswords) {
+      const response = await request(app).post('/adduser').send({ username: 'weakUser', password: weakPassword });
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe('La contraseña debe tener al menos una letra mayúscula, un número y 6 caracteres.');
+    }
   });
 });
