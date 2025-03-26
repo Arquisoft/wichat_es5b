@@ -6,6 +6,7 @@ import { Typewriter } from "react-simple-typewriter";
 import Game from './game/GameQuestion';
 
 
+
 const Login = ({userForHistory}) => {
 
   const [username, setUsername] = useState('');
@@ -102,6 +103,7 @@ const Login = ({userForHistory}) => {
           <Button variant="contained" color="primary" onClick={() => {setStartGame(true); start();}} sx={{ marginTop: 2 }}>
             Start Game
           </Button>
+
 
         </div>
       ) : (

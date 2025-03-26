@@ -42,8 +42,8 @@ app.post('/newRanking', async (req, res) => {
     // Validaciones
     if (
         correct < 0 || correct > 6 ||      // correctAnswers debe estar entre 0 y 6
-        wrong < 0 || wrong > 6 ||          // wrongAnswers debe estar entre 0 y 6
-        correct + wrong !== 6              // La suma debe ser 6
+        wrong < 0 || wrong > 6 //||          // wrongAnswers debe estar entre 0 y 6
+        //correct + wrong !== 6              // La suma debe ser 6
     ) {
         return res.status(400).json({ message: "Datos inválidos: correctAnswers y wrongAnswers deben sumar 6 y estar entre 0 y 6." });
     }
@@ -114,6 +114,7 @@ app.post('/history', async (req, res) => {
 
 // Ruta para agregar una nueva entrada al historial de partidas
 app.post('/newHistory', async (req, res) => {
+  console.log(req.body);
   const { username, date, correctAnswers, wrongAnswers } = req.body;
 
     // Conversión a número
@@ -123,8 +124,8 @@ app.post('/newHistory', async (req, res) => {
     // Validaciones
     if (
       correct < 0 || correct > 6 ||      // CorrectAnswers en el rango [0,6]
-      wrong < 0 || wrong > 6 ||          // WrongAnswers en el rango [0,6]
-      correct + wrong !== 6              // Suma de respuestas debe ser 6
+      wrong < 0 || wrong > 6 //||          // WrongAnswers en el rango [0,6]
+      //correct + wrong !== 6              // Suma de respuestas debe ser 6
     ) {
       return res.status(400).json({ message: "Datos inválidos: correctAnswers y wrongAnswers deben sumar 6 y estar entre 0 y 6." });
     }

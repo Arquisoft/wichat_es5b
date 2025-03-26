@@ -5,9 +5,6 @@ import axios from 'axios';
 const databaseServiceUrl = process.env.DATABASE_URL || 'http://localhost:8006';
 
 
-
-
-
 const History = ({username}) => {
     const [show, setShow] = useState(false);
     const [historial, setHistorial] = useState([])
@@ -26,7 +23,7 @@ const History = ({username}) => {
 
     const getHistorial = async () =>{
         const res= await axios.post(databaseServiceUrl + "/history", {username: username});
-        return setHistorial(res.data);
+        setHistorial(res.data);
     }
 
 
