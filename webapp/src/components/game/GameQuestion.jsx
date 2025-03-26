@@ -132,7 +132,7 @@ export default function MovieQuiz({username}) {
 
   return (
     <div>
-      {loading ? (<LoadingScreen/>) :  (<div className="max-w-xl mx-auto p-10 bg-white shadow-lg rounded-lg text-center">
+      {loading ? (<LoadingScreen/>) :  (<div className="max-w-xl mx-auto p-10 bg-white shadow-lg rounded-lg text-center margin" >
       <h2 className="text-2xl font-bold">{currentQuestion.question}</h2>
       <img src={currentQuestion.imageUrl} alt="Pregunta" className="w-full h-48 object-cover my-3 rounded" />
       <div className="grid grid-cols-1 gap-2">

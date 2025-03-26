@@ -9,14 +9,19 @@ import NavMenu from './components/NavMenu';
 
 function App() {
   const [showLogin, setShowLogin] = useState(true);
+  const [user, setUser] = useState();
 
   const handleToggleView = () => {
     setShowLogin(!showLogin);
   };
 
+  const userForHistory = (username) =>{
+    setUser(username)
+  }
+
   return (
     <div>
-      <NavMenu />
+      <NavMenu username={user}/>
       <Container component="main" maxWidth={false}   sx={{ 
                                                           width: "100vw", 
                                                           height: "100vh", 
@@ -29,7 +34,7 @@ function App() {
                                                           boxSizing: "border-box"
                                                         }}>
         <CssBaseline />
-        {showLogin ? <Login /> : <AddUser />}
+        {showLogin ? <Login userForHistory={userForHistory} /> : <AddUser />}
         <Typography component="div" align="center" sx={{ marginTop: 1}}>
           {showLogin ? (
             <Link name="gotoregister" component="button" variant="body2" onClick={handleToggleView}>

@@ -1,25 +1,27 @@
 import { AppBar, Toolbar, Button, IconButton, Typography } from "@mui/material"
 import "./game/GameQuestion.css"
+import History from "./History";
 
-const NavMenu = () =>{
+const NavMenu = ({username}) =>{
+
+    
     return(
 
         <AppBar className="corporative-orange" position="static">
-            <Toolbar variant="dense" className="corporative-orange" sx={{display:"flex",justifyContent: "space-around"}}>
-                <Button variant="primary" color="inherit" component="div">
+            <Toolbar variant="dense" className="corporative-orange" sx={{display:"grid",justifyContent: "center", gridTemplateColumns: "repeat(5, 1fr)"}}>
+                <Button variant="primary" sx={{color:"#fecd24",fontSize: "1.1rem"}}>
                 IDENTIFICATE
                 </Button>
-                <Button variant="primary" color="inherit" component="div">
-                IDIOMA ES
+                <Button variant="primary" sx={{color:"#fecd24",fontSize: "1.1rem"}}>
+                IDIOMA - ES
                 </Button>
-                <div style={{display:"flex",marginBottom:"-5em"}}>
-                    <img src="/prueba.png" alt="WICHAT" style={{width:"10em"}}/>
-                    <h1>WiChat</h1>
+                <div style={{display:"flex", justifyContent:"center",marginBottom:"-5em"}}>
+                    <img src="/logo512.png" alt="WICHAT" style={{width:"12em"}}/>
                 </div>
-                <Button variant="primary" color="inherit" component="div">
-                HISTORIAL
-                </Button>
-                <Button variant="primary" color="inherit" component="div">
+
+                <History username={username}/>
+
+                <Button variant="primary" sx={{color:"#fecd24",fontSize: "1.1rem"}}>
                 RANKING
                 </Button>
             </Toolbar>
