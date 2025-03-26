@@ -25,6 +25,7 @@ defineFeature(feature, test => {
   });
 
   beforeEach(async () => {
+    await page.waitForTimeout(1500);
     await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
   });
 
@@ -48,6 +49,7 @@ defineFeature(feature, test => {
     then('A confirmation message should be shown in the screen', async () => {
         await expect(page).toMatchElement("div", { text: "User added successfully" });
     });
+
   })
 
   test('The user submits the form without filling username and password', ({given,when,then}) =>  {
@@ -65,6 +67,49 @@ defineFeature(feature, test => {
     then('A validation message "Username and password are required" should be displayed', async () => {
       await expect(page).toMatchElement("div", { text: "Error: User validation failed: username: Path `username` is required." });
     });
+
+  })
+
+  test('The user submits the form with username empty', ({given,when,then}) =>  {
+
+    let password;
+
+    given('An unregistered user', async () => {
+      password = "passwordasw"
+      await expect(page).toClick("button", { text: "Don't have an account? Register here." });
+    });
+
+    when('I leave the username field empty and I fill the password field and I press submit', async () => {
+      await expect(page).toFill('input[name="username"]', '');
+      await expect(page).toFill('input[name="password"]', password);
+      await expect(page).toClick('button', { text: 'Add User' });
+    });
+
+    then('A validation message "Username is required" should be displayed', async () => {
+      await expect(page).toMatchElement("div", { text: "Error: User validation failed: username: Path `username` is required." });
+    });
+
+  })
+
+  test('The user submits the form with password empty', ({given,when,then}) =>  {
+
+    let username;
+
+    given('An unregistered user', async () => {
+      username = "userasw"
+      await expect(page).toClick("button", { text: "Don't have an account? Register here." });
+    });
+
+    when('I leave the password field empty and I fill the username field and I press submit', async () => {
+      await expect(page).toFill('input[name="username"]', username);
+      await expect(page).toFill('input[name="password"]', '');
+      await expect(page).toClick('button', { text: 'Add User' });
+    });
+
+    then('A validation message "Password is required" should be displayed', async () => {
+      await expect(page).toMatchElement("div", { text: "Error: User validation failed: username: Path `password` is required." });
+    });
+
   })
 
   afterAll(async ()=>{

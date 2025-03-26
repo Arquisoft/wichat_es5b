@@ -10,19 +10,15 @@ Scenario: The user submits the form without filling username and password
   When I leave the username and password fields empty and i press submit
   Then A validation message "Username and password are required" should be displayed
 
-# Scenario: The user submits the form with username empty
-#   Given An unregistered user
-#   When I leave the username field empty
-#   And I fill the password field
-#   And I press submit
-#   Then A validation message "Username is required" should be displayed
+Scenario: The user submits the form with username empty
+  Given An unregistered user
+  When I leave the username field empty and I fill the password field and I press submit
+  Then A validation message "Username is required" should be displayed
 
-# Scenario: The user submits the form with password empty
-#   Given An unregistered user
-#   When I leave the password field empty
-#   And I fill the username field
-#   And I press submit
-#   Then A validation message "Password is required" should be displayed
+Scenario: The user submits the form with password empty
+  Given An unregistered user
+  When I leave the password field empty and I fill the username field and I press submit
+  Then A validation message "Password is required" should be displayed
 
 # Scenario: The user submits the form with a username already registered
 #   Given A user with username "existinguser" is already registered
