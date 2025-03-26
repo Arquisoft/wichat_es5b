@@ -27,7 +27,7 @@ const Ranking = () => {
 
     return (
         <div >
-            <Button sx={{"mt":2}} variant="contained" color="primary" onClick= {() => mostrarRanking()}>Ranking</Button>
+            <Button variant="primary" sx={{color:"#fecd24",fontSize: "1.1rem"}} onClick= {() => mostrarRanking()}>RANKING</Button>
             <Dialog open={show} onClose={()=> setShow(false)}>
                 <DialogContent>
                     <DialogTitle>Ranking</DialogTitle>

@@ -4,11 +4,10 @@ import axios from 'axios';
 import { Container, Typography, TextField, Button, Snackbar, Alert } from '@mui/material';
 import { Typewriter } from "react-simple-typewriter";
 import Game from './game/GameQuestion';
-import History from './History';
-import Ranking from './Ranking';
 
 
-const Login = () => {
+
+const Login = ({userForHistory}) => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -22,7 +21,10 @@ const Login = () => {
 
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
-  
+
+  const loginHistory = () =>{
+    userForHistory(username);
+  }
 
   const loginUser = async () => {
     try {
@@ -70,6 +72,8 @@ const Login = () => {
     );
   }
 
+  
+
   return (
     <Container
   component="main"
@@ -100,10 +104,7 @@ const Login = () => {
             Start Game
           </Button>
 
-          
-          <History username={username} />
 
-          <Ranking />
         </div>
       ) : (
         <div>
@@ -125,7 +126,7 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button variant="contained" color="primary" onClick={loginUser} sx={{color: "#d87152", backgroundColor: "#faf5ea"}}>
+          <Button variant="contained" color="primary" onClick={()=>{loginUser();loginHistory();}} sx={{color: "#d87152", backgroundColor: "#faf5ea"}}>
             Login
           </Button>
           <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />
