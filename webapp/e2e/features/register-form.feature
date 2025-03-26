@@ -5,11 +5,10 @@ Scenario: The user is not registered in the site
   When I fill the data in the form and press submit
   Then A confirmation message should be shown in the screen
 
-# Scenario: The user submits the form without filling username and password
-#   Given An unregistered user
-#   When I leave the username and password fields empty
-#   And I press submit
-#   Then A validation message "Username and password are required" should be displayed
+Scenario: The user submits the form without filling username and password
+  Given An unregistered user
+  When I leave the username and password fields empty and i press submit
+  Then A validation message "Username and password are required" should be displayed
 
 # Scenario: The user submits the form with username empty
 #   Given An unregistered user
