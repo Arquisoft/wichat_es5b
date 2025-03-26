@@ -6,15 +6,17 @@ const databaseServiceUrl = process.env.DATABASE_URL || 'http://localhost:8006';
 
 export default function GameOver({ correct, wrong, username }) {
   const saveHistorial = async () =>{
-    await axios.post(databaseServiceUrl + "/newHistory", {username: username, date: new Date().toISOString(), correctAnswers: correct, wrongAnswers: wrong});
+    const data = {username: username, date: new Date().toISOString(), correctAnswers: correct, wrongAnswers: wrong};
+    await axios.post(databaseServiceUrl + "/newHistory", data);
   }
   const saveRanking = async () =>{
-    await axios.post(databaseServiceUrl + "/newRanking", {username: username, correctAnswers: correct, wrongAnswers: wrong});
+    const data={username: username, correctAnswers: correct, wrongAnswers: wrong}
+    await axios.post(databaseServiceUrl + "/newRanking", data);
   }
   useEffect(()=>{
     saveHistorial();
     saveRanking();
-  });
+  },[]);
 
     return (
       <div className="max-w-lg mx-auto p-5 bg-white shadow-lg rounded-lg text-center">
