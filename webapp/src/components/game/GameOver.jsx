@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect } from "react";
 
 
-const databaseServiceUrl = process.env.DATABASE_URL || 'http://localhost:8006';
+const databaseServiceUrl = process.env.DATABASE_URI || 'http://localhost:8006';
 
 export default function GameOver({ correct, wrong, username }) {
   const saveHistorial = async () =>{
