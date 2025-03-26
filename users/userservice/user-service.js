@@ -48,7 +48,8 @@ app.post('/adduser', async (req, res) => {
         validatePassword(req.body.password);
 
         // Verificar si el usuario ya existe en la base de datos
-        const existingUser = await User.findOne({ username: String(req.body.username) });
+        let query = { username: req.body.username.toString() };
+        const existingUser = await User.findOne(query);
         if (existingUser) {
             return res.status(400).json({ error: 'El nombre de usuario ya está en uso' });
         }
