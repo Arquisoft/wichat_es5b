@@ -27,6 +27,12 @@ const Login = ({userForHistory}) => {
   }
 
   const loginUser = async () => {
+    // Verifica si los campos están vacíos
+    if (!username || !password) {
+      setError("Username and password are required");
+      return; // Detiene la ejecución si hay campos vacíos
+    }
+
     try {
       const response = await axios.post(`${apiEndpoint}/login`, { username, password });
 
@@ -115,12 +121,14 @@ const Login = ({userForHistory}) => {
             margin="normal"
             fullWidth
             label="Username"
+            name="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <TextField
             margin="normal"
             fullWidth
+            name="password"
             label="Password"
             type="password"
             value={password}
