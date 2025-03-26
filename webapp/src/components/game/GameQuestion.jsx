@@ -18,7 +18,7 @@ export default function MovieQuiz() {
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
   const [loading, setLoading] = useState(true);
   const PREGUNTASNUM = 6;
-  /*
+  
   useEffect(() => {
     nextQuestion();
   }, []);
@@ -37,7 +37,7 @@ export default function MovieQuiz() {
       setWrongAnswers(wrongAnswers + 1);
       nextQuestion();
     }
-  }, [timeLeft]);*/
+  }, [timeLeft]);
 
   const nextQuestion = async () => {
       
@@ -57,32 +57,6 @@ export default function MovieQuiz() {
     setLoading(false);
     
   };
-
-  useEffect(() => {
-    
-    if (timeLeft === 0) {
-      // setWrongAnswers((prev) => prev + 1);
-      // setQuestionsAnswered((prev) => prev + 1);
-
-      handleOptionClick();
-      
-      if (questionsAnswered >= PREGUNTASNUM) {
-        setGameFinished(true);
-      } else {
-        nextQuestion();
-      }
-      return; // Evita seguir con el temporizador
-    }
-  
-    const timer = setInterval(() => {
-      if (!gameFinished) {
-        setTimeLeft((prev) => Math.max(prev - 1, 0));
-      }
-    }, 1000);
-  
-    return () => clearInterval(timer);
-  }, [timeLeft, gameFinished]);
-  
 
   const handleOptionClick = async (selectedAnswer) => {
     setSelectedOption(selectedAnswer);
