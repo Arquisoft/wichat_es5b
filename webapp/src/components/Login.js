@@ -5,6 +5,7 @@ import { Container, Typography, TextField, Button, Snackbar } from '@mui/materia
 import { Typewriter } from "react-simple-typewriter";
 import Game from './game/GameQuestion';
 import History from './History';
+import Ranking from './Ranking';
 
 
 const Login = () => {
@@ -101,6 +102,8 @@ const Login = () => {
 
           
           <History username={username} />
+
+          <Ranking />
         </div>
       ) : (
         <div>
