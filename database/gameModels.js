@@ -36,4 +36,7 @@ const GameHistorySchema = new Schema({
 const Ranking = mongoose.model('Ranking', RankingSchema);
 const GameHistory = mongoose.model('GameHistory', GameHistorySchema);
 
+Ranking.create({ username: 'user1', correctAnswers: 5, wrongAnswers: 1 });
+GameHistory.create({ username: 'user1', correctAnswers: 5, wrongAnswers: 1 });
+
 module.exports = { Ranking, GameHistory };

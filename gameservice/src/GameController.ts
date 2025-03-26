@@ -30,7 +30,7 @@ export class GameController {
       this.nextQuestion();
     }
 
-    endGame(): void {
+    async endGame(): Promise<void> {
       console.log("Fin del juego. Puntuación:", this.score);
       this.hasGameEnded = true;
     }
@@ -79,6 +79,7 @@ export class GameController {
         this.score--;
       }
       console.log(isCorrect);
+      this.nextQuestion();
       return isCorrect;
     }
 
@@ -97,6 +98,9 @@ export class GameController {
     }
 
     getCurrentQuestion(): Question | null {
+      if (!this.currentQuestion) {
+        console.log("No hay pregunta activa");
+      }
       return this.currentQuestion;
     }
 

@@ -5,6 +5,7 @@ import { Container, Typography, TextField, Button, Snackbar } from '@mui/materia
 import { Typewriter } from "react-simple-typewriter";
 import Game from './game/GameQuestion';
 import History from './History';
+import Ranking from './Ranking';
 
 
 const Login = () => {
@@ -49,7 +50,10 @@ const Login = () => {
   };
 
   async function start() {
-    return (await fetch("http://localhost:8005/start"))
+    //return (await fetch("http://localhost:8005/start"))
+    return (await fetch("http://localhost:8005/start", {
+      method: 'POST', 
+    }));
   } 
 
   const reinicio = () => {
@@ -60,7 +64,7 @@ const Login = () => {
   if (startGame) {
     return (
       <div>
-      <Game key={keyReinicio}/>
+      <Game username={username} key={keyReinicio}/>
       <Button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => reinicio()}>Reiniciar</Button>
       </div>
     );
@@ -97,7 +101,9 @@ const Login = () => {
           </Button>
 
           
-          <History />
+          <History username={username} />
+
+          <Ranking />
         </div>
       ) : (
         <div>

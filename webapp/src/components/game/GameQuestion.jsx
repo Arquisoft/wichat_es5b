@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import './GameQuestion.css';
 import GameOver from "./GameOver";
 import HintsButtons from '../HintsButtons';
+import Chatbot from '../Chatbot';
 import LoadingScreen from '../LoadingScreen';
-import History from '../History';
 import axios from 'axios';
 
 const gameUrl = process.env.GAMECONTROLLER_URL || 'http://localhost:8005';
 
-export default function MovieQuiz() {
+export default function MovieQuiz({username}) {
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [timeLeft, setTimeLeft] = useState(30);
@@ -18,6 +18,25 @@ export default function MovieQuiz() {
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
   const [loading, setLoading] = useState(true);
   const PREGUNTASNUM = 6;
+  const user = {username}.username
+
+  const nextQuestion = async () => {
+    
+    setLoading(true);
+    const question = await getQuestion();
+
+    if (!question || Object.keys(question).length === 0) {
+      console.error("Error: no se recibió una nueva pregunta.");
+      return;
+    }
+
+    console.log("Nueva pregunta obtenida:", question);
+
+    setCurrentQuestion(question);
+    setSelectedOption(null);
+    setTimeLeft(60);
+    setLoading(false);
+  };
   
   useEffect(() => {
     nextQuestion();
@@ -33,30 +52,20 @@ export default function MovieQuiz() {
   }, [gameFinished]);
 
   useEffect(() => {
-    if (timeLeft === 0 && !gameFinished) {
-      setWrongAnswers(wrongAnswers + 1);
-      nextQuestion();
+    if (timeLeft === 0) {
+      // setWrongAnswers((prev) => prev + 1);
+      // setQuestionsAnswered((prev) => prev + 1);
+
+      handleOptionClick();
+      
+      if (questionsAnswered >= PREGUNTASNUM) {
+        setGameFinished(true);
+      } else {
+        nextQuestion();
+      }
+      return; // Evita seguir con el temporizador
     }
   }, [timeLeft]);
-
-  const nextQuestion = async () => {
-      
-    setLoading(true);
-    const question = await getQuestion();
-
-    if (!question || Object.keys(question).length === 0) {
-      console.error("Error: no se recibió una nueva pregunta.");
-      return;
-    }
-
-    console.log("Nueva pregunta obtenida:", question);
-
-    setCurrentQuestion(question);
-    setSelectedOption(null);
-    setTimeLeft(10);
-    setLoading(false);
-    
-  };
 
   const handleOptionClick = async (selectedAnswer) => {
     setSelectedOption(selectedAnswer);
@@ -83,7 +92,7 @@ export default function MovieQuiz() {
 
   if (gameFinished) {
     endGame();
-    return <GameOver correct={correctAnswers} wrong={wrongAnswers} />
+    return <GameOver correct={correctAnswers} wrong={wrongAnswers} username ={user} />
   }
 
   async function start(){
@@ -117,14 +126,17 @@ export default function MovieQuiz() {
   
 
   async function endGame() {
-    return await axios.get(gameUrl + "/end")
+    // return await axios.get(gameUrl + "/end");
+    return (await fetch(gameUrl + "/end", {
+      method: 'POST',
+    }))
   }
 
-
+  
 
   return (
     <div>
-      {loading ? (<LoadingScreen/>) :  (<div className="max-w-xl mx-auto p-10 bg-white shadow-lg rounded-lg text-center">
+      {loading ? (<LoadingScreen/>) :  (<div className="max-w-xl mx-auto p-10 bg-white shadow-lg rounded-lg text-center margin" >
       <h2 className="text-2xl font-bold">{currentQuestion.question}</h2>
       <img src={currentQuestion.imageUrl} alt="Pregunta" className="w-full h-48 object-cover my-3 rounded" />
       <div className="grid grid-cols-1 gap-2">
@@ -152,7 +164,9 @@ export default function MovieQuiz() {
         <p className="mt-2 text-lg font-semibold">Aciertos: {correctAnswers}</p>
         
         <HintsButtons key={currentQuestion} movieName={currentQuestion.correctAnswer} />
-      
+        
+        <Chatbot movieName={currentQuestion.correctAnswer} />
+        
 
       </div>
       )}
