@@ -1,6 +1,7 @@
 import { AppBar, Toolbar, Button, IconButton, Typography } from "@mui/material"
 import "./game/GameQuestion.css"
 import History from "./History";
+import Ranking from "./Ranking";
 
 const NavMenu = ({username}) =>{
 
@@ -21,9 +22,7 @@ const NavMenu = ({username}) =>{
 
                 <History username={username}/>
 
-                <Button variant="primary" sx={{color:"#fecd24",fontSize: "1.1rem"}}>
-                RANKING
-                </Button>
+                <Ranking />
             </Toolbar>
         </AppBar>
     );
