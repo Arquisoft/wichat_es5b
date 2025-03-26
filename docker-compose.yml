@@ -10,6 +10,20 @@ services:
     networks:
       - mynetwork
 
+  database:
+    container_name: database-wichat_es5b
+    image: ghcr.io/arquisoft/wichat_es5b/database:latest
+    profiles: ["dev","prod"]
+    build: ./database
+    depends_on:
+      - mongodb
+    ports:
+      - "8006:8006"
+    networks:
+      - mynetwork
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/game
+
   authservice:
     container_name: authservice-wichat_es5b
     image: ghcr.io/arquisoft/wichat_es5b/authservice:latest
@@ -73,7 +87,7 @@ services:
     networks:
       - mynetwork
     environment:
-      WIKIDATA_SERVICE_URL: http://llmservice:8004 
+      WIKIDATA_SERVICE_URI: http://wikidataservice:8004 
 
   gatewayservice:
     container_name: gatewayservice-wichat_es5b
@@ -95,8 +109,8 @@ services:
       AUTH_SERVICE_URL: http://authservice:8002
       USER_SERVICE_URL: http://userservice:8001
       LLM_SERVICE_URL: http://llmservice:8003
-      WIKIDATA_SERVICE_URL: http://llmservice:8004
-      GAME_SERVICE_URL: http://llmservice:8005
+      WIKIDATA_SERVICE_URL: http://wikidataservice:8004
+      GAMESERVICE_URI: http://gameservice:8005
 
   webapp:
     container_name: webapp-wichat_es5b
@@ -106,10 +120,11 @@ services:
     depends_on:
       - gatewayservice
       - gameservice
+      - database
     ports:
       - "3000:3000"
     environment:
-      GAME_SERVICE_URL: http://llmservice:8005
+      GAMESERVICE_URI: http://llmservice:8005
 
   prometheus:
     image: prom/prometheus
@@ -153,3 +168,4 @@ volumes:
 networks:
   mynetwork:
     driver: bridge
+

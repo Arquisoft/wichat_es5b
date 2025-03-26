@@ -5,7 +5,7 @@ import { MovieQuestionGenerator } from "./generators/MovieQuestionGenerator";
 
 export class QuestionManager {
 
-  private wikidataUri = process.env.WIKIDATA_URI || 'http://localhost:8004';
+  private wikidataUri = process.env.WIKIDATA_SERVICE_URI || 'http://localhost:8004';
 
 
   private questions: Question[];
