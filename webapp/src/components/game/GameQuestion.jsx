@@ -41,6 +41,19 @@ export default function MovieQuiz({username}) {
   };
 
   useEffect(() => {
+    nextQuestion();
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (!gameFinished) {
+        setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [gameFinished]);
+
+  useEffect(() => {
     if (timeLeft === 0) {
       // setWrongAnswers((prev) => prev + 1);
       // setQuestionsAnswered((prev) => prev + 1);
@@ -54,17 +67,8 @@ export default function MovieQuiz({username}) {
       }
       return; // Evita seguir con el temporizador
     }
-  
-    const timer = setInterval(() => {
-      if (!gameFinished) {
-        setTimeLeft((prev) => Math.max(prev - 1, 0));
-      }
-    }, 1000);
-  
-    return () => clearInterval(timer);
-  }, [timeLeft, gameFinished]);
-  
-  
+  }, [timeLeft]);
+
 
   const handleOptionClick = async (selectedAnswer) => {
     setSelectedOption(selectedAnswer);

@@ -106,7 +106,7 @@ const Login = ({userForHistory}) => {
           <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
             Your account was created on {new Date(createdAt).toLocaleDateString()}.
           </Typography>
-          <Button variant="contained" color="primary" onClick={() => {setStartGame(true); start();}} sx={{ marginTop: 2 }}>
+          <Button variant="contained" color="primary" onClick={async () => {await start(); setStartGame(true);}} sx={{ marginTop: 2 }}>
             Start Game
           </Button>
 
