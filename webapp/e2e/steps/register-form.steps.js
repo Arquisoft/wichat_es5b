@@ -13,7 +13,7 @@ defineFeature(feature, test => {
       ? await puppeteer.launch({headless: "new", args: ['--no-sandbox', '--disable-setuid-sandbox']})
       // : await puppeteer.launch({ headless: false, slowMo: 100 });
       : await puppeteer.launch({ 
-        executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', 
+        // executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', // Only for Mac users
         headless: false, 
         slowMo: 10
       });
@@ -122,8 +122,8 @@ defineFeature(feature, test => {
     let username;
     let password
   
-    given('A user with username "existinguser" is already registered', async () => {
-      username = "existinguser";
+    given('A user with username "repeateduser" is already registered', async () => {
+      username = "repeateduser";
       password = "ValidPassword123";
       await expect(page).toClick("button", { text: "Don't have an account? Register here." });
       await expect(page).toFill('input[name="username"]', username);
@@ -132,7 +132,7 @@ defineFeature(feature, test => {
       await expect(page).toMatchElement("div", { text: "Usuario añadido correctamente" });
     });
   
-    when('I fill the username field with "existinguser" and I fill the password field and I press submit', async () => {
+    when('I fill the username field with "repeateduser" and I fill the password field and I press submit', async () => {
       await expect(page).toFill('input[name="username"]', username);
       await expect(page).toFill('input[name="password"]', password);
       await expect(page).toClick('button', { text: 'Add User' });

@@ -23,14 +23,14 @@ Scenario: The user logs in with both incorrect username and password
 Scenario: The user submits the form without filling the password field
   Given A registered user with username "existinguser" and password "ValidPassword123"
   When I fill the username field with "existinguser" and I leave the password field empty and I press submit
-  Then A validation message "Username and password are required" should be displayed
+  Then A validation message "Invalid credentials" should be displayed
 
 Scenario: The user submits the form without filling the username field
   Given A registered user with username "existinguser" and password "ValidPassword123"
   When I leave the username field empty and I fill the password field with "ValidPassword123" and I press submit
-  Then A validation message "Username and password are required" should be displayed
+  Then A validation message "Invalid credentials" should be displayed
 
 Scenario: The user submits the form without filling username and password
   Given A registered user with username "existinguser" and password "ValidPassword123"
   When I leave both the username and password fields empty and I press submit
-  Then A validation message "Username and password are required" should be displayed
+  Then A validation message "Invalid credentials" should be displayed

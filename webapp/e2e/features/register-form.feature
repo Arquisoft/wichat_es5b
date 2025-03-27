@@ -21,8 +21,8 @@ Scenario: The user submits the form with password empty
   Then A validation message "El campo contraseña es obligatorio y no puede estar vacío" should be displayed
 
 Scenario: The user submits the form with a username already registered
-  Given A user with username "existinguser" is already registered
-  When I fill the username field with "existinguser" and I fill the password field and I press submit
+  Given A user with username "repeateduser" is already registered
+  When I fill the username field with "repeateduser" and I fill the password field and I press submit
   Then A validation message "El nombre de usuario ya está en uso" should be displayed
 
 Scenario: The user submits the form with a password without an uppercase letter

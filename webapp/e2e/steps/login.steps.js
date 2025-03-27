@@ -13,8 +13,9 @@ defineFeature(feature, test => {
       ? await puppeteer.launch({headless: "new", args: ['--no-sandbox', '--disable-setuid-sandbox']})
       // : await puppeteer.launch({ headless: false, slowMo: 100 });
       : await puppeteer.launch({ 
-        executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', 
-        headless: false, slowMo: 15 
+        // executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', // Only for Mac users
+        headless: false, 
+        slowMo: 10
       });
     page = await browser.newPage();
     //Way of setting up the timeout
@@ -96,7 +97,7 @@ defineFeature(feature, test => {
     });
 
     then('A validation message "Invalid credentials" should be displayed', async () => {
-        await expect(page).toMatchElement('div', { text: "Invalid credentials" });
+        await expect(page).toMatchElement('div', { text: `Invalid credentials` });
     });
 
   })
@@ -119,7 +120,7 @@ defineFeature(feature, test => {
     });
 
     then('A validation message "Invalid credentials" should be displayed', async () => {
-        await expect(page).toMatchElement('div', { text: "Invalid credentials" });
+        await expect(page).toMatchElement('div', { text: `Invalid credentials` });
     });
 
   })
@@ -142,7 +143,7 @@ defineFeature(feature, test => {
     });
 
     then('A validation message "Invalid credentials" should be displayed', async () => {
-        await expect(page).toMatchElement('div', { text: "Invalid credentials" });
+        await expect(page).toMatchElement('div', { text: `Invalid credentials` });
     });
 
   })
@@ -164,8 +165,8 @@ defineFeature(feature, test => {
         await expect(page).toClick('button', { text: 'Login' });
     });
 
-    then('A validation message "Username and password are required" should be displayed', async () => {
-        await expect(page).toMatchElement('div', { text: "Username and password are required" });
+    then('A validation message "Invalid credentials" should be displayed', async () => {
+        await expect(page).toMatchElement('div', { text: `Invalid credentials` });
     });
 
   })  
@@ -187,8 +188,8 @@ defineFeature(feature, test => {
         await expect(page).toClick('button', { text: 'Login' });
     });
 
-    then('A validation message "Username and password are required" should be displayed', async () => {
-        await expect(page).toMatchElement('div', { text: "Username and password are required" });
+    then('A validation message "Invalid credentials" should be displayed', async () => {
+        await expect(page).toMatchElement('div', { text: `Invalid credentials` });
     });
 
   })  
@@ -210,8 +211,8 @@ defineFeature(feature, test => {
         await expect(page).toClick('button', { text: 'Login' });
     });
 
-    then('A validation message "Username and password are required" should be displayed', async () => {
-        await expect(page).toMatchElement('div', { text: "Username and password are required" });
+    then('A validation message "Invalid credentials" should be displayed', async () => {
+        await expect(page).toMatchElement('div', { text: `Invalid credentials` });
     });
 
   }) 
