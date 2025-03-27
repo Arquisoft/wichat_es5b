@@ -76,9 +76,9 @@ export default function MovieQuiz({username}) {
     const res = await answer(selectedAnswer);
     setQuestionsAnswered((prev) => prev + 1);
   
-    if (res && res.result !== undefined) {
-      console.log(res.result);
-      if (res.result) setCorrectAnswers((prev) => prev + 1);
+    if (res !== undefined) {
+      
+      if (res) setCorrectAnswers((prev) => prev + 1);
       else setWrongAnswers((prev) => prev + 1);
     } else {
       console.error("Error: respuesta inesperada del servidor", res);

@@ -36,8 +36,8 @@ app.get("/question", (req: any, res: any) => {
 // Petición para obtener respuesta
 app.post("/answer", (req: any, res: any) => {
   const selectedAnswer = req.body.answer;
-  gameController.submitAnswer(selectedAnswer);
-  res.sendStatus(200);
+  const prueba = gameController.submitAnswer(selectedAnswer);
+  res.status(200).json(prueba);
 });
 
 app.listen(8005, () => {
