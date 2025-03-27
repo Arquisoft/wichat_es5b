@@ -12,7 +12,11 @@ defineFeature(feature, test => {
     browser = process.env.GITHUB_ACTIONS
       ? await puppeteer.launch({headless: "new", args: ['--no-sandbox', '--disable-setuid-sandbox']})
       // : await puppeteer.launch({ headless: false, slowMo: 100 });
-      : await puppeteer.launch({ headless: true, slowMo: 1 });
+      : await puppeteer.launch({ 
+        executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', 
+        headless: false, 
+        slowMo: 10
+      });
     page = await browser.newPage();
     //Way of setting up the timeout
     setDefaultOptions({ timeout: 10000 })
@@ -36,8 +40,8 @@ defineFeature(feature, test => {
     let password;
 
     given('An unregistered user', async () => {
-      username = "pablo"
-      password = "pabloasw"
+      username = "userasw";
+      password = "ValidPassword123";
       await expect(page).toClick("button", { text: "Don't have an account? Register here." });
     });
 
@@ -48,7 +52,7 @@ defineFeature(feature, test => {
     });
 
     then('A confirmation message should be shown in the screen', async () => {
-        await expect(page).toMatchElement("div", { text: "User added successfully" });
+        await expect(page).toMatchElement("div", { text: "Usuario añadido correctamente" });
     });
 
   })
@@ -65,8 +69,8 @@ defineFeature(feature, test => {
       await expect(page).toClick('button', { text: 'Add User' });
     });
 
-    then('A validation message "Error: Username and password are required" should be displayed', async () => {
-      await expect(page).toMatchElement("div", { text: "Error: Username and password are required" });
+    then('A validation message "El campo nombre de usuario es obligatorio y no puede estar vacío" should be displayed', async () => {
+      await expect(page).toMatchElement("div", { text: `El campo nombre de usuario es obligatorio y no puede estar vacío` });
     });
 
   })
@@ -76,7 +80,7 @@ defineFeature(feature, test => {
     let password;
 
     given('An unregistered user', async () => {
-      password = "passwordasw"
+      password = "ValidPassword123"
       await expect(page).toClick("button", { text: "Don't have an account? Register here." });
     });
 
@@ -86,8 +90,8 @@ defineFeature(feature, test => {
       await expect(page).toClick('button', { text: 'Add User' });
     });
 
-    then('A validation message "Error: Username and password are required" should be displayed', async () => {
-      await expect(page).toMatchElement("div", { text: "Error: Username and password are required" });
+    then('A validation message "El campo nombre de usuario es obligatorio y no puede estar vacío" should be displayed', async () => {
+      await expect(page).toMatchElement("div", { text: `El campo nombre de usuario es obligatorio y no puede estar vacío` });
     });
 
   })
@@ -107,8 +111,8 @@ defineFeature(feature, test => {
       await expect(page).toClick('button', { text: 'Add User' });
     });
 
-    then('A validation message "Error: Username and password are required" should be displayed', async () => {
-      await expect(page).toMatchElement("div", { text: "Error: Username and password are required" });
+    then('A validation message "El campo contraseña es obligatorio y no puede estar vacío" should be displayed', async () => {
+      await expect(page).toMatchElement("div", { text: `El campo contraseña es obligatorio y no puede estar vacío` });
     });
 
   })
@@ -120,12 +124,12 @@ defineFeature(feature, test => {
   
     given('A user with username "existinguser" is already registered', async () => {
       username = "existinguser";
-      password = "correctpassword";
+      password = "ValidPassword123";
       await expect(page).toClick("button", { text: "Don't have an account? Register here." });
       await expect(page).toFill('input[name="username"]', username);
       await expect(page).toFill('input[name="password"]', password);
       await expect(page).toClick('button', { text: 'Add User' });
-      await expect(page).toMatchElement("div", { text: "User created successfully" });
+      await expect(page).toMatchElement("div", { text: "Usuario añadido correctamente" });
     });
   
     when('I fill the username field with "existinguser" and I fill the password field and I press submit', async () => {
@@ -134,13 +138,81 @@ defineFeature(feature, test => {
       await expect(page).toClick('button', { text: 'Add User' });
     });
   
-    then('A validation message "Username is already taken" should be displayed', async () => {
-      await expect(page).toMatchElement("div", { text: "Error: Username is already taken" });
+    then('A validation message "El nombre de usuario ya está en uso" should be displayed', async () => {
+      await expect(page).toMatchElement("div", { text: "El nombre de usuario ya está en uso" });
     });
   
   });
-  
 
+  test('The user submits the form with a password without an uppercase letter', ({ given, when, then }) => {
+
+    let username;
+    let password
+  
+    given('An unregistered user', async () => {
+      username = "userasw";
+      password = "password1";
+      await expect(page).toClick("button", { text: "Don't have an account? Register here." });
+    });
+
+    when('I fill the username field with "userasw" and I fill the password field with "password1" and I press submit', async () => {
+      await expect(page).toFill('input[name="username"]', username);
+      await expect(page).toFill('input[name="password"]', password);
+      await expect(page).toClick('button', { text: 'Add User' });
+    });
+
+    then('A validation message "La contraseña debe tener al menos una letra mayúscula, un número y 6 caracteres." should be displayed', async () => {
+      await expect(page).toMatchElement("div", { text: "La contraseña debe tener al menos una letra mayúscula, un número y 6 caracteres." });
+    });
+
+  });
+
+  test('The user submits the form with a password without a number', ({ given, when, then }) => {
+
+    let username;
+    let password
+  
+    given('An unregistered user', async () => {
+      username = "userasw";
+      password = "Password";
+      await expect(page).toClick("button", { text: "Don't have an account? Register here." });
+    });
+
+    when('I fill the username field with "userasw" and I fill the password field with "Password" and I press submit', async () => {
+      await expect(page).toFill('input[name="username"]', username);
+      await expect(page).toFill('input[name="password"]', password);
+      await expect(page).toClick('button', { text: 'Add User' });
+    });
+
+    then('A validation message "La contraseña debe tener al menos una letra mayúscula, un número y 6 caracteres." should be displayed', async () => {
+      await expect(page).toMatchElement("div", { text: "La contraseña debe tener al menos una letra mayúscula, un número y 6 caracteres." });
+    });
+
+  });
+
+  test('The user submits the form with a password shorter than 6 characters', ({ given, when, then }) => {
+
+    let username;
+    let password
+  
+    given('An unregistered user', async () => {
+      username = "userasw";
+      password = "Pass1";
+      await expect(page).toClick("button", { text: "Don't have an account? Register here." });
+    });
+
+    when('I fill the username field with "userasw" and I fill the password field with "Pass1" and I press submit', async () => {
+      await expect(page).toFill('input[name="username"]', username);
+      await expect(page).toFill('input[name="password"]', password);
+      await expect(page).toClick('button', { text: 'Add User' });
+    });
+
+    then('A validation message "La contraseña debe tener al menos una letra mayúscula, un número y 6 caracteres." should be displayed', async () => {
+      await expect(page).toMatchElement("div", { text: "La contraseña debe tener al menos una letra mayúscula, un número y 6 caracteres." });
+    });
+
+  });
+  
   afterAll(async ()=>{
     if (page) {
       await page.close();
