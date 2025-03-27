@@ -19,16 +19,40 @@ mongoose.connect(mongoUri);
 // Function to validate required fields in the request body
 function validateRequiredFields(req, requiredFields) {
     for (const field of requiredFields) {
-      if (!(field in req.body)) {
-        throw new Error(`Missing required field: ${field}`);
+      let fieldName = field;
+        if (field === 'username') {
+            fieldName = 'nombre de usuario';
+        } else if (field === 'password') {
+            fieldName = 'contraseña';
+        }
+
+      if (!req.body[field] || req.body[field].trim() === '') {
+        throw new Error(`El campo ${fieldName} es obligatorio y no puede estar vacío`);
       }
     }
+}
+
+function validatePassword(password) {
+  const regex = /^(?=.*[A-Z])(?=.*\d).{6,}$/; // Al menos 1 mayúscula, 1 número y mínimo 6 caracteres
+  if (!regex.test(password)) {
+      throw new Error("La contraseña debe tener al menos una letra mayúscula, un número y 6 caracteres.");
+  }
 }
 
 app.post('/adduser', async (req, res) => {
     try {
         // Check if required fields are present in the request body
         validateRequiredFields(req, ['username', 'password']);
+
+        // Validar requisitos de la contraseña
+        validatePassword(req.body.password);
+
+        // Verificar si el usuario ya existe en la base de datos
+        let query = { username: req.body.username.toString() };
+        const existingUser = await User.findOne(query);
+        if (existingUser) {
+            return res.status(400).json({ error: 'El nombre de usuario ya está en uso' });
+        }
 
         // Encrypt the password before saving it
         const hashedPassword = await bcrypt.hash(req.body.password, 10);

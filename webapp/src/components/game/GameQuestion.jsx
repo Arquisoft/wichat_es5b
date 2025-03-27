@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import './GameQuestion.css';
 import GameOver from "./GameOver";
 import HintsButtons from '../HintsButtons';
+import Chatbot from '../Chatbot';
 import LoadingScreen from '../LoadingScreen';
 import axios from 'axios';
 
-const gameUrl = process.env.GAMECONTROLLER_URL || 'http://localhost:8005';
+const gameUrl = process.env.GAMECONTROLLER_URI || 'http://localhost:8005';
 
 export default function MovieQuiz({username}) {
   const [currentQuestion, setCurrentQuestion] = useState("");
@@ -34,7 +35,7 @@ export default function MovieQuiz({username}) {
 
     setCurrentQuestion(question);
     setSelectedOption(null);
-    setTimeLeft(10);
+    setTimeLeft(60);
     setLoading(false);
     
   };
@@ -124,14 +125,17 @@ export default function MovieQuiz({username}) {
   
 
   async function endGame() {
-    return await axios.get(gameUrl + "/end")
+    // return await axios.get(gameUrl + "/end");
+    return (await fetch(gameUrl + "/end", {
+      method: 'POST',
+    }))
   }
 
   
 
   return (
     <div>
-      {loading ? (<LoadingScreen/>) :  (<div className="max-w-xl mx-auto p-10 bg-white shadow-lg rounded-lg text-center">
+      {loading ? (<LoadingScreen/>) :  (<div className="max-w-xl mx-auto p-10 bg-white shadow-lg rounded-lg text-center margin" >
       <h2 className="text-2xl font-bold">{currentQuestion.question}</h2>
       <img src={currentQuestion.imageUrl} alt="Pregunta" className="w-full h-48 object-cover my-3 rounded" />
       <div className="grid grid-cols-1 gap-2">
@@ -159,7 +163,9 @@ export default function MovieQuiz({username}) {
         <p className="mt-2 text-lg font-semibold">Aciertos: {correctAnswers}</p>
         
         <HintsButtons key={currentQuestion} movieName={currentQuestion.correctAnswer} />
-      
+        
+        <Chatbot movieName={currentQuestion.correctAnswer} />
+        
 
       </div>
       )}

@@ -1,13 +1,13 @@
 // src/components/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Container, Typography, TextField, Button, Snackbar } from '@mui/material';
+import { Container, Typography, TextField, Button, Snackbar, Alert } from '@mui/material';
 import { Typewriter } from "react-simple-typewriter";
 import Game from './game/GameQuestion';
-import History from './History';
 
 
-const Login = () => {
+
+const Login = ({userForHistory}) => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -21,7 +21,10 @@ const Login = () => {
 
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
-  
+
+  const loginHistory = () =>{
+    userForHistory(username);
+  }
 
   const loginUser = async () => {
     // Verifica si los campos están vacíos
@@ -55,7 +58,10 @@ const Login = () => {
   };
 
   async function start() {
-    return (await fetch("http://localhost:8005/start"))
+    //return (await fetch("http://localhost:8005/start"))
+    return (await fetch("http://localhost:8005/start", {
+      method: 'POST', 
+    }));
   } 
 
   const reinicio = () => {
@@ -71,6 +77,8 @@ const Login = () => {
       </div>
     );
   }
+
+  
 
   return (
     <Container
@@ -102,8 +110,7 @@ const Login = () => {
             Start Game
           </Button>
 
-          
-          <History username={username} />
+
         </div>
       ) : (
         <div>
@@ -127,12 +134,22 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button variant="contained" color="primary" onClick={loginUser} sx={{color: "#d87152", backgroundColor: "#faf5ea"}}>
+          <Button variant="contained" color="primary" onClick={()=>{loginUser();loginHistory();}} sx={{color: "#d87152", backgroundColor: "#faf5ea"}}>
             Login
           </Button>
           <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />
+          {/* Mensaje de error en rojo con Alert */}
           {error && (
-            <Snackbar open={!!error} autoHideDuration={6000} onClose={() => setError('')} message={`Error: ${error}`} />
+            <Snackbar
+              open={!!error}
+              autoHideDuration={6000}
+              onClose={() => setError('')}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+              <Alert onClose={() => setError('')} severity="error" sx={{ width: '100%' }}>
+                {error}
+              </Alert>
+            </Snackbar>
           )}
         </div>
       )}
