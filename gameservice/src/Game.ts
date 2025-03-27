@@ -14,9 +14,9 @@ app.use(express.json());
 app.use(cors());
 
 // Petición para iniciar el juego
-app.post("/start", (req: any, res: any) => {
+app.post("/start", async (req: any, res: any) => {
   console.log("Juego iniciado");
-  gameController.startGame();
+  await gameController.startGame();
   res.sendStatus(200);
 });
 
