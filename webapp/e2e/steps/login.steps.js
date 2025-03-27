@@ -12,7 +12,10 @@ defineFeature(feature, test => {
     browser = process.env.GITHUB_ACTIONS
       ? await puppeteer.launch({headless: "new", args: ['--no-sandbox', '--disable-setuid-sandbox']})
       // : await puppeteer.launch({ headless: false, slowMo: 100 });
-      : await puppeteer.launch({ headless: true, slowMo: 1 });
+      : await puppeteer.launch({ 
+        //executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', 
+        headless: false, slowMo: 200 
+      });
     page = await browser.newPage();
     //Way of setting up the timeout
     setDefaultOptions({ timeout: 10000 })
