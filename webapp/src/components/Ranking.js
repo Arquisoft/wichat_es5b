@@ -4,7 +4,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Table, Table
 
 
 
-const databaseServiceUrl = process.env.DATABASE_URL || 'http://localhost:8006';
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
 const Ranking = () => {
     const [ranking, setRanking] = useState([]);
@@ -12,7 +12,7 @@ const Ranking = () => {
 
 
     const getRanking= async () =>{
-        const res= await axios.get(databaseServiceUrl + "/ranking");
+        const res= await axios.get(apiEndpoint + "/ranking");
         setRanking(res.data);
     }
 

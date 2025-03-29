@@ -27,7 +27,7 @@ jest.mock('./GameOver', () => ({ correct, wrong }) => (
 ));
 
 
-const gameUrl = process.env.GAMECONTROLLER_URL || 'http://localhost:8005';
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
 describe('GameQuestion Component', () => {
   const mockQuestion = {
@@ -156,7 +156,7 @@ describe('GameQuestion Component', () => {
     
     //veerifica que axios.post se ha llmaado
     expect(axios.post).toHaveBeenCalledWith(
-      `${gameUrl}/answer`,
+      `${apiEndpoint}/answer`,
       { answer: mockQuestion.options[0] }
     );
   });

@@ -117,8 +117,10 @@ app.post('/history', async (req, res) => {
 
 // Ruta para agregar una nueva entrada al historial de partidas
 app.post('/newHistory', async (req, res) => {
+  console.log("history")
   console.log(req.body);
   const { username, date, correctAnswers, wrongAnswers } = req.body;
+  
 
     // Conversión a número
     const correct = Number(correctAnswers);
