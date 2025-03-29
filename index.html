@@ -1070,6 +1070,10 @@ A continuación, se presentan los principales aspectos que influirán en el desa
 <td class="tableblock halign-left valign-top"><p class="tableblock">Pruebas</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">El proyecto deberá incluir distintos tipos de pruebas para garantizar el resultado esperado y un producto de calidad (pruebas de aceptación, de carga, cobertura, etc.).</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">API</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">El sistema debera proporcionar una API para acceder al juego como a los datos del mismo y esta debera estar documentada y ser abierta.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1205,7 +1209,7 @@ entradas y las salidas</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Contexto%20negocio.png" alt="Contexto negocio" width="645" height="150">
+<img src="./images/Contexto%20negocio.png" alt="Contexto negocio" width="640" height="146">
 </div>
 </div>
 <div class="ulist">
@@ -1231,12 +1235,12 @@ entradas y las salidas</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Mistral</p>
+<p>LLM</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Modelo de Lenguaje creado por Empathy. Es el modelo de lenguaje que usaremos para apoyar al usuario en caso de que necesite pistas.</p>
+<p>Modelo de Lenguaje llamado mistral y creado por Empathy. Es el modelo de lenguaje que usaremos para apoyar al usuario en caso de que necesite pistas.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1266,7 +1270,7 @@ mapeo mostrando las relaciones entre los canales y las entradas/salidas.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Contexto%20tecnico.png" alt="Contexto tecnico" width="972" height="502">
+<img src="./images/Contexto%20tecnico.png" alt="Contexto tecnico" width="1157" height="502">
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1307,27 +1311,47 @@ mapeo mostrando las relaciones entre los canales y las entradas/salidas.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Chat en tiempo real</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">GatewayService - WikidataService</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GatewayService - GameService</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interaccion con el juego</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GatewayService - StatsService</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Obtencion de estadisticas</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GameService - WikidataService</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Interacción con Wikidata</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WikidataService - Wikidata</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HTTPS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Obtención de imágenes y datos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Obtención de imágenes y datos de las preguntas</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">UserService - Mongo DB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">StatsService - History DB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Obtencion del historial del jugador</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">StatsService - Ranking DB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Obtencion del ranking global</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UserService - Users DB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Registro</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AuthService - Mongo DB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AuthService - Users DB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Inicio de sesión</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">LLMService - Mistral</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LLMService - LLM</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HTTPS</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Chat en tiempo real</p></td>
 </tr>
@@ -1582,7 +1606,7 @@ mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Vision%20general.png" alt="Vision general" width="511" height="150">
+<img src="./images/Vision%20general.png" alt="Vision general" width="620" height="146">
 </div>
 </div>
 <div class="sect3">
@@ -1612,7 +1636,7 @@ mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Es un servicio externo a la aplicación, utilizado por esta, para obtener información y generar las preguntas.</em></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Mistral</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>LLM</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Es un servicio externo a la aplicación, utilizado por esta, para obtener pistas a partir de la información de wikidata.</em></p></td>
 </tr>
 </tbody>
@@ -1630,7 +1654,7 @@ mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Nivel%202.png" alt="Nivel 2" width="761" height="269">
+<img src="./images/Nivel%202.png" alt="Nivel 2" width="879" height="265">
 </div>
 </div>
 <div class="sect3">
@@ -1660,7 +1684,7 @@ mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Es el componente que manejala parte lógica del juego. También se encarga de almacenar y recuperar los datos de la base de datos. Utiliza las APIs wikidata y la correspondiente al llm.</em></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>MongoDB</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Database</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Sistema de base de datos NoSQL diseñado para almacenar grandes volúmenes de datos de manera flexible y escalable.</em></p></td>
 </tr>
 <tr>
@@ -1668,7 +1692,7 @@ mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Base de conocimiento colaborativa y estructurada. Almacena datos y permite la utilización de estos al proyecto. Estos datos se obtienen a través de su API.</em></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Mistral</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>LLM</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Modelo de lenguaje que permite a la aplicación interactuar con él a través de su API.</em></p></td>
 </tr>
 </tbody>
@@ -1686,7 +1710,7 @@ mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Backend.png" alt="Backend" width="798" height="569">
+<img src="./images/Backend.png" alt="Backend" width="971" height="569">
 </div>
 </div>
 <div class="sect3">
@@ -1720,8 +1744,16 @@ mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Servicio de modelo de lenguaje, utilizado para la generación de pistas a partir de la información obtenido de wikidata.</em></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>GameService</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Servicio utilizado para la logica del juego y obtencion de las preguntas.</em></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>WikidataService</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Servicio utilizado para la obtención de información de wikidata.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>StatsService</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Servicio utilizado para la obtención del historial de cada usuario y del ranking global del juego.</em></p></td>
 </tr>
 </tbody>
 </table>
@@ -1945,7 +1977,7 @@ conexiones físicas entre ellos</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/arquitectura.png" alt="arquitectura" width="938" height="885">
+<img src="./images/arquitectura.png" alt="arquitectura" width="1394" height="929">
 </div>
 </div>
 <div class="dlist">
@@ -1982,23 +2014,23 @@ las llamadas a la misma seran mas rapidas que si se encontrase fuera de la misma
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">WebApp</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Es el frontend de nuestra aplicación</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Azure</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio que va a hostear el servidor en el que estara almacenada nuestra aplicación</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BBDD MongoDB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Es la base de datos donde almacenaremos la información de los usuarios</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WebApp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Es el frontend de nuestra aplicación</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Gatewayservice</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio mediante el cual llamamos al resto de los servicios de la aplicacion, tanto internos como externos</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">authservice</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authservice</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio de autenticaciones de los usuarios</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">userservice</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Userservice</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio que almacena a los usuarios</p></td>
 </tr>
 <tr>
@@ -2006,8 +2038,20 @@ las llamadas a la misma seran mas rapidas que si se encontrase fuera de la misma
 <td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio que realizará las llamadas al LLM</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Azure</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio que va a hostear el servidor en el que estara almacenada nuestra aplicación</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GameService</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio que nos facilitará la información de las preguntas y la logica del juego</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WikidataService</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio que obtendra la información para las peguntas de wikidata</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">StatsService</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio que nos facilitará las estadisticas de los jugadores y el ranking global del juego</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Database</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Es la base de datos donde almacenaremos la información de los usuarios y las estadisticas de cada uno</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">LLM</p></td>
@@ -2737,6 +2781,14 @@ reducir la deuda técnica.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Back-end</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Parte de una aplicación que gestiona la lógica de negocio, el procesamiento de datos y la comunicación con la base de datos, funcionando en el servidor y respondiendo a las solicitudes del front-end.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Modelo extenso de lenguaje(LLM)</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Modelo de inteligencia artificial entrenado con grandes volúmenes de texto para comprender y generar lenguaje natural.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>ChatBot</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Programa de inteligencia artificial diseñado para simular conversaciones con usuarios, respondiendo preguntas y realizando tareas de manera automatizada.</em></p></td>
 </tr>
 </tbody>
 </table>
