@@ -14,6 +14,7 @@ const llmServiceUrl = process.env.LLM_SERVICE_URL || 'http://localhost:8003';
 const authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://localhost:8002';
 const userServiceUrl = process.env.USER_SERVICE_URL || 'http://localhost:8001';
 const wikiDataServiceUrl = process.env.WIKIDATA_SERVICE_URL || 'http://localhost:8004';
+const databaseUrl = process.env.DATABASE_URI || 'http://localhost:8006'
 
 app.use(cors());
 app.use(express.json());
@@ -62,12 +63,47 @@ app.post('/queryWikiData', async (req, res) => {
   try {
     // Forward the add user request to the user service
     const wikiDataResponse = await axios.post(wikiDataServiceUrl+'/ask', req.body);
-    res.json(wikiDataServiceUrl.data);
+    res.json(wikiDataResponse.data);
   } catch (error) {
     res.status(error.response.status).json({ error: error.response.data.error });
   }
 });
 
+app.post("/history", async (req, res) => {
+  try {
+    const history = await axios.post(databaseUrl+'/history',req.body);
+    res.json(history.data);
+  } catch(error) {
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
+
+app.get("/ranking", async (req, res) => {
+  try {
+    const ranking = await axios.get(databaseUrl+'/ranking');
+    res.json(ranking.data);
+  } catch(error) {
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
+
+app.post("/newRanking", async (req, res)=>{
+  try{
+    const rankingResponse = await axios.post(databaseUrl+'/newRanking', req.body);
+    res.json(rankingResponse.data)
+  } catch (error){
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
+
+app.post("/newHistory", async (req, res)=>{
+  try{
+    const historyResponse = await axios.post(databaseUrl+'/newHistory', req.body);
+    res.json(historyResponse.data)
+  } catch (error){
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
 
 // Read the OpenAPI YAML file synchronously
 openapiPath='./openapi.yaml'
