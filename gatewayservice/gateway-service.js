@@ -15,6 +15,8 @@ const authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://localhost:8002';
 const userServiceUrl = process.env.USER_SERVICE_URL || 'http://localhost:8001';
 const wikiDataServiceUrl = process.env.WIKIDATA_SERVICE_URL || 'http://localhost:8004';
 const databaseUrl = process.env.DATABASE_URI || 'http://localhost:8006'
+const gameUrl = process.env.GAMECONTROLLER_URI || 'http://localhost:8005';
+
 
 app.use(cors());
 app.use(express.json());
@@ -100,6 +102,42 @@ app.post("/newHistory", async (req, res)=>{
   try{
     const historyResponse = await axios.post(databaseUrl+'/newHistory', req.body);
     res.json(historyResponse.data)
+  } catch (error){
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
+
+app.post("/start", async (req, res)=>{
+  try {
+    const startResponse = await axios.post(gameUrl+'/start', req.body);
+    res.json(startResponse.data)
+  } catch (error){
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
+
+app.post("/end", async (req, res)=>{
+  try {
+    const endResponse = await axios.post(gameUrl+'/end', req.body);
+    res.json(endResponse.data)
+  } catch (error){
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
+
+app.get("/question", async (req, res) => {
+  try {
+    const questionResponse = await axios.get(gameUrl+'/question');
+    res.json(questionResponse.data)
+  } catch (error){
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
+
+app.post("/answer", async (req, res) => {
+  try {
+    const answerResponse = await axios.post(gameUrl+'/answer', req.body);
+    res.json(answerResponse.data)
   } catch (error){
     res.status(error.response.status).json({ error: error.response.data.error });
   }
