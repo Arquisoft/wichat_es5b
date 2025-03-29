@@ -83,12 +83,12 @@ node "WiChat" {
 cloud "Wikidata" {
 }
 
-cloud "Mistral" {
+cloud "LLM" {
 }
 
 "User" <--> "WiChat" : Interacciona
-"WiChat" <--> "Wikidata" : Recibe datos
-"WiChat" <--> "Mistral" : Obtiene pistas
+"WiChat" <--> "Wikidata" : Recibe datos de las preguntas
+"WiChat" <--> "LLM" : Obtiene pistas de las preguntas
 
 @enduml
 ----
@@ -101,7 +101,7 @@ cloud "Mistral" {
 | _User_ | _Representa el usuario final de la aplicación. Este interactua con el sistema jugando al juego de preguntas_
 | _WiChat_ | _Es el componente principal de la aplicación. Este maneja la parte lógica del juego, la creación de preguntas a través de consultas a la API de wikidata, el envío y consultas de resultados a la base de datos, la interacción con el ranking y el login de la aplicación_
 | _Wikidata_ | _Es un servicio externo a la aplicación, utilizado por esta, para obtener información y generar las preguntas._
-| _Mistral_ | _Es un servicio externo a la aplicación, utilizado por esta, para obtener pistas a partir de la información de wikidata._
+| _LLM_ | _Es un servicio externo a la aplicación, utilizado por esta, para obtener pistas a partir de la información de wikidata._
 |===
 
 
@@ -129,21 +129,21 @@ frame "WiChat" {
     node "Backend" {
     }
 
-    database "MongoDB" {
+    database "Database" {
     }
 }
 
 cloud "Wikidata" {
 }
 
-cloud "Mistral" {
+cloud "LLM" {
 }
 
 "User" <--> "Frontend" : Interacciona
 "Frontend"<--> "Backend" : Interacciona
-"Backend" <--> "MongoDB" : Almacena
-"Backend" <-down-> "Wikidata" : Recibe datos
-"Backend" <-down-> "Mistral" : Utiliza
+"Backend" <--> "Database" : Almacena
+"Backend" <-down-> "Wikidata" : Recibe datos de las preguntas
+"Backend" <-down-> "LLM" : Obtiene pistas de las preguntas
 
 @enduml
 ----
@@ -156,9 +156,9 @@ cloud "Mistral" {
 | _User_ | _Representa el usuario final de la aplicación. Este interactua con el frontend del sistema._
 | _Frontend_ | _Es el componente responsable de la iterfaz de usuario con la que el usuario final llevará a cabo la interacción. Se comunica con el backend para llevar a cabo el juego._
 | _Backend_ | _Es el componente que manejala parte lógica del juego. También se encarga de almacenar y recuperar los datos de la base de datos. Utiliza las APIs wikidata y la correspondiente al llm._
-| _MongoDB_ | _Sistema de base de datos NoSQL diseñado para almacenar grandes volúmenes de datos de manera flexible y escalable._
+| _Database_ | _Sistema de base de datos NoSQL diseñado para almacenar grandes volúmenes de datos de manera flexible y escalable._
 | _Wikidata_ | _Base de conocimiento colaborativa y estructurada. Almacena datos y permite la utilización de estos al proyecto. Estos datos se obtienen a través de su API._
-| _Mistral_ | _Modelo de lenguaje que permite a la aplicación interactuar con él a través de su API._
+| _LLM_ | _Modelo de lenguaje que permite a la aplicación interactuar con él a través de su API._
 
 |===
 
@@ -189,27 +189,39 @@ frame WiChat {
 
     node "AuthService"
 
+    node "StatsService"
+
     node "LLMService"
 
-    node "WikidataService"
-  }
+    node "GameService"
 
-  database "Mongo DB"
+    node "WikidataService"
+
+    database "Users DB"
+
+    database "History DB"
+
+    database "Ranking DB"
+  }
 }
 
 cloud "Wikidata"
 
-cloud "Mistral"
+cloud "LLM"
 
 "Usuario" --> "Frontend"
 "Frontend" <--> "GatewayService"
 "GatewayService" <--> "UserService"
 "GatewayService" <--> "AuthService"
 "GatewayService" <--> "LLMService"
-"GatewayService" <--> "WikidataService"
-"UserService" <--> "Mongo DB"
-"AuthService" <--> "Mongo DB"
-"LLMService" <--> "Mistral"
+"GatewayService" <--> "GameService"
+"GatewayService" <--> "StatsService"
+"GameService" <--> "WikidataService"
+"UserService" <--> "Users DB"
+"AuthService" <--> "Users DB"
+"StatsService" <--> "History DB"
+"StatsService" <--> "Ranking DB"
+"LLMService" <--> "LLM"
 "WikidataService" <--> "Wikidata"
 
 
@@ -226,5 +238,7 @@ cloud "Mistral"
 | _UserService_ | _Servicio utilizado para el registro de nuevos usuarios en la aplicación._
 | _AuthService_ | _Servicio utilizado para la autenticación de usuarios en la aplicación._
 | _LLMService_ | _Servicio de modelo de lenguaje, utilizado para la generación de pistas a partir de la información obtenido de wikidata._
+| _GameService_ | _Servicio utilizado para la logica del juego y obtencion de las preguntas._
 | _WikidataService_ | _Servicio utilizado para la obtención de información de wikidata._
+| _StatsService_ | _Servicio utilizado para la obtención del historial de cada usuario y del ranking global del juego._
 |===

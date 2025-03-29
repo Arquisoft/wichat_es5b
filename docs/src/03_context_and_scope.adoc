@@ -66,12 +66,12 @@ node "WiChat" {
 cloud "Wikidata" {
 }
 
-node "Mistral" {
+cloud "LLM" {
 }
 
 "Usuario" --> "WiChat" : Interactúa
 "WiChat" <--> "Wikidata" : Pide y recibe datos
-"WiChat" <--> "Mistral" : Intercambia mensajes del usuario
+"WiChat" <--> "LLM" : Intercambia mensajes del usuario
 
 @enduml
 ----
@@ -84,9 +84,9 @@ Persona real que utilizará la aplicación. Interactuará con ella eligiendo una
 
 Base de datos general de donde obtendremos las imágenes y datos relacionados con ellas. La aplicación se comunica y obtiene información de Wikidata a través de su API.
 
-* Mistral
+* LLM
 
-Modelo de Lenguaje creado por Empathy. Es el modelo de lenguaje que usaremos para apoyar al usuario en caso de que necesite pistas.
+Modelo de Lenguaje llamado mistral y creado por Empathy. Es el modelo de lenguaje que usaremos para apoyar al usuario en caso de que necesite pistas.
 
 === Contexto Técnico
 
@@ -133,22 +133,33 @@ frame WiChat {
 
     node "GameService"
 
-    database "Mongo DB"
+    node "StatsService"
+
+    database "Users DB"
+
+    database "History DB"
+
+    database "Ranking DB"
 }
 
 cloud "Wikidata"
 
-cloud "Mistral"
+cloud "LLM"
 
 "Usuario" --> "Webapp" : HTTP
 "Webapp" <--> "GatewayService" : HTTP
 "GatewayService" <--> "UserService" : HTTP
 "GatewayService" <--> "AuthService" : HTTP
 "GatewayService" <--> "LLMService" : HTTP
-"GatewayService" <--> "WikidataService" : HTTP
-"UserService" <--> "Mongo DB" : HTTP
-"AuthService" <--> "Mongo DB" : HTTP
-"LLMService" <--> "Mistral" : HTTPS
+"GatewayService" <--> "GameService" : HTTP
+"GatewayService" <--> "StatsService" : HTTP
+"GameService" <--> "WikidataService" : HTTP
+"StatsService" <--> "History DB" : HTTP
+"StatsService" <--> "Ranking DB" : HTTP
+"UserService" <--> "Users DB" : HTTP
+"AuthService" <--> "Users DB" : HTTP
+
+"LLMService" <--> "LLM" : HTTPS
 "WikidataService" <--> "Wikidata" : HTTPS
 
 
@@ -181,23 +192,39 @@ cloud "Mistral"
 |HTTP
 |Chat en tiempo real
 
-|GatewayService - WikidataService
+|GatewayService - GameService
+|HTTP
+|Interaccion con el juego
+
+|GatewayService - StatsService
+|HTTP
+|Obtencion de estadisticas
+
+|GameService - WikidataService
 |HTTP
 |Interacción con Wikidata
 
 |WikidataService - Wikidata
 |HTTPS
-|Obtención de imágenes y datos
+|Obtención de imágenes y datos de las preguntas
 
-|UserService - Mongo DB
+|StatsService - History DB
+|HTTP
+|Obtencion del historial del jugador
+
+|StatsService - Ranking DB
+|HTTP
+|Obtencion del ranking global
+
+|UserService - Users DB
 |HTTP
 |Registro
 
-|AuthService - Mongo DB
+|AuthService - Users DB
 |HTTP
 |Inicio de sesión
 
-|LLMService - Mistral
+|LLMService - LLM
 |HTTPS
 |Chat en tiempo real
 |===
