@@ -12,6 +12,12 @@ const AddUser = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const addUser = async () => {
+    // Verifica si los campos están vacíos
+    if (!username || !password || username == '' || password == '') {
+      setError("Username and password are required");
+      return; // Detiene la ejecución si hay campos vacíos
+    }
+
     try {
       await axios.post(`${apiEndpoint}/adduser`, { username, password });
       setOpenSnackbar(true);
