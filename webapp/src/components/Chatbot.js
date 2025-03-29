@@ -54,7 +54,9 @@ const Chatbot = ({ movieName }) => {
             zIndex: 1000,
             borderRadius: '8px',
             overflow: 'hidden'
-        }}>
+        }}
+        data-testid="chatbot-container"
+        >
 
             <Paper elevation={3} sx={{ 
                 display: 'flex',
@@ -64,7 +66,10 @@ const Chatbot = ({ movieName }) => {
                 overflow: 'hidden',
                 border: '2px solid #c46331',
                 paddingBottom: '0'
-            }}>
+                
+            }}
+             role="region"
+            >
                 {/* Botón de minimizar/expandir */}
                 <Button 
                     onClick={() => setIsMinimized(!isMinimized)}
