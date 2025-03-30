@@ -19,7 +19,9 @@ export class QuestionManager {
 
   async generateQuestions(nQuestions: number) {
     for(let i= 0; i< this.generator.length;i++){
+      console.log("Antes del execute query")
       const queryResult = await this.executeQuery(this.generator[i].getQuery());
+      console.log("Después del execute query")
       let generatedQuestions = this.generator[i].generateQuestions(queryResult, nQuestions);
       generatedQuestions.forEach(q => this.questions.push(q));
 
@@ -61,6 +63,7 @@ export class QuestionManager {
   }
 
   async executeQuery(query: string) : Promise<any> {
+    console.log("En el executeQuery")
     return (await fetch(`${this.wikidataUri}/query`, {
       method: 'POST',
       headers: {

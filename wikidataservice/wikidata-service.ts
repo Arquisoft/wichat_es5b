@@ -4,6 +4,8 @@ const express = require('express');
 const app = express();
 const port = 8004;
 
+app.use(express.json());
+
 export async function executeSparqlQuery(query: string) {
     try {
       const response = await axios.get('https://query.wikidata.org/sparql', {
@@ -23,7 +25,7 @@ export async function executeSparqlQuery(query: string) {
     }
 }
 
-app.get("/query", async (req: any, res: any) => {
+app.post("/query", async (req: any, res: any) => {
   const query = req.body.query; // Recoge el parámetro del cuerpo
   console.log("Query recibido:", query);
   res.status(200).json(await executeSparqlQuery(query));
