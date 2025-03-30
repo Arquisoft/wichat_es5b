@@ -1,26 +1,13 @@
 import { AbstractQuestionGenerator } from "./AbstractQuestionGenerator";
 import { Question } from "../questions/Question";
 import { ActorQuestion } from "../questions/ActorQuestion";
-
+import { actorQuery } from "./Queries";
 
 export class ActorQuestionGenerator extends AbstractQuestionGenerator {
 
     constructor(){
         super()
-        this.query = `
-            SELECT DISTINCT ?characterLabel ?performerLabel ?filmTitle (SAMPLE(?pic) AS ?pic) WHERE {
-            ?character wdt:P31 wd:Q15773347;
-            wdt:P175 ?performer;
-            wdt:P1441 ?work;
-            wdt:P18 ?pic.
-    
-            ?work wdt:P31 wd:Q11424;
-            wdt:P1476 ?filmTitle;
-
-            SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-            }
-            GROUP BY ?characterLabel ?performerLabel ?filmTitle
-        `;
+        this.query = actorQuery;
     }
 
     doGenerateQuestion(correctOption :string, options: string[], data : string[]) : Question{

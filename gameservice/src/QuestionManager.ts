@@ -19,12 +19,20 @@ export class QuestionManager {
   }
 
   async generateQuestions(nQuestions: number) {
-    let nQuestType = nQuestions / this.generator.length;
-    for(let i= 0; i< this.generator.length;i++){
-      const queryResult = await this.executeQuery(this.generator[i].getQuery());
-      let generatedQuestions = this.generator[i].generateQuestions(queryResult, nQuestType);
-      generatedQuestions.forEach(q => this.questions.push(q));
-    }
+    let nQuestType = Math.floor(nQuestions/this.generator.length);
+    let nExtraQuestions = nQuestions % this.generator.length;
+
+    let queryPromises = this.generator.map((gen, index) => {
+      let nQuestionsToGenerate = nQuestType + (index === 0 ? nExtraQuestions : 0);
+      return this.executeQuery(gen.getQuery()).then(queryResult =>
+          gen.generateQuestions(queryResult, nQuestionsToGenerate)
+      );
+    });
+
+    let results = await Promise.all(queryPromises);
+    results.forEach(generatedQuestions => {
+        generatedQuestions.forEach(q => this.questions.push(q));
+    });
 
     this.currentQuestion = 0;
   }
