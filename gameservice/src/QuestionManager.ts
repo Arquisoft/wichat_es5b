@@ -9,25 +9,23 @@ export class QuestionManager {
 
 
   private questions: Question[];
-  private generator: QuestionGenerator;
+  private generator: QuestionGenerator[];
   private currentQuestion: number =0;
 
   constructor() {
     this.questions = [];
-    this.generator = new MovieQuestionGenerator();
+    this.generator = [new MovieQuestionGenerator()];
   }
 
   async generateQuestions(nQuestions: number) {
-    const queryResult = await this.executeQuery();
-    const movies = new Map<string, string>();
-    queryResult.results.bindings.forEach((entry: any) => {
-        const movieName = entry.itemLabel.value;
-        const image = entry.pic.value;
-        movies.set(movieName, image);
-    });
+    for(let i= 0; i< this.generator.length;i++){
+      const queryResult = await this.executeQuery(this.generator[i].getQuery());
+      let generatedQuestions = this.generator[i].generateQuestions(queryResult, nQuestions);
+      generatedQuestions.forEach(q => this.questions.push(q));
 
-    let generatedQuestions = this.generator.generateQuestions(movies, nQuestions);
-    generatedQuestions.forEach(q => this.questions.push(q));
+    }
+
+   
     this.currentQuestion = 0;
   }
 
@@ -62,8 +60,14 @@ export class QuestionManager {
     this.questions.push(question);
   }
 
-  async executeQuery() : Promise<any> {
-    return (await fetch(this.wikidataUri + "/query")).json()
+  async executeQuery(query: string) : Promise<any> {
+    return (await fetch(`${this.wikidataUri}/query`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ query })
+    })).json();
   }
 
 }

@@ -2,9 +2,37 @@ import { QuestionGenerator } from "../QuestionGenerator";
 import { Question } from "../questions/Question";
 import { MovieQuestion } from "../questions/MovieQuestion";
 
+
 export class MovieQuestionGenerator implements QuestionGenerator {
 
-    generateQuestions(movies: Map<string, string>, nQuestions: number): Question[]{  
+    private query: string = `
+        SELECT DISTINCT ?itemLabel (SAMPLE(?pic) AS ?pic) WHERE {
+        ?item wdt:P31 wd:Q11424;
+        wdt:P577 ?publication_date;
+        wdt:P18 ?pic.
+        
+        FILTER (?publication_date >= "2025-00-00T00:00:00Z"^^xsd:dateTime)
+
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+        
+        }
+
+        GROUP BY ?item ?itemLabel
+
+        `;
+
+    getQuery():string{
+        return this.query;
+    }
+
+    generateQuestions(queryResult: any, nQuestions: number): Question[]{  
+        const movies = new Map<string, string>();
+        queryResult.results.bindings.forEach((entry: any) => {
+            const movieName = entry.itemLabel.value;
+            const image = entry.pic.value;
+            movies.set(movieName, image);
+        });
+
         const moviesArray = Array.from(movies);
         
         const questions: Question[] = new Array(nQuestions); 

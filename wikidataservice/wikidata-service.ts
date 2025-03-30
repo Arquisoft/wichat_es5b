@@ -4,23 +4,7 @@ const express = require('express');
 const app = express();
 const port = 8004;
 
-const query = `
-SELECT DISTINCT ?itemLabel (SAMPLE(?pic) AS ?pic) WHERE {
-  ?item wdt:P31 wd:Q11424;
-  wdt:P577 ?publication_date;
-  wdt:P18 ?pic.
-  
-   FILTER (?publication_date >= "2025-00-00T00:00:00Z"^^xsd:dateTime)
-
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-  
-}
-
-GROUP BY ?item ?itemLabel
-
-`
-
-export async function executeSparqlQuery() {
+export async function executeSparqlQuery(query: string) {
     try {
       const response = await axios.get('https://query.wikidata.org/sparql', {
         headers: {
@@ -36,12 +20,13 @@ export async function executeSparqlQuery() {
     } catch (error) {
       console.error('Se ha producido un error al ejecutar la query de SPARQL:', error);
       throw error;
-
     }
 }
 
-app.get("/query", async (_req: any, res: any) => {
-  res.status(200).json(await executeSparqlQuery());
+app.get("/query", async (req: any, res: any) => {
+  const query = req.body.query; // Recoge el parámetro del cuerpo
+  console.log("Query recibido:", query);
+  res.status(200).json(await executeSparqlQuery(query));
 })
 
 // Start the wikidata service
