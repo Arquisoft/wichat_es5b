@@ -1,6 +1,7 @@
 import {Question} from "./questions/Question";
 import { QuestionGenerator } from "./QuestionGenerator";
 import { MovieQuestionGenerator } from "./generators/MovieQuestionGenerator";
+import { ActorQuestionGenerator } from "./generators/ActorQuestionGenerator";
 
 
 export class QuestionManager {
@@ -14,20 +15,17 @@ export class QuestionManager {
 
   constructor() {
     this.questions = [];
-    this.generator = [new MovieQuestionGenerator()];
+    this.generator = [new MovieQuestionGenerator(), new ActorQuestionGenerator()];
   }
 
   async generateQuestions(nQuestions: number) {
+    let nQuestType = nQuestions / this.generator.length;
     for(let i= 0; i< this.generator.length;i++){
-      console.log("Antes del execute query")
       const queryResult = await this.executeQuery(this.generator[i].getQuery());
-      console.log("Después del execute query")
-      let generatedQuestions = this.generator[i].generateQuestions(queryResult, nQuestions);
+      let generatedQuestions = this.generator[i].generateQuestions(queryResult, nQuestType);
       generatedQuestions.forEach(q => this.questions.push(q));
-
     }
 
-   
     this.currentQuestion = 0;
   }
 
