@@ -1,5 +1,7 @@
 import { QuestionGenerator } from "../QuestionGenerator";
 import { Question } from "../questions/Question";
+import { shuffle } from "../util/GameUtil";
+
 
 export abstract class AbstractQuestionGenerator implements QuestionGenerator {
 
@@ -42,7 +44,7 @@ export abstract class AbstractQuestionGenerator implements QuestionGenerator {
             const [incorrectName, incorrectData] = array[randomIndex];
             options.push(incorrectName);
         }
-        options = this.shuffleOptions(options);
+        options = shuffle(options);
         return this.doGenerateQuestion(correctOption, options, correctData);
     }
 
@@ -61,22 +63,8 @@ export abstract class AbstractQuestionGenerator implements QuestionGenerator {
         return Math.floor(Math.random() * max);
     }
 
-    shuffleOptions(options: string[]): string[] {
-        const shuffled = options.slice(); // hacemos copia para no modificar el original
-      
-        for (let i = shuffled.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          
-          // Intercambiar elementos en las posiciones i y j
-          const temp = shuffled[i];
-          shuffled[i] = shuffled[j];
-          shuffled[j] = temp;
-        }    
-        return shuffled;
-      }
+    abstract doGenerateQuestion(correctOption :string, options: string[], data : string[]) : Question;
 
-      abstract doGenerateQuestion(correctOption :string, options: string[], data : string[]) : Question;
-
-      abstract mapResult(queryResult : any, mappedRes: Map<String, String[]>): any;
+    abstract mapResult(queryResult : any, mappedRes: Map<String, String[]>): any;
 }
   

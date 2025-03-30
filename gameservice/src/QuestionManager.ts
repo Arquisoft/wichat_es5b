@@ -2,6 +2,7 @@ import {Question} from "./questions/Question";
 import { QuestionGenerator } from "./QuestionGenerator";
 import { MovieQuestionGenerator } from "./generators/MovieQuestionGenerator";
 import { ActorQuestionGenerator } from "./generators/ActorQuestionGenerator";
+import { shuffle } from "./util/GameUtil";
 
 
 export class QuestionManager {
@@ -33,6 +34,8 @@ export class QuestionManager {
     results.forEach(generatedQuestions => {
         generatedQuestions.forEach(q => this.questions.push(q));
     });
+
+    this.questions = shuffle(this.questions);
 
     this.currentQuestion = 0;
   }
@@ -78,5 +81,4 @@ export class QuestionManager {
       body: JSON.stringify({ query })
     })).json();
   }
-
 }
