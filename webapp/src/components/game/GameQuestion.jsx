@@ -25,6 +25,7 @@ export default function MovieQuiz({username}) {
     
     setLoading(true);
     const question = await getQuestion();
+    setLoading(false);
 
     if (!question || Object.keys(question).length === 0) {
       console.error("Error: no se recibió una nueva pregunta.");
@@ -36,7 +37,7 @@ export default function MovieQuiz({username}) {
     setCurrentQuestion(question);
     setSelectedOption(null);
     setTimeLeft(60);
-    setLoading(false);
+    
     
   };
 
