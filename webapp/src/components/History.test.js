@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor, act } from '@testing-library/react';
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import History from './History';
 import MockAdapter from 'axios-mock-adapter';
@@ -15,10 +15,10 @@ mockAxios.onPost(apiEndpoint+'/history').reply(200, [{ username: 'prueba' , date
 
 describe('History Component', () => {
 
-    test('Aparece el boton incialmente', () => {
+    it('Aparece el boton incialmente', () => {
         render(<History username={'prueba'} />);
         expect(screen.getByText('HISTORIAL')).toBeInTheDocument();
-    })
+    });
   
   
     it('Se despliega al pulsar el boton', async () => {
