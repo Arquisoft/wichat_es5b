@@ -37,7 +37,7 @@ const HintsButtons = (props) =>{
       }
 
       return (
-        <Container component="main" maxWidth="xs" sx={{ mt: 4, display: "flex", justifyContent:"center", alignContent: "center"}}>
+        <Container className="bg-orange shadow-lg rounded-lg" component="div" maxWidth="s" sx={{ mt: 4, display: "flex", justifyContent:"center", alignContent: "center"}}>
             {['Primera Pista', 'Segunda Pista', 'Tercera Pista', 'Cuarta Pista'].map((label, index) => (
                 
                 <Container key={index} >

@@ -133,38 +133,45 @@ export default function MovieQuiz({username}) {
 
   return (
     <div>
-      {loading ? (<LoadingScreen/>) :  (<div className="max-w-xl mx-auto p-10 bg-white shadow-lg rounded-lg text-center margin" >
-      <h2 className="text-2xl font-bold">{currentQuestion.question}</h2>
-      <img src={currentQuestion.imageUrl} alt="Pregunta" className="w-full h-48 object-cover my-3 rounded" />
-      <div className="grid grid-cols-1 gap-2">
-        {currentQuestion.options.map((option, index) => (
-          <button
-            key={index}
-            onClick={() => handleOptionClick(option)}
-            className={`py-2 px-4 rounded font-semibold border transition-all duration-200 ${
-              selectedOption !== null
-                ? option === currentQuestion.correctAnswer
-                  ? "bg-green-500 text-white"
-                  : option === selectedOption
-                  ? "bg-red-500 text-white"
-                  : "bg-gray-200"
-                : "bg-blue-500 text-white hover:bg-blue-700"
-            }`}
-          >
-            {option}
-          </button>
-          
-        ))}
-      </div>
-        <p className="mt-4 text-lg font-semibold">Tiempo restante: {timeLeft} s</p>
-        <p className="mt-2 text-lg font-semibold">Pregunta {questionsAnswered + 1} de {PREGUNTASNUM}</p>
-        <p className="mt-2 text-lg font-semibold">Aciertos: {correctAnswers}</p>
-        
-        <HintsButtons key={currentQuestion} movieName={currentQuestion.correctAnswer} />
-        
-        <Chatbot movieName={currentQuestion.correctAnswer} />
-        
-
+      {loading ? (<LoadingScreen/>) :  
+      //(<div className="max-w-xl mx-auto p-10 bg-white shadow-lg rounded-lg text-center margin" >
+      (<div className="grid grid-rows-3 gap-2 max-w-xl mx-auto p-10 text-center margin" >
+        <div className="grid grid-cols-2">
+          <p className="mt-4 text-lg font-semibold">Tiempo restante: {timeLeft} s</p>
+          <p className="mt-2 text-lg font-semibold">Pregunta {questionsAnswered + 1} de {PREGUNTASNUM}</p>
+          <p className="mt-2 text-lg font-semibold">Aciertos: {correctAnswers}</p>
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          <div>
+            <img src={currentQuestion.imageUrl} alt="Pregunta" className="w-full h-48 my-3 rounded" />
+          </div>
+          <div className = "bg-orange shadow-lg rounded-lg">
+            <h2 className="text-2xl font-bold text-white">{currentQuestion.question}</h2>
+            <div className="grid grid-cols-1 gap-2">
+              {currentQuestion.options.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleOptionClick(option)}
+                  className={`py-2 px-4 mx-4 rounded font-semibold border transition-all duration-200 ${
+                    selectedOption !== null
+                      ? option === currentQuestion.correctAnswer
+                        ? "bg-green-500 text-black"
+                        : option === selectedOption
+                        ? "bg-red-500 text-black"
+                        : "bg-gray-200"
+                      : "bg-blue-500 text-black hover:bg-blue-700"
+                  }`}
+                >
+                  {option}
+                </button>
+                
+              ))}
+              </div>
+            
+            </div>
+          </div>
+            <HintsButtons key={currentQuestion} movieName={currentQuestion.correctAnswer} />
+          <Chatbot movieName={currentQuestion.correctAnswer} />
       </div>
       )}
     </div>
