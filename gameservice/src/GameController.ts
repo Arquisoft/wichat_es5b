@@ -41,7 +41,7 @@ export class GameController {
      * 
      * @returns {void} 
      */
-    nextQuestion(): void {
+    async nextQuestion(): Promise<void> {
       this.currentQuestion = this.questionManager.getNextQuestion();
       
       console.log("Nueva pregunta:", this.currentQuestion);
