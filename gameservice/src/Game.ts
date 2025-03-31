@@ -14,9 +14,9 @@ app.use(express.json());
 app.use(cors());
 
 // Petición para iniciar el juego
-app.post("/start", (req: any, res: any) => {
+app.post("/start", async (req: any, res: any) => {
   console.log("Juego iniciado");
-  gameController.startGame();
+  await gameController.startGame();
   res.sendStatus(200);
 });
 
@@ -36,8 +36,8 @@ app.get("/question", (req: any, res: any) => {
 // Petición para obtener respuesta
 app.post("/answer", (req: any, res: any) => {
   const selectedAnswer = req.body.answer;
-  gameController.submitAnswer(selectedAnswer);
-  res.sendStatus(200);
+  const prueba = gameController.submitAnswer(selectedAnswer);
+  res.status(200).json(prueba);
 });
 
 app.listen(8005, () => {
