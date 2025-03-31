@@ -18,8 +18,8 @@ describe('Login component', () => {
   
 
   it('should log in successfully', async () => {
-    await mockAxios.onPost('http://localhost:8006/history').reply(200, [{date: "2024-01-01T12:34:56Z", correctAnswers: 4, wrongAnswers:2}]);
-    await mockAxios.onGet('http://localhost:8006/ranking').reply(200, [{username:"user1", date: "2024-01-01T12:34:56Z", correctAnswers: 4, wrongAnswers:2}]);
+    await mockAxios.onPost('http://localhost:8000/history').reply(200, [{date: "2024-01-01T12:34:56Z", correctAnswers: 4, wrongAnswers:2}]);
+    await mockAxios.onGet('http://localhost:8000/ranking').reply(200, [{username:"user1", date: "2024-01-01T12:34:56Z", correctAnswers: 4, wrongAnswers:2}]);
     render(<Login userForHistory={userForHistory}/>);
     
 
@@ -79,8 +79,8 @@ describe('Login component', () => {
   });
 
   it('El botón de volver debe aparecer', async () => {
-    await mockAxios.onPost('http://localhost:8006/history').reply(200, [{date: "2024-01-01T12:34:56Z", correctAnswers: 4, wrongAnswers:2}]);
-    await mockAxios.onGet('http://localhost:8006/ranking').reply(200, [{username:"user1", date: "2024-01-01T12:34:56Z", correctAnswers: 4, wrongAnswers:2}]);
+    await mockAxios.onPost('http://localhost:8000/history').reply(200, [{date: "2024-01-01T12:34:56Z", correctAnswers: 4, wrongAnswers:2}]);
+    await mockAxios.onGet('http://localhost:8000/ranking').reply(200, [{username:"user1", date: "2024-01-01T12:34:56Z", correctAnswers: 4, wrongAnswers:2}]);
     render(<Login userForHistory={userForHistory}/>);
     
 
@@ -89,23 +89,31 @@ describe('Login component', () => {
     const loginButton = screen.getByRole('button', { name: /Login/i });
 
     // Mock the axios.post request to simulate a successful response
-    mockAxios.onPost('http://localhost:8000/login').reply(200, { createdAt: '2024-01-01T12:34:56Z' });
-    mockAxios.onPost('http://localhost:8000/askllm').reply(200, { answer: 'Hello test user' });
+    await mockAxios.onPost('http://localhost:8000/login').reply(200, { createdAt: '2024-01-01T12:34:56Z' });
+    await mockAxios.onPost('http://localhost:8000/askllm').reply(200, { answer: 'Hello test user' });
+    await mockAxios.onPost('http://localhost:8000/start').reply(200);
+
+    mockAxios.onGet('../Game').reply(200, {
+      componente: () => <p>Mock de Game</p>,
+    });
+    
 
     // Simulate user input
     await act(async () => {
         fireEvent.change(usernameInput, { target: { value: 'testUser' } });
         fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
         fireEvent.click(loginButton);
+        
       });
+
+      await act(async () => {
+        fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      });
+
     
-      mockAxios.onGet('../Game').reply(200, {
-        componente: () => <p>Mock de Game</p>,
-      });
-
-      await fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
-
-      await expect(screen.getByText("Reiniciar")).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText("Volver")).toBeInTheDocument();
+    });
       });
 
   })
