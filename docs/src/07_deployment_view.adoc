@@ -68,10 +68,11 @@ endif::arc42help[]
 @startuml
 
 
-
-[Wikidata] as Wikidata
 actor usuario
-[LLM]
+
+node Dispositivo{
+    [Buscador] as buscador
+}
 
 node Azure{
     node Docker{
@@ -80,41 +81,57 @@ node Azure{
         }
 
         node ContenedorDocker2{
-            database "BBDD\nMongoDB" as BBDD
+            [Gatewayservice] as gateway
         }
 
         node ContenedorDocker3{
-            [authservice] as ause
+            [Authservice] as authservice
         }
 
         node ContenedorDocker4{
-            [LLMService] as LLMService
+            [Userservice] as userservice
         }
 
         node ContenedorDocker5{
-            [userservice] as userService
+            [GameService] as gameservice
         }
 
         node ContenedorDocker6{
-            [Gatewayservice] as gateway
+            [WikidataService] as wikidataservice
         }
+
+        node ContenedorDocker7{
+            [StatsService] as statsservice
+        }
+
+        node ContenedorDocker8{
+            [LLMService] as llmservice
+        }
+
+        node ContenedorDocker9{
+            database "Database" as database
+        }
+        
     }
 }
 
-node Dispositivo{
-    [Buscador] as buscador
-}
+Cloud "Wikidata"
+Cloud "LLM"
 
 usuario --> buscador
 buscador --> webapp
 webapp --> gateway
-gateway --> LLMService
-LLMService --> LLM
-gateway --> ause
-gateway --> userService
-gateway --> Wikidata
-userService --> BBDD
-ause --> BBDD
+gateway --> llmservice
+llmservice --> LLM
+gateway --> authservice
+gateway --> userservice
+gateway --> gameservice
+gameservice --> wikidataservice
+wikidataservice --> "Wikidata"
+userservice --> database
+authservice --> database
+gateway --> statsservice
+statsservice --> database
 
 @enduml
 ----
@@ -143,13 +160,16 @@ Mapeo de los Bloques de Construcción a Infraestructura::
 [options="header",cols="1,2"]
 |===
 | Bloque de Construcción | Infraestructura
-| WebApp | Es el frontend de nuestra aplicación
-| BBDD MongoDB | Es la base de datos donde almacenaremos la información de los usuarios
-| Gatewayservice | Es el servicio mediante el cual llamamos al resto de los servicios de la aplicacion, tanto internos como externos
-| authservice | Es el servicio de autenticaciones de los usuarios
-| userservice | Es el servicio que almacena a los usuarios
-| LLMService | Es el servicio que realizará las llamadas al LLM
 | Azure | Es el servicio que va a hostear el servidor en el que estara almacenada nuestra aplicación
+| WebApp | Es el frontend de nuestra aplicación
+| Gatewayservice | Es el servicio mediante el cual llamamos al resto de los servicios de la aplicacion, tanto internos como externos
+| Authservice | Es el servicio de autenticaciones de los usuarios
+| Userservice | Es el servicio que almacena a los usuarios
+| LLMService | Es el servicio que realizará las llamadas al LLM
+| GameService | Es el servicio que nos facilitará la información de las preguntas y la logica del juego
+| WikidataService | Es el servicio que obtendra la información para las peguntas de wikidata
+| StatsService | Es el servicio que nos facilitará las estadisticas de los jugadores y el ranking global del juego
+| Database | Es la base de datos donde almacenaremos la información de los usuarios y las estadisticas de cada uno
 | LLM | Es un modelo extenso de lenguaje localizado en un servidor ajeno al que accederemos mediante una API key
 | Wikidata | Es una base de datos externa de la cual sacaremos las posibles preguntas de la aplicación asi como las respuestas
 |===
