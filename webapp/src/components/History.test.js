@@ -20,7 +20,6 @@ describe('History Component', () => {
         expect(screen.getByText('HISTORIAL')).toBeInTheDocument();
     });
   
-  
     it('Se despliega al pulsar el boton', async () => {
         render(<History username={'prueba'} />);
         fireEvent.click(screen.getByText("HISTORIAL"));
@@ -46,6 +45,15 @@ describe('History Component', () => {
         await waitFor(() => {
             expect(screen.getByText("Cerrar")).toBeInTheDocument();
           });
-        expect(screen.getByRole('table'))
+        expect(screen.getByRole('table')).toBeInTheDocument();
+    });
+
+    it('La tabla no aparece si no hay usuario', async () => {
+        render(<History />);
+        fireEvent.click(screen.getByText("HISTORIAL"));
+        await waitFor(() => {
+            expect(screen.getByText("Cerrar")).toBeInTheDocument();
+          });
+        expect(screen.getByText('Debe iniciar sesión para ver su historial')).toBeInTheDocument();
     })
 });
