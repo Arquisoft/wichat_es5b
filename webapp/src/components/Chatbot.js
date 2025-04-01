@@ -65,7 +65,10 @@ const Chatbot = ({ movieName }) => {
             borderRadius: '8px',
             overflow: 'hidden'
         }}>
-            <Paper elevation={3} sx={{ 
+            <Paper 
+                elevation={3} 
+                role="region"
+            sx={{ 
                 display: 'flex',
                 flexDirection: 'column',
                 height: isMinimized ? '40px' : '520px',
