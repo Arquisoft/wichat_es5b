@@ -1,6 +1,8 @@
 import {Question} from "./questions/Question";
 import { QuestionGenerator } from "./QuestionGenerator";
 import { MovieQuestionGenerator } from "./generators/MovieQuestionGenerator";
+import { ActorQuestionGenerator } from "./generators/ActorQuestionGenerator";
+import { shuffle } from "./util/GameUtil";
 
 
 export class QuestionManager {
@@ -9,25 +11,32 @@ export class QuestionManager {
 
 
   private questions: Question[];
-  private generator: QuestionGenerator;
+  private generator: QuestionGenerator[];
   private currentQuestion: number =0;
 
   constructor() {
     this.questions = [];
-    this.generator = new MovieQuestionGenerator();
+    this.generator = [new MovieQuestionGenerator(), new ActorQuestionGenerator()];
   }
 
   async generateQuestions(nQuestions: number) {
-    const queryResult = await this.executeQuery();
-    const movies = new Map<string, string>();
-    queryResult.results.bindings.forEach((entry: any) => {
-        const movieName = entry.itemLabel.value;
-        const image = entry.pic.value;
-        movies.set(movieName, image);
+    let nQuestType = Math.floor(nQuestions/this.generator.length);
+    let nExtraQuestions = nQuestions % this.generator.length;
+
+    let queryPromises = this.generator.map((gen, index) => {
+      let nQuestionsToGenerate = nQuestType + (index === 0 ? nExtraQuestions : 0);
+      return this.executeQuery(gen.getQuery()).then(queryResult =>
+          gen.generateQuestions(queryResult, nQuestionsToGenerate)
+      );
     });
 
-    let generatedQuestions = this.generator.generateQuestions(movies, nQuestions);
-    generatedQuestions.forEach(q => this.questions.push(q));
+    let results = await Promise.all(queryPromises);
+    results.forEach(generatedQuestions => {
+        generatedQuestions.forEach(q => this.questions.push(q));
+    });
+
+    this.questions = shuffle(this.questions);
+
     this.currentQuestion = 0;
   }
 
@@ -62,8 +71,14 @@ export class QuestionManager {
     this.questions.push(question);
   }
 
-  async executeQuery() : Promise<any> {
-    return (await fetch(this.wikidataUri + "/query")).json()
+  async executeQuery(query: string) : Promise<any> {
+    console.log("En el executeQuery")
+    return (await fetch(`${this.wikidataUri}/query`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ query })
+    })).json();
   }
-
 }
