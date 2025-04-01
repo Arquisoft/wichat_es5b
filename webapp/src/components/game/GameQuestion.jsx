@@ -132,14 +132,16 @@ export default function MovieQuiz({username}) {
   
 
   return (
-    <div>
+    <div className="object-cover">
       {loading ? (<LoadingScreen/>) :  
       //(<div className="max-w-xl mx-auto p-10 bg-white shadow-lg rounded-lg text-center margin" >
       (<div className="grid grid-rows-3 gap-2 max-w-xl mx-auto p-10 text-center margin" >
-        <div className="grid grid-cols-2">
-          <p className="mt-4 text-lg font-semibold">Tiempo restante: {timeLeft} s</p>
-          <p className="mt-2 text-lg font-semibold">Pregunta {questionsAnswered + 1} de {PREGUNTASNUM}</p>
-          <p className="mt-2 text-lg font-semibold">Aciertos: {correctAnswers}</p>
+        <div className="grid grid-cols-2 bg-orange shadow-lg rounded-lg my-3">
+          <p className="mt-2 text-2xl font-semibold align-left justify-top ml-1 ">PREGUNTA {questionsAnswered + 1} de {PREGUNTASNUM}</p>
+          <div className="grid grid-rows-2">
+            <p className="text-lg font-semibold">ACIERTOS: {correctAnswers}</p>
+            <p className="text-lg font-semibold">Tiempo restante: {timeLeft} s</p>
+          </div>
         </div>
         <div className="grid grid-cols-2 gap-2">
           <div>

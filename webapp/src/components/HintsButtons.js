@@ -50,7 +50,7 @@ const HintsButtons = (props) =>{
                     />
     
                 ) : (
-                    <Button
+                    <Button 
                         onClick={() => handleAskForHint(props.movieName, index)}
                         sx={{ 
                           mt: 1,
