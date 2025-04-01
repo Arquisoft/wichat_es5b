@@ -12,7 +12,7 @@ const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000
 export default function MovieQuiz({username}) {
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
-  const [timeLeft, setTimeLeft] = useState(80);
+  const [timeLeft, setTimeLeft] = useState(60);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
   const [gameFinished, setGameFinished] = useState(false);
@@ -26,6 +26,7 @@ export default function MovieQuiz({username}) {
     
     setLoading(true);
     const question = await getQuestion();
+    setLoading(false);
 
     if (!question || Object.keys(question).length === 0) {
       console.error("Error: no se recibió una nueva pregunta.");
@@ -36,10 +37,23 @@ export default function MovieQuiz({username}) {
 
     setCurrentQuestion(question);
     setSelectedOption(null);
-    setTimeLeft(80);
+    setTimeLeft(60);
     setLoading(false);
     
   };
+
+  useEffect(() => {
+    nextQuestion();
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (!gameFinished) {
+        setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [gameFinished]);
 
   useEffect(() => {
     if (timeLeft === 0) {
@@ -55,17 +69,8 @@ export default function MovieQuiz({username}) {
       }
       return; // Evita seguir con el temporizador
     }
-  
-    const timer = setInterval(() => {
-      if (!gameFinished) {
-        setTimeLeft((prev) => Math.max(prev - 1, 0));
-      }
-    }, 1000);
-  
-    return () => clearInterval(timer);
-  }, [timeLeft, gameFinished]);
-  
-  
+  }, [timeLeft]);
+
 
   const handleOptionClick = async (selectedAnswer) => {
     setSelectedOption(selectedAnswer);
@@ -73,9 +78,9 @@ export default function MovieQuiz({username}) {
     const res = await answer(selectedAnswer);
     setQuestionsAnswered((prev) => prev + 1);
   
-    if (res && res.result !== undefined) {
-      console.log(res.result);
-      if (res.result) setCorrectAnswers((prev) => prev + 1);
+    if (res !== undefined) {
+      
+      if (res) setCorrectAnswers((prev) => prev + 1);
       else setWrongAnswers((prev) => prev + 1);
     } else {
       console.error("Error: respuesta inesperada del servidor", res);

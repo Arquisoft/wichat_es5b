@@ -27,12 +27,6 @@ const Login = ({userForHistory}) => {
   }
 
   const loginUser = async () => {
-    // Verifica si los campos están vacíos
-    if (!username || !password) {
-      setError("Username and password are required");
-      return; // Detiene la ejecución si hay campos vacíos
-    }
-
     try {
       const response = await axios.post(`${apiEndpoint}/login`, { username, password });
 
@@ -58,15 +52,14 @@ const Login = ({userForHistory}) => {
   };
 
   async function start() {
-    //return (await fetch("http://localhost:8005/start"))
-    return (await fetch("http://localhost:8005/start", {
-      method: 'POST', 
-    }));
+    const res= await axios.post(apiEndpoint + "/start");
+    return res;
   } 
 
   const reinicio = () => {
+    setStartGame(false);
     setKeyReinicio(keyReinicio + 1);
-    start();
+    //start();
   }
 
   if (startGame) {
@@ -87,7 +80,9 @@ const Login = ({userForHistory}) => {
       >
       <div>
       <Game username={username} key={keyReinicio}/>
-      <Button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => reinicio()}>Reiniciar</Button>
+      <Button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => reinicio()}>
+        Volver
+      </Button>
       </div>
       </Container>
 
@@ -122,7 +117,7 @@ const Login = ({userForHistory}) => {
           <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
             Your account was created on {new Date(createdAt).toLocaleDateString()}.
           </Typography>
-          <Button variant="contained" color="primary" onClick={() => {setStartGame(true); start();}} sx={{ marginTop: 2 }}>
+          <Button variant="contained" color="primary" onClick={async () => { await start(); setStartGame(true);}} sx={{ marginTop: 2 }}>
             Start Game
           </Button>
 
