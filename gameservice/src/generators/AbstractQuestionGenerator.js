@@ -1,24 +1,24 @@
-import { QuestionGenerator } from "../QuestionGenerator";
-import { Question } from "../questions/Question";
-import { shuffle } from "../util/GameUtil";
+const { Question } = require("../questions/Question");
+const { shuffle } = require("../util/GameUtil");
 
 
-export abstract class AbstractQuestionGenerator implements QuestionGenerator {
 
-    protected query: string ="";
+class AbstractQuestionGenerator  {
 
-    getQuery():string{
+    query ="";
+
+    getQuery(){
         return this.query;
     }
 
-    generateQuestions(queryResult: any, nQuestions: number): Question[]{  
-        const mappedRes = new Map<string, string[]>();
+    generateQuestions(queryResult, nQuestions){  
+        const mappedRes = new Map();
         this.mapResult(queryResult, mappedRes);
 
         const array = Array.from(mappedRes);
         
-        const questions: Question[] = new Array(nQuestions); 
-        const generatedQuestions: number[] = new Array(nQuestions);
+        const questions = new Array(nQuestions); 
+        const generatedQuestions = new Array(nQuestions);
 
         for (let i = 0; i < nQuestions; i++) {
             questions[i] = this.generateQuestion(array, generatedQuestions);
@@ -27,17 +27,17 @@ export abstract class AbstractQuestionGenerator implements QuestionGenerator {
         return questions;
     }
     
-    generateQuestion(array : [string, string[]][], generatedQuestions : number[] ) : Question {
+    generateQuestion(array , generatedQuestions ) {
         let movieIndex = this.getUnusedIndex(array.length, generatedQuestions);
         let [correctOption, correctData] =  array[movieIndex];
 
-        let options : string[] = [] ;
+        let options = [] ;
         options.push(correctOption);
 
-        let optionsIndex: number[] = [];
+        let optionsIndex = [];
         optionsIndex.push(movieIndex);
 
-        let randomIndex: number;
+        let randomIndex;
         
         for(let i = 0; i< Question.NUMBER_OF_OPTIONS;i++){
             randomIndex = this.getUnusedIndex(array.length, optionsIndex);
@@ -48,7 +48,7 @@ export abstract class AbstractQuestionGenerator implements QuestionGenerator {
         return this.doGenerateQuestion(correctOption, options, correctData);
     }
 
-    getUnusedIndex(max: number, generatedIndex: number[]): number{
+    getUnusedIndex(max, generatedIndex){
         let index = this.getRandomIndex(max);
         let count = 0;
         while(generatedIndex.includes(index) && count < max) {
@@ -59,12 +59,19 @@ export abstract class AbstractQuestionGenerator implements QuestionGenerator {
         return index;
     }
 
-    getRandomIndex(max: number ): number{
+    getRandomIndex(max ){
         return Math.floor(Math.random() * max);
     }
 
-    abstract doGenerateQuestion(correctOption :string, options: string[], data : string[]) : Question;
+    doGenerateQuestion(correctOption , options, data ){
+        throw new Error("sin implementar");
+    };
 
-    abstract mapResult(queryResult : any, mappedRes: Map<String, String[]>): any;
+    mapResult(queryResult , mappedRes){
+        throw new Error("sin implementar");
+    }
 }
+
+module.exports = { AbstractQuestionGenerator };
+
   

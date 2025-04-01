@@ -1,15 +1,11 @@
-export class Question {
-     private readonly imageUrl: string;
-    private options: string[];
-    private readonly correctAnswer: string;
-
-    public static readonly NUMBER_OF_OPTIONS = 3;
-
-    constructor(imageUrl: string, correctAnswer: string, options?: string[]) {
+class Question {
+    
+    constructor(imageUrl, correctAnswer, options) {
         this.imageUrl = imageUrl;
         if (options != undefined) this.options = options;
         else this.options = [];
         this.correctAnswer = correctAnswer;
+        this.NUMBER_OF_OPTIONS = 3;
     }
 
     /**
@@ -17,7 +13,7 @@ export class Question {
      * 
      * @param answers - Un array de respuestas posibles para esta pregunta.
      */
-    setOptions(answers: string[]): void {
+    setOptions(answers) {
         this.options = answers;
     }
 
@@ -25,7 +21,7 @@ export class Question {
      * Devuelve la respuesta correcta para esta pregunta.
      * @returns La respuesta correcta.
      */
-    getCorrectAnswer(): string {
+    getCorrectAnswer() {
         return this.correctAnswer;
     }
 
@@ -34,7 +30,7 @@ export class Question {
      * 
      * @returns Un array de cadenas que representa las opciones de respuesta.
      */
-    getOptions(): string[] {
+    getOptions() {
         return this.options;
     }
 
@@ -42,7 +38,9 @@ export class Question {
      * Devuelve la URL de la imagen asociada con esta pregunta.
      * @returns La URL de la imagen.
      */
-    getImage(): string {
+    getImage() {
         return this.imageUrl;
     }
 }
+
+module.exports = { Question };
