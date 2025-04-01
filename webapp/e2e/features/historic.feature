@@ -5,6 +5,11 @@ Scenario: Unauthenticated user attempts to access game history
   When I try to access the game history page
   Then I should see a message "Debe iniciar sesión para ver su historial" and remain on the same page
 
+Scenario: Unauthenticated user attempts to access game history from Add User page
+  Given An unauthenticated user
+  When I go to the register page and I try to access the game history page
+  Then I should see a message "Debe iniciar sesión para ver su historial" and remain on the same page
+
 Scenario: Authenticated user views his empty history
   Given A registered user with username "aswuser" and password "ValidPassword123"
   When I log in and I go to the history window

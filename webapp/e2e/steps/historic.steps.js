@@ -52,6 +52,23 @@ defineFeature(feature, test => {
 
   });
 
+  test('Unauthenticated user attempts to access game history from Add User page', ({given,when,then}) => {
+
+    given('An unauthenticated user', async () => {
+
+    });
+
+    when('I go to the register page and I try to access the game history page', async () => {
+      await expect(page).toClick("button", { text: "Don't have an account? Register here." });
+      await expect(page).toClick('button', { text: 'HISTORIAL' })
+    });
+
+    then('I should see a message "Debe iniciar sesión para ver su historial" and remain on the same page', async () => {
+      await expect(page).toMatchElement("div", { text: "Debe iniciar sesión para ver su historial" });
+    });
+
+  });
+
   test('Authenticated user views his empty history', ({given,when,then}) => {
 
     let username;
