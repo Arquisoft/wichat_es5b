@@ -1,11 +1,12 @@
 class Question {
-    
+
+    static NUMBER_OF_OPTIONS = 3;
     constructor(imageUrl, correctAnswer, options) {
         this.imageUrl = imageUrl;
         if (options != undefined) this.options = options;
         else this.options = [];
         this.correctAnswer = correctAnswer;
-        this.NUMBER_OF_OPTIONS = 3;
+        
     }
 
     /**

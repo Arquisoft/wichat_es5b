@@ -1,4 +1,4 @@
-const { GameController } = require("../src/GameController");
+const { shuffle } = require("../src/util/GameUtil");
 const { AnswerVerifier } = require("../src/AnswerVerifier");
 const { MovieQuestionGenerator } = require("../src/generators/MovieQuestionGenerator");
 const { ActorQuestionGenerator } = require("../src/generators/ActorQuestionGenerator");

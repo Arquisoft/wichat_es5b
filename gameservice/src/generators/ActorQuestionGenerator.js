@@ -1,13 +1,13 @@
 const { AbstractQuestionGenerator } = require("./AbstractQuestionGenerator");
-const { Question } = require("../questions/Question");
+const { ActorQuestion } = require("../questions/ActorQuestion");
 const { MovieQuestion } = require("../questions/MovieQuestion");
-const { movieQuery } = require("./Queries");
+const { actorQuery } = require("./Queries");
 
 class ActorQuestionGenerator extends AbstractQuestionGenerator {
 
     constructor(){
         super();
-        this.query = movieQuery.actorQuery;
+        this.query = actorQuery;
     }
 
     doGenerateQuestion(correctOption , options, data ){

@@ -1,12 +1,12 @@
 import axios from 'axios';
-const express = require('express');
+import express from 'express';
 
 const app = express();
 const port = 8004;
 
 app.use(express.json());
 
-export async function executeSparqlQuery(query: string) {
+export async function executeSparqlQuery(query) {
     try {
       const response = await axios.get('https://query.wikidata.org/sparql', {
         headers: {
@@ -25,15 +25,15 @@ export async function executeSparqlQuery(query: string) {
     }
 }
 
-app.post("/query", async (req: any, res: any) => {
+app.post("/query", async (req, res) => {
   const query = req.body.query; // Recoge el parámetro del cuerpo
   console.log("Query recibido:", query);
   res.status(200).json(await executeSparqlQuery(query));
 })
 
 // Start the wikidata service
-const server = app.listen(port, () => {
+export const server = app.listen(port, () => {
   console.log(`Wikidata Service listening at http://localhost:${port}`);
 });
 
-module.exports = server
+
