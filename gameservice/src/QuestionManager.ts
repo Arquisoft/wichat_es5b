@@ -1,12 +1,13 @@
 import {Question} from "./questions/Question";
 import { QuestionGenerator } from "./QuestionGenerator";
 import { MovieQuestionGenerator } from "./generators/MovieQuestionGenerator";
+import { CharacterQuestionGenerator } from "./generators/CharacterQuestionGenerator";
 
 export class QuestionManager {
 
   private questions: Question[];
   private generator: QuestionGenerator;
-  private currentQuestion: number =0;
+  private currentQuestion: number = 0;
 
   constructor() {
     this.questions = [];
@@ -14,6 +15,8 @@ export class QuestionManager {
   }
 
   async generateQuestions(nQuestions: number) {
+    this.generator = new MovieQuestionGenerator();
+
     const queryResult = await this.executeQuery();
     const movies = new Map<string, string>();
     queryResult.results.bindings.forEach((entry: any) => {
@@ -23,6 +26,22 @@ export class QuestionManager {
     });
 
     let generatedQuestions = this.generator.generateQuestions(movies, nQuestions);
+    generatedQuestions.forEach(q => this.questions.push(q));
+    this.currentQuestion = 0;
+  }
+
+  async generateCharacterQuestions(nQuestions: number) {
+    this.generator = new CharacterQuestionGenerator();
+
+    const queryResult = await this.executeQuery();
+    const questions = new Map<string, string>();
+    queryResult.results.bindings.forEach((entry: any) => {
+        const seriesName = entry.seriesLabel.value;
+        const image = entry.pic.value;
+        questions.set(seriesName, image);
+    });
+
+    let generatedQuestions = this.generator.generateQuestions(questions, nQuestions);
     generatedQuestions.forEach(q => this.questions.push(q));
     this.currentQuestion = 0;
   }

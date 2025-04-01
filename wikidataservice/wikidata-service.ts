@@ -20,6 +20,23 @@ GROUP BY ?item ?itemLabel
 
 `
 
+const queryCharacter = `
+SELECT DISTINCT ?seriesLabel ?pic WHERE {
+  ?item wdt:P31 wd:Q15773317;
+  wdt:P1441 ?series;
+  wdt:P18 ?pic.
+
+  SERVICE wikibase:label { 
+    bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en".
+    ?series rdfs:label ?seriesLabel
+  }
+  
+}
+
+GROUP BY ?item ?itemLabel ?series ?seriesLabel ?pic
+
+`
+
 export async function executeSparqlQuery() {
     try {
       const response = await axios.get('https://query.wikidata.org/sparql', {
