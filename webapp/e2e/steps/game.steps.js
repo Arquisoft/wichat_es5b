@@ -17,11 +17,11 @@ defineFeature(feature, test => {
           : await puppeteer.launch({ 
             executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', // Only for Mac users
             headless: false, 
-            slowMo: 40
+            slowMo: 20
           });
         page = await browser.newPage();
         //Way of setting up the timeout
-        setDefaultOptions({ timeout: 40000 })
+        setDefaultOptions({ timeout: 120000 })
     
         await page
           .goto("http://localhost:3000", {
@@ -45,7 +45,6 @@ defineFeature(feature, test => {
     beforeEach(async () => {
         await page.waitForTimeout(1500);
         await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
-        // await page.waitForNavigation({ waitUntil: "domcontentloaded" });
     });
 
     test('Authenticated user starts a game', ({given,when,then}) => {
@@ -62,6 +61,7 @@ defineFeature(feature, test => {
             await expect(page).toFill('input[name="username"]', username);
             await expect(page).toFill('input[name="password"]', password);
             await expect(page).toClick('button', { text: 'Login' });
+            await page.waitForTimeout(1000);
             await expect(page).toClick('button', { text: 'Start Game' });
         });
 
@@ -69,6 +69,55 @@ defineFeature(feature, test => {
             await expect(page).toMatchElement("h2", { text: "De qué película es esta imagen?" });
             await expect(page).toMatchElement("h2", { text: "Pregunta 1 de 6" });
             await expect(page).toMatchElement("h2", { text: "Aciertos: 0" });
+        });
+
+    });
+
+    test('Authenticated user starts and finish a game', ({given,when,then}) => {
+
+        let username;
+        let password;
+
+        given('A registered user with username "aswuser" and password "ValidPassword123"', async () => {
+            username = "aswuser";
+            password = "ValidPassword123";
+        });
+
+        when('I log in and I click on Start Game and I answer all questions', async () => {
+            await expect(page).toFill('input[name="username"]', username);
+            await expect(page).toFill('input[name="password"]', password);
+            await expect(page).toClick('button', { text: 'Login' });
+            await page.waitForTimeout(1000);
+            await expect(page).toClick('button', { text: 'Start Game' });
+
+            await expect(page).toMatchElement("h2", { text: "De qué película es esta imagen?" });
+
+            // Primera pregunta
+            await expect(page).toMatchElement("h2", { text: "Pregunta 1 de 6" });
+            await expect(page).toClick('#option-0');
+            // Segunda pregunta
+            await page.waitForTimeout(1000);
+            await expect(page).toMatchElement("h2", { text: "Pregunta 2 de 6" });
+            await expect(page).toClick('#option-0');
+            // Tercera pregunta
+            await page.waitForTimeout(1000);
+            await expect(page).toMatchElement("h2", { text: "Pregunta 3 de 6" });
+            await expect(page).toClick('#option-0');
+            // Cuarta pregunta
+            await expect(page).toMatchElement("h2", { text: "Pregunta 4 de 6" });
+            await expect(page).toClick('#option-0');
+            // Quinta pregunta
+            await page.waitForTimeout(1000);
+            await expect(page).toMatchElement("h2", { text: "Pregunta 5 de 6" });
+            await expect(page).toClick('#option-0');
+            // Sexta pregunta
+            await page.waitForTimeout(1000);
+            await expect(page).toMatchElement("h2", { text: "Pregunta 6 de 6" });
+            await expect(page).toClick('#option-0');
+        });
+
+        then('I should see the finish page', async () => {
+            await expect(page).toMatchElement("h2", { text: "Fin de la partida" });
         });
 
     });

@@ -1,3 +1,4 @@
+process.env.LLM_API_KEY = "sk-tpRSusY7sIQFub3jiBONVw";
 const { MongoMemoryServer } = require('mongodb-memory-server');
 
 let mongoserver;
