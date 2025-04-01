@@ -29,7 +29,7 @@ defineFeature(feature, test => {
 
     // Intentar iniciar sesión con existinguser
     await expect(page).toFill('input[name="username"]', "existinguser");
-    await expect(page).toFill('input[name="password"]', "validpassword");
+    await expect(page).toFill('input[name="password"]', "ValidPassword123");
     await expect(page).toClick('button', { text: 'Login' });
 
     // Comprobar si el login fue exitoso
