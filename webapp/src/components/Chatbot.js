@@ -74,25 +74,58 @@ const Chatbot = ({ movieName }) => {
                 border: '2px solid #c46331',
                 paddingBottom: '0'
             }}>
-                <Button 
-                    onClick={() => setIsMinimized(!isMinimized)}
-                    sx={{ 
-                        width: '100%',
-                        backgroundColor: '#c46331',
-                        color: 'white',
-                        '&:hover': { 
-                            backgroundColor: '#a6532a',
-                            borderBottom: '2px solid #8a4524'
-                        },
-                        borderRadius: 0,
-                        minHeight: '40px',
-                        fontWeight: 'bold',
-                        fontSize: '1rem'
-                    }}
-                >
-                    {isMinimized ? 'Chat de Pistas ▲' : 'Chat de Pistas ▼'}
-                </Button>
-
+                {/* Cabecera con título y botón de modelo */}
+                <Box sx={{ 
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    backgroundColor: '#c46331',
+                    width: '100%',
+                    minHeight: '40px'
+                }}>
+                    <Button 
+                        onClick={() => setIsMinimized(!isMinimized)}
+                        sx={{ 
+                            color: 'white',
+                            '&:hover': { 
+                                backgroundColor: '#a6532a',
+                            },
+                            fontWeight: 'bold',
+                            fontSize: '1rem',
+                            flexGrow: 1,
+                            textAlign: 'left',
+                            justifyContent: 'flex-start',
+                            pl: 2,
+                            textTransform: 'none'
+                        }}
+                    >
+                        {isMinimized ? 'Chat de Pistas ▲' : 'Chat de Pistas ▼'}
+                    </Button>
+                    
+                    {!isMinimized && (
+                        <Button 
+                            variant="outlined"
+                            onClick={toggleModel}
+                            sx={{ 
+                                backgroundColor: '#f0e6de',
+                                color: '#5a2d16',
+                                borderColor: '#c46331',
+                                '&:hover': { 
+                                    backgroundColor: '#e8d5c9',
+                                    borderColor: '#a6532a'
+                                },
+                                fontSize: '0.8rem',
+                                mr: 1,
+                                height: '30px',
+                                minWidth: '100px',
+                                textTransform: 'none'
+                            }}
+                        >
+                            {currentModel === DEFAULT_MODEL ? 'Usar Qwen' : 'Usar Mistral'}
+                        </Button>
+                    )}
+                </Box>
+    
                 {!isMinimized && (
                     <>
                         <List sx={{ 
@@ -127,76 +160,53 @@ const Chatbot = ({ movieName }) => {
                                 </ListItem>
                             ))}
                         </List>
-
+    
                         <Box sx={{ 
                             display: 'flex', 
-                            flexDirection: 'column',
                             p: 2,
                             backgroundColor: '#f8f1eb',
                             borderTop: '2px solid #c46331'
                         }}>
-                            <Box sx={{ display: 'flex', mb: 1 }}>
-                                <Button 
-                                    variant="outlined"
-                                    onClick={toggleModel}
-                                    sx={{ 
-                                        ml: 'auto',
-                                        backgroundColor: '#f0e6de',
-                                        color: '#5a2d16',
-                                        borderColor: '#c46331',
-                                        '&:hover': { 
-                                            backgroundColor: '#e8d5c9',
-                                            borderColor: '#a6532a'
+                            <TextField
+                                fullWidth
+                                size="medium"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                placeholder="Escribe tu pregunta..."
+                                onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                                sx={{
+                                    '& .MuiOutlinedInput-root': {
+                                        '& fieldset': {
+                                            borderColor: '#c46331',
                                         },
-                                        fontSize: '0.8rem'
-                                    }}
-                                >
-                                    {currentModel === DEFAULT_MODEL ? 'Usar Qwen' : 'Usar Mistral'}
-                                </Button>
-                            </Box>
-                            
-                            <Box sx={{ display: 'flex' }}>
-                                <TextField
-                                    fullWidth
-                                    size="medium"
-                                    value={input}
-                                    onChange={(e) => setInput(e.target.value)}
-                                    placeholder="Escribe tu pregunta..."
-                                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                                    sx={{
-                                        '& .MuiOutlinedInput-root': {
-                                            '& fieldset': {
-                                                borderColor: '#c46331',
-                                            },
-                                            '&:hover fieldset': {
-                                                borderColor: '#a6532a',
-                                            },
+                                        '&:hover fieldset': {
+                                            borderColor: '#a6532a',
                                         },
-                                        '& .MuiInputBase-input': {
-                                            padding: '12px'
-                                        },
-                                        height: '45px'
-                                    }}
-                                />
-
-                                <Button 
-                                    variant="contained" 
-                                    onClick={handleSendMessage}
-                                    sx={{ 
-                                        ml: 1.5,
-                                        backgroundColor: '#c46331',
-                                        color: 'white',
-                                        '&:hover': { 
-                                            backgroundColor: '#a6532a' 
-                                        },
-                                        padding: '0 20px',
-                                        fontSize: '1rem',
-                                        height: '45px'
-                                    }}
-                                >
-                                    Enviar
-                                </Button>
-                            </Box>
+                                    },
+                                    '& .MuiInputBase-input': {
+                                        padding: '12px'
+                                    },
+                                    height: '45px'
+                                }}
+                            />
+    
+                            <Button 
+                                variant="contained" 
+                                onClick={handleSendMessage}
+                                sx={{ 
+                                    ml: 1.5,
+                                    backgroundColor: '#c46331',
+                                    color: 'white',
+                                    '&:hover': { 
+                                        backgroundColor: '#a6532a' 
+                                    },
+                                    padding: '0 20px',
+                                    fontSize: '1rem',
+                                    height: '45px'
+                                }}
+                            >
+                                Enviar
+                            </Button>
                         </Box>
                     </>
                 )}
