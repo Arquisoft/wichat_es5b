@@ -78,7 +78,7 @@ describe('Login component', () => {
     await expect(screen.getByText("Username and password are required")).toBeInTheDocument();
   });
 
-  it('El botón de volver debe aparecer', async () => {
+  it('El botón de volver debe aparecer y funcionar', async () => {
     await mockAxios.onPost('http://localhost:8000/history').reply(200, [{date: "2024-01-01T12:34:56Z", correctAnswers: 4, wrongAnswers:2}]);
     await mockAxios.onGet('http://localhost:8000/ranking').reply(200, [{username:"user1", date: "2024-01-01T12:34:56Z", correctAnswers: 4, wrongAnswers:2}]);
     render(<Login userForHistory={userForHistory}/>);
@@ -104,17 +104,23 @@ describe('Login component', () => {
         fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
         fireEvent.click(loginButton);
         
-      });
+    });
 
-      await act(async () => {
-        fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
-      });
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+    });
 
     
-      await waitFor(() => {
-        expect(screen.getByText("Volver")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText("Volver")).toBeInTheDocument();
     });
-      });
+    await fireEvent.click(screen.getByText("Volver"));
+
+    await waitFor(() => {
+      expect(screen.getByText("Start Game")).toBeInTheDocument();
+    });
+
+    });
 
   })
 
