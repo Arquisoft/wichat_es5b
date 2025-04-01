@@ -10,7 +10,7 @@ const mockAxios = new MockAdapter(axios);
 describe('Chatbot Component', () => {
   const movieName = 'Inception';
   
-  // Función helper para expandir el chat (reducirá duplicación sin perder líneas)
+  
   const expandChat = () => {
     const toggleButton = screen.getByRole('button', { name: /Chat de Pistas ▲/i });
     fireEvent.click(toggleButton);
@@ -29,7 +29,9 @@ describe('Chatbot Component', () => {
   });
 
   describe('Initial State and Appearance', () => {
+
     it('should render the chatbot minimized by default', () => {
+
         cleanup();
         render(<Chatbot movieName={movieName} />);
         const minimizeButton = screen.getByRole('button', { name: /Chat de Pistas ▲/i });
@@ -39,6 +41,7 @@ describe('Chatbot Component', () => {
     });
 
     it('should have correct initial styles for minimized state', () => {
+
       cleanup();
       render(<Chatbot movieName={movieName} />);
       
@@ -46,11 +49,11 @@ describe('Chatbot Component', () => {
         name: /Chat de Pistas ▲/i 
       });
       
-      // Obtiene los estilos computados reales
+      
       const styles = window.getComputedStyle(toggleButton);
       
-      expect(styles.color).toBe("white"); // white
-      expect(styles.backgroundColor).toBe('rgb(166, 83, 42)'); // #c46331
+      expect(styles.color).toBe("white"); 
+      expect(styles.backgroundColor).toBe('rgb(166, 83, 42)'); 
       
       expect(styles.fontWeight).toBe("700");
     });
@@ -439,11 +442,12 @@ describe('Chatbot Component', () => {
   });
 
   describe('LLM Model Switching', () => {
+    
     beforeEach(() => {
       mockAxios.reset();
       cleanup();
       render(<Chatbot movieName={movieName} />);
-      expandChat(); // Expandimos el chat para ver el botón
+      expandChat(); 
     });
   
     afterEach(() => {
@@ -452,31 +456,39 @@ describe('Chatbot Component', () => {
     });
   
     it('should display the model switch button when chat is expanded', () => {
+
       const switchButton = screen.getByRole('button', { 
         name: /Usar (Qwen|Mistral)/i 
       });
+
       expect(switchButton).toBeInTheDocument();
     });
   
     it('should show "Usar Qwen" by default when Mistral is active', () => {
+
       const switchButton = screen.getByRole('button', { 
         name: /Usar Qwen/i 
       });
+      
       expect(switchButton).toHaveTextContent('Usar Qwen');
     });
   
     it('should switch button text to "Usar Mistral" when Qwen is active', () => {
+
       const switchButton = screen.getByRole('button', { 
         name: /Usar Qwen/i 
       });
+
       fireEvent.click(switchButton);
       expect(switchButton).toHaveTextContent('Usar Mistral');
     });
   
     it('should display a system message when switching models', () => {
+
       const switchButton = screen.getByRole('button', { 
         name: /Usar Qwen/i 
       });
+
       fireEvent.click(switchButton);
       
       const systemMessages = screen.getAllByText(/Se ha cambiado el modelo a /i);
@@ -487,6 +499,7 @@ describe('Chatbot Component', () => {
     });
   
     it('should have correct styling for the model switch button', () => {
+
       const switchButton = screen.getByRole('button', { 
         name: /Usar Qwen/i 
       });
@@ -499,15 +512,17 @@ describe('Chatbot Component', () => {
     });
   
     it('should not display the switch button when chat is minimized', () => {
-      // Minimizamos el chat
+      
       const toggleButton = screen.getByRole('button', { name: /Chat de Pistas ▼/i });
       fireEvent.click(toggleButton);
       
       const switchButton = screen.queryByRole('button', { 
         name: /Usar (Qwen|Mistral)/i 
       });
+
       expect(switchButton).not.toBeInTheDocument();
     });
+
   });
 
   describe('Edge Cases', () => {

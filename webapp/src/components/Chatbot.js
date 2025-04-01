@@ -10,7 +10,7 @@ const Chatbot = ({ movieName }) => {
     const DEFAULT_MODEL = 'empathy';
     const QWEN_MODEL = 'empathyQwen';
 
-    const [currentModel, setCurrentModel] = useState(DEFAULT_MODEL); // Modelo por defecto
+    const [currentModel, setCurrentModel] = useState(DEFAULT_MODEL); //modelo por defecto: mistral
     
     const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
@@ -46,7 +46,7 @@ const Chatbot = ({ movieName }) => {
         const newModel = currentModel === DEFAULT_MODEL ? QWEN_MODEL : DEFAULT_MODEL;
         setCurrentModel(newModel);
         
-        // Añadir mensaje informativo al chat
+        //que aparezca mensaje informativo al chat del cambio de modelo
         const modelName = newModel === DEFAULT_MODEL ? 'Mistral' : 'Qwen';
         const infoMessage = {
             text: `Se ha cambiado el modelo a ${modelName}.`,
