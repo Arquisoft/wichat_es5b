@@ -17,7 +17,7 @@ export class QuestionManager {
 
   constructor() {
     this.questions = [];
-    this.generator = [new MovieQuestionGenerator(), new ActorQuestionGenerator()];
+    this.generator = [new MovieQuestionGenerator(), new ActorQuestionGenerator(), new CharacterQuestionGenerator()];
   }
 
   async generateQuestions(nQuestions: number) {
@@ -40,24 +40,6 @@ export class QuestionManager {
 
     this.currentQuestion = 0;
   }
-
-  /*
-  async generateCharacterQuestions(nQuestions: number) {
-    this.generator = new CharacterQuestionGenerator();
-
-    const queryResult = await this.executeQuery();
-    const questions = new Map<string, string>();
-    queryResult.results.bindings.forEach((entry: any) => {
-        const seriesName = entry.seriesLabel.value;
-        const image = entry.pic.value;
-        questions.set(seriesName, image);
-    });
-
-    let generatedQuestions = this.generator.generateQuestions(questions, nQuestions);
-    generatedQuestions.forEach(q => this.questions.push(q));
-    this.currentQuestion = 0;
-  }
-    */
 
   /**
    * Devuelve una pregunta aleatoria de la lista de preguntas disponibles.
