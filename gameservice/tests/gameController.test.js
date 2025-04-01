@@ -1,11 +1,11 @@
-import {GameController} from "../src/GameController";
-import {QuestionManager} from "../src/QuestionManager";
-import {AnswerVerifier} from "../src/AnswerVerifier";
-import {MovieQuestion} from "../src/questions/MovieQuestion"
+const { GameController } = require("../src/GameController");
+const { QuestionManager } = require("../src/QuestionManager");
+const { AnswerVerifier } = require("../src/AnswerVerifier");
+const { MovieQuestion } = require("../src/questions/MovieQuestion");
 
-let gameController: GameController;
-let questionManager: QuestionManager;
-let answerVerifier: AnswerVerifier;
+let gameController;
+let questionManager;
+let answerVerifier;
 
 beforeEach(() => {
     questionManager = new QuestionManager();
@@ -16,7 +16,7 @@ beforeEach(() => {
 test("Inicio del juego", async () => {
     gameController.getQuestionManager().pushQuestion(new MovieQuestion("", "The Matrix", ["Star Wars", "Inception", "The Matrix", "Interstellar"]));
 
-    jest.spyOn(gameController.getQuestionManager(), 'generateQuestions').mockImplementation((nQuestions: number) => {
+    jest.spyOn(gameController.getQuestionManager(), 'generateQuestions').mockImplementation((nQuestions) => {
         return Promise.resolve();
     });
     await gameController.startGame();

@@ -1,4 +1,4 @@
-export const movieQuery = `
+const movieQuery = `
     SELECT DISTINCT ?itemLabel (SAMPLE(?pic) AS ?pic) WHERE {
     ?item wdt:P31 wd:Q11424;
     wdt:P577 ?publication_date;
@@ -12,7 +12,7 @@ export const movieQuery = `
     GROUP BY ?item ?itemLabel
 `;
 
-export const actorQuery = `
+const actorQuery = `
     SELECT DISTINCT ?characterLabel ?performerLabel ?filmTitle (SAMPLE(?pic) AS ?pic) WHERE {
     ?character wdt:P31 wd:Q15773347;
     wdt:P175 ?performer;
@@ -27,3 +27,5 @@ export const actorQuery = `
 
     GROUP BY ?characterLabel ?performerLabel ?filmTitle
 `;
+
+module.exports = { movieQuery, actorQuery };
