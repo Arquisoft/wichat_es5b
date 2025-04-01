@@ -6,7 +6,8 @@ import Chatbot from '../Chatbot';
 import LoadingScreen from '../LoadingScreen';
 import axios from 'axios';
 
-const gameUrl = process.env.GAMECONTROLLER_URL || 'http://localhost:8005';
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
+
 
 export default function MovieQuiz({username}) {
   const [currentQuestion, setCurrentQuestion] = useState("");
@@ -94,13 +95,10 @@ export default function MovieQuiz({username}) {
     return <GameOver correct={correctAnswers} wrong={wrongAnswers} username ={user} />
   }
 
-  async function start(){
-    return (await fetch(gameUrl+"start"))
-  }
 
   async function getQuestion() {
     try {
-      const response = await fetch(gameUrl + "/question");
+      const response = await fetch(apiEndpoint + "/question");
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.statusText}`);
       }
@@ -114,7 +112,7 @@ export default function MovieQuiz({username}) {
   async function answer(selectedAnswer) {
     try {
       console.log("Enviando respuesta:", selectedAnswer);
-      const response = await axios.post(gameUrl + "/answer", { answer: selectedAnswer });
+      const response = await axios.post(apiEndpoint + "/answer", { answer: selectedAnswer });
       console.log("Respuesta recibida:", response.data);
       return response.data; // Devolver los datos en lugar del objeto completo
     } catch (error) {
@@ -125,8 +123,8 @@ export default function MovieQuiz({username}) {
   
 
   async function endGame() {
-    // return await axios.get(gameUrl + "/end");
-    return (await fetch(gameUrl + "/end", {
+    // return await axios.get(apiEndpoint + "/end");
+    return (await fetch(apiEndpoint + "/end", {
       method: 'POST',
     }))
   }
@@ -135,7 +133,7 @@ export default function MovieQuiz({username}) {
 
   return (
     <div>
-      {loading ? (<LoadingScreen/>) :  (<div className="max-w-xl mx-auto p-10 bg-white shadow-lg rounded-lg text-center">
+      {loading ? (<LoadingScreen/>) :  (<div className="max-w-xl mx-auto p-10 bg-white shadow-lg rounded-lg text-center margin" >
       <h2 className="text-2xl font-bold">{currentQuestion.question}</h2>
       <img src={currentQuestion.imageUrl} alt="Pregunta" className="w-full h-48 object-cover my-3 rounded" />
       <div className="grid grid-cols-1 gap-2">
