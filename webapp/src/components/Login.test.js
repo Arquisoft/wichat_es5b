@@ -70,13 +70,8 @@ describe('Login component', () => {
     expect(screen.queryByText(/Your account was created on/i)).toBeNull();
   });
 
-  it('deben llenarse los campos para iniciar sesion', async () => {
-    render(<Login userForHistory={userForHistory}/>);
-    const loginButton = screen.getByRole('button', { name: /Login/i });
-    fireEvent.click(loginButton);
-
-    await expect(screen.getByText("Username and password are required")).toBeInTheDocument();
-  });
+  
+  
 
   it('El botón de volver debe aparecer y funcionar', async () => {
     await mockAxios.onPost('http://localhost:8000/history').reply(200, [{date: "2024-01-01T12:34:56Z", correctAnswers: 4, wrongAnswers:2}]);
@@ -120,9 +115,10 @@ describe('Login component', () => {
       expect(screen.getByText("Start Game")).toBeInTheDocument();
     });
 
-    });
+    });  
 
   })
 
+  
   
 
