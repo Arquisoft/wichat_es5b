@@ -77,11 +77,12 @@ const Chatbot = ({ movieName }) => {
                 {/* Cabecera con título y botón de modelo */}
                 <Box sx={{ 
                     display: 'flex',
-                    justifyContent: 'space-between',
+                    justifyContent: isMinimized ? 'center' : 'space-between',
                     alignItems: 'center',
                     backgroundColor: '#c46331',
                     width: '100%',
-                    minHeight: '40px'
+                    minHeight: '40px',
+                    position: 'relative'
                 }}>
                     <Button 
                         onClick={() => setIsMinimized(!isMinimized)}
@@ -92,11 +93,13 @@ const Chatbot = ({ movieName }) => {
                             },
                             fontWeight: 'bold',
                             fontSize: '1rem',
-                            flexGrow: 1,
-                            textAlign: 'left',
-                            justifyContent: 'flex-start',
-                            pl: 2,
-                            textTransform: 'none'
+                            flexGrow: isMinimized ? 0 : 1,
+                            textAlign: isMinimized ? 'center' : 'left',
+                            justifyContent: 'center',
+                            px: 2,
+                            textTransform: 'none',
+                            position: isMinimized ? 'static' : 'relative',
+                            minWidth: isMinimized ? 'auto' : 0
                         }}
                     >
                         {isMinimized ? 'Chat de Pistas ▲' : 'Chat de Pistas ▼'}
