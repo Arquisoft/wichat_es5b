@@ -6,7 +6,8 @@ import Chatbot from '../Chatbot';
 import LoadingScreen from '../LoadingScreen';
 import axios from 'axios';
 
-const gameUrl = process.env.GAMECONTROLLER_URI || 'http://localhost:8005';
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
+
 
 export default function MovieQuiz({username}) {
   const [currentQuestion, setCurrentQuestion] = useState("");
@@ -25,6 +26,7 @@ export default function MovieQuiz({username}) {
     
     setLoading(true);
     const question = await getQuestion();
+    setLoading(false);
 
     if (!question || Object.keys(question).length === 0) {
       console.error("Error: no se recibió una nueva pregunta.");
@@ -36,9 +38,22 @@ export default function MovieQuiz({username}) {
     setCurrentQuestion(question);
     setSelectedOption(null);
     setTimeLeft(60);
-    setLoading(false);
+    
     
   };
+
+  useEffect(() => {
+    nextQuestion();
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (!gameFinished) {
+        setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [gameFinished]);
 
   useEffect(() => {
     if (timeLeft === 0) {
@@ -54,17 +69,8 @@ export default function MovieQuiz({username}) {
       }
       return; // Evita seguir con el temporizador
     }
-  
-    const timer = setInterval(() => {
-      if (!gameFinished) {
-        setTimeLeft((prev) => Math.max(prev - 1, 0));
-      }
-    }, 1000);
-  
-    return () => clearInterval(timer);
-  }, [timeLeft, gameFinished]);
-  
-  
+  }, [timeLeft]);
+
 
   const handleOptionClick = async (selectedAnswer) => {
     setSelectedOption(selectedAnswer);
@@ -72,9 +78,9 @@ export default function MovieQuiz({username}) {
     const res = await answer(selectedAnswer);
     setQuestionsAnswered((prev) => prev + 1);
   
-    if (res && res.result !== undefined) {
-      console.log(res.result);
-      if (res.result) setCorrectAnswers((prev) => prev + 1);
+    if (res !== undefined) {
+      
+      if (res) setCorrectAnswers((prev) => prev + 1);
       else setWrongAnswers((prev) => prev + 1);
     } else {
       console.error("Error: respuesta inesperada del servidor", res);
@@ -94,13 +100,10 @@ export default function MovieQuiz({username}) {
     return <GameOver correct={correctAnswers} wrong={wrongAnswers} username ={user} />
   }
 
-  async function start(){
-    return (await fetch(gameUrl+"start"))
-  }
 
   async function getQuestion() {
     try {
-      const response = await fetch(gameUrl + "/question");
+      const response = await fetch(apiEndpoint + "/question");
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.statusText}`);
       }
@@ -114,7 +117,7 @@ export default function MovieQuiz({username}) {
   async function answer(selectedAnswer) {
     try {
       console.log("Enviando respuesta:", selectedAnswer);
-      const response = await axios.post(gameUrl + "/answer", { answer: selectedAnswer });
+      const response = await axios.post(apiEndpoint + "/answer", { answer: selectedAnswer });
       console.log("Respuesta recibida:", response.data);
       return response.data; // Devolver los datos en lugar del objeto completo
     } catch (error) {
@@ -125,8 +128,8 @@ export default function MovieQuiz({username}) {
   
 
   async function endGame() {
-    // return await axios.get(gameUrl + "/end");
-    return (await fetch(gameUrl + "/end", {
+    // return await axios.get(apiEndpoint + "/end");
+    return (await fetch(apiEndpoint + "/end", {
       method: 'POST',
     }))
   }
@@ -141,6 +144,7 @@ export default function MovieQuiz({username}) {
       <div className="grid grid-cols-1 gap-2">
         {currentQuestion.options.map((option, index) => (
           <button
+            id={`option-${index}`}
             key={index}
             onClick={() => handleOptionClick(option)}
             className={`py-2 px-4 rounded font-semibold border transition-all duration-200 ${

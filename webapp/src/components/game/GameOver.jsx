@@ -2,16 +2,16 @@ import axios from 'axios';
 import { useEffect } from "react";
 
 
-const databaseServiceUrl = process.env.DATABASE_URI || 'http://localhost:8006';
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
 export default function GameOver({ correct, wrong, username }) {
   const saveHistorial = async () =>{
     const data = {username: username, date: new Date().toISOString(), correctAnswers: correct, wrongAnswers: wrong};
-    await axios.post(databaseServiceUrl + "/newHistory", data);
+    await axios.post(apiEndpoint + "/newHistory", data);
   }
   const saveRanking = async () =>{
     const data={username: username, correctAnswers: correct, wrongAnswers: wrong}
-    await axios.post(databaseServiceUrl + "/newRanking", data);
+    await axios.post(apiEndpoint + "/newRanking", data);
   }
   useEffect(()=>{
     saveHistorial();

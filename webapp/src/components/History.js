@@ -2,27 +2,23 @@ import { useState, useEffect } from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
 import axios from 'axios';
 
-const databaseServiceUrl = process.env.DATABASE_URL || 'http://localhost:8006';
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
 
 const History = ({username}) => {
     const [show, setShow] = useState(false);
     const [historial, setHistorial] = useState([])
 
-    useEffect(() => {
-        console.log(username)
-        if (username) 
-            getHistorial();
-        
-    }, [username]);
-
 
     const mostrarHistorial = () =>{
+        if (username) {
+            getHistorial();
+        }
         setShow(true);
     }
 
     const getHistorial = async () =>{
-        const res= await axios.post(databaseServiceUrl + "/history", {username: username});
+        const res= await axios.post(apiEndpoint + "/history", {username: username});
         setHistorial(res.data);
     }
 
@@ -33,7 +29,7 @@ const History = ({username}) => {
             <Button variant="primary" sx={{color:"#fecd24",fontSize: "1.1rem"}} onClick= {() => mostrarHistorial()}>HISTORIAL</Button>
             <Dialog open={show} onClose={()=> setShow(false)}>
                 <DialogTitle>
-                    <h2>Historial</h2>
+                    Historial
                 </DialogTitle>
                 <DialogContent>
                     {username ? (<Table>

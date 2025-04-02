@@ -12,7 +12,11 @@ defineFeature(feature, test => {
     browser = process.env.GITHUB_ACTIONS
       ? await puppeteer.launch({headless: "new", args: ['--no-sandbox', '--disable-setuid-sandbox']})
       // : await puppeteer.launch({ headless: false, slowMo: 100 });
-      : await puppeteer.launch({ headless: true, slowMo: 1 });
+      : await puppeteer.launch({ 
+        // executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', // Only for Mac users
+        headless: false, 
+        slowMo: 10
+      });
     page = await browser.newPage();
     //Way of setting up the timeout
     setDefaultOptions({ timeout: 10000 })
@@ -25,7 +29,7 @@ defineFeature(feature, test => {
 
     // Intentar iniciar sesión con existinguser
     await expect(page).toFill('input[name="username"]', "existinguser");
-    await expect(page).toFill('input[name="password"]', "validpassword");
+    await expect(page).toFill('input[name="password"]', "ValidPassword123");
     await expect(page).toClick('button', { text: 'Login' });
 
     // Comprobar si el login fue exitoso
@@ -38,11 +42,11 @@ defineFeature(feature, test => {
         // Si el usuario no existe, registrarlo
         await expect(page).toClick("button", { text: "Don't have an account? Register here." });
         await expect(page).toFill('input[name="username"]', "existinguser");
-        await expect(page).toFill('input[name="password"]', "validpassword");
+        await expect(page).toFill('input[name="password"]', "ValidPassword123");
         await expect(page).toClick('button', { text: 'Add User' })
 
         // Confirmar que el registro fue exitoso
-        await expect(page).toMatchElement("div", { text: "User added successfully" });
+        await expect(page).toMatchElement("div", { text: "Usuario añadido correctamente" });
     }
   });
 
@@ -57,13 +61,13 @@ defineFeature(feature, test => {
     let username;
     let password;
 
-    given('A registered user with username "existinguser" and password "validpassword"', async () => {
+    given('A registered user with username "existinguser" and password "ValidPassword123"', async () => {
         username = "existinguser";
-        password = "validpassword";
+        password = "ValidPassword123";
         await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
     });
 
-    when('I fill the username field with "existinguser" and I fill the password field with "validpassword" and I press submit', async () => {
+    when('I fill the username field with "existinguser" and I fill the password field with "ValidPassword123" and I press submit', async () => {
         await expect(page).toFill('input[name="username"]', username);
         await expect(page).toFill('input[name="password"]', password);
         await expect(page).toClick('button', { text: 'Login' });
@@ -80,7 +84,7 @@ defineFeature(feature, test => {
     let username;
     let password;
 
-    given('A registered user with username "existinguser" and password "validpassword"', async () => {
+    given('A registered user with username "existinguser" and password "ValidPassword123"', async () => {
         username = "existinguser";
         password = "invalidpassword";
         await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
@@ -92,8 +96,8 @@ defineFeature(feature, test => {
         await expect(page).toClick('button', { text: 'Login' });
     });
 
-    then('A validation message "Error: Invalid credentials" should be displayed', async () => {
-        await expect(page).toMatchElement('div', { text: "Error: Invalid credentials" });
+    then('A validation message "Invalid credentials" should be displayed', async () => {
+        await expect(page).toMatchElement('div', { text: `Invalid credentials` });
     });
 
   })
@@ -103,20 +107,20 @@ defineFeature(feature, test => {
     let username;
     let password;
 
-    given('A user with username "existinguser" and password "validpassword" is registered', async () => {
+    given('A user with username "existinguser" and password "ValidPassword123" is registered', async () => {
         username = "nonexistinguser";
-        password = "validpassword";
+        password = "ValidPassword123";
         await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
     });
 
-    when('I fill the username field with "nonexistentuser" and I fill the password field with "validpassword" and I press submit', async () => {
+    when('I fill the username field with "nonexistentuser" and I fill the password field with "ValidPassword123" and I press submit', async () => {
         await expect(page).toFill('input[name="username"]', username);
         await expect(page).toFill('input[name="password"]', password);
         await expect(page).toClick('button', { text: 'Login' });
     });
 
-    then('A validation message "Error: Invalid credentials" should be displayed', async () => {
-        await expect(page).toMatchElement('div', { text: "Error: Invalid credentials" });
+    then('A validation message "Invalid credentials" should be displayed', async () => {
+        await expect(page).toMatchElement('div', { text: `Invalid credentials` });
     });
 
   })
@@ -126,7 +130,7 @@ defineFeature(feature, test => {
     let username;
     let password;
 
-    given('A user with username "existinguser" and password "validpassword" is registered', async () => {
+    given('A user with username "existinguser" and password "ValidPassword123" is registered', async () => {
         username = "nonexistinguser";
         password = "invalidpassword";
         await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
@@ -138,8 +142,8 @@ defineFeature(feature, test => {
         await expect(page).toClick('button', { text: 'Login' });
     });
 
-    then('A validation message "Error: Invalid credentials" should be displayed', async () => {
-        await expect(page).toMatchElement('div', { text: "Error: Invalid credentials" });
+    then('A validation message "Invalid credentials" should be displayed', async () => {
+        await expect(page).toMatchElement('div', { text: `Invalid credentials` });
     });
 
   })
@@ -149,7 +153,7 @@ defineFeature(feature, test => {
     let username;
     let password;
 
-    given('A registered user with username "existinguser" and password "validpassword"', async () => {
+    given('A registered user with username "existinguser" and password "ValidPassword123"', async () => {
         username = "existinguser";
         password = "";
         await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
@@ -161,8 +165,8 @@ defineFeature(feature, test => {
         await expect(page).toClick('button', { text: 'Login' });
     });
 
-    then('A validation message "Error: Username and password are required" should be displayed', async () => {
-        await expect(page).toMatchElement('div', { text: "Error: Username and password are required" });
+    then('A validation message "Invalid credentials" should be displayed', async () => {
+        await expect(page).toMatchElement('div', { text: `Invalid credentials` });
     });
 
   })  
@@ -172,20 +176,20 @@ defineFeature(feature, test => {
     let username;
     let password;
 
-    given('A registered user with username "existinguser" and password "validpassword"', async () => {
+    given('A registered user with username "existinguser" and password "ValidPassword123"', async () => {
         username = "";
-        password = "validpassword";
+        password = "ValidPassword123";
         await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
     });
 
-    when('I leave the username field empty and I fill the password field with "validpassword" and I press submit', async () => {
+    when('I leave the username field empty and I fill the password field with "ValidPassword123" and I press submit', async () => {
         await expect(page).toFill('input[name="username"]', username);
         await expect(page).toFill('input[name="password"]', password);
         await expect(page).toClick('button', { text: 'Login' });
     });
 
-    then('A validation message "Error: Username and password are required" should be displayed', async () => {
-        await expect(page).toMatchElement('div', { text: "Error: Username and password are required" });
+    then('A validation message "Invalid credentials" should be displayed', async () => {
+        await expect(page).toMatchElement('div', { text: `Invalid credentials` });
     });
 
   })  
@@ -195,7 +199,7 @@ defineFeature(feature, test => {
     let username;
     let password;
 
-    given('A registered user with username "existinguser" and password "validpassword"', async () => {
+    given('A registered user with username "existinguser" and password "ValidPassword123"', async () => {
         username = "";
         password = "";
         await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
@@ -207,8 +211,8 @@ defineFeature(feature, test => {
         await expect(page).toClick('button', { text: 'Login' });
     });
 
-    then('A validation message "Error: Username and password are required" should be displayed', async () => {
-        await expect(page).toMatchElement('div', { text: "Error: Username and password are required" });
+    then('A validation message "Invalid credentials" should be displayed', async () => {
+        await expect(page).toMatchElement('div', { text: `Invalid credentials` });
     });
 
   }) 
