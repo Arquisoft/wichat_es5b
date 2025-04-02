@@ -10,11 +10,11 @@ services:
     networks:
       - mynetwork
 
-  database:
-    container_name: database-wichat_es5b
-    image: ghcr.io/arquisoft/wichat_es5b/database:latest
+  statsservice:
+    container_name: statsservice-wichat_es5b
+    image: ghcr.io/arquisoft/wichat_es5b/statsservice:latest
     profiles: ["dev","prod"]
-    build: ./database
+    build: ./statsservice
     depends_on:
       - mongodb
     ports:
@@ -101,6 +101,7 @@ services:
       - llmservice
       - wikidataservice
       - gameservice
+      - statsservice
     ports:
       - "8000:8000"
     networks:
@@ -110,7 +111,8 @@ services:
       USER_SERVICE_URL: http://userservice:8001
       LLM_SERVICE_URL: http://llmservice:8003
       WIKIDATA_SERVICE_URL: http://wikidataservice:8004
-      GAMESERVICE_URI: http://gameservice:8005
+      GAMECONTROLLER_URI: http://gameservice:8005
+      STATS_URI: http://statsservice:8006
 
   webapp:
     container_name: webapp-wichat_es5b
@@ -120,11 +122,11 @@ services:
     depends_on:
       - gatewayservice
       - gameservice
-      - database
+      - statsservice
     ports:
       - "3000:3000"
     environment:
-      GAMESERVICE_URI: http://llmservice:8005
+      GAMECONTROLLER_URI: http://llmservice:8005
 
   prometheus:
     image: prom/prometheus
