@@ -2,7 +2,7 @@
   "name": "wikidataservice",
   "version": "1.0.0",
   "scripts": {
-    "start": "ts-node wikidata-service.ts",
+    "start": "node wikidata-service.js",
     "test": "jest"
   },
   "dependencies": {

@@ -1,26 +1,21 @@
-import {Question} from "./questions/Question";
-import { QuestionGenerator } from "./QuestionGenerator";
-import { MovieQuestionGenerator } from "./generators/MovieQuestionGenerator";
-import { CharacterQuestionGenerator } from "./generators/CharacterQuestionGenerator";
-import { ActorQuestionGenerator } from "./generators/ActorQuestionGenerator";
-import { shuffle } from "./util/GameUtil";
+const { shuffle } = require("../src/util/GameUtil");
+const { AnswerVerifier } = require("../src/AnswerVerifier");
+const { MovieQuestionGenerator } = require("../src/generators/MovieQuestionGenerator");
+const { ActorQuestionGenerator } = require("../src/generators/ActorQuestionGenerator");
+const { CharacterQuestionGenerator } = require("../src/generators/CharacterQuestionGenerator"); 
 
 
-export class QuestionManager {
+class QuestionManager {
 
-  private wikidataUri = process.env.WIKIDATA_SERVICE_URI || 'http://localhost:8004';
-
-
-  private questions: Question[];
-  private generator: QuestionGenerator[];
-  private currentQuestion: number =0;
+  wikidataUri = process.env.WIKIDATA_SERVICE_URI || 'http://localhost:8004';
 
   constructor() {
     this.questions = [];
     this.generator = [new MovieQuestionGenerator(), new ActorQuestionGenerator(), new CharacterQuestionGenerator()];
+    this.currentQuestion=0;
   }
 
-  async generateQuestions(nQuestions: number) {
+  async generateQuestions(nQuestions) {
     let nQuestType = Math.floor(nQuestions/this.generator.length);
     let nExtraQuestions = nQuestions % this.generator.length;
 
@@ -47,7 +42,7 @@ export class QuestionManager {
    * @returns {Question} Una pregunta aleatoria de la lista.
    * Si la lista de preguntas es vacia, puede devolver un error.
    */
-  getNextQuestion(): Question { 
+  getNextQuestion() { 
       let question = this.questions[this.currentQuestion];
       this.currentQuestion++;
       return question;
@@ -64,15 +59,15 @@ export class QuestionManager {
    * 
    * @returns {Question[]} Un array de preguntas.
    */
-  getQuestionList(): Question[] {
+  getQuestionList() {
     return this.questions;
   }
 
-  pushQuestion(question: Question): void {
+  pushQuestion(question) {
     this.questions.push(question);
   }
 
-  async executeQuery(query: string) : Promise<any> {
+  async executeQuery(query)  {
     console.log("En el executeQuery")
     return (await fetch(`${this.wikidataUri}/query`, {
       method: 'POST',
@@ -83,3 +78,5 @@ export class QuestionManager {
     })).json();
   }
 }
+
+module.exports = { QuestionManager };

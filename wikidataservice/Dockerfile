@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8004
 
 # Define the command to run your app
-CMD ["npx","ts-node", "wikidata-service.ts"]
+CMD ["node", "wikidata-service.js"]

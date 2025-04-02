@@ -10,7 +10,7 @@ const mockAxios = new MockAdapter(axios);
 describe('Chatbot Component', () => {
   const movieName = 'Inception';
   
-  // Función helper para expandir el chat (reducirá duplicación sin perder líneas)
+  
   const expandChat = () => {
     const toggleButton = screen.getByRole('button', { name: /Chat de Pistas ▲/i });
     fireEvent.click(toggleButton);
@@ -29,7 +29,9 @@ describe('Chatbot Component', () => {
   });
 
   describe('Initial State and Appearance', () => {
+
     it('should render the chatbot minimized by default', () => {
+
         cleanup();
         render(<Chatbot movieName={movieName} />);
         const minimizeButton = screen.getByRole('button', { name: /Chat de Pistas ▲/i });
@@ -40,24 +42,21 @@ describe('Chatbot Component', () => {
 
     it('should have correct initial styles for minimized state', () => {
 
-        cleanup();
-        render(<Chatbot movieName={movieName} />);
-        
-        //buscar el botón por su texto exacto
-        const toggleButton = screen.getByRole('button', { 
-          name: /Chat de Pistas ▲/i 
-        });
-        
-        //verificar estilos con valores exactos de Material-UI
-        expect(toggleButton).toHaveStyle({
-          color: 'white',      
-          width: '100%',
-        });
-        
-        //verificación adicional de clases
-        expect(toggleButton).toHaveClass('MuiButton-root');
-        expect(toggleButton).toHaveClass('MuiButton-textPrimary');
+      cleanup();
+      render(<Chatbot movieName={movieName} />);
+      
+      const toggleButton = screen.getByRole('button', { 
+        name: /Chat de Pistas ▲/i 
       });
+      
+      
+      const styles = window.getComputedStyle(toggleButton);
+      
+      expect(styles.color).toBe("white"); 
+      expect(styles.backgroundColor).toBe('rgb(166, 83, 42)'); 
+      
+      expect(styles.fontWeight).toBe("700");
+    });
 
   });
 
@@ -257,29 +256,9 @@ describe('Chatbot Component', () => {
 
     });
 
-    it('should display bot response after sending message', async () => {
 
-      const testResponse = 'Christopher Nolan dirigió esta película';
-      mockAxios.onPost(/askllm/).reply(200, { answer: testResponse });
-      
-      const inputField = screen.getByPlaceholderText('Escribe tu pregunta...');
-      const sendButton = screen.getByRole('button', { name: /Enviar/i });
-      
-      fireEvent.change(inputField, { target: { value: '¿Quién es el director?' } });
 
-      await act(async () => {
-        fireEvent.click(sendButton);
-      });
-      
-      await waitFor(() => {
-        const messages = screen.getAllByRole('listitem');
-        expect(messages).toHaveLength(2);
-        expect(messages[1]).toHaveTextContent(testResponse);
-      });
-
-    });
-
-    it('should format user and bot messages differently', async () => {
+    it('should display answer and user and bot messages have different format', async () => {
 
       const testResponse = 'Respuesta del bot';
       mockAxios.onPost(/askllm/).reply(200, { answer: testResponse });
@@ -294,6 +273,10 @@ describe('Chatbot Component', () => {
       });
       
       await waitFor(() => {
+        const messages = screen.getAllByRole('listitem');
+        expect(messages).toHaveLength(2);
+        expect(messages[1]).toHaveTextContent(testResponse);
+
         const userMessage = screen.getByText('Pregunta del usuario');
         const botMessage = screen.getByText(testResponse);
         
@@ -458,6 +441,90 @@ describe('Chatbot Component', () => {
 
   });
 
+  describe('LLM Model Switching', () => {
+    
+    beforeEach(() => {
+      mockAxios.reset();
+      cleanup();
+      render(<Chatbot movieName={movieName} />);
+      expandChat(); 
+    });
+  
+    afterEach(() => {
+      jest.clearAllMocks();
+      cleanup();
+    });
+  
+    it('should display the model switch button when chat is expanded', () => {
+
+      const switchButton = screen.getByRole('button', { 
+        name: /Usar (Qwen|Mistral)/i 
+      });
+
+      expect(switchButton).toBeInTheDocument();
+    });
+  
+    it('should show "Usar Qwen" by default when Mistral is active', () => {
+
+      const switchButton = screen.getByRole('button', { 
+        name: /Usar Qwen/i 
+      });
+      
+      expect(switchButton).toHaveTextContent('Usar Qwen');
+    });
+  
+    it('should switch button text to "Usar Mistral" when Qwen is active', () => {
+
+      const switchButton = screen.getByRole('button', { 
+        name: /Usar Qwen/i 
+      });
+
+      fireEvent.click(switchButton);
+      expect(switchButton).toHaveTextContent('Usar Mistral');
+    });
+  
+    it('should display a system message when switching models', () => {
+
+      const switchButton = screen.getByRole('button', { 
+        name: /Usar Qwen/i 
+      });
+
+      fireEvent.click(switchButton);
+      
+      const systemMessages = screen.getAllByText(/Se ha cambiado el modelo a /i);
+      expect(systemMessages.length).toBeGreaterThan(0);
+      
+      const lastMessage = systemMessages[systemMessages.length - 1];
+      expect(lastMessage).toHaveTextContent('Se ha cambiado el modelo a Qwen.');
+    });
+  
+    it('should have correct styling for the model switch button', () => {
+
+      const switchButton = screen.getByRole('button', { 
+        name: /Usar Qwen/i 
+      });
+      
+      expect(switchButton).toHaveStyle('background-color: rgb(232, 213, 201)');
+      expect(switchButton).toHaveStyle('color: rgb(90, 45, 22)');
+     
+      expect(switchButton).toHaveStyle('font-size: 0.8rem');
+      expect(switchButton).toHaveStyle('height: 30px');
+    });
+  
+    it('should not display the switch button when chat is minimized', () => {
+      
+      const toggleButton = screen.getByRole('button', { name: /Chat de Pistas ▼/i });
+      fireEvent.click(toggleButton);
+      
+      const switchButton = screen.queryByRole('button', { 
+        name: /Usar (Qwen|Mistral)/i 
+      });
+
+      expect(switchButton).not.toBeInTheDocument();
+    });
+
+  });
+
   describe('Edge Cases', () => {
 
     beforeEach(() => {
@@ -481,7 +548,7 @@ describe('Chatbot Component', () => {
           fireEvent.click(sendButton);
         });
         
-        // Verificación mínima pero esencial
+        
         await waitFor(() => {
           const botMessages = screen.getAllByRole('listitem')
             .filter(item => item.textContent.includes('mensaje muy largo'));

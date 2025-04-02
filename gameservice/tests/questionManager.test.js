@@ -1,6 +1,6 @@
-import { QuestionManager } from "../src/QuestionManager";
+const { QuestionManager } = require("../src/QuestionManager");
 
-let questionManager: QuestionManager;
+let questionManager;
 
 beforeEach(() => {
     questionManager = new QuestionManager();

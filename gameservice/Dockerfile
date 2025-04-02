@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8005
 
 # Define the command to run your app
-CMD ["npx","ts-node", "./src/Game.ts"]
+CMD ["node", "./src/Game.js"]
