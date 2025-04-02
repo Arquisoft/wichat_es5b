@@ -17,11 +17,11 @@ defineFeature(feature, test => {
           : await puppeteer.launch({ 
             // executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', // Only for Mac users
             headless: false, 
-            slowMo: 10
+            slowMo: 20
           });
         page = await browser.newPage();
         //Way of setting up the timeout
-        setDefaultOptions({ timeout: 10000 })
+        setDefaultOptions({ timeout: 240000 })
     
         await page
           .goto("http://localhost:3000", {
@@ -43,6 +43,23 @@ defineFeature(feature, test => {
     });
 
     when('I try to access the game history page', async () => {
+      await expect(page).toClick('button', { text: 'HISTORIAL' })
+    });
+
+    then('I should see a message "Debe iniciar sesión para ver su historial" and remain on the same page', async () => {
+      await expect(page).toMatchElement("div", { text: "Debe iniciar sesión para ver su historial" });
+    });
+
+  });
+
+  test('Unauthenticated user attempts to access game history from Add User page', ({given,when,then}) => {
+
+    given('An unauthenticated user', async () => {
+
+    });
+
+    when('I go to the register page and I try to access the game history page', async () => {
+      await expect(page).toClick("button", { text: "Don't have an account? Register here." });
       await expect(page).toClick('button', { text: 'HISTORIAL' })
     });
 
@@ -81,6 +98,138 @@ defineFeature(feature, test => {
     });
 
     then('I should see a table with the headings "Fecha", "Preguntas correctas", and "Preguntas incorrectas"', async () => {
+      await expect(page).toMatchElement("h2", { text: "Historial" });
+      await expect(page).toMatchElement("th", { text: "Fecha" });
+      await expect(page).toMatchElement("th", { text: "Preguntas correctas" });
+      await expect(page).toMatchElement("th", { text: "Preguntas incorrectas" });
+    });
+
+  });
+
+  test('Authenticated user views the History from game page', ({given,when,then}) => {
+
+    let username;
+    let password;
+
+    given('A registered user with username "aswuser" and password "ValidPassword123"', async () => {
+        username = "aswuser";
+        password = "ValidPassword123";
+    });
+
+    when('I log in and I click to start game and I click on History', async () => {
+        await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
+        await expect(page).toFill('input[name="username"]', username);
+        await expect(page).toFill('input[name="password"]', password);
+        await expect(page).toClick('button', { text: 'Login' });
+
+        await expect(page).toMatchElement('button', { text: 'Start Game' });
+        await expect(page).toClick('button', { text: 'Start Game' });
+        await expect(page).toMatchElement("img"); 
+
+        await expect(page).toClick('button', { text: 'HISTORIAL' });
+    });
+
+    then('I should see a table with the headings "Fecha", "Preguntas correctas", and "Preguntas incorrectas"', async () => {
+      await expect(page).toMatchElement("h2", { text: "Historial" });
+      await expect(page).toMatchElement("th", { text: "Fecha" });
+      await expect(page).toMatchElement("th", { text: "Preguntas correctas" });
+      await expect(page).toMatchElement("th", { text: "Preguntas incorrectas" });
+    });
+
+  });
+
+  test('Authenticated user views the History from game page right in the middle of the games', ({given,when,then}) => {
+
+    let username;
+    let password;
+
+    given('A registered user with username "aswuser" and password "ValidPassword123"', async () => {
+        username = "aswuser";
+        password = "ValidPassword123";
+    });
+
+    when('I log in and I click to start game and I answer 3 questions and I click on History', async () => {
+        await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
+        await expect(page).toFill('input[name="username"]', username);
+        await expect(page).toFill('input[name="password"]', password);
+        await expect(page).toClick('button', { text: 'Login' });
+
+        await expect(page).toMatchElement('button', { text: 'Start Game' });
+        await expect(page).toClick('button', { text: 'Start Game' });
+        await expect(page).toMatchElement("img"); 
+
+        // Primera pregunta
+        await page.waitForTimeout(1000);
+        await expect(page).toMatchElement("p", { text: "Pregunta 1 de 6" });
+        await expect(page).toClick('#option-0');
+        // Segunda pregunta
+        await page.waitForTimeout(1000);
+        await expect(page).toMatchElement("p", { text: "Pregunta 2 de 6" });
+        await expect(page).toClick('#option-0');
+        // Tercera pregunta
+        await page.waitForTimeout(1000);
+        await expect(page).toMatchElement("p", { text: "Pregunta 3 de 6" });
+        await expect(page).toClick('#option-0');
+
+        await expect(page).toClick('button', { text: 'HISTORIAL' });
+    });
+
+    then('I should see the history of the game', async () => {
+      await expect(page).toMatchElement("h2", { text: "Historial" });
+      await expect(page).toMatchElement("th", { text: "Fecha" });
+      await expect(page).toMatchElement("th", { text: "Preguntas correctas" });
+      await expect(page).toMatchElement("th", { text: "Preguntas incorrectas" });
+    });
+
+  });
+
+  test('Authenticated user views the History from end game page', ({given,when,then}) => {
+
+    let username;
+    let password;
+
+    given('A registered user with username "aswuser" and password "ValidPassword123"', async () => {
+        username = "aswuser";
+        password = "ValidPassword123";
+    });
+
+    when('I log in and I click to start game and I answer all questions and I click on History', async () => {
+        await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
+        await expect(page).toFill('input[name="username"]', username);
+        await expect(page).toFill('input[name="password"]', password);
+        await expect(page).toClick('button', { text: 'Login' });
+
+        await expect(page).toMatchElement('button', { text: 'Start Game' });
+        await expect(page).toClick('button', { text: 'Start Game' });
+        await expect(page).toMatchElement("img"); 
+
+        // Primera pregunta
+        await expect(page).toMatchElement("p", { text: "Pregunta 1 de 6" });
+        await expect(page).toClick('#option-0');
+        // Segunda pregunta
+        await page.waitForTimeout(1000);
+        await expect(page).toMatchElement("p", { text: "Pregunta 2 de 6" });
+        await expect(page).toClick('#option-0');
+        // Tercera pregunta
+        await page.waitForTimeout(1000);
+        await expect(page).toMatchElement("p", { text: "Pregunta 3 de 6" });
+        await expect(page).toClick('#option-0');
+        // Cuarta pregunta
+        await expect(page).toMatchElement("p", { text: "Pregunta 4 de 6" });
+        await expect(page).toClick('#option-0');
+        // Quinta pregunta
+        await page.waitForTimeout(1000);
+        await expect(page).toMatchElement("p", { text: "Pregunta 5 de 6" });
+        await expect(page).toClick('#option-0');
+        // Sexta pregunta
+        await page.waitForTimeout(1000);
+        await expect(page).toMatchElement("p", { text: "Pregunta 6 de 6" });
+        await expect(page).toClick('#option-0');
+
+        await expect(page).toClick('button', { text: 'HISTORIAL' });
+    });
+
+    then('I should see the history of the game', async () => {
       await expect(page).toMatchElement("h2", { text: "Historial" });
       await expect(page).toMatchElement("th", { text: "Fecha" });
       await expect(page).toMatchElement("th", { text: "Preguntas correctas" });
