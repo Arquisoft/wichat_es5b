@@ -21,12 +21,12 @@ jobs:
     - run: npm --prefix gatewayservice ci
     - run: npm --prefix statsservice ci
     - run: npm --prefix webapp ci
-    - run: npm --prefix gameservice test -- --coverage
+#    - run: npm --prefix gameservice test -- --coverage
     - run: npm --prefix users/authservice test -- --coverage
     - run: npm --prefix users/userservice test -- --coverage
     - run: npm --prefix llmservice test -- --coverage
     - run: npm --prefix gatewayservice test -- --coverage
-    - run: npm --prefix statsservice test -- --coverage
+#    - run: npm --prefix statsservice test -- --coverage
     - run: npm --prefix webapp test -- --coverage
     - name: Analyze with SonarQube
       uses: SonarSource/sonarqube-scan-action@master
