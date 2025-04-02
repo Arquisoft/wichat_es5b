@@ -184,7 +184,7 @@ jobs:
         workdir: wikidataservice
 
   docker-push-statsservice:
-    name: Push database service Docker Image to GitHub Packages
+    name: Push stats service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -197,7 +197,7 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       with:
-        name: arquisoft/wichat_es5b/database
+        name: arquisoft/wichat_es5b/statsservice
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
