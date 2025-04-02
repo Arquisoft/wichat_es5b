@@ -1,5 +1,5 @@
 module.exports = {
-    testMatch: ["**/steps/game.steps.js"],
+    testMatch: ["**/steps/welcome.steps.js"],
     testTimeout: 120000,
     setupFilesAfterEnv: ["expect-puppeteer"]
 }
