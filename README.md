@@ -9,15 +9,19 @@
 <img src="https://miro.medium.com/max/365/1*Jr3NFSKTfQWRUyjblBSKeg.png" height="100">
 </p>
 
-This is a base project for the Software Architecture course in 2024/2025. It is a basic application composed of several components.
+<p><a href="http://20.0.163.155:3000">Enlace a la web de Wichat</a></p>
+Este es un proyecto base para el curso de Arquitectura de Software en 2024/2025. Es una aplicación básica compuesta por varios componentes.
 
-- **User service**. Express service that handles the insertion of new users in the system.
-- **Auth service**. Express service that handles the authentication of users.
-- **LLM service**. Express service that handles the communication with the LLM.
-- **Gateway service**. Express service that is exposed to the public and serves as a proxy to the two previous ones.
-- **Webapp**. React web application that uses the gateway service to allow basic login and new user features.
+- **User service**. Servicio de Express que gestiona la inserción de nuevos usuarios en el sistema.
+- **Auth service**. Servicio de Express que gestiona la autenticación de los usuarios.
+- **LLM service**. Servicio de Express que gestiona la comunicación con el LLM.
+- **Stats service**. Servicio de Express que gestiona el historial de cada usuario y el ranking global de la aplicacion.
+- **Game service**. Servicio de Express que gestiona la logica del juego y los datos de las preguntas.
+- **Wikidata service**. Servicio de Express que obtiene la informacion de las preguntas de Wikidata.
+- **Gateway service**. Servicio de Express expuesto al público y que sirve como proxy para los anteriores.
+- **Webapp**. Aplicación web en React que utiliza el servicio de gateway para permitir el inicio de sesión y nuevas funciones de usuario.
 
-Both the user and auth service share a Mongo database that is accessed with mongoose.
+Tanto el User service como el Auth service y el Stats service comparten una base de datos MongoDB a la que se accede mediante Mongoose.
 
 ## Miembros del grupo
 <p>Alberto Martinez Olivar - uo282069@uniovi.es</p>

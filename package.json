@@ -10,6 +10,6 @@
     "typescript": "^5.8.2"
   },
   "scripts": {
-    "startAll": "concurrently -n userservice,authservice,database,llmservice,wikidataservice,gameservice,gatewayservice,webapp \"npm --prefix users/userservice start\" \"npm --prefix users/authservice start\" \"npm --prefix database start\" \"npm --prefix llmservice start\" \"npm --prefix wikidataservice start\" \"npm --prefix gameservice start\" \"npm --prefix gatewayservice start\" \"npm --prefix webapp start\""
+    "startAll": "concurrently -n userservice,authservice,statsservice,llmservice,wikidataservice,gameservice,gatewayservice,webapp \"npm --prefix users/userservice start\" \"npm --prefix users/authservice start\" \"npm --prefix statsservice start\" \"npm --prefix llmservice start\" \"npm --prefix wikidataservice start\" \"npm --prefix gameservice start\" \"npm --prefix gatewayservice start\" \"npm --prefix webapp start\""
   }
 }

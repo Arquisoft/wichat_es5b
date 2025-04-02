@@ -39,6 +39,7 @@ A continuación, se presentan los principales aspectos que influirán en el desa
 | Frontend       | El sistema contará al menos con un frontend web que mostrará las imágenes, preguntas y respuestas.
 | Despliegue     | La web deberá estar desplegada y accesible a través de la Web.
 | Pruebas        | El proyecto deberá incluir distintos tipos de pruebas para garantizar el resultado esperado y un producto de calidad (pruebas de aceptación, de carga, cobertura, etc.).
+| API        | El sistema debera proporcionar una API para acceder al juego como a los datos del mismo y esta debera estar documentada y ser abierta.
 |===
 
 === Restricciones Organizativas

@@ -159,6 +159,7 @@ export default function MovieQuiz({username}) {
             <div className="grid grid-cols-1 gap-2">
               {currentQuestion.options.map((option, index) => (
                 <button
+                  id={`option-${index}`}
                   key={index}
                   onClick={() => handleOptionClick(option)}
                   className={`py-2 px-4 mx-4 rounded font-semibold border transition-all duration-200 ${
