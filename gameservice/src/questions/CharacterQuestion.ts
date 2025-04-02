@@ -2,11 +2,12 @@ import { Question } from "./Question";
 
 export class CharacterQuestion extends Question {
     private characterName : string;
-    private question = "En qué serie de televisión aparece este personaje?"
+    private question : string;
     
     constructor(url: string, correctAnswer: string, options: string[], characterName : string) {
         super(url, correctAnswer, options);
         this.characterName = characterName;
+        this.question = `En qué serie de televisión aparece ${characterName}?`
     }
 
     getQuestion(): String {
