@@ -51,5 +51,11 @@ endif::arc42help[]
 |Back-end
 |Parte de una aplicación que gestiona la lógica de negocio, el procesamiento de datos y la comunicación con la base de datos, funcionando en el servidor y respondiendo a las solicitudes del front-end.
 
+|Modelo extenso de lenguaje(LLM)
+|Modelo de inteligencia artificial entrenado con grandes volúmenes de texto para comprender y generar lenguaje natural.
+
+|ChatBot
+|Programa de inteligencia artificial diseñado para simular conversaciones con usuarios, respondiendo preguntas y realizando tareas de manera automatizada.
+
 |===
 
