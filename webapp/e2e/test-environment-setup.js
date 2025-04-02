@@ -5,6 +5,9 @@ let mongoserver;
 let userservice;
 let authservice;
 let llmservice;
+let database;
+// let gameservice;
+// let wikidataservice;
 let gatewayservice;
 
 async function startServer() {
@@ -16,6 +19,8 @@ async function startServer() {
     authservice = await require("../../users/authservice/auth-service");
     llmservice = await require("../../llmservice/llm-service");
     database = await require("../../database/gameRoutes");
+    // gameservice = await require("../../gameservice/src/Game.ts");
+    // wikidataservice = await require("../../wikidataservice/wikidata-service");
     gatewayservice = await require("../../gatewayservice/gateway-service");
 }
 
