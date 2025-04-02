@@ -66,9 +66,9 @@ defineFeature(feature, test => {
         });
 
         then('I should see the first question of the game', async () => {
-            await expect(page).toMatchElement("h2", { text: "De qué película es esta imagen?" });
-            await expect(page).toMatchElement("h2", { text: "Pregunta 1 de 6" });
-            await expect(page).toMatchElement("h2", { text: "Aciertos: 0" });
+            await expect(page).toMatchElement("img"); 
+            await expect(page).toMatchElement("p", { text: "Pregunta 1 de 6" });
+            await expect(page).toMatchElement("p", { text: "Aciertos: 0" });
         });
 
     });
@@ -90,29 +90,164 @@ defineFeature(feature, test => {
             await page.waitForTimeout(1000);
             await expect(page).toClick('button', { text: 'Start Game' });
 
-            await expect(page).toMatchElement("h2", { text: "De qué película es esta imagen?" });
+            await expect(page).toMatchElement("img"); 
 
             // Primera pregunta
-            await expect(page).toMatchElement("h2", { text: "Pregunta 1 de 6" });
+            await expect(page).toMatchElement("p", { text: "Pregunta 1 de 6" });
             await expect(page).toClick('#option-0');
             // Segunda pregunta
             await page.waitForTimeout(1000);
-            await expect(page).toMatchElement("h2", { text: "Pregunta 2 de 6" });
+            await expect(page).toMatchElement("p", { text: "Pregunta 2 de 6" });
             await expect(page).toClick('#option-0');
             // Tercera pregunta
             await page.waitForTimeout(1000);
-            await expect(page).toMatchElement("h2", { text: "Pregunta 3 de 6" });
+            await expect(page).toMatchElement("p", { text: "Pregunta 3 de 6" });
             await expect(page).toClick('#option-0');
             // Cuarta pregunta
-            await expect(page).toMatchElement("h2", { text: "Pregunta 4 de 6" });
+            await expect(page).toMatchElement("p", { text: "Pregunta 4 de 6" });
             await expect(page).toClick('#option-0');
             // Quinta pregunta
             await page.waitForTimeout(1000);
-            await expect(page).toMatchElement("h2", { text: "Pregunta 5 de 6" });
+            await expect(page).toMatchElement("p", { text: "Pregunta 5 de 6" });
             await expect(page).toClick('#option-0');
             // Sexta pregunta
             await page.waitForTimeout(1000);
-            await expect(page).toMatchElement("h2", { text: "Pregunta 6 de 6" });
+            await expect(page).toMatchElement("p", { text: "Pregunta 6 de 6" });
+            await expect(page).toClick('#option-0');
+        });
+
+        then('I should see the finish page', async () => {
+            await expect(page).toMatchElement("h2", { text: "Fin de la partida" });
+        });
+
+    });
+
+    test('Authenticated user starts and finish a game and restarts the game', ({given,when,then}) => {
+
+        let username;
+        let password;
+
+        given('A registered user with username "aswuser" and password "ValidPassword123"', async () => {
+            username = "aswuser";
+            password = "ValidPassword123";
+        });
+
+        when('I log in and I click on Start Game and I answer all questions and I clic "Volver"', async () => {
+            await expect(page).toFill('input[name="username"]', username);
+            await expect(page).toFill('input[name="password"]', password);
+            await expect(page).toClick('button', { text: 'Login' });
+            await page.waitForTimeout(1000);
+            await expect(page).toClick('button', { text: 'Start Game' });
+
+            await expect(page).toMatchElement("img"); 
+
+            // Primera pregunta
+            await expect(page).toMatchElement("p", { text: "Pregunta 1 de 6" });
+            await expect(page).toClick('#option-0');
+            // Segunda pregunta
+            await page.waitForTimeout(1000);
+            await expect(page).toMatchElement("p", { text: "Pregunta 2 de 6" });
+            await expect(page).toClick('#option-0');
+            // Tercera pregunta
+            await page.waitForTimeout(1000);
+            await expect(page).toMatchElement("p", { text: "Pregunta 3 de 6" });
+            await expect(page).toClick('#option-0');
+            // Cuarta pregunta
+            await expect(page).toMatchElement("p", { text: "Pregunta 4 de 6" });
+            await expect(page).toClick('#option-0');
+            // Quinta pregunta
+            await page.waitForTimeout(1000);
+            await expect(page).toMatchElement("p", { text: "Pregunta 5 de 6" });
+            await expect(page).toClick('#option-0');
+            // Sexta pregunta
+            await page.waitForTimeout(1000);
+            await expect(page).toMatchElement("p", { text: "Pregunta 6 de 6" });
+            await expect(page).toClick('#option-0');
+
+            // Final del juego
+            await page.waitForTimeout(1000);
+            await expect(page).toClick("button", { text: "Volver" });
+        });
+
+        then('I should see the welcome page', async () => {
+            await expect(page).toMatchElement("button", { text: "Start Game" });
+        });
+
+    });
+
+    test('Authenticated user starts and finish a game and restarts the game and finish the game again', ({given,when,then}) => {
+
+        let username;
+        let password;
+
+        given('A registered user with username "aswuser" and password "ValidPassword123"', async () => {
+            username = "aswuser";
+            password = "ValidPassword123";
+        });
+
+        when('I log in and I click on Start Game and I answer all questions and I clic "Volver" and I answer all questions again', async () => {
+            await expect(page).toFill('input[name="username"]', username);
+            await expect(page).toFill('input[name="password"]', password);
+            await expect(page).toClick('button', { text: 'Login' });
+            await page.waitForTimeout(1000);
+            await expect(page).toClick('button', { text: 'Start Game' });
+
+            await expect(page).toMatchElement("img"); 
+
+            // Primera pregunta
+            await expect(page).toMatchElement("p", { text: "Pregunta 1 de 6" });
+            await expect(page).toClick('#option-0');
+            // Segunda pregunta
+            await page.waitForTimeout(1000);
+            await expect(page).toMatchElement("p", { text: "Pregunta 2 de 6" });
+            await expect(page).toClick('#option-0');
+            // Tercera pregunta
+            await page.waitForTimeout(1000);
+            await expect(page).toMatchElement("p", { text: "Pregunta 3 de 6" });
+            await expect(page).toClick('#option-0');
+            // Cuarta pregunta
+            await expect(page).toMatchElement("p", { text: "Pregunta 4 de 6" });
+            await expect(page).toClick('#option-0');
+            // Quinta pregunta
+            await page.waitForTimeout(1000);
+            await expect(page).toMatchElement("p", { text: "Pregunta 5 de 6" });
+            await expect(page).toClick('#option-0');
+            // Sexta pregunta
+            await page.waitForTimeout(1000);
+            await expect(page).toMatchElement("p", { text: "Pregunta 6 de 6" });
+            await expect(page).toClick('#option-0');
+
+            // Final del juego
+            await page.waitForTimeout(1000);
+            await expect(page).toClick("button", { text: "Volver" });
+
+            // Empezamos el juego de nuevo
+            await page.waitForTimeout(1000);
+            await expect(page).toClick('button', { text: 'Start Game' });
+
+            await expect(page).toMatchElement("img"); 
+
+            // Primera pregunta
+            await expect(page).toMatchElement("p", { text: "Pregunta 1 de 6" });
+            await expect(page).toClick('#option-0');
+            // Segunda pregunta
+            await page.waitForTimeout(1000);
+            await expect(page).toMatchElement("p", { text: "Pregunta 2 de 6" });
+            await expect(page).toClick('#option-0');
+            // Tercera pregunta
+            await page.waitForTimeout(1000);
+            await expect(page).toMatchElement("p", { text: "Pregunta 3 de 6" });
+            await expect(page).toClick('#option-0');
+            // Cuarta pregunta
+            await expect(page).toMatchElement("p", { text: "Pregunta 4 de 6" });
+            await expect(page).toClick('#option-0');
+            // Quinta pregunta
+            await page.waitForTimeout(1000);
+            await expect(page).toMatchElement("p", { text: "Pregunta 5 de 6" });
+            await expect(page).toClick('#option-0');
+            // Sexta pregunta
+            await page.waitForTimeout(1000);
+            await expect(page).toMatchElement("p", { text: "Pregunta 6 de 6" });
             await expect(page).toClick('#option-0');
         });
 
