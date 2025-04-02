@@ -7,7 +7,6 @@ const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000
 export default function GameOver({ correct, wrong, username }) {
   const saveHistorial = async () =>{
     const data = {username: username, date: new Date().toISOString(), correctAnswers: correct, wrongAnswers: wrong};
-    console.log(data);
     await axios.post(apiEndpoint + "/newHistory", data);
   }
   const saveRanking = async () =>{

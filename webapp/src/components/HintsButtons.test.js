@@ -5,6 +5,9 @@ import MockAdapter from 'axios-mock-adapter';
 import Login from './Login';
 import HintsButtons from './HintsButtons';
 
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
+
+
 const mockAxios = new MockAdapter(axios);
 
 describe('HintsButtons component', () => {
@@ -12,7 +15,7 @@ describe('HintsButtons component', () => {
     mockAxios.reset();
     render(<HintsButtons />);
   
-    mockAxios.onPost('http://localhost:8000/askllm').reply(200, { answer: 'Hello test user' });
+    mockAxios.onPost(apiEndpoint+'/askllm').reply(200, { answer: 'Hello test user' });
 
   });
   

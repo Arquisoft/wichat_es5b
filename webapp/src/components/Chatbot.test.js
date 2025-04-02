@@ -257,29 +257,9 @@ describe('Chatbot Component', () => {
 
     });
 
-    it('should display bot response after sending message', async () => {
 
-      const testResponse = 'Christopher Nolan dirigió esta película';
-      mockAxios.onPost(/askllm/).reply(200, { answer: testResponse });
-      
-      const inputField = screen.getByPlaceholderText('Escribe tu pregunta...');
-      const sendButton = screen.getByRole('button', { name: /Enviar/i });
-      
-      fireEvent.change(inputField, { target: { value: '¿Quién es el director?' } });
 
-      await act(async () => {
-        fireEvent.click(sendButton);
-      });
-      
-      await waitFor(() => {
-        const messages = screen.getAllByRole('listitem');
-        expect(messages).toHaveLength(2);
-        expect(messages[1]).toHaveTextContent(testResponse);
-      });
-
-    });
-
-    it('should format user and bot messages differently', async () => {
+    it('should display answer and user and bot messages have different format', async () => {
 
       const testResponse = 'Respuesta del bot';
       mockAxios.onPost(/askllm/).reply(200, { answer: testResponse });
@@ -294,6 +274,10 @@ describe('Chatbot Component', () => {
       });
       
       await waitFor(() => {
+        const messages = screen.getAllByRole('listitem');
+        expect(messages).toHaveLength(2);
+        expect(messages[1]).toHaveTextContent(testResponse);
+
         const userMessage = screen.getByText('Pregunta del usuario');
         const botMessage = screen.getByText(testResponse);
         

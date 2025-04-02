@@ -29,7 +29,7 @@ const History = ({username}) => {
             <Button variant="primary" sx={{color:"#fecd24",fontSize: "1.1rem"}} onClick= {() => mostrarHistorial()}>HISTORIAL</Button>
             <Dialog open={show} onClose={()=> setShow(false)}>
                 <DialogTitle>
-                    <h2>Historial</h2>
+                    Historial
                 </DialogTitle>
                 <DialogContent>
                     {username ? (<Table>

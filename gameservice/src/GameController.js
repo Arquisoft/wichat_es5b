@@ -1,36 +1,26 @@
-import { QuestionManager } from "./QuestionManager";
-import { AnswerVerifier } from "./AnswerVerifier";
-import { Question } from "./questions/Question";
+const { Question } = require("../src/questions/Question");
+const { AnswerVerifier } = require("../src/AnswerVerifier");
+const { MovieQuestion } = require("../src/questions/MovieQuestion");
 
-export class GameController {
-    private readonly questionManager: QuestionManager;
-    private readonly answerVerifier: AnswerVerifier;
-    
-    private score: number;
-    private currentQuestion: Question | null;
+class GameController {
+  constructor(questionManager, answerVerifier){
+    this.score = 0,
+    this.questionManager = questionManager,
+    this.answerVerifier = answerVerifier,
+    this.currentQuestion = null
+    this.hasGameEnded = false;
+    this.NUMBER_OF_QUESTIONS = 6;
+   }
 
-    private hasGameEnded: boolean = false;
-
-    public static NUMBER_OF_QUESTIONS = 6;
   
-    constructor(
-      questionManager: QuestionManager,
-      answerVerifier: AnswerVerifier
-    ) {
-      this.score = 0;
-      this.questionManager = questionManager;
-      this.answerVerifier = answerVerifier;
-      this.currentQuestion = null;
-    }
-  
-    async startGame(): Promise<void> {
+    async startGame() {
       this.score = 0;
       console.log("Inicio del juego");
       await this.questionManager.generateQuestions(GameController.NUMBER_OF_QUESTIONS);
       this.nextQuestion();
     }
 
-    async endGame(): Promise<void> {
+    async endGame() {
       console.log("Fin del juego. Puntuación:", this.score);
       this.hasGameEnded = true;
     }
@@ -41,7 +31,7 @@ export class GameController {
      * 
      * @returns {void} 
      */
-    async nextQuestion(): Promise<void> {
+    async nextQuestion() {
       this.currentQuestion = this.questionManager.getNextQuestion();
       
       console.log("Nueva pregunta:", this.currentQuestion);
@@ -57,12 +47,12 @@ export class GameController {
      * @param {string} correctAnswer - La respuesta correcta para la pregunta
      * @returns {void} 
      */
-    setQuestion(URL: string, options: string[], correctAnswer: string): void {
+    setQuestion(URL, options, correctAnswer) {
       this.currentQuestion = new Question(URL, correctAnswer, []);
       this.currentQuestion.setOptions(options);
     }
   
-    submitAnswer(selectedAnswer: string): boolean {
+    submitAnswer(selectedAnswer) {
       if (!this.currentQuestion) {
         console.log("No hay una pregunta activa.");
         return false;
@@ -89,22 +79,23 @@ export class GameController {
       this.nextQuestion();
     }
   
-    getScore(): number {
+    getScore() {
       return this.score;
     }
 
-    isGameEnded(): boolean {
+    isGameEnded() {
       return this.hasGameEnded;
     }
 
-    getCurrentQuestion(): Question | null {
+    getCurrentQuestion() {
       if (!this.currentQuestion) {
         console.log("No hay pregunta activa");
       }
       return this.currentQuestion;
     }
 
-    getQuestionManager(): QuestionManager {
+    getQuestionManager() {
       return this.questionManager;
     }
   }
+  module.exports = { GameController };
