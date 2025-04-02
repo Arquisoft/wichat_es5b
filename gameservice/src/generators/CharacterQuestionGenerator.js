@@ -1,7 +1,7 @@
-import { Question } from "../questions/Question";
-import { CharacterQuestion } from "../questions/CharacterQuestion";
-import { AbstractQuestionGenerator } from "./AbstractQuestionGenerator";
-import { characterQuery } from "./Queries";
+const { Question } = require("../questions/Question");
+const { CharacterQuestion } = require("../questions/CharacterQuestion");
+const { AbstractQuestionGenerator } = require("./AbstractQuestionGenerator");
+const { characterQuery } = require("./Queries");
 
 export class CharacterQuestionGenerator extends AbstractQuestionGenerator {
 
@@ -10,11 +10,11 @@ export class CharacterQuestionGenerator extends AbstractQuestionGenerator {
         this.query = characterQuery;
     }
 
-    doGenerateQuestion(correctOption: string, options: string[], data: string[]): Question {
+    doGenerateQuestion(correctOption, options, data) {
         return new CharacterQuestion(data[0], correctOption, options, data[1]);
     }
-    mapResult(queryResult: any, mappedRes: Map<String, String[]>) {
-        queryResult.results.bindings.forEach((entry: any) => {
+    mapResult(queryResult, mappedRes) {
+        queryResult.results.bindings.forEach((entry) => {
             const characterName = entry.characterLabel.value;
             const seriesName = entry.seriesLabel.value;
             const image = entry.pic.value;
@@ -22,4 +22,5 @@ export class CharacterQuestionGenerator extends AbstractQuestionGenerator {
         });
     }
 }
-  
+
+module.exports = { CharacterQuestionGenerator };
