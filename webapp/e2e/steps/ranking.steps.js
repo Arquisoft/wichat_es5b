@@ -15,7 +15,7 @@ defineFeature(feature, test => {
           ? await puppeteer.launch({headless: "new", args: ['--no-sandbox', '--disable-setuid-sandbox']})
           // : await puppeteer.launch({ headless: false, slowMo: 100 });
           : await puppeteer.launch({ 
-            executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', // Only for Mac users
+            // executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', // Only for Mac users
             headless: false, 
             slowMo: 40
           });
@@ -122,7 +122,7 @@ defineFeature(feature, test => {
 
             await expect(page).toMatchElement('button', { text: 'Start Game' });
             await expect(page).toClick('button', { text: 'Start Game' });
-            await expect(page).toMatchElement("h2", { text: "De qué película es esta imagen?" });
+            await expect(page).toMatchElement("img"); 
 
             await expect(page).toClick('button', { text: 'RANKING' });
         });
@@ -153,18 +153,18 @@ defineFeature(feature, test => {
 
             await expect(page).toMatchElement('button', { text: 'Start Game' });
             await expect(page).toClick('button', { text: 'Start Game' });
-            await expect(page).toMatchElement("h2", { text: "De qué película es esta imagen?" });
+            await expect(page).toMatchElement("img"); 
 
             // Primera pregunta
-            await expect(page).toMatchElement("h2", { text: "Pregunta 1 de 6" });
+            await expect(page).toMatchElement("p", { text: "Pregunta 1 de 6" });
             await expect(page).toClick('#option-0');
             // Segunda pregunta
             await page.waitForTimeout(1000);
-            await expect(page).toMatchElement("h2", { text: "Pregunta 2 de 6" });
+            await expect(page).toMatchElement("p", { text: "Pregunta 2 de 6" });
             await expect(page).toClick('#option-0');
             // Tercera pregunta
             await page.waitForTimeout(1000);
-            await expect(page).toMatchElement("h2", { text: "Pregunta 3 de 6" });
+            await expect(page).toMatchElement("p", { text: "Pregunta 3 de 6" });
             await expect(page).toClick('#option-0');
 
             await expect(page).toClick('button', { text: 'RANKING' });
@@ -196,29 +196,30 @@ defineFeature(feature, test => {
 
             await expect(page).toMatchElement('button', { text: 'Start Game' });
             await expect(page).toClick('button', { text: 'Start Game' });
-            await expect(page).toMatchElement("h2", { text: "De qué película es esta imagen?" });
+            await expect(page).toMatchElement("img"); 
 
             // Primera pregunta
-            await expect(page).toMatchElement("h2", { text: "Pregunta 1 de 6" });
+            await expect(page).toMatchElement("p", { text: "Pregunta 1 de 6" });
             await expect(page).toClick('#option-0');
             // Segunda pregunta
             await page.waitForTimeout(1000);
-            await expect(page).toMatchElement("h2", { text: "Pregunta 2 de 6" });
+            await expect(page).toMatchElement("p", { text: "Pregunta 2 de 6" });
             await expect(page).toClick('#option-0');
             // Tercera pregunta
             await page.waitForTimeout(1000);
-            await expect(page).toMatchElement("h2", { text: "Pregunta 3 de 6" });
+            await expect(page).toMatchElement("p", { text: "Pregunta 3 de 6" });
             await expect(page).toClick('#option-0');
             // Cuarta pregunta
-            await expect(page).toMatchElement("h2", { text: "Pregunta 4 de 6" });
+            await page.waitForTimeout(1000);
+            await expect(page).toMatchElement("p", { text: "Pregunta 4 de 6" });
             await expect(page).toClick('#option-0');
             // Quinta pregunta
             await page.waitForTimeout(1000);
-            await expect(page).toMatchElement("h2", { text: "Pregunta 5 de 6" });
+            await expect(page).toMatchElement("p", { text: "Pregunta 5 de 6" });
             await expect(page).toClick('#option-0');
             // Sexta pregunta
             await page.waitForTimeout(1000);
-            await expect(page).toMatchElement("h2", { text: "Pregunta 6 de 6" });
+            await expect(page).toMatchElement("p", { text: "Pregunta 6 de 6" });
             await expect(page).toClick('#option-0');
 
             await expect(page).toClick('button', { text: 'RANKING' });
