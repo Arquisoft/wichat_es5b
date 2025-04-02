@@ -20,11 +20,13 @@ jobs:
     - run: npm --prefix gatewayservice ci
     - run: npm --prefix statsservice ci
     - run: npm --prefix webapp ci
-#    - run: npm --prefix users/authservice test -- --coverage
-#    - run: npm --prefix users/userservice test -- --coverage
-#    - run: npm --prefix llmservice test -- --coverage
-#    - run: npm --prefix gatewayservice test -- --coverage
-#    - run: npm --prefix webapp test -- --coverage
+#    - run: npm --prefix gameservice test -- --coverage
+    - run: npm --prefix users/authservice test -- --coverage
+    - run: npm --prefix users/userservice test -- --coverage
+    - run: npm --prefix llmservice test -- --coverage
+    - run: npm --prefix gatewayservice test -- --coverage
+#    - run: npm --prefix statsservice test -- --coverage
+    - run: npm --prefix webapp test -- --coverage
     - name: Analyze with SonarCloud
       uses: SonarSource/sonarqube-scan-action@master
       env:
@@ -181,7 +183,7 @@ jobs:
         registry: ghcr.io
         workdir: wikidataservice
 
-  docker-push-databaseservice:
+  docker-push-statsservice:
     name: Push database service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
     permissions:
@@ -199,12 +201,12 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
-        workdir: database
+        workdir: statsservice
 
   deploy:
     name: Deploy over SSH
     runs-on: ubuntu-latest
-    needs: [docker-push-userservice,docker-push-authservice,docker-push-llmservice,docker-push-gatewayservice,docker-push-webapp,docker-push-gameservice,docker-push-wikidataservice,docker-push-databaseservice]
+    needs: [docker-push-userservice,docker-push-authservice,docker-push-llmservice,docker-push-gatewayservice,docker-push-webapp,docker-push-gameservice,docker-push-wikidataservice,docker-push-statsservice]
     steps:
     - name: Deploy over SSH
       uses: fifsky/ssh-action@master
