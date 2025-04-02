@@ -65,7 +65,7 @@ const Login = ({userForHistory}) => {
   if (startGame) {
     return (
       <Container
-      component="main"
+      component="div"
       sx={{
         marginTop: 4,
         width: "100%",

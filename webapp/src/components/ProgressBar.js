@@ -8,7 +8,6 @@ const ProgressBar = ({ timeLeft}) => {
         <progress
           value={timeLeft}
           max={60}
-          className= "bg-blue-500"
           width = "100%"
         />
       </div>

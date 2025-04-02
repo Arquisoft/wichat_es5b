@@ -139,7 +139,7 @@ export default function MovieQuiz({username}) {
   return (
     <div className="object-cover">
       {loading ? (<LoadingScreen/>) :  
-      (<div className="grid grid-rows-3 gap-2 max-w-xl mx-auto p-10 text-center margin" >
+      (<div className="grid grid-rows-3 gap-2 max-w-xl mx-auto p-10 text-center" >
         <div className="grid grid-rows-2 bg-orange shadow-lg rounded-lg my-3 py-2">
           <div className="grid grid-cols-2 ">
             <p className="mt-2 text-2xl font-semibold align-left justify-top ml-1 text-white">Pregunta {questionsAnswered + 1} de {PREGUNTASNUM}</p>
@@ -151,11 +151,11 @@ export default function MovieQuiz({username}) {
           <ProgressBar timeLeft={timeLeft}/>
         </div>
         <div className="grid grid-cols-2 gap-2">
-          <div>
+          <div class>
             <img src={currentQuestion.imageUrl} alt="Pregunta" className="w-full h-48 my-3 rounded" />
           </div>
-          <div className = "bg-orange shadow-lg rounded-lg">
-            <h2 className="text-2xl font-bold text-white">{currentQuestion.question}</h2>
+          <div className = "bg-orange shadow-lg rounded-lg py-2">
+            <h2 className="text-2xl font-bold text-white mx-4">{currentQuestion.question}</h2>
             <div className="grid grid-cols-1 gap-2">
               {currentQuestion.options.map((option, index) => (
                 <button
@@ -179,7 +179,7 @@ export default function MovieQuiz({username}) {
             
             </div>
           </div>
-            <HintsButtons key={currentQuestion} movieName={currentQuestion.correctAnswer} />
+            <HintsButtons key={currentQuestion} questionsLlm={currentQuestion.questionsLlm} />
           <Chatbot movieName={currentQuestion.correctAnswer} />
       </div>
       )}
