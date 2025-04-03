@@ -4,7 +4,6 @@ const cors = require("cors");
 const { GameController } = require("../src/GameController");
 const { QuestionManager } = require("../src/QuestionManager");
 const { AnswerVerifier } = require("../src/AnswerVerifier");
-const { MovieQuestion } = require("../src/questions/MovieQuestion");
 
 const questionGen = new QuestionManager();
 const answerVer = new AnswerVerifier();
@@ -37,8 +36,9 @@ app.get("/question", (req  , res  ) => {
 // Petición para obtener respuesta
 app.post("/answer", (req  , res  ) => {
   const selectedAnswer = req.body.answer;
-  const prueba = gameController.submitAnswer(selectedAnswer);
-  res.status(200).json(prueba);
+  const timeLeft = req.body.timeLeft;
+  const prueba = gameController.submitAnswer(selectedAnswer, timeLeft);
+  res.json({ score:5});
 });
 
 app.listen(8005, () => {

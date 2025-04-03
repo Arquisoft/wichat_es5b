@@ -15,6 +15,7 @@ export default function MovieQuiz({username}) {
   const [timeLeft, setTimeLeft] = useState(60);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
+  const [score, setScore] = useState(0);
   const [gameFinished, setGameFinished] = useState(false);
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -94,12 +95,12 @@ export default function MovieQuiz({username}) {
       }
     }, 500);
   };
-
+  
   if (gameFinished) {
-    endGame();
+    const score = endGame()
+    console.log(score)
     return <GameOver correct={correctAnswers} wrong={wrongAnswers} username ={user} />
   }
-
 
   async function getQuestion() {
     try {
@@ -116,9 +117,9 @@ export default function MovieQuiz({username}) {
 
   async function answer(selectedAnswer) {
     try {
-      console.log("Enviando respuesta:", selectedAnswer);
-      const response = await axios.post(apiEndpoint + "/answer", { answer: selectedAnswer });
-      console.log("Respuesta recibida:", response.data);
+      console.log("Enviando respuesta:", selectedAnswer, "tiempo: "+timeLeft);
+      const response = await axios.post(apiEndpoint + "/answer", { answer: selectedAnswer, timeLeft: timeLeft });
+      console.log("Rurl:", response);
       return response.data; // Devolver los datos en lugar del objeto completo
     } catch (error) {
       console.error("Error al enviar la respuesta:", error);
@@ -129,7 +130,7 @@ export default function MovieQuiz({username}) {
 
   async function endGame() {
     // return await axios.get(apiEndpoint + "/end");
-    return (await fetch(apiEndpoint + "/end", {
+    return  (await fetch(apiEndpoint + "/end", {
       method: 'POST',
     }))
   }
