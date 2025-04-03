@@ -42,3 +42,5 @@ const characterQuery = `
 
     GROUP BY ?character ?characterLabel ?series ?seriesLabel ?pic
 `;
+
+module.exports = { movieQuery, actorQuery, characterQuery };
