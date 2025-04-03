@@ -15,7 +15,7 @@ defineFeature(feature, test => {
           ? await puppeteer.launch({headless: "new", args: ['--no-sandbox', '--disable-setuid-sandbox']})
           // : await puppeteer.launch({ headless: false, slowMo: 100 });
           : await puppeteer.launch({ 
-            // executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', // Only for Mac users
+            executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', // Only for Mac users
             headless: false, 
             slowMo: 20
           });
@@ -249,7 +249,7 @@ defineFeature(feature, test => {
 
       const postResponse = await page.evaluate(async (username, date, correctAnswers, wrongAnswers) => {
         try {
-          const response = await fetch("http://localhost:8006/newRanking", {
+          const response = await fetch("http://localhost:8006/newHistory", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -293,9 +293,9 @@ defineFeature(feature, test => {
       await expect(page).toMatchElement("th", { text: "Fecha" });
       await expect(page).toMatchElement("th", { text: "Preguntas correctas" });
       await expect(page).toMatchElement("th", { text: "Preguntas incorrectas" });
-      // await expect(page).toMatchElement("td", { text: "2025-03-31T12:00:00Z" });
-      // await expect(page).toMatchElement("td", { text: "4" });
-      // await expect(page).toMatchElement("td", { text: "2" });
+      await expect(page).toMatchElement("td", { text: "2025-03-31T12:00:00Z" });
+      await expect(page).toMatchElement("td", { text: "4" });
+      await expect(page).toMatchElement("td", { text: "2" });
     });
 
   });
