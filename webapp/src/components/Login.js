@@ -64,12 +64,28 @@ const Login = ({userForHistory}) => {
 
   if (startGame) {
     return (
+      <Container
+      component="div"
+      sx={{
+        marginTop: 4,
+        width: "100%",
+        height: "100%",
+        backgroundColor: "#a9c8c4",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        border: "4px solid #c46331",
+        boxSizing: "border-box"
+      }}
+      >
       <div>
       <Game username={username} key={keyReinicio}/>
       <Button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => reinicio()}>
         Volver
       </Button>
       </div>
+      </Container>
+
     );
   }
 

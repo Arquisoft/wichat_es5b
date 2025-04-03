@@ -13,7 +13,8 @@ const mockAxios = new MockAdapter(axios);
 describe('HintsButtons component', () => {
   beforeEach(() => {
     mockAxios.reset();
-    render(<HintsButtons />);
+    const llmQuestions= ["Pista 1", "Pista 2", "Pista 3", "Pista 4"]
+    render(<HintsButtons questionsLlm={llmQuestions} />);
   
     mockAxios.onPost(apiEndpoint+'/askllm').reply(200, { answer: 'Hello test user' });
 
