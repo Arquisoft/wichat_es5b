@@ -10,6 +10,7 @@ class GameController {
     this.currentQuestion = null
     this.hasGameEnded = false;
     this.NUMBER_OF_QUESTIONS = 6;
+    this.POINTS_PER_QUESTION=100;
    }
 
   
@@ -52,7 +53,7 @@ class GameController {
       this.currentQuestion.setOptions(options);
     }
   
-    submitAnswer(selectedAnswer) {
+    submitAnswer(selectedAnswer, timeLeft) {
       if (!this.currentQuestion) {
         console.log("No hay una pregunta activa.");
         return false;
@@ -63,11 +64,13 @@ class GameController {
       );
       
       if (isCorrect) {
-        this.score++;
+        this.score+=POINTS_PER_QUESTION
+        this.score+=timeLeft;
       }
+      /*
       else{
         this.score--;
-      }
+      }*/
       console.log(isCorrect);
       this.nextQuestion();
       return isCorrect;

@@ -137,7 +137,7 @@ app.get("/question", async (req, res) => {
 app.post("/answer", async (req, res) => {
   try {
     const answerResponse = await axios.post(gameUrl+'/answer', req.body);
-    res.json(answerResponse.data)
+    res.json("abeja")
   } catch (error){
     res.status(error.response.status).json({ error: error.response.data.error });
   }
