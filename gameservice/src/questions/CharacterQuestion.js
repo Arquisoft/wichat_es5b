@@ -12,3 +12,5 @@ class CharacterQuestion extends Question {
         return this.question;
     }
 }
+
+module.exports = { CharacterQuestion };

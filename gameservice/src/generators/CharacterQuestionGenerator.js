@@ -6,7 +6,7 @@ const { characterQuery } = require("./Queries");
 class CharacterQuestionGenerator extends AbstractQuestionGenerator {
 
     constructor() {
-        super()
+        super();
         this.query = characterQuery;
     }
 
