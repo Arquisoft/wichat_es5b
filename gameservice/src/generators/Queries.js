@@ -28,7 +28,7 @@ const actorQuery = `
     GROUP BY ?characterLabel ?performerLabel ?filmTitle
 `;
 
-export const characterQuery = `
+const characterQuery = `
     SELECT DISTINCT ?characterLabel ?seriesLabel (SAMPLE(?pic) AS ?pic) WHERE {
     ?character wdt:P31 wd:Q15773317;
     wdt:P1441 ?series;

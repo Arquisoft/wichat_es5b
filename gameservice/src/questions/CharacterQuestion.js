@@ -1,6 +1,6 @@
 const { Question } = require("./Question");
 
-export class CharacterQuestion extends Question {
+class CharacterQuestion extends Question {
     
     constructor(url, correctAnswer, options, characterName) {
         super(url, correctAnswer, options);

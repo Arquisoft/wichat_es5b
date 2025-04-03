@@ -3,7 +3,7 @@ const { CharacterQuestion } = require("../questions/CharacterQuestion");
 const { AbstractQuestionGenerator } = require("./AbstractQuestionGenerator");
 const { characterQuery } = require("./Queries");
 
-export class CharacterQuestionGenerator extends AbstractQuestionGenerator {
+class CharacterQuestionGenerator extends AbstractQuestionGenerator {
 
     constructor() {
         super()
