@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Container, Typography, TextField, Button, Snackbar, Alert } from '@mui/material';
 import { Typewriter } from "react-simple-typewriter";
 import Game from './game/GameQuestion';
+import LoadingScreen from './LoadingScreen';
 
 
 
@@ -18,6 +19,7 @@ const Login = ({userForHistory}) => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [startGame, setStartGame] = useState(false);
   const [keyReinicio, setKeyReinicio] = useState(0);
+  const [mostrarPantalla, setMostrarPantalla] = useState(false);
 
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
@@ -61,6 +63,11 @@ const Login = ({userForHistory}) => {
     setKeyReinicio(keyReinicio + 1);
     //start();
   }
+
+  
+  if(mostrarPantalla)
+    return (<LoadingScreen />);
+
 
   if (startGame) {
     return (
@@ -117,7 +124,7 @@ const Login = ({userForHistory}) => {
           <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
             Your account was created on {new Date(createdAt).toLocaleDateString()}.
           </Typography>
-          <Button variant="contained" color="primary" onClick={async () => { await start(); setStartGame(true);}} sx={{ marginTop: 2 }}>
+          <Button variant="contained" color="primary" onClick={async () => { setMostrarPantalla(true); await start(); setMostrarPantalla(false); setStartGame(true);}} sx={{ marginTop: 2 }}>
             Start Game
           </Button>
 
