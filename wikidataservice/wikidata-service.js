@@ -36,4 +36,7 @@ const server = app.listen(port, () => {
   console.log(`Wikidata Service listening at http://localhost:${port}`);
 });
 
-module.exports = {server, executeSparqlQuery}
+module.exports = server
+
+
+

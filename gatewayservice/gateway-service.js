@@ -137,7 +137,16 @@ app.get("/question", async (req, res) => {
 app.post("/answer", async (req, res) => {
   try {
     const answerResponse = await axios.post(gameUrl+'/answer', req.body);
-    res.json("abeja")
+    res.json(answerResponse.data)
+  } catch (error){
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
+
+app.post("/hintUsed", async (req, res) => {
+  try {
+    const hintUsedResponse = await axios.post(gameUrl+'/hintUsed', req.body);
+    res.json(hintUsedResponse.data)
   } catch (error){
     res.status(error.response.status).json({ error: error.response.data.error });
   }

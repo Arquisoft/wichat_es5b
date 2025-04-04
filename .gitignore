@@ -3,4 +3,4 @@ coverage
 docs/build
 gameservice/build
 .env
-webapp/.env
+llmservice/.env
