@@ -50,6 +50,13 @@ app.post("/hintUsed", (req  , res  ) => {
   res.json({ score});
 });
 
+// Petición tras utilizar una pista del llm (actualizar puntuación)
+app.post("/chatBotUsed", (req  , res  ) => {
+  gameController.chatBotUsed();
+  const score = gameController.score
+  res.json({ score});
+});
+
 app.listen(8005, () => {
   console.log("Servidor iniciado en el puerto 8005");
 });

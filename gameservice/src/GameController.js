@@ -11,6 +11,7 @@ class GameController {
     this.hasGameEnded = false;
     this.NUMBER_OF_QUESTIONS = 6;
     this.POINTS_PER_QUESTION=100;
+    this.POINTS_CHATBOT_USED = 20;
    }
 
   
@@ -104,6 +105,10 @@ class GameController {
     hintUsed(numHint){
         this.score -= (5 * (numHint+1))
         console.log("número pista"+numHint)
+    }
+
+    chatBotUsed(){
+        this.score -=this.POINTS_CHATBOT_USED;
     }
   }
   module.exports = { GameController };
