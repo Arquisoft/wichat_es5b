@@ -5,7 +5,10 @@ import MockAdapter from 'axios-mock-adapter';
 import Chatbot from './Chatbot';
 import '@testing-library/jest-dom';
 
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 const mockAxios = new MockAdapter(axios);
+const mockSetScore = jest.fn();
+
 
 describe('Chatbot Component', () => {
   const movieName = 'Inception';
@@ -20,7 +23,10 @@ describe('Chatbot Component', () => {
   beforeEach(() => {
     mockAxios.reset();
     cleanup();
-    render(<Chatbot movieName={movieName} />);
+
+      render(<Chatbot movieName={movieName} setScore={mockSetScore}/>);
+
+      mockAxios.onPost(apiEndpoint+'/chatBotUsed').reply(200, { score: -20 });
   });
 
   afterEach(() => {
@@ -33,7 +39,7 @@ describe('Chatbot Component', () => {
     it('should render the chatbot minimized by default', () => {
 
         cleanup();
-        render(<Chatbot movieName={movieName} />);
+        render(<Chatbot movieName={movieName} setScore={mockSetScore}/>);
         const minimizeButton = screen.getByRole('button', { name: /Chat de Pistas ▲/i });
         expect(minimizeButton).toBeInTheDocument();
         
@@ -43,8 +49,8 @@ describe('Chatbot Component', () => {
     it('should have correct initial styles for minimized state', () => {
 
       cleanup();
-      render(<Chatbot movieName={movieName} />);
-      
+        render(<Chatbot movieName={movieName} setScore={mockSetScore}/>);
+
       const toggleButton = screen.getByRole('button', { 
         name: /Chat de Pistas ▲/i 
       });
@@ -63,7 +69,7 @@ describe('Chatbot Component', () => {
   describe('Toggle Functionality', () => {
     beforeEach(() => {
         cleanup();
-        render(<Chatbot movieName={movieName} />);
+        render(<Chatbot movieName={movieName} setScore={mockSetScore}/>);
 
       });
 
@@ -118,7 +124,7 @@ describe('Chatbot Component', () => {
 
     beforeEach(() => {
       cleanup();
-      render(<Chatbot movieName={movieName} />);
+        render(<Chatbot movieName={movieName} setScore={mockSetScore}/>);
       expandChat();
     });
 
@@ -138,7 +144,7 @@ describe('Chatbot Component', () => {
 
         cleanup();
 
-        render(<Chatbot movieName={movieName} />);
+        render(<Chatbot movieName={movieName} setScore={mockSetScore}/>);
         
         //encontrar el botón en su estado inicial (▲ = minimizado)
         const toggleButton = await screen.findByRole('button', { 
@@ -198,7 +204,7 @@ describe('Chatbot Component', () => {
 
     beforeEach(() => {
       cleanup();
-      render(<Chatbot movieName={movieName} />);
+      render(<Chatbot movieName={movieName} setScore={mockSetScore}/>);
       expandChat();
       mockAxios.onPost(/askllm/).reply(200, { answer: 'Esta es una pista sobre la película' });
     });
@@ -308,7 +314,7 @@ describe('Chatbot Component', () => {
         mockAxios.onPost(/askllm/).reply(500);
         
         //renderizar el componente
-        render(<Chatbot movieName={movieName} />);
+        render(<Chatbot movieName={movieName} setScore={mockSetScore}/>);
         
         //primero expandir el chat
         const toggleButton = screen.getByRole('button', { name: /Chat de Pistas ▲/i });
@@ -338,8 +344,8 @@ describe('Chatbot Component', () => {
         mockAxios.onPost(/askllm/)
           .reply(500);
       
-        const { container } = render(<Chatbot movieName={movieName} />);
-        
+        const { container } = render(<Chatbot movieName={movieName} setScore={mockSetScore}/>);
+
         //usar within para limitar el ámbito de búsqueda
         const { getByRole } = within(container);
         
@@ -379,7 +385,8 @@ describe('Chatbot Component', () => {
 
     beforeEach(() => {
         cleanup();
-        const { container } = render(<Chatbot movieName={movieName} />);
+        const { container } = render(<Chatbot movieName={movieName} setScore={mockSetScore}/>);
+        ;
         expandChat();
         mockAxios.onPost(/askllm/).reply(200, { answer: 'Respuesta' });
       });
@@ -402,7 +409,7 @@ describe('Chatbot Component', () => {
         
         // verificar la solicitud API
         await waitFor(() => {
-          expect(mockAxios.history.post.length).toBe(1);
+          expect(mockAxios.history.post.length).toBe(2);
           const requestData = JSON.parse(mockAxios.history.post[0].data);
           expect(requestData.question).toContain(movieName);
           expect(requestData.question).toContain(testQuestion);
@@ -416,8 +423,8 @@ describe('Chatbot Component', () => {
         process.env.REACT_APP_API_ENDPOINT = 'https://custom-api.example.com';
         
         
-        const { container } = render(<Chatbot movieName={movieName} />);
-        
+        const { container } = render(<Chatbot movieName={movieName} setScore={mockSetScore}/>);
+
         //usar el container específico para encontrar elementos
         const toggleButton = within(container).getByRole('button', { name: /▲/i });
         fireEvent.click(toggleButton);
@@ -446,7 +453,7 @@ describe('Chatbot Component', () => {
     beforeEach(() => {
       mockAxios.reset();
       cleanup();
-      render(<Chatbot movieName={movieName} />);
+      render(<Chatbot movieName={movieName} setScore={mockSetScore}/>);
       expandChat(); 
     });
   
@@ -529,7 +536,7 @@ describe('Chatbot Component', () => {
 
     beforeEach(() => {
         cleanup();
-        render(<Chatbot movieName={movieName} />);
+        render(<Chatbot movieName={movieName} setScore={mockSetScore}/>);
         expandChat();
       });
 

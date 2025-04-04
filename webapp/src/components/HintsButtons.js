@@ -27,7 +27,6 @@ const HintsButtons = (props) =>{
         if (numHint + 1 < questions.length) {
           setUnlockedIndex(numHint + 1);
         }
-    
       }
 
       return (
