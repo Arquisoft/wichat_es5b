@@ -2,6 +2,7 @@ const { shuffle } = require("../src/util/GameUtil");
 const { AnswerVerifier } = require("../src/AnswerVerifier");
 const { MovieQuestionGenerator } = require("../src/generators/MovieQuestionGenerator");
 const { ActorQuestionGenerator } = require("../src/generators/ActorQuestionGenerator");
+const { CharacterQuestionGenerator } = require("../src/generators/CharacterQuestionGenerator"); 
 
 
 class QuestionManager {
@@ -10,7 +11,7 @@ class QuestionManager {
 
   constructor() {
     this.questions = [];
-    this.generator = [new MovieQuestionGenerator(), new ActorQuestionGenerator()];
+    this.generator = [new MovieQuestionGenerator(), new ActorQuestionGenerator(), new CharacterQuestionGenerator()];
     this.currentQuestion=0;
   }
 
