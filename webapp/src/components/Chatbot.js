@@ -33,7 +33,6 @@ const Chatbot = ({ movieName, setScore }) => {
             setMessages(prev => [...prev, botMessage]);
 
             const chatBotUsedResponse = await axios.post(`${apiEndpoint}/chatBotUsed`)
-            console.log(chatBotUsedResponse)
             setScore(chatBotUsedResponse.data.score)
 
         } catch (error) {

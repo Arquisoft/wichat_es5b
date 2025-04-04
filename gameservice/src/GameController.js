@@ -11,6 +11,7 @@ class GameController {
     this.hasGameEnded = false;
     this.NUMBER_OF_QUESTIONS = 6;
     this.POINTS_PER_QUESTION=100;
+    this.POINTS_HINTBUTTONS_USED=5;
     this.POINTS_CHATBOT_USED = 20;
    }
 
@@ -65,13 +66,8 @@ class GameController {
       );
       
       if (isCorrect) {
-        this.score+=this.POINTS_PER_QUESTION
-        this.score+=timeLeft;
+        this.score+=this.POINTS_PER_QUESTION+timeLeft;
       }
-      /*
-      else{
-        this.score--;
-      }*/
       console.log(isCorrect);
       this.nextQuestion();
       return isCorrect;
@@ -103,8 +99,7 @@ class GameController {
     }
 
     hintUsed(numHint){
-        this.score -= (5 * (numHint+1))
-        console.log("número pista"+numHint)
+        this.score -= (this.POINTS_HINTBUTTONS_USED * (numHint+1))
     }
 
     chatBotUsed(){
