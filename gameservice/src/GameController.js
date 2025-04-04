@@ -17,7 +17,7 @@ class GameController {
     async startGame() {
       this.score = 0;
       console.log("Inicio del juego");
-      await this.questionManager.generateQuestions(GameController.NUMBER_OF_QUESTIONS);
+      await this.questionManager.generateQuestions(this.NUMBER_OF_QUESTIONS);
       this.nextQuestion();
     }
 
@@ -64,7 +64,7 @@ class GameController {
       );
       
       if (isCorrect) {
-        this.score+=POINTS_PER_QUESTION
+        this.score+=this.POINTS_PER_QUESTION
         this.score+=timeLeft;
       }
       /*
@@ -99,6 +99,11 @@ class GameController {
 
     getQuestionManager() {
       return this.questionManager;
+    }
+
+    hintUsed(numHint){
+        this.score -= (5 * (numHint+1))
+        console.log("número pista"+numHint)
     }
   }
   module.exports = { GameController };

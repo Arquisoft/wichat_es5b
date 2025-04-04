@@ -37,8 +37,17 @@ app.get("/question", (req  , res  ) => {
 app.post("/answer", (req  , res  ) => {
   const selectedAnswer = req.body.answer;
   const timeLeft = req.body.timeLeft;
-  const prueba = gameController.submitAnswer(selectedAnswer, timeLeft);
-  res.json({ score:5});
+  const isCorrect = gameController.submitAnswer(selectedAnswer, timeLeft);
+  const score = gameController.score
+  res.json({ isCorrect, score});
+});
+
+// Petición tras utilizar una pista del llm (actualizar puntuación)
+app.post("/hintUsed", (req  , res  ) => {
+  const numHint = req.body.numHint;
+  gameController.hintUsed(numHint);
+  const score = gameController.score
+  res.json({ score});
 });
 
 app.listen(8005, () => {
