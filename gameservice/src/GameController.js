@@ -10,13 +10,16 @@ class GameController {
     this.currentQuestion = null
     this.hasGameEnded = false;
     this.NUMBER_OF_QUESTIONS = 6;
+    this.POINTS_PER_QUESTION=100;
+    this.POINTS_HINTBUTTONS_USED=5;
+    this.POINTS_CHATBOT_USED = 20;
    }
 
   
     async startGame() {
       this.score = 0;
       console.log("Inicio del juego");
-      await this.questionManager.generateQuestions(GameController.NUMBER_OF_QUESTIONS);
+      await this.questionManager.generateQuestions(this.NUMBER_OF_QUESTIONS);
       this.nextQuestion();
     }
 
@@ -52,7 +55,7 @@ class GameController {
       this.currentQuestion.setOptions(options);
     }
   
-    submitAnswer(selectedAnswer) {
+    submitAnswer(selectedAnswer, timeLeft) {
       if (!this.currentQuestion) {
         console.log("No hay una pregunta activa.");
         return false;
@@ -63,10 +66,7 @@ class GameController {
       );
       
       if (isCorrect) {
-        this.score++;
-      }
-      else{
-        this.score--;
+        this.score+=this.POINTS_PER_QUESTION+timeLeft;
       }
       console.log(isCorrect);
       this.nextQuestion();
@@ -96,6 +96,14 @@ class GameController {
 
     getQuestionManager() {
       return this.questionManager;
+    }
+
+    hintUsed(numHint){
+        this.score -= (this.POINTS_HINTBUTTONS_USED * (numHint+1))
+    }
+
+    chatBotUsed(){
+        this.score -=this.POINTS_CHATBOT_USED;
     }
   }
   module.exports = { GameController };

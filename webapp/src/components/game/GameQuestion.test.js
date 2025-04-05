@@ -158,7 +158,7 @@ describe('GameQuestion Component', () => {
     //veerifica que axios.post se ha llmaado
     expect(axios.post).toHaveBeenCalledWith(
       `${apiEndpoint}/answer`,
-      { answer: mockQuestion.options[0] }
+      { answer: mockQuestion.options[0] , timeLeft:60}
     );
   });
 

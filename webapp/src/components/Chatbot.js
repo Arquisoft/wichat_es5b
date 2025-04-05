@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Box, List, ListItem, ListItemText, Paper } from '@mui/material';
 import axios from 'axios';
 
-const Chatbot = ({ movieName }) => {
+const Chatbot = ({ movieName, setScore }) => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [isMinimized, setIsMinimized] = useState(true);
@@ -31,6 +31,9 @@ const Chatbot = ({ movieName }) => {
             
             const botMessage = { text: response.data.answer, sender: 'bot' };
             setMessages(prev => [...prev, botMessage]);
+
+            const chatBotUsedResponse = await axios.post(`${apiEndpoint}/chatBotUsed`)
+            setScore(chatBotUsedResponse.data.score)
 
         } catch (error) {
             console.error("Error al comunicarse con el LLM:", error);

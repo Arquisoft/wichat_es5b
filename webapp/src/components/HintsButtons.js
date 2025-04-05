@@ -14,27 +14,19 @@ const HintsButtons = (props) =>{
 
 
     const handleAskForHint = async (questions, numHint) => {
-      /*
-        const questions = [
-          "De que año y genero es la pelicula " + movieName +" , dame solamente el año y el genero y evita decir el nombre de la pelicula (formato: Fue estrenada en {año})",
-          "Nombre del actor protagonista de " + movieName + ", no digas el nombre de la pelicula (Formato: El actor protagonista es {nombre del actor}.)",
-          "Quien es el personaje principal de " + movieName + ", no digas el nombre de la pelicula, solo el nombre del personaje protagonista (Formato: El personaje principal es {nombre del personaje}).",
-          "Dame un resumen muy breve en una línea de la trama de la película " + movieName + ", no digas el nombre de la película (Formato: La pelicula trata sobre {resumen en una linea})."
-        ];*/
         const model = "empathy";
-    
-        
-    
+
+        const hintUsedResponse = await axios.post(`${apiEndpoint}/hintUsed`, {numHint})
+        props.setScore(hintUsedResponse.data.score)
+
         const question = questions[numHint];
         const message = await axios.post(`${apiEndpoint}/askllm`, { question, model });
         setHints([...hints, message.data.answer]);
-          
-    
+
         //desbloqueo siguiente boton
         if (numHint + 1 < questions.length) {
           setUnlockedIndex(numHint + 1);
         }
-    
       }
 
       return (

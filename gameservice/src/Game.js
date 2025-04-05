@@ -4,7 +4,6 @@ const cors = require("cors");
 const { GameController } = require("../src/GameController");
 const { QuestionManager } = require("../src/QuestionManager");
 const { AnswerVerifier } = require("../src/AnswerVerifier");
-const { MovieQuestion } = require("../src/questions/MovieQuestion");
 
 const questionGen = new QuestionManager();
 const answerVer = new AnswerVerifier();
@@ -37,8 +36,25 @@ app.get("/question", (req  , res  ) => {
 // Petición para obtener respuesta
 app.post("/answer", (req  , res  ) => {
   const selectedAnswer = req.body.answer;
-  const prueba = gameController.submitAnswer(selectedAnswer);
-  res.status(200).json(prueba);
+  const timeLeft = req.body.timeLeft;
+  const isCorrect = gameController.submitAnswer(selectedAnswer, timeLeft);
+  const score = gameController.score
+  res.json({ isCorrect, score});
+});
+
+// Petición tras utilizar una pista del llm (actualizar puntuación)
+app.post("/hintUsed", (req  , res  ) => {
+  const numHint = req.body.numHint;
+  gameController.hintUsed(numHint);
+  const score = gameController.score
+  res.json({ score});
+});
+
+// Petición tras utilizar una pista del llm (actualizar puntuación)
+app.post("/chatBotUsed", (req  , res  ) => {
+  gameController.chatBotUsed();
+  const score = gameController.score
+  res.json({ score});
 });
 
 app.listen(8005, () => {
