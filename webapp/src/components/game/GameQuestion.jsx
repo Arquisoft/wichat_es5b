@@ -19,6 +19,7 @@ export default function MovieQuiz({username}) {
   const [gameFinished, setGameFinished] = useState(false);
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [optionsDisabled, setOptionsDisabled] = useState(false);//opcion para desactivar los botones de respuesta
   const PREGUNTASNUM = 6;
   const user = {username}.username
 
@@ -40,7 +41,7 @@ export default function MovieQuiz({username}) {
     setSelectedOption(null);
     setTimeLeft(60);
     setLoading(false);
-
+    setOptionsDisabled(false);
   };
 
   useEffect(() => {
@@ -75,6 +76,7 @@ export default function MovieQuiz({username}) {
 
   const handleOptionClick = async (selectedAnswer) => {
     setSelectedOption(selectedAnswer);
+    setOptionsDisabled(true);
 
     const res = await answer(selectedAnswer);
     setQuestionsAnswered((prev) => prev + 1);
@@ -163,16 +165,17 @@ export default function MovieQuiz({username}) {
                             <button
                                 id={`option-${index}`}
                                 key={index}
-                                onClick={() => handleOptionClick(option)}
-                                className={`py-2 px-4 mx-4 rounded font-semibold border transition-all duration-200 ${
-                                    selectedOption !== null
+                                onClick={() => !optionsDisabled && handleOptionClick(option)}
+                                className={`py-2 px-4 mx-4 rounded font-semibold border transition-all duration-200 
+                                  ${selectedOption !== null
                                         ? option === currentQuestion.correctAnswer
                                             ? "bg-green-500 text-black"
                                             : option === selectedOption
                                                 ? "bg-red-500 text-black"
                                                 : "bg-gray-200"
-                                        : "bg-blue-500 text-black hover:bg-blue-700"
-                                }`}
+                                        : "bg-blue-500 text-black hover:bg-blue-700"}
+                                  ${optionsDisabled ? "pointer-events-none" : ""}
+                                `}
                             >
                               {option}
                             </button>
