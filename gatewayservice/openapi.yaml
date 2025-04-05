@@ -52,7 +52,7 @@ paths:
                     description: Creation date.
                     example: '2024-03-17T20:47:23.935Z'
                   ___v:
-                    type: integer
+                    type: number
                     example: '0'                                        
         '400':
           description: Failed to add user.
@@ -142,3 +142,409 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
+  /askllm:
+    post:
+      summary: Realizar llamadas a la LLM
+      operationId: askllm
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                question:
+                  type: string
+                  description: Pregunta a realizar a la LLM.
+                  example: ¿Quien es el actor protagonista de BenHur?
+                apikey:
+                  type: string
+                  description: Api key de la LLM.
+                  example: sk-468645sdas54d5s6addfsf456d
+                model:
+                  type: string
+                  description: Modelo a usar.
+                  example: Mistral
+      responses:
+        '200': 
+          description: La llamada se realiza correctamente, devuelve la respuesta del LLM
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  answer:
+                    type: string
+                    description: Respuesta de la LLM
+                    example: Respuesta correcta
+        '400': 
+          description: Hubo un error al realizar la llamada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Mensaje de error
+                    example: Error
+  
+  /queryWikiData:
+    post: 
+      summary: Realizar peticion a wikidata
+      operationId: query
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: Query de Sparql para pedir la información a wikidata.
+                  example: SELECT DISTINCT ?itemLabel (SAMPLE(?pic) AS ?pic) WHERE { ?item wdt:P31 wd:Q11424; wdt:P577 ?publication_date; wdt:P18 ?pic.}
+      responses:
+        '200': 
+          description: La llamada se realiza correctamente y devuelve la respuesta de wikidata
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  answer:
+                    type: array
+                    description: Respuesta de Wikidata
+                    items:
+                      type: object
+                      properties:
+                        itemLabel:
+                          type: string
+                          description: Nombre de la película
+                          example: Inception
+                        pic:
+                          type: string
+                          description: URL de la imagen de la película
+                          example: "https://upload.wikimedia.org/wikipedia/en/7/7f/Inception_ver3.jpg"
+
+
+  /history:
+    post:
+      summary: Pedir historial de un jugador especifico
+      operationId: history
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username: 
+                  type: string
+                  description: Nombre del usuario del que queremos el historial
+                  example: user1
+      responses:
+        '200': 
+          description: La llamada se realiza correctamente, devuelve la respuesta del historial
+          content:
+             application/json:
+              schema:
+                type: array
+                description: Partidas del usuario
+                items:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                      description: Usuario
+                      example: user1
+                    date:
+                      type: string
+                      format: date
+                      description: Fecha de la partida
+                      example: 2024-03-30
+                    correctAnswers:
+                      type: number
+                      description: Respuestas correctas
+                      example: 4
+                    wrongAnswers:
+                      type: number
+                      description: Respuestas incorrectas
+                      example: 2
+
+        '500':
+          description: Hubo un error al realizar la llamada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error
+                    example: Error
+                    
+                    
+
+
+  /ranking:
+    get:
+      summary: Pedir el ranking general del juego
+      operationId: ranking
+      responses:
+        '200':
+          description: La llamada se realiza correctamente, devuelve la respuesta del ranking
+          content:
+             application/json:
+              schema:
+                type: array
+                description: Partidas del ranking
+                items:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                      description: Usuario
+                      example: user1
+                    correctAnswers:
+                      type: number
+                      description: Respuestas correctas
+                      example: 4
+                    wrongAnswers:
+                      type: number
+                      description: Respuestas incorrectas
+                      example: 2
+        '500':
+          description: Hubo un error al realizar la llamada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error
+                    example: Error
+  
+  /newRanking:
+    post:
+      summary: Crear una nueva entrada en la base de datos de ranking
+      operationId: newRanking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+                type: object
+                properties:
+                  username: 
+                    type: string
+                    description: Nombre del usuario que esta jugando
+                    example: user1
+                  correct:
+                    type: number
+                    description: Numero de respuestas correctas
+                    example: 2
+                  wrong:
+                    type: number
+                    description: Numero de respuestas incorrectas
+                    example: 4
+
+      responses:
+        '201':
+          description: Se guarda correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    _id:
+                      type: string
+                      description: Identificador único del ranking
+                      example: 605c72ef153207001f39f4f1"
+                    username:
+                      type: string
+                      description: Nombre de usuario del jugador
+                      example: user1
+                    correctAnswers:
+                      type: number
+                      description: Respuestas correctas 
+                      example: 10
+                    wrongAnswers:
+                      type: number
+                      description: Respuestas incorrectas 
+                      example: 3
+                    __v:
+                      type: number
+                      description: Número de versión del documento
+                      example: 0
+        '400':
+          description: Hubo un error en los parametros
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error
+                    example: "Datos inválidos: correctAnswers y wrongAnswers deben sumar 6 y estar entre 0 y 6."
+
+            
+
+  /newHistory:
+    post:
+      summary: Crear una nueva entrada en la base de datos de historial
+      operationId: newHistory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+                type: object
+                properties:
+                  username: 
+                    type: string
+                    description: Nombre del usuario que esta jugando
+                    example: user1
+                  date:
+                    type: string
+                    description: Fecha en la que se jugó la partida
+                    example: 2024-03-30
+                  correct:
+                    type: number
+                    description: Numero de respuestas correctas
+                    example: 2
+                  wrong:
+                    type: number
+                    description: Numero de respuestas incorrectas
+                    example: 4
+      responses:
+        '201':
+          description: Se guarda correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    _id:
+                      type: string
+                      description: Identificador único del ranking
+                      example: 605c72ef153207001f39f4f1"
+                    username:
+                      type: string
+                      description: Nombre de usuario del jugador
+                      example: user1
+                    date:
+                      type: string
+                      description: Fecha de la partida
+                      example: 2024-03-30
+                    correctAnswers:
+                      type: number
+                      description: Respuestas correctas 
+                      example: 10
+                    wrongAnswers:
+                      type: number
+                      description: Respuestas incorrectas 
+                      example: 3
+                    __v:
+                      type: number
+                      description: Número de versión del documento
+                      example: 0
+        '400':
+          description: Hubo un error en los parametros
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error
+                    example: "Datos inválidos: correctAnswers y wrongAnswers deben sumar 6 y estar entre 0 y 6."
+
+  /end:
+    post:
+      summary: Pedir que el juego finalice
+      operationId: end
+      responses:
+        '200':
+          description: El juego se finaliza
+          content: {}
+            
+      
+
+
+  /start:
+    post:
+      summary: Pedir que el juego comience
+      operationId: start
+      responses:
+        '200':
+          description: El juego se inicia
+          content: {}
+      
+
+
+  /question:
+    get:
+      summary: Pedir una pregunta al juego
+      operationId: question
+      responses:
+        '200':
+          description: Se devuelve correctamente la pregunta
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  imageUrl:
+                    type: string
+                    description: URL de la imagen asociada con la pregunta.
+                    example: 'http://commons.wikimedia.org/wiki/Special:FilePath/SDCC13%20-%20Kitty%20Pryde%20Cosplay%20%289348039788%29.jpg'
+                  options:
+                    type: array
+                    description: Opciones de respuesta posibles.
+                    items:
+                      type: string
+                    example:
+                        - 'Stephen Mendel'
+                        - 'Elliot Page'
+                        - 'Susan Ruttan'
+                        - 'Rooney Mara'
+                  correctAnswer:
+                    type: string
+                    description: La respuesta correcta.
+                    example: 'Elliot Page'
+                  actorName:
+                    type: string
+                    description: El nombre del actor.
+                    example: 'Elliot Page'
+                  characterName:
+                    type: string
+                    description: El nombre del personaje.
+                    example: 'Kitty Pryde'
+                  movieName:
+                    type: string
+                    description: El nombre de la película.
+                    example: '엑스맨: 최후의 전쟁'
+                  question:
+                    type: string
+                    description: La pregunta formulada.
+                    example: '¿Quién interpreta a Kitty Pryde en la película 엑스맨: 최후의 전쟁?'
+      
+
+
+  /answer:
+    get:
+      summary: Pedir procesar la respuesta a la pregunta
+      operationId: answer
+      responses:
+        '200':
+          description: Respuesta procesada correctamente
+          content:
+            application/json:
+              schema:
+                type: boolean
+                description: Indica si la pregunta fue respondida correcta o incorrectamente
+                example: true

@@ -11,6 +11,7 @@ require('dotenv').config();
 
 // Define configurations for different LLM APIs
 const llmConfigs = {
+
   gemini: {
     url: (apiKey) => `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
     transformRequest: (question) => ({
@@ -18,10 +19,27 @@ const llmConfigs = {
     }),
     transformResponse: (response) => response.data.candidates[0]?.content?.parts[0]?.text
   },
+
   empathy: {
     url: () => 'https://empathyai.prod.empathy.co/v1/chat/completions',
     transformRequest: (question) => ({
-      model: "mistralai/Mistral-7B-Instruct-v0.3",
+      model: "mistralai/Mistral-7B-Instruct-v0.3", //con Qwen: qwen/Qwen2.5-Coder-7B-Instruct
+      messages: [
+        { role: "system", content: "You are a helpful assistant." },
+        { role: "user", content: question }
+      ]
+    }),
+    transformResponse: (response) => response.data.choices[0]?.message?.content,
+    headers: (apiKey) => ({
+      Authorization: `Bearer ${apiKey}`,
+      'Content-Type': 'application/json'
+    })
+  },
+
+  empathyQwen: {
+    url: () => 'https://empathyai.prod.empathy.co/v1/chat/completions',
+    transformRequest: (question) => ({
+      model: "qwen/Qwen2.5-Coder-7B-Instruct",
       messages: [
         { role: "system", content: "You are a helpful assistant." },
         { role: "user", content: question }
@@ -33,6 +51,7 @@ const llmConfigs = {
       'Content-Type': 'application/json'
     })
   }
+
 };
 
 // Function to validate required fields in the request body

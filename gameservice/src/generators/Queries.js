@@ -28,4 +28,19 @@ const actorQuery = `
     GROUP BY ?characterLabel ?performerLabel ?filmTitle
 `;
 
-module.exports = { movieQuery, actorQuery };
+const characterQuery = `
+    SELECT DISTINCT ?characterLabel ?seriesLabel (SAMPLE(?pic) AS ?pic) WHERE {
+    ?character wdt:P31 wd:Q15773317;
+    wdt:P1441 ?series;
+    wdt:P18 ?pic.
+
+    SERVICE wikibase:label { 
+        bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en".
+    }
+    
+    }
+
+    GROUP BY ?character ?characterLabel ?series ?seriesLabel ?pic
+`;
+
+module.exports = { movieQuery, actorQuery, characterQuery };

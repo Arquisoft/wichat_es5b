@@ -5,14 +5,14 @@ import HintsButtons from '../HintsButtons';
 import Chatbot from '../Chatbot';
 import LoadingScreen from '../LoadingScreen';
 import axios from 'axios';
+import ProgressBar from '../ProgressBar';  // Asegúrate de importar la barra de progreso correctamente
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
-
 
 export default function MovieQuiz({username}) {
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
-  const [timeLeft, setTimeLeft] = useState(30);
+  const [timeLeft, setTimeLeft] = useState(60);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
   const [gameFinished, setGameFinished] = useState(false);
@@ -38,7 +38,7 @@ export default function MovieQuiz({username}) {
     setCurrentQuestion(question);
     setSelectedOption(null);
     setTimeLeft(60);
-    
+    setLoading(false);
     
   };
 
@@ -137,42 +137,54 @@ export default function MovieQuiz({username}) {
   
 
   return (
-    <div>
-      {loading ? (<LoadingScreen/>) :  (<div className="max-w-xl mx-auto p-10 bg-white shadow-lg rounded-lg text-center margin" >
-      <h2 className="text-2xl font-bold">{currentQuestion.question}</h2>
-      <img src={currentQuestion.imageUrl} alt="Pregunta" className="w-full h-48 object-cover my-3 rounded" />
-      <div className="grid grid-cols-1 gap-2">
-        {currentQuestion.options.map((option, index) => (
-          <button
-            id={`option-${index}`}
-            key={index}
-            onClick={() => handleOptionClick(option)}
-            className={`py-2 px-4 rounded font-semibold border transition-all duration-200 ${
-              selectedOption !== null
-                ? option === currentQuestion.correctAnswer
-                  ? "bg-green-500 text-white"
-                  : option === selectedOption
-                  ? "bg-red-500 text-white"
-                  : "bg-gray-200"
-                : "bg-blue-500 text-white hover:bg-blue-700"
-            }`}
-          >
-            {option}
-          </button>
-          
-        ))}
-      </div>
-        <p className="mt-4 text-lg font-semibold">Tiempo restante: {timeLeft} s</p>
-        <p className="mt-2 text-lg font-semibold">Pregunta {questionsAnswered + 1} de {PREGUNTASNUM}</p>
-        <p className="mt-2 text-lg font-semibold">Aciertos: {correctAnswers}</p>
-        
-        <HintsButtons key={currentQuestion} movieName={currentQuestion.correctAnswer} />
-        
-        <Chatbot movieName={currentQuestion.correctAnswer} />
-        
-
+    <div className="object-cover">
+      {loading ? (<LoadingScreen/>) :  
+      (<div className="grid grid-rows-3 gap-2 max-w-xl mx-auto p-10 text-center" >
+        <div className="grid grid-rows-2 bg-orange shadow-lg rounded-lg my-3 py-2">
+          <div className="grid grid-cols-2 ">
+            <p className="mt-2 text-2xl font-semibold align-left justify-top ml-1 text-white">Pregunta {questionsAnswered + 1} de {PREGUNTASNUM}</p>
+            <div className="grid grid-rows-2 align-right justify-bottom mr-2">
+              <p className="text-lg font-semibold">Aciertos: {correctAnswers}</p>
+              <p className="text-lg font-semibold">Tiempo restante: {timeLeft} s</p>
+            </div>
+          </div>
+          <ProgressBar timeLeft={timeLeft}/>
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          <div class>
+            <img src={currentQuestion.imageUrl} alt="Pregunta" className="w-full h-48 my-3 rounded" />
+          </div>
+          <div className = "bg-orange shadow-lg rounded-lg py-2">
+            <h2 className="text-2xl font-bold text-white mx-4">{currentQuestion.question}</h2>
+            <div className="grid grid-cols-1 gap-2">
+              {currentQuestion.options.map((option, index) => (
+                <button
+                  id={`option-${index}`}
+                  key={index}
+                  onClick={() => handleOptionClick(option)}
+                  className={`py-2 px-4 mx-4 rounded font-semibold border transition-all duration-200 ${
+                    selectedOption !== null
+                      ? option === currentQuestion.correctAnswer
+                        ? "bg-green-500 text-black"
+                        : option === selectedOption
+                        ? "bg-red-500 text-black"
+                        : "bg-gray-200"
+                      : "bg-blue-500 text-black hover:bg-blue-700"
+                  }`}
+                >
+                  {option}
+                </button>
+                
+              ))}
+              </div>
+            
+            </div>
+          </div>
+            <HintsButtons key={currentQuestion} questionsLlm={currentQuestion.questionsLlm} />
+          <Chatbot movieName={currentQuestion.correctAnswer} />
       </div>
       )}
+
     </div>
   );
 }
