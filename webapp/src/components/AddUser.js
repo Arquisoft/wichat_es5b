@@ -46,8 +46,8 @@ const AddUser = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <Button id="add-user-btn" variant="contained" color="primary" onClick={addUser}>
-        Add User
+      <Button fullWidth id="add-user-btn" variant="contained" color="primary" onClick={addUser}>
+        Registrarse
       </Button>
       {/* Mensaje de éxito */}
       <Snackbar

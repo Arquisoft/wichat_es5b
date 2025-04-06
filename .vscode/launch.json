@@ -99,7 +99,7 @@
       "type": "node-terminal",
       "request": "launch",
       "command": "npm install && npm start",
-      "cwd": "${workspaceFolder}/database",
+      "cwd": "${workspaceFolder}/statsservice",
       "windows": {
         "command": "npm install; npm start"
       }
