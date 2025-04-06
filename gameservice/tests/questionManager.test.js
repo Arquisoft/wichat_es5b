@@ -1,4 +1,5 @@
 const { QuestionManager } = require("../src/QuestionManager");
+const {MovieQuestionGenerator} = require("../src/generators/MovieQuestionGenerator");
 
 let questionManager;
 
@@ -38,7 +39,7 @@ test("Generate questions", async () => {
             }
           });
     })
-
+    questionManager.generator = [new MovieQuestionGenerator()]
     await questionManager.generateQuestions(2);
     expect(questionManager.getQuestionList().length).toBe(2);
     expect(questionManager.areThereQuestionsLeft()).toBe(true);

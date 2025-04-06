@@ -38,24 +38,24 @@ test("Test de Question", () => {
 test("Selección de respuesta correcta", () => {
     gameController.setQuestion("", ["Star Wars", "Inception", "The Matrix", "Interstellar"], "Interstellar");
     gameController.getQuestionManager().pushQuestion(new MovieQuestion("", "The Matrix", ["Star Wars", "Inception", "The Matrix", "Interstellar"]));
-    gameController.submitAnswer("Interstellar");
+    gameController.submitAnswer("Interstellar", 0);
 
-    expect(gameController.getScore()).toBe(1);
+    expect(gameController.getScore()).toBe(100);
     expect(gameController.isGameEnded()).toBe(false);
     expect(gameController.getCurrentQuestion()).not.toBeNull();
 });
 
 test("Selección de respuesta incorrecta", () => {
     gameController.setQuestion("", ["Star Wars", "Inception", "The Matrix", "Interstellar"], "Interstellar");
-    gameController.submitAnswer("Star Wars");
+    gameController.submitAnswer("Star Wars",0);
 
-    expect(gameController.getScore()).toBe(-1);
+    expect(gameController.getScore()).toBe(0);
     expect(gameController.isGameEnded()).toBe(false);
 });
 
 test("Fin del juego", () => {
     gameController.setQuestion("", ["Star Wars", "Inception", "The Matrix", "Interstellar"], "Interstellar");
-    gameController.submitAnswer("Interstellar");
+    gameController.submitAnswer("Interstellar",0);
 
     gameController.endGame();
     expect(gameController.isGameEnded()).toBe(true);
@@ -64,7 +64,7 @@ test("Fin del juego", () => {
 test("Se devuelve una respuesta sin haber pregunta", () => {
     expect(gameController.getCurrentQuestion()).toBeNull();
 
-    gameController.submitAnswer("Interstellar");
+    gameController.submitAnswer("Interstellar",0);
 
     expect(gameController.getCurrentQuestion()).toBeNull();
     expect(gameController.getScore()).toBe(0);

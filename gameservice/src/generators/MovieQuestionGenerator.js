@@ -16,6 +16,7 @@ class MovieQuestionGenerator extends AbstractQuestionGenerator {
 
     mapResult(queryResult, mappedRes){
         queryResult.results.bindings.forEach((entry) => {
+            console.log(entry)
             const movieName = entry.itemLabel.value;
             const image = entry.pic.value;
             mappedRes.set(movieName, [image]);
