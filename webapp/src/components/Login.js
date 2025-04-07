@@ -20,9 +20,7 @@ const Login = ({userForHistory}) => {
   const [startGame, setStartGame] = useState(false);
   const [keyReinicio, setKeyReinicio] = useState(0);
   const [mostrarPantalla, setMostrarPantalla] = useState(false);
-  const [difficulty, setDifficulty] = useState('easy');
-  
-  let nQuestions = 12;
+  const [nQuestions, setNQuestions] = useState(6);
 
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
@@ -58,13 +56,8 @@ const Login = ({userForHistory}) => {
 
   async function start() {
     const res= await axios.post(apiEndpoint + "/start", {
-      difficulty: difficulty
+      nQuestions: nQuestions
     });
-    await axios.get(apiEndpoint + "/numberOfQuestions")
-      .then(response => {
-        console.log(response);
-        nQuestions = response.data.numberOfQuestions;
-      });
     return res;
   } 
 
@@ -136,10 +129,10 @@ const Login = ({userForHistory}) => {
           </Typography>
           <Box sx={{display: 'flex', justifyContent: 'space-between', mt: 2, mb: 2}}>
             Escoge la dificultad del juego:
-            <ButtonGroup variant="contained" aria-label="outlined primary button group" sx={{width: '100%'}}>
-              <Button selected={difficulty === 'easy'} onClick={() => setDifficulty('easy')} sx={{width: '33%'}}>Fácil</Button>
-              <Button selected={difficulty === 'medium'} onClick={() => setDifficulty('medium')} sx={{width: '33%'}}>Normal</Button>
-              <Button selected={difficulty === 'hard'} onClick={() => setDifficulty('hard')} sx={{width: '33%'}}>Difícil</Button>
+            <ButtonGroup variant="contained" aria-label="outlined primary button group" sx={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
+              <Button selected={nQuestions === 6} onClick={() => {setNQuestions(6); console.log("Corta")}} sx={{width: '33%'}}>Corta</Button>
+              <Button selected={nQuestions === 12} onClick={() => {setNQuestions(12); console.log("Normal")}} sx={{width: '33%'}}>Normal</Button>
+              <Button selected={nQuestions === 18} onClick={() => {setNQuestions(18); console.log("Larga")}} sx={{width: '33%'}}>Larga</Button>
             </ButtonGroup>
           </Box>
           <Button variant="contained" color="primary" onClick={async () => { setMostrarPantalla(true); await start(); setMostrarPantalla(false); setStartGame(true);}} sx={{ marginTop: 2 }}>

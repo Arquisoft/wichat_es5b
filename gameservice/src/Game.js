@@ -15,8 +15,8 @@ app.use(cors());
 
 // Petición para iniciar el juego
 app.post("/start", async (req  , res  ) => {
-  console.log("Juego iniciado", req.body.difficulty);
-  gameController.setDifficulty(req.body.difficulty);
+  console.log("Juego iniciado", req.body.nQuestions);
+  gameController.setNumberOfQuestions(req.body.nQuestions);
   await gameController.startGame();
   res.sendStatus(200);
 });
@@ -57,12 +57,6 @@ app.post("/chatBotUsed", (req  , res  ) => {
   const score = gameController.score
   res.json({ score});
 });
-
-// Petición para obtener el numero de preguntas
-app.get("/numberOfQuestions", (req, res) => {
-  const numberOfQuestions = gameController.getNumberOfQuestions();
-  res.json({ numberOfQuestions });
-})
 
 app.listen(8005, () => {
   console.log("Servidor iniciado en el puerto 8005");
