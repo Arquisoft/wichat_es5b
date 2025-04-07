@@ -1,7 +1,7 @@
 // src/components/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Container, Typography, TextField, Button, Snackbar, Alert } from '@mui/material';
+import { Container, Typography, TextField, Button, Snackbar, Alert, ButtonGroup, Box } from '@mui/material';
 import { Typewriter } from "react-simple-typewriter";
 import Game from './game/GameQuestion';
 import LoadingScreen from './LoadingScreen';
@@ -20,6 +20,9 @@ const Login = ({userForHistory}) => {
   const [startGame, setStartGame] = useState(false);
   const [keyReinicio, setKeyReinicio] = useState(0);
   const [mostrarPantalla, setMostrarPantalla] = useState(false);
+  const [difficulty, setDifficulty] = useState('easy');
+  
+  let nQuestions = 12;
 
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
@@ -54,7 +57,14 @@ const Login = ({userForHistory}) => {
   };
 
   async function start() {
-    const res= await axios.post(apiEndpoint + "/start");
+    const res= await axios.post(apiEndpoint + "/start", {
+      difficulty: difficulty
+    });
+    await axios.get(apiEndpoint + "/numberOfQuestions")
+      .then(response => {
+        console.log(response);
+        nQuestions = response.data.numberOfQuestions;
+      });
     return res;
   } 
 
@@ -86,7 +96,7 @@ const Login = ({userForHistory}) => {
       }}
       >
       <div>
-      <Game username={username} key={keyReinicio}/>
+      <Game username={username} nQuestions={nQuestions} key={keyReinicio}/>
       <Button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => reinicio()}>
         Volver
       </Button>
@@ -124,6 +134,14 @@ const Login = ({userForHistory}) => {
           <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
             Your account was created on {new Date(createdAt).toLocaleDateString()}.
           </Typography>
+          <Box sx={{display: 'flex', justifyContent: 'space-between', mt: 2, mb: 2}}>
+            Escoge la dificultad del juego:
+            <ButtonGroup variant="contained" aria-label="outlined primary button group" sx={{width: '100%'}}>
+              <Button selected={difficulty === 'easy'} onClick={() => setDifficulty('easy')} sx={{width: '33%'}}>Fácil</Button>
+              <Button selected={difficulty === 'medium'} onClick={() => setDifficulty('medium')} sx={{width: '33%'}}>Normal</Button>
+              <Button selected={difficulty === 'hard'} onClick={() => setDifficulty('hard')} sx={{width: '33%'}}>Difícil</Button>
+            </ButtonGroup>
+          </Box>
           <Button variant="contained" color="primary" onClick={async () => { setMostrarPantalla(true); await start(); setMostrarPantalla(false); setStartGame(true);}} sx={{ marginTop: 2 }}>
             Start Game
           </Button>

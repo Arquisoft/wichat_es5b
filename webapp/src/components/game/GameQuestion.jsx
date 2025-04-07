@@ -9,7 +9,7 @@ import ProgressBar from '../ProgressBar';  // Asegúrate de importar la barra de
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
-export default function MovieQuiz({username}) {
+export default function MovieQuiz({username, nQuestions}) {
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [timeLeft, setTimeLeft] = useState(60);
@@ -19,11 +19,13 @@ export default function MovieQuiz({username}) {
   const [gameFinished, setGameFinished] = useState(false);
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
   const [loading, setLoading] = useState(true);
-  const PREGUNTASNUM = 6;
+  const PREGUNTASNUM = {nQuestions}.nQuestions;
   const user = {username}.username
 
 
   const nextQuestion = async () => {
+
+    console.log("Preguntas: " + PREGUNTASNUM);
 
     setLoading(true);
     const question = await getQuestion();

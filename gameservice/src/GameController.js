@@ -105,5 +105,25 @@ class GameController {
     chatBotUsed(){
         this.score -=this.POINTS_CHATBOT_USED;
     }
+
+    setDifficulty(dif) {
+      switch (dif) {
+        case 'easy':
+          this.NUMBER_OF_QUESTIONS = 6;
+          break;
+        case 'medium':
+          this.NUMBER_OF_QUESTIONS = 12;
+          break;
+        case 'hard':
+          this.NUMBER_OF_QUESTIONS = 18;
+          break;
+        default:
+      }
+      console.log("Preguntas: " + this.NUMBER_OF_QUESTIONS);
+    }
+
+    getNumberOfQuestions(){
+        return this.NUMBER_OF_QUESTIONS;
+    }
   }
   module.exports = { GameController };
