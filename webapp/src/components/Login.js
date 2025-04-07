@@ -5,6 +5,7 @@ import { Container, Typography, TextField, Button, Snackbar, Alert } from '@mui/
 import { Typewriter } from "react-simple-typewriter";
 import Game from './game/GameQuestion';
 import LoadingScreen from './LoadingScreen';
+import SelectionScreen from "./GameSelectionScreen";
 
 
 
@@ -55,51 +56,6 @@ const Login = ({userForHistory}) => {
     setOpenSnackbar(false);
   };
 
-  async function start() {
-    const res= await axios.post(apiEndpoint + "/start");
-    return res;
-  } 
-
-  const reinicio = () => {
-    setStartGame(false);
-    setKeyReinicio(keyReinicio + 1);
-    //start();
-  }
-
-  
-  if(mostrarPantalla)
-    return (<LoadingScreen />);
-
-
-  if (startGame) {
-    return (
-      <Container
-      component="div"
-      sx={{
-        marginTop: 4,
-        width: "100%",
-        height: "100%",
-        backgroundColor: "#a9c8c4",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        border: "4px solid #c46331",
-        boxSizing: "border-box"
-      }}
-      >
-      <div>
-      <Game username={username} key={keyReinicio}/>
-      <Button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => reinicio()}>
-        Volver
-      </Button>
-      </div>
-      </Container>
-
-    );
-  }
-
-  
-
   return (
     <Container
   component="main"
@@ -116,22 +72,7 @@ const Login = ({userForHistory}) => {
   }}
   >
       {loginSuccess ? (
-        <div>
-          <Typewriter
-            words={[message]} // Pass your message as an array of strings
-            cursor
-            cursorStyle="|"
-            typeSpeed={50} // Typing speed in ms
-          />
-          <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
-            Your account was created on {new Date(createdAt).toLocaleDateString()}.
-          </Typography>
-          <Button variant="contained" color="primary" onClick={async () => { setMostrarPantalla(true); await start(); setMostrarPantalla(false); setStartGame(true);}} sx={{ marginTop: 2 }}>
-            Start Game
-          </Button>
-
-
-        </div>
+        <SelectionScreen username={username}/>
       ) : (
         <div>
           <Typography component="h1" variant="h5" sx={{color: "#d87152"}}>
