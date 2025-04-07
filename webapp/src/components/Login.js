@@ -2,9 +2,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Container, Typography, TextField, Button, Snackbar, Alert } from '@mui/material';
-import { Typewriter } from "react-simple-typewriter";
-import Game from './game/GameQuestion';
-import LoadingScreen from './LoadingScreen';
 import SelectionScreen from "./GameSelectionScreen";
 
 
@@ -13,15 +10,9 @@ const Login = ({userForHistory}) => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
-  const [createdAt, setCreatedAt] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [startGame, setStartGame] = useState(false);
-  const [keyReinicio, setKeyReinicio] = useState(0);
-  const [mostrarPantalla, setMostrarPantalla] = useState(false);
-
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
@@ -31,21 +22,7 @@ const Login = ({userForHistory}) => {
 
   const loginUser = async () => {
     try {
-      const response = await axios.post(`${apiEndpoint}/login`, { username, password });
-
-      const question = "Please, generate a greeting message for a student called " + username + " that is a student of the Software Architecture course in the University of Oviedo. Be nice and polite. Two to three sentences max.";
-      const model = "empathy"
-      const message = await axios.post(`${apiEndpoint}/askllm`, { question, model })
-      setMessage(message.data.answer);
-
-      // Extract data from the response
-      const { createdAt: userCreatedAt } = response.data;
-
-      localStorage.setItem('token', response.data.token);
-
-      setCreatedAt(userCreatedAt);
       setLoginSuccess(true);
-
       setOpenSnackbar(true);
     } catch (error) {
       setError(error.response.data.error);
@@ -95,7 +72,7 @@ const Login = ({userForHistory}) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button fullWidth variant="contained" color="primary" onClick={()=>{loginUser();loginHistory();}} sx={{color: "#d87152", backgroundColor: "#faf5ea"}}>
+          <Button variant="contained" color="primary" onClick={()=>{loginUser();loginHistory();}} sx={{color: "#d87152", backgroundColor: "#faf5ea"}}>
             Login
           </Button>
           <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />
