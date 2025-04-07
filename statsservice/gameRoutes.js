@@ -36,7 +36,7 @@ app.get('/ranking', async (req, res) => {
 
 // Ruta para agregar una nueva entrada al ranking
 app.post('/newRanking', async (req, res) => {
-    const { username, correctAnswers, wrongAnswers } = req.body;
+    const { username, correctAnswers, wrongAnswers, nQuestions } = req.body;
 
     // Conversión a número
     const correct = Number(correctAnswers);
@@ -44,11 +44,11 @@ app.post('/newRanking', async (req, res) => {
 
     // Validaciones
     if (
-        correct < 0 || correct > 6 ||      // correctAnswers debe estar entre 0 y 6
-        wrong < 0 || wrong > 6 //||          // wrongAnswers debe estar entre 0 y 6
-        //correct + wrong !== 6              // La suma debe ser 6
+        correct < 0 || correct > nQuestions ||      // correctAnswers debe estar entre 0 y 6
+        wrong < 0 || wrong > nQuestions //||          // wrongAnswers debe estar entre 0 y 6
+        //correct + wrong !== nQuestions              // La suma debe ser 6
     ) {
-        return res.status(400).json({ message: "Datos inválidos: correctAnswers y wrongAnswers deben sumar 6 y estar entre 0 y 6." });
+        return res.status(400).json({ message: `Datos inválidos: correctAnswers y wrongAnswers deben sumar ${nQuestions} y estar entre 0 y ${nQuestions}.` });
     }
     const rankingEntry = new Ranking({
       username: req.body.username,
@@ -66,7 +66,7 @@ app.post('/newRanking', async (req, res) => {
 
 // Ruta para actualizar el ranking de un usuario
 app.put('/updateRanking/:username', async (req, res) => {
-  const { correctAnswers, wrongAnswers } = req.body;
+  const { correctAnswers, wrongAnswers, nQuestions } = req.body;
   const username = req.params.username;
 
   // Conversión a número
@@ -75,11 +75,11 @@ app.put('/updateRanking/:username', async (req, res) => {
 
   // Validaciones
   if (
-      correct < 0 || correct > 6 ||      // correctAnswers debe estar entre 0 y 6
-      wrong < 0 || wrong > 6 ||          // wrongAnswers debe estar entre 0 y 6
-      correct + wrong !== 6              // La suma debe ser 6
+      correct < 0 || correct > nQuestions ||      // correctAnswers debe estar entre 0 y 6
+      wrong < 0 || wrong > nQuestions ||          // wrongAnswers debe estar entre 0 y 6
+      correct + wrong !== nQuestions              // La suma debe ser 6
   ) {
-      return res.status(400).json({ message: "Datos inválidos: correctAnswers y wrongAnswers deben sumar 6 y estar entre 0 y 6." });
+      return res.status(400).json({ message: `Datos inválidos: correctAnswers y wrongAnswers deben sumar ${nQuestions} y estar entre 0 y ${nQuestions}.` });
   }
 
   try {
@@ -119,7 +119,7 @@ app.post('/history', async (req, res) => {
 app.post('/newHistory', async (req, res) => {
   console.log("history")
   console.log(req.body);
-  const { username, date, correctAnswers, wrongAnswers } = req.body;
+  const { username, date, correctAnswers, wrongAnswers, nQuestions } = req.body;
   
 
     // Conversión a número
@@ -128,11 +128,11 @@ app.post('/newHistory', async (req, res) => {
 
     // Validaciones
     if (
-      correct < 0 || correct > 6 ||      // CorrectAnswers en el rango [0,6]
-      wrong < 0 || wrong > 6 //||          // WrongAnswers en el rango [0,6]
-      //correct + wrong !== 6              // Suma de respuestas debe ser 6
+      correct < 0 || correct > nQuestions ||      // CorrectAnswers en el rango [0,6]
+      wrong < 0 || wrong > nQuestions //||          // WrongAnswers en el rango [0,6]
+      //correct + wrong !== nQuestions              // Suma de respuestas debe ser 6
     ) {
-      return res.status(400).json({ message: "Datos inválidos: correctAnswers y wrongAnswers deben sumar 6 y estar entre 0 y 6." });
+      return res.status(400).json({ message: `Datos inválidos: correctAnswers y wrongAnswers deben sumar ${nQuestions} y estar entre 0 y ${nQuestions}.` });
     }
 
     // Si pasa las validaciones
