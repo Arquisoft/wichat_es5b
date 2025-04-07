@@ -127,12 +127,12 @@ const Login = ({userForHistory}) => {
           <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
             Your account was created on {new Date(createdAt).toLocaleDateString()}.
           </Typography>
+          <Typography component="p" variant="body1" sx={{ textAlign: 'left', marginTop: 2}}>Escoge la longitud de la partida:</Typography>
           <Box sx={{display: 'flex', justifyContent: 'space-between', mt: 2, mb: 2}}>
-            Escoge la dificultad del juego:
             <ButtonGroup variant="contained" aria-label="outlined primary button group" sx={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
-              <Button selected={nQuestions === 6} onClick={() => {setNQuestions(6); console.log("Corta")}} sx={{width: '33%'}}>Corta</Button>
-              <Button selected={nQuestions === 12} onClick={() => {setNQuestions(12); console.log("Normal")}} sx={{width: '33%'}}>Normal</Button>
-              <Button selected={nQuestions === 18} onClick={() => {setNQuestions(18); console.log("Larga")}} sx={{width: '33%'}}>Larga</Button>
+              <Button disabled={nQuestions === 6} onClick={() => {setNQuestions(6); console.log("Corta")}} sx={{width: '33%'}}>Corta</Button>
+              <Button disabled={nQuestions === 12} onClick={() => {setNQuestions(12); console.log("Normal")}} sx={{width: '33%'}}>Normal</Button>
+              <Button disabled={nQuestions === 18} onClick={() => {setNQuestions(18); console.log("Larga")}} sx={{width: '33%'}}>Larga</Button>
             </ButtonGroup>
           </Box>
           <Button variant="contained" color="primary" onClick={async () => { setMostrarPantalla(true); await start(); setMostrarPantalla(false); setStartGame(true);}} sx={{ marginTop: 2 }}>
