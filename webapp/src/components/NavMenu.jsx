@@ -111,7 +111,7 @@ import {
                 fontSize: "1.1rem" 
             }}
             >
-              IDENTIFÍCATE
+              IDENTIFICATE
             </Button>
           )}
         </Toolbar>

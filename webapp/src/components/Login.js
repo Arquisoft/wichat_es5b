@@ -155,7 +155,7 @@ const Login = ({userForHistory}) => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <Button fullWidth variant="contained" color="primary" onClick={()=>{loginUser();loginHistory();}} sx={{color: "#d87152", backgroundColor: "#faf5ea"}}>
-            Iniciar sesión
+            Login
           </Button>
           <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />
           {/* Mensaje de error en rojo con Alert */}
