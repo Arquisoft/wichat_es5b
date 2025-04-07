@@ -40,6 +40,8 @@ const Login = ({userForHistory}) => {
       // Extract data from the response
       const { createdAt: userCreatedAt } = response.data;
 
+      localStorage.setItem('token', response.data.token);
+
       setCreatedAt(userCreatedAt);
       setLoginSuccess(true);
 
@@ -152,7 +154,7 @@ const Login = ({userForHistory}) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button variant="contained" color="primary" onClick={()=>{loginUser();loginHistory();}} sx={{color: "#d87152", backgroundColor: "#faf5ea"}}>
+          <Button fullWidth variant="contained" color="primary" onClick={()=>{loginUser();loginHistory();}} sx={{color: "#d87152", backgroundColor: "#faf5ea"}}>
             Login
           </Button>
           <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />

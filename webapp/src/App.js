@@ -38,11 +38,11 @@ function App() {
         <Typography component="div" align="center" sx={{ marginTop: 1}}>
           {showLogin ? (
             <Link name="gotoregister" component="button" variant="body2" onClick={handleToggleView}>
-              Don't have an account? Register here.
+              ¿No tienes una cuenta? Regístrate aquí.
             </Link>
           ) : (
             <Link component="button" variant="body2" onClick={handleToggleView}>
-              Already have an account? Login here.
+              ¿Ya tienes una cuenta? Inicia sesión aquí.
             </Link>
           )}
         </Typography>
