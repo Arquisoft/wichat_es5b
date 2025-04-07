@@ -161,6 +161,15 @@ app.post("/chatBotUsed", async (req, res) => {
   }
 });
 
+app.get("/numberOfQuestions", async (req, res) => {
+  try {
+    const numberOfQuestionsResponse = await axios.get(gameUrl+'/numberOfQuestions');
+    res.json(numberOfQuestionsResponse.data)
+  } catch (error){
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
+
 // Read the OpenAPI YAML file synchronously
 openapiPath='./openapi.yaml'
 if (fs.existsSync(openapiPath)) {
