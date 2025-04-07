@@ -57,6 +57,7 @@ export default function UpdatePassword() {
     return (
         <div>
                 <MenuItem 
+                    data-testid="open-password-dialog"
                     variant="primary" 
                     sx={{
                         backgroundColor:"#c46331",
@@ -69,7 +70,7 @@ export default function UpdatePassword() {
                 </MenuItem>
                 <Dialog open={show} onClose={()=> setShow(false)}>
                     <DialogTitle>
-                        Editar contraseña
+                        Edite su contraseña
                     </DialogTitle>
                     <DialogContent>
                     <TextField

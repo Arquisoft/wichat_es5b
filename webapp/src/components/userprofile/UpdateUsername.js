@@ -65,7 +65,7 @@ export default function UpdateUsername() {
                 </MenuItem>
                 <Dialog open={show} onClose={()=> setShow(false)}>
                     <DialogTitle>
-                        Editar nombre de usuario
+                        Edite su nombre de usuario
                     </DialogTitle>
                     <DialogContent>
                     <TextField
