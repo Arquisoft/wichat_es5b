@@ -63,8 +63,24 @@ export default function UpdateUsername() {
                 >
                     Editar nombre de usuario
                 </MenuItem>
-                <Dialog open={show} onClose={()=> setShow(false)}>
-                    <DialogTitle>
+                <Dialog 
+                    open={show} 
+                    onClose={()=> setShow(false)}
+                    PaperProps={{
+                        sx: {
+                          backgroundColor: "#fbdd9a", // fondo suave del modal
+                          padding: 2,
+                          borderRadius: 3,
+                        },
+                      }}
+                >
+                    <DialogTitle
+                        sx={{ 
+                            color: "#c46331", 
+                            fontWeight: "bold", 
+                            fontSize: "1.3rem" 
+                        }}
+                    >
                         Edite su nombre de usuario
                     </DialogTitle>
                     <DialogContent>
@@ -75,6 +91,24 @@ export default function UpdateUsername() {
                         label="Nombre de usuario"
                         value={newUsername}
                         onChange={(e) => setNewUsername(e.target.value)}
+                        sx={{
+                            backgroundColor: "#fff",
+                            borderRadius: 1,
+                            '& label.Mui-focused': {
+                              color: "#c46331",
+                            },
+                            '& .MuiOutlinedInput-root': {
+                              '& fieldset': {
+                                borderColor: "#a9c8c4",
+                              },
+                              '&:hover fieldset': {
+                                borderColor: "#c46331",
+                              },
+                              '&.Mui-focused fieldset': {
+                                borderColor: "#c46331",
+                              },
+                            },
+                          }}
                     />
                     <Button 
                         fullWidth 
@@ -82,12 +116,29 @@ export default function UpdateUsername() {
                         variant="contained" 
                         color="primary" 
                         onClick={handleUpdate}
+                        sx={{
+                            mt: 2,
+                            backgroundColor: "#c46331",
+                            color: "#fbdd9a",
+                            fontWeight: "bold",
+                            '&:hover': {
+                              backgroundColor: "#a84f22",
+                            }
+                          }}
                     >
                         Actualizar nombre de usuario
                     </Button>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={() => setShow(false)}>Cerrar</Button>
+                        <Button 
+                            onClick={() => setShow(false)}
+                            sx={{ 
+                                color: "#c46331", 
+                                fontWeight: "bold" 
+                            }}
+                        >
+                            Cerrar
+                        </Button>
                     </DialogActions>
 
                     {/* Mensaje de éxito */}

@@ -68,8 +68,24 @@ export default function UpdatePassword() {
                 >
                     Editar contraseña
                 </MenuItem>
-                <Dialog open={show} onClose={()=> setShow(false)}>
-                    <DialogTitle>
+                <Dialog 
+                    open={show} 
+                    onClose={()=> setShow(false)}
+                    PaperProps={{
+                        sx: {
+                          backgroundColor: "#fbdd9a", // fondo suave del modal
+                          padding: 2,
+                          borderRadius: 3,
+                        },
+                      }}
+                >
+                    <DialogTitle
+                        sx={{ 
+                            color: "#c46331", 
+                            fontWeight: "bold", 
+                            fontSize: "1.3rem" 
+                        }}
+                    >
                         Edite su contraseña
                     </DialogTitle>
                     <DialogContent>
@@ -81,6 +97,24 @@ export default function UpdatePassword() {
                         type="password"
                         value={oldPassword}
                         onChange={(e) => setOldPassword(e.target.value)}
+                        sx={{
+                            backgroundColor: "#fff",
+                            borderRadius: 1,
+                            '& label.Mui-focused': {
+                              color: "#c46331",
+                            },
+                            '& .MuiOutlinedInput-root': {
+                              '& fieldset': {
+                                borderColor: "#a9c8c4",
+                              },
+                              '&:hover fieldset': {
+                                borderColor: "#c46331",
+                              },
+                              '&.Mui-focused fieldset': {
+                                borderColor: "#c46331",
+                              },
+                            },
+                          }}
                     />
                     <TextField
                         name="password"
@@ -90,6 +124,24 @@ export default function UpdatePassword() {
                         type="password"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
+                        sx={{
+                            backgroundColor: "#fff",
+                            borderRadius: 1,
+                            '& label.Mui-focused': {
+                              color: "#c46331",
+                            },
+                            '& .MuiOutlinedInput-root': {
+                              '& fieldset': {
+                                borderColor: "#a9c8c4",
+                              },
+                              '&:hover fieldset': {
+                                borderColor: "#c46331",
+                              },
+                              '&.Mui-focused fieldset': {
+                                borderColor: "#c46331",
+                              },
+                            },
+                          }}
                     />
                     <TextField
                         name="password"
@@ -99,6 +151,24 @@ export default function UpdatePassword() {
                         type="password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
+                        sx={{
+                            backgroundColor: "#fff",
+                            borderRadius: 1,
+                            '& label.Mui-focused': {
+                              color: "#c46331",
+                            },
+                            '& .MuiOutlinedInput-root': {
+                              '& fieldset': {
+                                borderColor: "#a9c8c4",
+                              },
+                              '&:hover fieldset': {
+                                borderColor: "#c46331",
+                              },
+                              '&.Mui-focused fieldset': {
+                                borderColor: "#c46331",
+                              },
+                            },
+                          }}
                     />
                     <Button 
                         fullWidth 
@@ -106,12 +176,29 @@ export default function UpdatePassword() {
                         variant="contained" 
                         color="primary" 
                         onClick={handleUpdate}
+                        sx={{
+                            mt: 2,
+                            backgroundColor: "#c46331",
+                            color: "#fbdd9a",
+                            fontWeight: "bold",
+                            '&:hover': {
+                              backgroundColor: "#a84f22",
+                            }
+                          }}
                     >
                         Actualizar contraseña
                     </Button>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={() => setShow(false)}>Cerrar</Button>
+                        <Button 
+                            onClick={() => setShow(false)}
+                            sx={{ 
+                                color: "#c46331", 
+                                fontWeight: "bold" 
+                            }}
+                        >
+                            Cerrar
+                        </Button>
                     </DialogActions>
 
                     {/* Mensaje de éxito */}
