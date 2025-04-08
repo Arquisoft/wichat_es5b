@@ -17,7 +17,6 @@ const Ranking = () => {
     }
 
     useEffect(() => {
-        console.log("aaaa");
         getRanking();
     }, []);
 
@@ -35,6 +34,8 @@ const Ranking = () => {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Fecha</TableCell>
+                                <TableCell>Preguntas correctas</TableCell>
+                                <TableCell>Preguntas Incorrectas</TableCell>
                                 <TableCell>Puntuación</TableCell>
                             </TableRow>
                         </TableHead>
@@ -43,6 +44,8 @@ const Ranking = () => {
                             <TableRow key={index}>
                                 <TableCell>{user.username}</TableCell>
                                 <TableCell>{user.correctAnswers}</TableCell>
+                                <TableCell>{user.wrongAnswers}</TableCell>
+                                <TableCell>{user.totalScore}</TableCell>
                             </TableRow>
                         ))}
 
