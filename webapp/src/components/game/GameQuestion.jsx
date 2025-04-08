@@ -22,7 +22,7 @@ export default function MovieQuiz({username}) {
   const [optionsDisabled, setOptionsDisabled] = useState(false);//opcion para desactivar los botones de respuesta
   const PREGUNTASNUM = 6;
   const user = {username}.username
-  const questions = [];
+  const [questions, setQuestions] = useState([]);
 
 
   const nextQuestion = async () => {
@@ -39,7 +39,8 @@ export default function MovieQuiz({username}) {
     console.log("Nueva pregunta obtenida:", question);
 
     setCurrentQuestion(question);
-    questions.push(
+    setQuestions(prevQuestions => [
+      ...prevQuestions,
       {
         text: question.question,
         image: question.imageUrl,
@@ -49,7 +50,8 @@ export default function MovieQuiz({username}) {
         option4: question.options[3],
         correctOption: question.correctAnswer
       }
-    );
+    ]);
+    console.log(questions)
     setSelectedOption(null);
     setTimeLeft(60);
     setLoading(false);
