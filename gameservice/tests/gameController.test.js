@@ -68,18 +68,6 @@ test("Selección de respuesta correcta utilizando dos pistas con los botones", (
     expect(gameController.getCurrentQuestion()).not.toBeNull();
 });
 
-test("Selección de respuesta correcta utilizando dos pistas con los botones", () => {
-    gameController.setQuestion("", ["Star Wars", "Inception", "The Matrix", "Interstellar"], "Interstellar");
-    gameController.getQuestionManager().pushQuestion(new MovieQuestion("", "The Matrix", ["Star Wars", "Inception", "The Matrix", "Interstellar"]));
-    gameController.hintUsed(0)
-    gameController.hintUsed(1)
-    gameController.submitAnswer("Interstellar",0);
-
-    expect(gameController.getScore()).toBe(gameController.POINTS_PER_QUESTION - 15);
-    expect(gameController.isGameEnded()).toBe(false);
-    expect(gameController.getCurrentQuestion()).not.toBeNull();
-});
-
 test("Selección de respuesta correcta utilizando dos pistas con el chat", () => {
     gameController.setQuestion("", ["Star Wars", "Inception", "The Matrix", "Interstellar"], "Interstellar");
     gameController.getQuestionManager().pushQuestion(new MovieQuestion("", "The Matrix", ["Star Wars", "Inception", "The Matrix", "Interstellar"]));
