@@ -22,6 +22,9 @@ const Login = ({userForHistory}) => {
 
   const loginUser = async () => {
     try {
+        const response = await axios.post(`${apiEndpoint}/login`, { username, password });
+
+        localStorage.setItem('token', response.data.token);
       setLoginSuccess(true);
       setOpenSnackbar(true);
     } catch (error) {
@@ -72,9 +75,9 @@ const Login = ({userForHistory}) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button variant="contained" color="primary" onClick={()=>{loginUser();loginHistory();}} sx={{color: "#d87152", backgroundColor: "#faf5ea"}}>
-            Login
-          </Button>
+            <Button fullWidth variant="contained" color="primary" onClick={()=>{loginUser();loginHistory();}} sx={{color: "#d87152", backgroundColor: "#faf5ea"}}>
+                Login
+            </Button>
           <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />
           {/* Mensaje de error en rojo con Alert */}
           {error && (
