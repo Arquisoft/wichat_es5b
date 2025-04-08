@@ -22,6 +22,7 @@ export default function MovieQuiz({username}) {
   const [optionsDisabled, setOptionsDisabled] = useState(false);//opcion para desactivar los botones de respuesta
   const PREGUNTASNUM = 6;
   const user = {username}.username
+  const questions = [];
 
 
   const nextQuestion = async () => {
@@ -38,6 +39,17 @@ export default function MovieQuiz({username}) {
     console.log("Nueva pregunta obtenida:", question);
 
     setCurrentQuestion(question);
+    questions.push(
+      {
+        text: question.question,
+        image: question.imageUrl,
+        option1: question.options[0],
+        option2: question.options[1],
+        option3: question.options[2],
+        option4: question.options[3],
+        correctOption: question.correctAnswer
+      }
+    );
     setSelectedOption(null);
     setTimeLeft(60);
     setLoading(false);
@@ -103,7 +115,8 @@ export default function MovieQuiz({username}) {
 
   if (gameFinished) {
     endGame()
-    return <GameOver correct={correctAnswers} wrong={wrongAnswers} username ={user} score  ={score} />
+    console.log(score)
+    return <GameOver correct={correctAnswers} wrong={wrongAnswers} username ={user} questions={questions} score={score} />
   }
 
   async function getQuestion() {

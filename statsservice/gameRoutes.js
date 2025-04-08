@@ -130,7 +130,7 @@ app.post('/history', async (req, res) => {
 app.post('/newHistory', async (req, res) => {
   console.log("history")
   console.log(req.body);
-  const { username, date, correctAnswers, wrongAnswers, questions } = req.body;
+  const { username, date, correctAnswers, wrongAnswers, questions, totalScore } = req.body;
   
 
     // Conversión a número
@@ -151,11 +151,12 @@ app.post('/newHistory', async (req, res) => {
     }
 
     // Validar array de preguntas
-    if (!Array.isArray(questions) || questions.length !== 6) {
+    if (!Array.isArray(questions)) { // || questions.length !== 6
       return res.status(400).json({ message: "Debes proporcionar un array de 6 preguntas." });
     }
 
     // Calcular totalScore sumando los score individuales de cada pregunta
+    /*
     let totalScore = 0;
     for (const question of questions) {
       if (typeof question.totalScore !== 'number') {
@@ -164,7 +165,7 @@ app.post('/newHistory', async (req, res) => {
         return res.status(400).json({ message: "El campo 'totalScore' de las preguntas debe ser mayor o igual a cero" });
       }
       totalScore += question.score;
-    }
+    }*/
 
 
     // Si pasa las validaciones
