@@ -25,7 +25,8 @@ mongoose.connect(mongoUri, {
 const RankingSchema = new Schema({
     username: { type: String, required: true },
     correctAnswers: { type: Number, required: true },
-    wrongAnswers: { type: Number, required: true }
+    wrongAnswers: { type: Number, required: true },
+    totalScore: { type: Number, required: true }
 });
 
 // Esquema para el historial
@@ -33,7 +34,38 @@ const GameHistorySchema = new Schema({
     username: { type: String, required: true },
     date: { type: Date, default: Date.now },
     correctAnswers: { type: Number, required: true },
-    wrongAnswers: { type: Number, required: true }
+    wrongAnswers: { type: Number, required: true },
+    totalScore: { type: Number, required: true },
+
+    /*
+    Formato de las preguntas:
+
+        [
+            {
+                text: "¿Capital de Francia?",
+                image: "http://url-de-imagen.jpg",
+                option1: "Madrid",
+                option2: "Roma",
+                option3: "París",
+                option4: "Berlín",
+                correctOption: "París"
+            },
+            ...
+        ]
+
+    */
+   
+    questions: [
+        {
+            text: { type: String, required: true },
+            image: { type: String },
+            option1: { type: String, required: true },
+            option2: { type: String, required: true },
+            option3: { type: String, required: true },
+            option4: { type: String, required: true },
+            correctOption: { type: String, required: true }
+        }
+    ]
 });
   
 const Ranking = mongoose.model('Ranking', RankingSchema);
