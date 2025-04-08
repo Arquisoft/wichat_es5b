@@ -17,10 +17,10 @@ class AbstractQuestionGenerator  {
 
         const array = Array.from(mappedRes);
         
-        const questions = new Array(6); 
-        const generatedQuestions = new Array(6);
+        const questions = new Array(nQuestions);
+        const generatedQuestions = new Array(nQuestions);
 
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < nQuestions; i++) {
             questions[i] = this.generateQuestion(array, generatedQuestions);
         }
 
@@ -38,8 +38,7 @@ class AbstractQuestionGenerator  {
         optionsIndex.push(movieIndex);
 
         let randomIndex;
-        console.log(Question.NUMBER_OF_OPTIONS);
-        
+
         for(let i = 0; i< Question.NUMBER_OF_OPTIONS;i++){
             randomIndex = this.getUnusedIndex(array.length, optionsIndex);
             const [incorrectName, incorrectData] = array[randomIndex];
