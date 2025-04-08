@@ -50,6 +50,26 @@ app.post('/adduser', async (req, res) => {
   }
 });
 
+app.post('/updateusername', async (req, res) => {
+  try {
+    // Forward the update username request to the user service
+    const userResponse = await axios.post(userServiceUrl+'/updateusername', req.body);
+    res.json(userResponse.data);
+  } catch (error) {
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
+
+app.post('/updatepassword', async (req, res) => {
+  try {
+    // Forward the update password request to the user service
+    const userResponse = await axios.post(userServiceUrl+'/updatepassword', req.body);
+    res.json(userResponse.data);
+  } catch (error) {
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
+
 app.post('/askllm', async (req, res) => {
   try {
     // Forward the add user request to the user service

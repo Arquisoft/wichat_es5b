@@ -74,4 +74,152 @@ describe('User Service', () => {
       expect(response.body.error).toBe('La contraseña debe tener al menos una letra mayúscula, un número y 6 caracteres.');
     }
   });
+
+  //TEST PARA UPDATE USERNAME
+
+  it('should update the username on POST /updateusername', async () => {
+    const user = new User({
+      username: 'oldUsername',
+      password: await bcrypt.hash('ValidPass1', 10)
+    });
+    await user.save();
+  
+    const response = await request(app).post('/updateusername').send({
+      userId: user._id,
+      newUsername: 'newUsername'
+    });
+  
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Usuario actualizado correctamente');
+  
+    const updatedUser = await User.findById(user._id);
+    expect(updatedUser.username).toBe('newUsername');
+  });
+  
+  it('should return 404 if user is not found in /updateusername', async () => {
+    const response = await request(app).post('/updateusername').send({
+      userId: '6612d8e2d508f3c53f0e5aaa', // fake valid ObjectId
+      newUsername: 'anyName'
+    });
+  
+    expect(response.status).toBe(404);
+    expect(response.body.error).toBe('Usuario no encontrado');
+  });
+  
+  it('should not allow updating to an already used username', async () => {
+    const existingUser = new User({
+      username: 'existingUser',
+      password: await bcrypt.hash('ValidPass1', 10)
+    });
+    await existingUser.save();
+  
+    const user = new User({
+      username: 'changeMe',
+      password: await bcrypt.hash('ValidPass2', 10)
+    });
+    await user.save();
+  
+    const response = await request(app).post('/updateusername').send({
+      userId: user._id,
+      newUsername: 'existingUser'
+    });
+  
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe('El nuevo nombre de usuario ya está en uso');
+  });
+
+  //TEST PARA UPDATE PASSWORD
+
+  it('should update password successfully on POST /updatepassword', async () => {
+    
+    const hashedPassword = await bcrypt.hash('OldPassword1', 10);
+
+    const user = new User({
+      username: 'passwordUser',
+      password: hashedPassword
+    });
+
+    await user.save();
+  
+    const response = await request(app).post('/updatepassword').send({
+      userId: user._id,
+      oldPassword: 'OldPassword1',
+      newPassword: 'NewPassword1',
+      confirmPassword: 'NewPassword1'
+    });
+  
+    expect(response.status).toBe(200);
+
+    expect(response.body.message).toBe('Contraseña actualizada correctamente');
+  
+    const updatedUser = await User.findById(user._id);
+
+    const isMatch = await bcrypt.compare('NewPassword1', updatedUser.password);
+
+    expect(isMatch).toBe(true);
+  });
+  
+  it('should return error if old password is incorrect', async () => {
+
+    const user = new User({
+      username: 'wrongOldPass',
+      password: await bcrypt.hash('CorrectOld1', 10)
+    });
+
+    await user.save();
+  
+    const response = await request(app).post('/updatepassword').send({
+      userId: user._id,
+      oldPassword: 'WrongOld1',
+      newPassword: 'NewPassword1',
+      confirmPassword: 'NewPassword1'
+    });
+  
+    expect(response.status).toBe(400);
+
+    expect(response.body.error).toBe('Contraseña actual incorrecta');
+  });
+  
+  it('should return error if new passwords do not match', async () => {
+
+    const user = new User({
+      username: 'notMatching',
+      password: await bcrypt.hash('ValidOld1', 10)
+    });
+
+    await user.save();
+  
+    const response = await request(app).post('/updatepassword').send({
+      userId: user._id,
+      oldPassword: 'ValidOld1',
+      newPassword: 'NewPassword1',
+      confirmPassword: 'DifferentPassword1'
+    });
+  
+    expect(response.status).toBe(400);
+
+    expect(response.body.error).toBe('Las contraseñas no coinciden');
+  });
+  
+  it('should return error for weak new password', async () => {
+
+    const user = new User({
+      username: 'weakPass',
+      password: await bcrypt.hash('OldPass1', 10)
+    });
+
+    await user.save();
+  
+    const response = await request(app).post('/updatepassword').send({
+      userId: user._id,
+      oldPassword: 'OldPass1',
+      newPassword: 'abc',
+      confirmPassword: 'abc'
+    });
+  
+    expect(response.status).toBe(400);
+
+    expect(response.body.error).toBe('La contraseña debe tener al menos una letra mayúscula, un número y 6 caracteres.');
+  });
+  
 });
