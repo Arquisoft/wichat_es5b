@@ -23,15 +23,12 @@ class QuestionManager {
   async generateQuestions(nQuestions) {
     let nQuestType = Math.floor(nQuestions/this.generator.length);
     let nExtraQuestions = nQuestions % this.generator.length;
-    console.log("wtf generator"+this.generator.length)
 
     let queryPromises = this.generator.map((gen, index) => {
       let nQuestionsToGenerate = nQuestType + (index === 0 ? nExtraQuestions : 0);
-      console.log("PREGUNasdasd "+nQuestionsToGenerate)
       return this.executeQuery(gen.getQuery()).then(queryResult =>
           gen.generateQuestions(queryResult, nQuestionsToGenerate)
       );
-
     });
 
     let results = await Promise.all(queryPromises);
