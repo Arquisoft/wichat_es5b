@@ -10,7 +10,7 @@ export default function GameOver({ correct, wrong, username, questions, score })
     await axios.post(apiEndpoint + "/newHistory", data);
   }
   const saveRanking = async () =>{
-    const data={username: username, correctAnswers: correct, wrongAnswers: wrong, totalScore:score, nQuestions: nQuestions}
+    const data={username: username, correctAnswers: correct, wrongAnswers: wrong, totalScore:score, questions: questions}
     await axios.post(apiEndpoint + "/newRanking", data);
   }
   useEffect(()=>{

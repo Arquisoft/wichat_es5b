@@ -36,19 +36,24 @@ app.get('/ranking', async (req, res) => {
 
 // Ruta para agregar una nueva entrada al ranking
 app.post('/newRanking', async (req, res) => {
-    const { username, correctAnswers, wrongAnswers, totalScore, nQuestions } = req.body;
+    const { username, correctAnswers, wrongAnswers, totalScore, questions } = req.body;
 
     // Conversión a número
     const correct = Number(correctAnswers);
     const wrong = Number(wrongAnswers);
 
+    // Validar array de preguntas
+    if (!Array.isArray(questions)) { // || questions.length !== 6
+      return res.status(400).json({ message: "Debes proporcionar un array de 6 preguntas." });
+    }
+
     // Validaciones
     if (
-        correct < 0 || correct > nQuestions ||      // correctAnswers debe estar entre 0 y 6
-        wrong < 0 || wrong > nQuestions //||          // wrongAnswers debe estar entre 0 y 6
+        correct < 0 || correct > questions.length ||      // correctAnswers debe estar entre 0 y 6
+        wrong < 0 || wrong > questions.length //||          // wrongAnswers debe estar entre 0 y 6
         //correct + wrong !== nQuestions              // La suma debe ser 6
     ) {
-        return res.status(400).json({ message: `Datos inválidos: correctAnswers y wrongAnswers deben sumar ${nQuestions} y estar entre 0 y ${nQuestions}.` });
+        return res.status(400).json({ message: `Datos inválidos: correctAnswers y wrongAnswers deben sumar ${questions.length} y estar entre 0 y ${questions.length}.` });
     }
 
     if ( totalScore < 0) {
