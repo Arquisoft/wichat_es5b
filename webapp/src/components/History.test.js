@@ -12,6 +12,7 @@ const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000
 //mockeo llamadas a base de datos
 const mockAxios = new MockAdapter(axios);
 mockAxios.onPost(apiEndpoint+'/history').reply(200, [{ username: 'prueba' , date: 'hoy',correctAnswers: 2, wrongAnswers:4 }]);
+jest.mock('./PreguntasHistorico', () => () => <div>Mocked HeavyComponent</div>);
 
 describe('History Component', () => {
 
