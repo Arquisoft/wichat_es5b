@@ -19,9 +19,22 @@
   max-width: 100%; 
   max-height: 100%; 
   overflow: auto; 
+  display: flex;
+  flex-direction: column;
   box-sizing: border-box; 
+  margin-top: 4;
 }
+
 .MuiContainer-root.MuiContainer-maxWidthLg.css-msrjqj-MuiContainer-root {
+  max-width: 100%; 
+  max-height: 100%; 
+  overflow: auto; 
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.grid.grid-rows-3.gap-2.max-w-xl.mx-auto.p-10.text-center{
   max-width: 100%; 
   max-height: 100%; 
   overflow: auto; 
@@ -29,7 +42,11 @@
   flex-direction: column;
 }
 
-.grid.grid-rows-3.gap-2.max-w-xl.mx-auto.p-10.text-center{
+.MuiContainer-root.MuiContainer-maxWidthLg.css-168b4vg-MuiContainer-root {
+  margin-bottom: 4;
+}
+
+.MuiContainer-root.MuiContainer-maxWidthS.bg-orange.shadow-lg.rounded-lg.css-1lf4fxe-MuiContainer-root {
   max-width: 100%; 
   max-height: 100%; 
   overflow: auto; 

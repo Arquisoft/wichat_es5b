@@ -265,6 +265,7 @@ progress::-webkit-progress-bar {
   max-height: 100%; 
    
   display: flex;
+  flex-direction: column;
   justify-content: center; 
   align-items: center; 
   overflow-y: auto;
