@@ -5,7 +5,8 @@ import {
     Menu,
     MenuItem,
   } from "@mui/material";
-  import { useState } from "react";
+  import { useState, useEffect } from "react";
+  import { loadProperties } from "../i18n";
   import "./game/GameQuestion.css";
   import History from "./History";
   import Ranking from "./Ranking";
@@ -19,6 +20,15 @@ import {
     // Internacionalización:
     const [langAnchorEl, setLangAnchorEl] = useState(null);
     const langMenuOpen = Boolean(langAnchorEl);
+  
+    const [translations, setTranslations] = useState({});  // Almacenamos las traducciones
+    const [currentLang, setCurrentLang] = useState("es");  // Idioma por defecto
+  
+    useEffect(() => {
+      // Cargar las traducciones cuando el idioma cambie
+      loadProperties(currentLang).then((props) => setTranslations(props));
+    }, [currentLang]);
+
     const handleLangMenuOpen = (event) => {
       setLangAnchorEl(event.currentTarget);
     };
@@ -29,13 +39,14 @@ import {
   
     const changeLanguage = (lang) => {
       console.log("Cambiar idioma a:", lang); // Más adelante se integra con i18n
+      setCurrentLang(lang);
       setLangAnchorEl(null);
     };
-  
-  
+
     const handleMenuOpen = (event) => {
       setAnchorEl(event.currentTarget);
     };
+
     const handleMenuClose = () => {
       setAnchorEl(null);
     };
@@ -61,7 +72,7 @@ import {
               onClick={handleLangMenuOpen}
               sx={{ color: "#fecd24", fontSize: "1.1rem" }}
             >
-              IDIOMA - ES
+              {translations.nav_language_label || "IDIOMA - ES"}
             </Button>
             <Menu
               anchorEl={langAnchorEl}
@@ -91,13 +102,13 @@ import {
                 onClick={() => changeLanguage("es")}
                 sx={{ backgroundColor: "#faf5ea", color: "#c46331", fontSize: "1.1rem" }}
               >
-                Español
+                {translations.nav_es || "Español"}
               </MenuItem>
               <MenuItem
                 onClick={() => changeLanguage("en")}
                 sx={{ backgroundColor: "#faf5ea", color: "#c46331", fontSize: "1.1rem" }}
               >
-                Inglés
+                {translations.nav_en || "Inglés"}
               </MenuItem>
             </Menu>
           </div>
@@ -123,7 +134,7 @@ import {
                 onClick={handleMenuOpen}
                 sx={{ color: "#fecd24", fontSize: "1.1rem" }}
                 >
-                Mi perfil
+                  {translations.nav_profile || "Mi perfil"}
                 </Button>
               <Menu
                 anchorEl={anchorEl}
@@ -159,7 +170,7 @@ import {
                         fontSize: "1.1rem" 
                     }}
                 >
-                    Cerrar sesión
+                  {translations.nav_logout || "Cerrar sesión"}
                 </MenuItem>
               </Menu>
               </div>
@@ -171,7 +182,7 @@ import {
                 fontSize: "1.1rem" 
             }}
             >
-              IDENTIFICATE
+              {translations.nav_identify || "IDENTIFÍCATE"}
             </Button>
           )}
         </Toolbar>
