@@ -41,17 +41,17 @@
 
 .h-48 {
   width: 40em;
-  height: 20em; 
-  object-fit: contain; 
+  height: 20em;
+  object-fit: contain;
 }
 
 .object-cover {
   object-fit: cover;
-}  
+}
 
 .my-3 {
   margin-top: 1rem;
-  margin-bottom: 1rem;   
+  margin-bottom: 1rem;
 }
 
 .rounded {
@@ -227,39 +227,35 @@ button:disabled:hover {
 }
 
 .align-left{
-  align-self: start; 
+  align-self: start;
 }
 
 .align-right{
-  align-self: end; 
+  align-self: end;
 }
 
 .justify-top{
-  justify-self: start; 
+  justify-self: start;
 }
 
 .justify-bottom{
-  justify-self: end; 
+  justify-self: end;
 }
 
-
-/* Cambiar el color de la parte que muestra el progreso */
 progress {
   width: 100%;
-  height: 1em; /* Ajusta la altura de la barra de progreso */
-  appearance: none; /* Desactivar el estilo por defecto */
+  height: 1em;
+  appearance: none;
   transition: width 1s ease;
 }
 
-/* Estilo para la parte que marca el progreso */
 progress::-webkit-progress-value {
-  background-color: #a9c8c4; /* Color verde para la parte de progreso */
+  background-color: #a9c8c4;
   border-radius: 1em;
-  transition: width 1s ease; /* Transición suave */
+  transition: width 1s ease;
 }
 
-/* Estilo para la parte del fondo de la barra */
 progress::-webkit-progress-bar {
-  background-color: #e5e7eb; /* Color gris claro para la parte no completada */
+  background-color: #e5e7eb;
   border-radius: 1em;
 }

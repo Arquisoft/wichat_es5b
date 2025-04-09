@@ -2,7 +2,8 @@ const { shuffle } = require("../src/util/GameUtil");
 const { AnswerVerifier } = require("../src/AnswerVerifier");
 const { MovieQuestionGenerator } = require("../src/generators/MovieQuestionGenerator");
 const { ActorQuestionGenerator } = require("../src/generators/ActorQuestionGenerator");
-const { CharacterQuestionGenerator } = require("../src/generators/CharacterQuestionGenerator"); 
+const { CharacterQuestionGenerator } = require("../src/generators/CharacterQuestionGenerator");
+const {getRandomValues} = require("node:crypto");
 
 
 class QuestionManager {
@@ -13,6 +14,10 @@ class QuestionManager {
     this.questions = [];
     this.generator = [new MovieQuestionGenerator(), new ActorQuestionGenerator(), new CharacterQuestionGenerator()];
     this.currentQuestion=0;
+  }
+
+  setGenerators(generators) {
+    this.generator = generators;
   }
 
   async generateQuestions(nQuestions) {
@@ -27,8 +32,9 @@ class QuestionManager {
     });
 
     let results = await Promise.all(queryPromises);
+
     results.forEach(generatedQuestions => {
-        generatedQuestions.forEach(q => this.questions.push(q));
+      generatedQuestions.forEach(q => this.questions.push(q));
     });
 
     this.questions = shuffle(this.questions);

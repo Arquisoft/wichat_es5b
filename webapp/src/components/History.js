@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
 import axios from 'axios';
+import PreguntasHistorico from "./PreguntasHistorico";
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
@@ -38,6 +39,7 @@ const History = ({username}) => {
                                 <TableCell>Fecha</TableCell>
                                 <TableCell>Preguntas correctas</TableCell>
                                 <TableCell>Preguntas incorrectas</TableCell>
+                                <TableCell>Preguntas</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -46,6 +48,7 @@ const History = ({username}) => {
                                 <TableCell>{user.date}</TableCell>
                                 <TableCell>{user.correctAnswers}</TableCell>
                                 <TableCell>{user.wrongAnswers}</TableCell>
+                                <PreguntasHistorico user={user}/>
                             </TableRow>
                         ))}
 

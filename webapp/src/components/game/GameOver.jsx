@@ -4,13 +4,13 @@ import { useEffect } from "react";
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
-export default function GameOver({ correct, wrong, username, nQuestions }) {
+export default function GameOver({ correct, wrong, username, questions, score }) {
   const saveHistorial = async () =>{
-    const data = {username: username, date: new Date().toISOString(), correctAnswers: correct, wrongAnswers: wrong, nQuestions: nQuestions};
+    const data = {username: username, date: new Date().toISOString(), correctAnswers: correct, wrongAnswers: wrong, totalScore:score, questions: questions};
     await axios.post(apiEndpoint + "/newHistory", data);
   }
   const saveRanking = async () =>{
-    const data={username: username, correctAnswers: correct, wrongAnswers: wrong, nQuestions: nQuestions}
+    const data={username: username, correctAnswers: correct, wrongAnswers: wrong, totalScore:score, nQuestions: nQuestions}
     await axios.post(apiEndpoint + "/newRanking", data);
   }
   useEffect(()=>{

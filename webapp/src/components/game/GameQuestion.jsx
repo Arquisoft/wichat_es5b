@@ -19,8 +19,10 @@ export default function MovieQuiz({username, nQuestions}) {
   const [gameFinished, setGameFinished] = useState(false);
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [optionsDisabled, setOptionsDisabled] = useState(false);//opcion para desactivar los botones de respuesta
   const PREGUNTASNUM = {nQuestions}.nQuestions;
   const user = {username}.username
+  const [questions, setQuestions] = useState([]);
 
 
   const nextQuestion = async () => {
@@ -39,10 +41,23 @@ export default function MovieQuiz({username, nQuestions}) {
     console.log("Nueva pregunta obtenida:", question);
 
     setCurrentQuestion(question);
+    setQuestions(prevQuestions => [
+      ...prevQuestions,
+      {
+        text: question.question,
+        image: question.imageUrl,
+        option1: question.options[0],
+        option2: question.options[1],
+        option3: question.options[2],
+        option4: question.options[3],
+        correctOption: question.correctAnswer
+      }
+    ]);
+    console.log(questions)
     setSelectedOption(null);
     setTimeLeft(60);
     setLoading(false);
-
+    setOptionsDisabled(false);
   };
 
   useEffect(() => {
@@ -77,6 +92,7 @@ export default function MovieQuiz({username, nQuestions}) {
 
   const handleOptionClick = async (selectedAnswer) => {
     setSelectedOption(selectedAnswer);
+    setOptionsDisabled(true);
 
     const res = await answer(selectedAnswer);
     setQuestionsAnswered((prev) => prev + 1);
@@ -103,7 +119,8 @@ export default function MovieQuiz({username, nQuestions}) {
 
   if (gameFinished) {
     endGame()
-    return <GameOver correct={correctAnswers} wrong={wrongAnswers} username ={user} score  ={score} />
+    console.log(score)
+    return <GameOver correct={correctAnswers} wrong={wrongAnswers} username ={user} questions={questions} score={score} />
   }
 
   async function getQuestion() {
@@ -165,16 +182,17 @@ export default function MovieQuiz({username, nQuestions}) {
                             <button
                                 id={`option-${index}`}
                                 key={index}
-                                onClick={() => handleOptionClick(option)}
-                                className={`py-2 px-4 mx-4 rounded font-semibold border transition-all duration-200 ${
-                                    selectedOption !== null
+                                onClick={() => !optionsDisabled && handleOptionClick(option)}
+                                className={`py-2 px-4 mx-4 rounded font-semibold border transition-all duration-200 
+                                  ${selectedOption !== null
                                         ? option === currentQuestion.correctAnswer
                                             ? "bg-green-500 text-black"
                                             : option === selectedOption
                                                 ? "bg-red-500 text-black"
                                                 : "bg-gray-200"
-                                        : "bg-blue-500 text-black hover:bg-blue-700"
-                                }`}
+                                        : "bg-blue-500 text-black hover:bg-blue-700"}
+                                  ${optionsDisabled ? "pointer-events-none" : ""}
+                                `}
                             >
                               {option}
                             </button>

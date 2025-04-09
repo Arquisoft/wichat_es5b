@@ -4,6 +4,8 @@ import MovieQuiz from './GameQuestion';
 import axios from 'axios';
 import { executeSparqlQuery } from '../../../../wikidataservice/wikidata-service';
 
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
+
 //mockeo dependencias externas
 jest.mock('axios');
 global.fetch = jest.fn();
@@ -13,12 +15,6 @@ jest.mock('../../../../wikidataservice/wikidata-service', () => ({
 
 //mockeo componentes hijos
 jest.mock('../LoadingScreen', () => () => <div data-testid="mock-loading">Loading Mockeado</div>);
-jest.mock('../HintsButtons', () => ({ movieName }) => (
-  <div data-testid="hints-buttons">
-    <span data-testid="movie-name">{movieName}</span>
-    <button>Pista</button>
-  </div>
-));
 jest.mock('./GameOver', () => ({ correct, wrong }) => (
   <div data-testid="game-over">
     <span>Aciertos: {correct}</span>
@@ -26,16 +22,13 @@ jest.mock('./GameOver', () => ({ correct, wrong }) => (
   </div>
 ));
 
-
-const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
-
 describe('GameQuestion Component', () => {
   const mockQuestion = {
     question: "¿Cuál es la película?",
     imageUrl: "https://example.com/image.jpg",
     options: ["Opción 1", "Opción 2", "Opción 3", "Opción 4"],
     correctAnswer: "Opción 2",
-    llmQuestions: ["Pista 1", "Pista 2", "Pista 3", "Pista 4"]
+    questionsLlm: ["Pista 1", "Pista 2", "Pista 3", "Pista 4"]
   };
 
 
@@ -50,10 +43,10 @@ describe('GameQuestion Component', () => {
 
   //useState original
   const originalUseState = React.useState;
-  
+
   //trackeo de todos los state setters mockeados
   let mockSetters = {};
-  
+
   //state mocking
   function mockUseState(initialState) {
     //mockeo estados especificos 
@@ -70,7 +63,7 @@ describe('GameQuestion Component', () => {
       //timeLeft state
       return [10, (val) => { mockSetters.timeLeft = val; }];
     }
-    
+
     //para todos los demas
     return originalUseState(initialState);
   }
@@ -79,10 +72,10 @@ describe('GameQuestion Component', () => {
     jest.clearAllMocks();
     jest.useFakeTimers();
     mockSetters = {}; //resetear state setters
-    
+
     //mockeo useState
     jest.spyOn(React, 'useState').mockImplementation(mockUseState);
-    
+
     //mockeo fetch
     global.fetch.mockImplementation((url) => {
       if (url.includes('/question')) {
@@ -96,13 +89,34 @@ describe('GameQuestion Component', () => {
         json: () => Promise.resolve({})
       });
     });
-    
+
     // mock axios
     axios.post.mockResolvedValue({ data: { result: true } });
     axios.get.mockResolvedValue({ data: {} });
-    
+
     //mockeo Wikidata service
     executeSparqlQuery.mockResolvedValue(mockWikidataResponse);
+
+
+    axios.post.mockImplementation((url, data) => {
+      if (url.includes('/hintUsed')) {
+        const numHint  = data.numHint;
+        const score = 5 * (numHint + 1);
+        return Promise.resolve({ data: { score: -score } });
+      }
+      if (url.includes('/askllm')) {
+        return Promise.resolve({ data: { answer: 'Pista del LLM correcta' } });
+      }
+      if(url.includes('chatBotUsed')){
+        return Promise.resolve({ data: { score: -20 } });
+      }
+      if(url.includes('answer')){
+        const timeLeft  = data.timeLeft;
+        return Promise.resolve({ data: { isCorrect: true, score: 100+timeLeft } });
+      }
+      return Promise.resolve({ data: {} });
+    });
+
   });
 
   afterEach(() => {
@@ -178,16 +192,23 @@ describe('GameQuestion Component', () => {
     act(() => {
       jest.advanceTimersByTime(1000);
     });
-    
-    
   });
 
   test('muestra el componente de pistas', async () => {
     render(<MovieQuiz />);
     
-    //checkeat componente de pistas
-    const hintsComponent = screen.getByTestId('hints-buttons');
-    expect(hintsComponent).toBeInTheDocument();
+    //checkear componente de pistas
+    const hintButtonLabels = [
+      'Primera Pista',
+      'Segunda Pista',
+      'Tercera Pista',
+      'Cuarta Pista'
+    ];
+
+    for (const label of hintButtonLabels) {
+      const hintButton = await screen.findByRole('button', { name: label });
+      expect(hintButton).toBeInTheDocument();
+    }
     
     //checkear nombre de la pelicula
    // const movieNameElement = screen.getByTestId('movie-name');
@@ -209,5 +230,60 @@ describe('GameQuestion Component', () => {
     
     //chekeacmos GameOver component
     expect(screen.getByTestId('game-over')).toBeInTheDocument();
+  });
+
+  test('actualiza la puntuación al utilizar los botones de pistas', async () => {
+    render(<MovieQuiz />);
+
+    const hintButtonLabels = [
+      'Primera Pista',
+      'Segunda Pista',
+      'Tercera Pista',
+      'Cuarta Pista'
+    ];
+
+    let score = 0
+    for(let i = 0; i <hintButtonLabels.length;i++){
+      const hintButton = await screen.findByRole('button', { name: hintButtonLabels[i] });
+      score =  5 * (i + 1)
+      fireEvent.click(hintButton);
+      await waitFor(() => {
+        expect(screen.getByText(new RegExp(`${-score}`))).toBeInTheDocument();
+        console.log("SCORE ("+i+")"+score)
+      });
+    }
+  });
+
+  test('actualiza la puntuación al utilizar el chatBot', async () => {
+    render(<MovieQuiz />);
+
+    const toggleButton = screen.getByRole('button', { name: /Chat de Pistas ▲/i });
+    fireEvent.click(toggleButton);
+
+    const inputField = screen.getByPlaceholderText('Escribe tu pregunta...');
+    const sendButton = screen.getByRole('button', { name: /Enviar/i });
+
+    fireEvent.change(inputField, { target: { value: '¿Quién es el director?' } });
+    fireEvent.click(sendButton);
+
+    await waitFor(() => {
+      expect(screen.getByText(/-20/)).toBeInTheDocument();
+    });
+  });
+
+  test('actualiza la puntuación al acertar una pregunta', async () => {
+    render(<MovieQuiz />);
+    const button = screen.getByRole('button', { name: mockQuestion.correctAnswer });
+    fireEvent.click(button);
+
+    expect(axios.post).toHaveBeenCalledWith(
+        `${apiEndpoint}/answer`,
+        { answer: mockQuestion.options[1] , timeLeft:60}
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText(/160/)).toBeInTheDocument();
+    });
+
   });
 });
