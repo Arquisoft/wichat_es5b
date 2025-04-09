@@ -1,44 +1,45 @@
 const { QuestionManager } = require("../src/QuestionManager");
+const {MovieQuestionGenerator} = require("../src/generators/MovieQuestionGenerator");
 
 let questionManager;
 
 beforeEach(() => {
-    questionManager = new QuestionManager();
+    questionManager = new QuestionManager(new MovieQuestionGenerator());
 });
 
 test("Generate questions", async () => {
     jest.spyOn(questionManager, 'executeQuery').mockImplementation(() => {
         return Promise.resolve({
             "head": {
-              "vars": ["itemLabel", "pic"]
+                "vars": ["itemLabel", "pic"]
             },
             "results": {
-              "bindings": [
-                {
-                  "itemLabel": {
-                    "type": "literal",
-                    "value": "Interstellar"
-                  },
-                  "pic": {
-                    "type": "literal",
-                    "value": "Image1"
-                  }
-                },
-                {
-                  "itemLabel": {
-                    "type": "literal",
-                    "value": "TheMatrix"
-                  },
-                  "pic": {
-                    "type": "literal",
-                    "value": "Image2"
-                  }
-                }
-              ]
+                "bindings": [
+                    {
+                        "itemLabel": {
+                            "type": "literal",
+                            "value": "Interstellar"
+                        },
+                        "pic": {
+                            "type": "literal",
+                            "value": "Image1"
+                        }
+                    },
+                    {
+                        "itemLabel": {
+                            "type": "literal",
+                            "value": "TheMatrix"
+                        },
+                        "pic": {
+                            "type": "literal",
+                            "value": "Image2"
+                        }
+                    }
+                ]
             }
-          });
+        });
     })
-
+    questionManager.setGenerators([new MovieQuestionGenerator()])
     await questionManager.generateQuestions(2);
     expect(questionManager.getQuestionList().length).toBe(2);
     expect(questionManager.areThereQuestionsLeft()).toBe(true);

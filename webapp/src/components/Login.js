@@ -58,7 +58,7 @@ const Login = ({userForHistory}) => {
   async function start() {
     const res= await axios.post(apiEndpoint + "/start");
     return res;
-  } 
+  }
 
   const reinicio = () => {
     setStartGame(false);
@@ -66,114 +66,114 @@ const Login = ({userForHistory}) => {
     //start();
   }
 
-  
+
   if(mostrarPantalla)
     return (<LoadingScreen />);
 
 
   if (startGame) {
     return (
-      <Container
-      component="div"
-      sx={{
-        marginTop: 4,
-        width: "100%",
-        height: "100%",
-        backgroundColor: "#a9c8c4",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        border: "4px solid #c46331",
-        boxSizing: "border-box"
-      }}
-      >
-      <div>
-      <Game username={username} key={keyReinicio}/>
-      <Button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => reinicio()}>
-        Volver
-      </Button>
-      </div>
-      </Container>
+        <Container
+            component="div"
+            sx={{
+              marginTop: 4,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "#a9c8c4",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              border: "4px solid #c46331",
+              boxSizing: "border-box"
+            }}
+        >
+          <div>
+            <Game username={username} key={keyReinicio}/>
+            <Button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => reinicio()}>
+              Volver
+            </Button>
+          </div>
+        </Container>
 
     );
   }
 
-  
+
 
   return (
-    <Container
-  component="main"
-  sx={{
-    marginTop: 4,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "#a9c8c4",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    border: "4px solid #c46331",
-    boxSizing: "border-box"
-  }}
-  >
-      {loginSuccess ? (
-        <div>
-          <Typewriter
-            words={[message]} // Pass your message as an array of strings
-            cursor
-            cursorStyle="|"
-            typeSpeed={50} // Typing speed in ms
-          />
-          <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
-            Your account was created on {new Date(createdAt).toLocaleDateString()}.
-          </Typography>
-          <Button variant="contained" color="primary" onClick={async () => { setMostrarPantalla(true); await start(); setMostrarPantalla(false); setStartGame(true);}} sx={{ marginTop: 2 }}>
-            Start Game
-          </Button>
+      <Container
+          component="main"
+          sx={{
+            marginTop: 4,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "#a9c8c4",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            border: "4px solid #c46331",
+            boxSizing: "border-box"
+          }}
+      >
+        {loginSuccess ? (
+            <div>
+              <Typewriter
+                  words={[message]} // Pass your message as an array of strings
+                  cursor
+                  cursorStyle="|"
+                  typeSpeed={50} // Typing speed in ms
+              />
+              <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
+                Your account was created on {new Date(createdAt).toLocaleDateString()}.
+              </Typography>
+              <Button variant="contained" color="primary" onClick={async () => { setMostrarPantalla(true); await start(); setMostrarPantalla(false); setStartGame(true);}} sx={{ marginTop: 2 }}>
+                Start Game
+              </Button>
 
 
-        </div>
-      ) : (
-        <div>
-          <Typography component="h1" variant="h5" sx={{color: "#d87152"}}>
-            Login
-          </Typography>
-          <TextField
-            margin="normal"
-            fullWidth
-            label="Username"
-            name="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button fullWidth variant="contained" color="primary" onClick={()=>{loginUser();loginHistory();}} sx={{color: "#d87152", backgroundColor: "#faf5ea"}}>
-            Login
-          </Button>
-          <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />
-          {/* Mensaje de error en rojo con Alert */}
-          {error && (
-            <Snackbar
-              open={!!error}
-              autoHideDuration={6000}
-              onClose={() => setError('')}
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            >
-              <Alert onClose={() => setError('')} severity="error" sx={{ width: '100%' }}>
-                {error}
-              </Alert>
-            </Snackbar>
-          )}
-        </div>
-      )}
-    </Container>
+            </div>
+        ) : (
+            <div>
+              <Typography component="h1" variant="h5" sx={{color: "#d87152"}}>
+                Login
+              </Typography>
+              <TextField
+                  margin="normal"
+                  fullWidth
+                  label="Username"
+                  name="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+              />
+              <TextField
+                  margin="normal"
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+              />
+              <Button fullWidth variant="contained" color="primary" onClick={()=>{loginUser();loginHistory();}} sx={{color: "#d87152", backgroundColor: "#faf5ea"}}>
+                Login
+              </Button>
+              <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />
+              {/* Mensaje de error en rojo con Alert */}
+              {error && (
+                  <Snackbar
+                      open={!!error}
+                      autoHideDuration={6000}
+                      onClose={() => setError('')}
+                      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                  >
+                    <Alert onClose={() => setError('')} severity="error" sx={{ width: '100%' }}>
+                      {error}
+                    </Alert>
+                  </Snackbar>
+              )}
+            </div>
+        )}
+      </Container>
   );
 
 };
