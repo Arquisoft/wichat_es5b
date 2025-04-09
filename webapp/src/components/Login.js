@@ -111,21 +111,24 @@ const Login = ({userForHistory}) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            border: "4px solid #c46331",
+            border: "6px solid #c46331",
             boxSizing: "border-box"
           }}
       >
         {loginSuccess ? (
             <div>
+              
               <Typewriter
-                  words={[message]} // Pass your message as an array of strings
+                  words={[message]} // Pass your message as an array of strings words={[message]}
                   cursor
                   cursorStyle="|"
                   typeSpeed={50} // Typing speed in ms
               />
+
               <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
                 Your account was created on {new Date(createdAt).toLocaleDateString()}.
               </Typography>
+
               <Button variant="contained" color="primary" onClick={async () => { setMostrarPantalla(true); await start(); setMostrarPantalla(false); setStartGame(true);}} sx={{ marginTop: 2 }}>
                 Start Game
               </Button>

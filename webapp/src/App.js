@@ -20,7 +20,14 @@ function App() {
   }
 
   return (
-    <div>
+    <div style={{
+      height: '100vh',
+      //overflow: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
+      backgroundColor: "#faf5ea",
+      boxSizing: 'border-box',
+    }}>
       <NavMenu username={user}/>
       <Container component="main" maxWidth={false}   sx={{ 
                                                           width: "100vw", 
@@ -30,11 +37,12 @@ function App() {
                                                           justifyContent: "center", 
                                                           alignItems: "center",
                                                           backgroundColor: "#faf5ea",
-                                                          border: "6px solid #c46331",
+                                                          border: "10px solid #c46331",
                                                           boxSizing: "border-box"
                                                         }}>
         <CssBaseline />
         {showLogin ? <Login userForHistory={userForHistory} /> : <AddUser />}
+
         <Typography component="div" align="center" sx={{ marginTop: 1}}>
           {showLogin ? (
             <Link name="gotoregister" component="button" variant="body2" onClick={handleToggleView}>
