@@ -260,7 +260,7 @@ describe('GameQuestion Component', () => {
     const toggleButton = screen.getByRole('button', { name: /Chat de Pistas ▲/i });
     fireEvent.click(toggleButton);
 
-    const inputField = screen.getByPlaceholderText('Escribe tu pregunta...');
+    const inputField = screen.getByPlaceholderText('Preguntame...');
     const sendButton = screen.getByRole('button', { name: /Enviar/i });
 
     fireEvent.change(inputField, { target: { value: '¿Quién es el director?' } });
