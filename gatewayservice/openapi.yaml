@@ -65,6 +65,122 @@ paths:
                     type: string
                     description: Error information.
                     example: getaddrinfo EAI_AGAIN mongodb
+  /updateusername:
+    post:
+      summary: Update a username in the database.
+      operationId: updateUsername
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+                - newUsername
+              properties:
+                userId:
+                  type: ObjectId
+                  description: User ID.
+                  example: 65f756db3fa22d227a4b7c7d
+                newUsername:
+                  type: string
+                  description: New username.
+                  example: student
+      responses:
+        '200':
+          description: Usuario actualizado correctamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Usuario actualizado correctamente.                   
+        '400':
+          description: Error en la solicitud.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: El nuevo nombre de usuario ya está en uso.
+        '404':
+          description: Usuario no encontrado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Usuario no encontrado.
+  /updatepassword:
+    post:
+      summary: Update the password in the database.
+      operationId: updatePassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+                - oldPassword
+                - newPassword
+                - confirmPassword
+              properties:
+                userId:
+                  type: ObjectId
+                  description: User ID.
+                  example: 65f756db3fa22d227a4b7c7d
+                oldPassword:
+                  type: string
+                  description: User password.
+                  example: pass
+                newPassword:
+                  type: string
+                  description: New password.
+                  example: newpass
+                confirmPassword:
+                  type: string
+                  description: Confirm new password.
+                  example: newpass
+      responses:
+        '200':
+          description: Contraseña actualizada correctamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Contraseña actualizada correctamente.                                        
+        '400':
+          description: Error de validacion o contraseña incorrecta.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Las contraseñas no coinciden o contraseña actual incorrecta.
+        '404':
+          description: Usuario no encontrado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Usuario no encontrado.
   /health:
     get:
       summary: Check the health status of the service.
