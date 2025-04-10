@@ -161,15 +161,15 @@ describe('User Service', () => {
   
   it('should return error if old password is incorrect', async () => {
 
-    const user = new User({
+    const userIncorrectPass = new User({
       username: 'wrongOldPass',
       password: await bcrypt.hash('CorrectOld1', 10)
     });
 
-    await user.save();
+    await userIncorrectPass.save();
   
     const response = await request(app).post('/updatepassword').send({
-      userId: user._id,
+      userId: userIncorrectPass._id,
       oldPassword: 'WrongOld1',
       newPassword: 'NewPassword1',
       confirmPassword: 'NewPassword1'
@@ -182,15 +182,15 @@ describe('User Service', () => {
   
   it('should return error if new passwords do not match', async () => {
 
-    const user = new User({
+    const userNewPassDontMatch = new User({
       username: 'notMatching',
       password: await bcrypt.hash('ValidOld1', 10)
     });
 
-    await user.save();
+    await userNewPassDontMatch.save();
   
     const response = await request(app).post('/updatepassword').send({
-      userId: user._id,
+      userId: userNewPassDontMatch._id,
       oldPassword: 'ValidOld1',
       newPassword: 'NewPassword1',
       confirmPassword: 'DifferentPassword1'
@@ -203,15 +203,15 @@ describe('User Service', () => {
   
   it('should return error for weak new password', async () => {
 
-    const user = new User({
+    const userWeakPass = new User({
       username: 'weakPass',
       password: await bcrypt.hash('OldPass1', 10)
     });
 
-    await user.save();
+    await userWeakPass.save();
   
     const response = await request(app).post('/updatepassword').send({
-      userId: user._id,
+      userId: userWeakPass._id,
       oldPassword: 'OldPass1',
       newPassword: 'abc',
       confirmPassword: 'abc'
