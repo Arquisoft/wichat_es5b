@@ -1,3 +1,16 @@
+let currentLang = "es"; // Idioma por defecto
+let translations = {};  // Traducciones cargadas
+
+export const getCurrentLang = () => currentLang;
+export const getTranslations = () => translations;
+
+// Cambia el idioma y recarga las traducciones
+export const setLanguage = async (lang) => {
+  currentLang = lang;
+  translations = await loadProperties(lang);
+  return translations;
+};
+
 // i18n.js - Función para cargar archivos .properties
 export const loadProperties = (lang) => {
     return fetch(`/resources/messages_${lang}.properties`) // Ruta del archivo
@@ -22,5 +35,5 @@ export const loadProperties = (lang) => {
         console.error("Error cargando el archivo .properties:", error);
         return {};
       });
-  };
+};
   
