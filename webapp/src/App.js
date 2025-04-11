@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import AddUser from './components/AddUser';
 import Login from './components/Login';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -6,10 +6,12 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import NavMenu from './components/NavMenu';
+import { LanguageContext } from "./LanguageContext";
 
 function App() {
   const [showLogin, setShowLogin] = useState(true);
   const [user, setUser] = useState();
+  const { translations } = useContext(LanguageContext);
 
   const handleToggleView = () => {
     setShowLogin(!showLogin);
@@ -38,11 +40,11 @@ function App() {
         <Typography component="div" align="center" sx={{ marginTop: 1}}>
           {showLogin ? (
             <Link name="gotoregister" component="button" variant="body2" onClick={handleToggleView}>
-              ¿No tienes una cuenta? Regístrate aquí.
+              {translations.app_register || "¿No tienes una cuenta? Regístrate aquí."}
             </Link>
           ) : (
             <Link component="button" variant="body2" onClick={handleToggleView}>
-              ¿Ya tienes una cuenta? Inicia sesión aquí.
+              {translations.app_login || "¿Ya tienes una cuenta? Inicia sesión aquí."}
             </Link>
           )}
         </Typography>

@@ -1,10 +1,11 @@
 // src/components/Login.js
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Container, Typography, TextField, Button, Snackbar, Alert } from '@mui/material';
 import { Typewriter } from "react-simple-typewriter";
 import Game from './game/GameQuestion';
 import LoadingScreen from './LoadingScreen';
+import { LanguageContext } from "../LanguageContext";
 
 
 
@@ -20,6 +21,7 @@ const Login = ({userForHistory}) => {
   const [startGame, setStartGame] = useState(false);
   const [keyReinicio, setKeyReinicio] = useState(0);
   const [mostrarPantalla, setMostrarPantalla] = useState(false);
+  const { translations } = useContext(LanguageContext);
 
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
@@ -135,12 +137,12 @@ const Login = ({userForHistory}) => {
       ) : (
         <div>
           <Typography component="h1" variant="h5" sx={{color: "#d87152"}}>
-            Login
+            {translations.login || "Login"}
           </Typography>
           <TextField
             margin="normal"
             fullWidth
-            label="Username"
+            label={translations.login_username || "Usuario"}
             name="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -149,13 +151,13 @@ const Login = ({userForHistory}) => {
             margin="normal"
             fullWidth
             name="password"
-            label="Password"
+            label={translations.login_password || "Password"}
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <Button fullWidth variant="contained" color="primary" onClick={()=>{loginUser();loginHistory();}} sx={{color: "#d87152", backgroundColor: "#faf5ea"}}>
-            Login
+            {translations.login_button || "Iniciar Sesión"}
           </Button>
           <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />
           {/* Mensaje de error en rojo con Alert */}

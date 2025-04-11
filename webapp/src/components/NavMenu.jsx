@@ -5,13 +5,15 @@ import {
     Menu,
     MenuItem,
   } from "@mui/material";
-  import { useState, useEffect } from "react";
+  import { useState, useEffect, useContext } from "react";
   import { loadProperties } from "../i18n";
   import "./game/GameQuestion.css";
   import History from "./History";
   import Ranking from "./Ranking";
   import UpdateUsername from "./userprofile/UpdateUsername";
   import UpdatePassword from "./userprofile/UpdatePassword";
+  import { LanguageContext } from "../LanguageContext";
+
   
   const NavMenu = ({ username }) => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -21,13 +23,7 @@ import {
     const [langAnchorEl, setLangAnchorEl] = useState(null);
     const langMenuOpen = Boolean(langAnchorEl);
   
-    const [translations, setTranslations] = useState({});  // Almacenamos las traducciones
-    const [currentLang, setCurrentLang] = useState("es");  // Idioma por defecto
-  
-    useEffect(() => {
-      // Cargar las traducciones cuando el idioma cambie
-      loadProperties(currentLang).then((props) => setTranslations(props));
-    }, [currentLang]);
+    const { currentLang, changeLanguage, translations } = useContext(LanguageContext);
 
     const handleLangMenuOpen = (event) => {
       setLangAnchorEl(event.currentTarget);
@@ -36,13 +32,7 @@ import {
     const handleLangMenuClose = () => {
       setLangAnchorEl(null);
     };
-  
-    const changeLanguage = (lang) => {
-      console.log("Cambiar idioma a:", lang); // Más adelante se integra con i18n
-      setCurrentLang(lang);
-      setLangAnchorEl(null);
-    };
-
+    
     const handleMenuOpen = (event) => {
       setAnchorEl(event.currentTarget);
     };
