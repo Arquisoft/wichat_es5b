@@ -92,7 +92,7 @@ const Login = ({userForHistory}) => {
       <div>
       <Game username={username} key={keyReinicio}/>
       <Button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => reinicio()}>
-        Volver
+        {translations.go_back || "Volver"}
       </Button>
       </div>
       </Container>
@@ -126,10 +126,10 @@ const Login = ({userForHistory}) => {
             typeSpeed={50} // Typing speed in ms
           />
           <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
-            Your account was created on {new Date(createdAt).toLocaleDateString()}.
+            {translations.welcome_account_creation_date || "Tu cuenta fue creada el "} {new Date(createdAt).toLocaleDateString()}.
           </Typography>
           <Button variant="contained" color="primary" onClick={async () => { setMostrarPantalla(true); await start(); setMostrarPantalla(false); setStartGame(true);}} sx={{ marginTop: 2 }}>
-            Start Game
+            {translations.welcome_start_button || "Comenzar Juego"}
           </Button>
 
 
