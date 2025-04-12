@@ -27,7 +27,7 @@ export default function MovieQuiz({username, nQuestions}) {
 
   const nextQuestion = async () => {
 
-    console.log("Preguntas: " + PREGUNTASNUM);
+    console.log("PreguntasNumero: " + PREGUNTASNUM);
 
     setLoading(true);
     const question = await getQuestion();

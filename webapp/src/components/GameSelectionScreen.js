@@ -1,0 +1,137 @@
+import { Button, ButtonGroup, Box, Typography, Container, Paper } from "@mui/material";
+import React, { useState } from "react";
+import { ThemeProvider } from '@mui/material/styles';
+import axios from "axios";
+import LoadingScreen from "./LoadingScreen";
+import Game from "./game/GameQuestion";
+import theme from './estilos/temas';
+
+export default function SelectionScreen({ username }) {
+    const [startGame, setStartGame] = useState(false);
+    const [mostrarPantalla, setMostrarPantalla] = useState(false);
+    const [modoJuego, setModoJuego] = useState('NORMAL');
+    const [dificultad, setDificultad] = useState('FÁCIL');
+    const [nQuestions, setNQuestions] = useState(6);
+
+    const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
+
+    async function start() {
+        const res= await axios.post(apiEndpoint + "/start", {
+            nQuestions: nQuestions
+        });
+        return res;    }
+
+    const reinicio = () => {
+        setStartGame(false);
+    }
+
+    if (mostrarPantalla) return <LoadingScreen />;
+    if (startGame) {
+        return (
+            <div>
+                <Game username={username} nQuestions={nQuestions}/>
+                <Button
+                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                    onClick={() => reinicio()}
+                >
+                    Volver
+                </Button>
+            </div>
+        );
+    }
+
+    return (
+        <ThemeProvider theme={theme}>
+            <Box className="bg-white min-h-screen py-8">
+                <Container maxWidth="md">
+                    {/* MODALIDAD DE JUEGO */}
+                    <Paper elevation={6} sx={{ backgroundColor: '#c46331', borderRadius: 3, p: 4, mb: 6 }}>
+                        <Typography variant="h5" fontWeight="bold" gutterBottom>
+                            MODALIDAD DE JUEGO
+                        </Typography>
+                        <Typography variant="body1" sx={{ mt: 1, mb: 2 }}>
+                            Escoge el modo de juego:
+                        </Typography>
+                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <ButtonGroup fullWidth>
+                                <Button
+                                    variant={modoJuego === 'normal' ? 'contained' : 'outlined'}
+                                    color={modoJuego === 'normal' ? 'primary' : 'inherit'}
+                                    onClick={() => setModoJuego('normal')}
+                                    sx={{ borderRadius: 2, fontWeight: 'bold', textTransform: 'none' }}
+                                >
+                                    Normal
+                                </Button>
+                                {/* Puedes añadir más modos aquí */}
+                            </ButtonGroup>
+                        </Box>
+                    </Paper>
+
+                    {/* DIFICULTAD DEL JUEGO */}
+                    <Paper elevation={6} sx={{ backgroundColor: '#c46331', borderRadius: 3, p: 4, mb: 6 }}>
+                        <Typography variant="h5" fontWeight="bold" gutterBottom>
+                            DIFICULTAD DEL JUEGO
+                        </Typography>
+                        <Typography variant="body1" sx={{ mt: 1, mb: 2 }}>
+                            Escoge la longitud de la partida:
+                        </Typography>
+                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <ButtonGroup fullWidth>
+                                <Button
+                                    variant={nQuestions === 6 ? 'contained' : 'outlined'}
+                                    color={nQuestions === 6 ? 'primary' : 'inherit'}
+                                    onClick={() => setNQuestions(6)}
+                                    sx={{ borderRadius: 2, fontWeight: 'bold', textTransform: 'none' }}
+                                >
+                                    Corta
+                                </Button>
+                                <Button
+                                    variant={nQuestions === 12 ? 'contained' : 'outlined'}
+                                    color={nQuestions === 12 ? 'primary' : 'inherit'}
+                                    onClick={() => setNQuestions(12)}
+                                    sx={{ borderRadius: 2, fontWeight: 'bold', textTransform: 'none' }}
+                                >
+                                    Normal
+                                </Button>
+                                <Button
+                                    variant={nQuestions === 18 ? 'contained' : 'outlined'}
+                                    color={nQuestions === 18 ? 'primary' : 'inherit'}
+                                    onClick={() => setNQuestions(18)}
+                                    sx={{ borderRadius: 2, fontWeight: 'bold', textTransform: 'none' }}
+                                >
+                                    Larga
+                                </Button>
+                            </ButtonGroup>
+                        </Box>
+                    </Paper>
+
+                    {/* BOTÓN INICIAR */}
+                    <Box sx={{ textAlign: 'center' }}>
+                        <Button
+                            variant="contained"
+                            size="large"
+                            sx={{
+                                backgroundColor: '#4abcb0',
+                                color: 'white',
+                                '&:hover': { backgroundColor: '#3aa89e' },
+                                boxShadow: 3,
+                                borderRadius: 2,
+                                mt: 2,
+                                px: 4,
+                                py: 1.5
+                            }}
+                            onClick={async () => {
+                                setMostrarPantalla(true);
+                                await start();
+                                setMostrarPantalla(false);
+                                setStartGame(true);
+                            }}
+                        >
+                            INICIAR JUEGO
+                        </Button>
+                    </Box>
+                </Container>
+            </Box>
+        </ThemeProvider>
+    );
+}

@@ -11,7 +11,8 @@ class AbstractQuestionGenerator  {
         return this.query;
     }
 
-    generateQuestions(queryResult, nQuestions){  
+    generateQuestions(queryResult, nQuestions){
+        console.log("OREGUNTAS"+nQuestions)
         const mappedRes = new Map();
         this.mapResult(queryResult, mappedRes);
 
