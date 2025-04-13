@@ -80,6 +80,7 @@ const Login = ({userForHistory}) => {
             component="div"
             sx={{
               marginTop: 4,
+              marginBottom: 4,
               width: "100%",
               height: "100%",
               backgroundColor: "#a9c8c4",
@@ -140,6 +141,7 @@ const Login = ({userForHistory}) => {
           <Button variant="contained" color="primary" onClick={async () => { setMostrarPantalla(true); await start(); setMostrarPantalla(false); setStartGame(true);}} sx={{ marginTop: 2 }}>
             Start Game
           </Button>
+
 
 
             </div>
