@@ -36,19 +36,24 @@ app.get('/ranking', async (req, res) => {
 
 // Ruta para agregar una nueva entrada al ranking
 app.post('/newRanking', async (req, res) => {
-    const { username, correctAnswers, wrongAnswers, totalScore } = req.body;
+    const { username, correctAnswers, wrongAnswers, totalScore, questions } = req.body;
 
     // Conversión a número
     const correct = Number(correctAnswers);
     const wrong = Number(wrongAnswers);
 
+    // Validar array de preguntas
+    if (!Array.isArray(questions)) { // || questions.length !== 6
+      return res.status(400).json({ message: "Debes proporcionar un array de 6 preguntas." });
+    }
+
     // Validaciones
     if (
-        correct < 0 || correct > 6 ||      // correctAnswers debe estar entre 0 y 6
-        wrong < 0 || wrong > 6 // ||       // wrongAnswers debe estar entre 0 y 6
-        //correct + wrong !== 6            // La suma debe ser 6
+        correct < 0 || correct > questions.length ||      // correctAnswers debe estar entre 0 y 6
+        wrong < 0 || wrong > questions.length //||          // wrongAnswers debe estar entre 0 y 6
+        //correct + wrong !== nQuestions              // La suma debe ser 6
     ) {
-        return res.status(400).json({ message: "Datos inválidos: correctAnswers y wrongAnswers deben sumar 6 y estar entre 0 y 6." });
+        return res.status(400).json({ message: `Datos inválidos: correctAnswers y wrongAnswers deben sumar ${questions.length} y estar entre 0 y ${questions.length}.` });
     }
 
     if ( totalScore < 0) {
@@ -72,7 +77,7 @@ app.post('/newRanking', async (req, res) => {
 
 // Ruta para actualizar el ranking de un usuario
 app.put('/updateRanking/:username', async (req, res) => {
-  const { correctAnswers, wrongAnswers, totalScore } = req.body;
+  const { correctAnswers, wrongAnswers, totalScore, nQuestions } = req.body;
   const username = req.params.username;
 
   // Conversión a número
@@ -81,11 +86,11 @@ app.put('/updateRanking/:username', async (req, res) => {
 
   // Validaciones
   if (
-      correct < 0 || correct > 6 ||      // correctAnswers debe estar entre 0 y 6
-      wrong < 0 || wrong > 6 ||          // wrongAnswers debe estar entre 0 y 6
-      correct + wrong !== 6              // La suma debe ser 6
+      correct < 0 || correct > nQuestions ||      // correctAnswers debe estar entre 0 y 6
+      wrong < 0 || wrong > nQuestions ||          // wrongAnswers debe estar entre 0 y 6
+      correct + wrong !== nQuestions              // La suma debe ser 6
   ) {
-      return res.status(400).json({ message: "Datos inválidos: correctAnswers y wrongAnswers deben sumar 6 y estar entre 0 y 6." });
+      return res.status(400).json({ message: `Datos inválidos: correctAnswers y wrongAnswers deben sumar ${nQuestions} y estar entre 0 y ${nQuestions}.` });
   }
 
   if ( totalScore < 0) {
@@ -137,22 +142,22 @@ app.post('/newHistory', async (req, res) => {
     const correct = Number(correctAnswers);
     const wrong = Number(wrongAnswers);
 
+    // Validar array de preguntas
+    if (!Array.isArray(questions)) { // || questions.length !== 6
+      return res.status(400).json({ message: "Debes proporcionar un array de 6 preguntas." });
+    }
+
     // Validaciones
     if (
-      correct < 0 || correct > 6 ||      // CorrectAnswers en el rango [0,6]
-      wrong < 0 || wrong > 6 //||          // WrongAnswers en el rango [0,6]
-      //correct + wrong !== 6              // Suma de respuestas debe ser 6
+      correct < 0 || correct > questions.length ||      // CorrectAnswers en el rango [0,6]
+      wrong < 0 || wrong > questions.length //||          // WrongAnswers en el rango [0,6]
+      //correct + wrong !== nQuestions              // Suma de respuestas debe ser 6
     ) {
-      return res.status(400).json({ message: "Datos inválidos: correctAnswers y wrongAnswers deben sumar 6 y estar entre 0 y 6." });
+      return res.status(400).json({ message: `Datos inválidos: correctAnswers y wrongAnswers deben sumar ${questions.length} y estar entre 0 y ${questions.length}.` });
     }
 
     if ( totalScore < 0) {
       return res.status(400).json({ message: "Datos inválidos: la puntuación total debe ser mayor o igual a 0" });
-    }
-
-    // Validar array de preguntas
-    if (!Array.isArray(questions)) { // || questions.length !== 6
-      return res.status(400).json({ message: "Debes proporcionar un array de 6 preguntas." });
     }
 
     // Calcular totalScore sumando los score individuales de cada pregunta

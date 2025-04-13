@@ -27,6 +27,11 @@ test("Inicio del juego", async () => {
 });
 
 test("Test de Question", () => {
+    gameController.getQuestionManager().pushQuestion(new MovieQuestion("", "The Matrix", ["Star Wars", "Inception", "The Matrix", "Interstellar"]));
+
+    jest.spyOn(gameController.getQuestionManager(), 'generateQuestions').mockImplementation((nQuestions) => {
+        return Promise.resolve();
+    });
     gameController.startGame();
     gameController.setQuestion("", ["Star Wars", "Inception", "The Matrix", "Interstellar"], "Interstellar");
 
@@ -91,7 +96,7 @@ test("Selección de respuesta incorrecta", () => {
 
 test("Fin del juego", () => {
     gameController.setQuestion("", ["Star Wars", "Inception", "The Matrix", "Interstellar"], "Interstellar");
-    gameController.submitAnswer("Interstellar");
+    gameController.submitAnswer("Interstellar", 30);
 
     gameController.endGame();
     expect(gameController.isGameEnded()).toBe(true);
@@ -100,7 +105,7 @@ test("Fin del juego", () => {
 test("Se devuelve una respuesta sin haber pregunta", () => {
     expect(gameController.getCurrentQuestion()).toBeNull();
 
-    gameController.submitAnswer("Interstellar");
+    gameController.submitAnswer("Interstellar", 30);
 
     expect(gameController.getCurrentQuestion()).toBeNull();
     expect(gameController.getScore()).toBe(0);

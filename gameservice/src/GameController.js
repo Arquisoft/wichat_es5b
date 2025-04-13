@@ -105,5 +105,13 @@ class GameController {
     chatBotUsed(){
         this.score -=this.POINTS_CHATBOT_USED;
     }
+
+    setNumberOfQuestions(n) {
+      this.NUMBER_OF_QUESTIONS = n;
+    }
+
+    getNumberOfQuestions(){
+        return this.NUMBER_OF_QUESTIONS;
+    }
   }
   module.exports = { GameController };
