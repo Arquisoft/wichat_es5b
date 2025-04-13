@@ -6,7 +6,7 @@ const LoadingScreen = () => {
             display: "flex",
             justifyContent: "center",
             alignContent: "center",
-            "flex-direction": "column"
+            flexDirection: "column"
         }}>
             <h2>Loading...</h2>
             <div>

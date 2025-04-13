@@ -39,12 +39,14 @@ import {
             gridTemplateColumns: "repeat(5, 1fr)",
           }}
         >
-          <Button variant="primary" sx={{ color: "#fecd24", fontSize: "1.1rem" }}>
+        <Button variant="primary" sx={{ color: "#fecd24", fontSize: "1.1rem" }}>
             IDIOMA - ES
-          </Button>
+        </Button>
   
-          <History username={username} />
-  
+        <div style={{display:"flex", justifyContent:"center"}}>
+            <History username={username} />
+        </div>
+
           <div
             style={{
               display: "flex",
@@ -54,11 +56,13 @@ import {
           >
             <img src="/logo512.png" alt="WICHAT" style={{ width: "12em" }} />
           </div>
-  
-          <Ranking />
+
+          <div style={{display:"flex", justifyContent:"center"}}>
+            <Ranking />
+          </div>
   
           {username ? (
-            <div>
+            <div style={{display:"flex", justifyContent:"center"}}>
               <Button
                 onClick={handleMenuOpen}
                 sx={{ color: "#fecd24", fontSize: "1.1rem" }}
