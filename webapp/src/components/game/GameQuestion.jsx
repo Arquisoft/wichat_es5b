@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import './GameQuestion.css';
 import GameOver from "./GameOver";
 import HintsButtons from '../HintsButtons';
@@ -6,6 +6,7 @@ import Chatbot from '../Chatbot';
 import LoadingScreen from '../LoadingScreen';
 import axios from 'axios';
 import ProgressBar from '../ProgressBar';  // Asegúrate de importar la barra de progreso correctamente
+import { LanguageContext } from "../../LanguageContext";
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
@@ -22,6 +23,7 @@ export default function MovieQuiz({username}) {
   const [optionsDisabled, setOptionsDisabled] = useState(false);//opcion para desactivar los botones de respuesta
   const PREGUNTASNUM = 6;
   const user = {username}.username
+  const { translations } = useContext(LanguageContext);
 
 
   const nextQuestion = async () => {
@@ -146,10 +148,10 @@ export default function MovieQuiz({username}) {
             (<div className="grid grid-rows-3 gap-2 max-w-xl mx-auto p-10 text-center" >
                   <div className="grid grid-rows-2 bg-orange shadow-lg rounded-lg my-3 py-2">
                     <div className="grid grid-cols-2 ">
-                      <p className="mt-2 text-2xl font-semibold align-left justify-top ml-1 text-white">Pregunta {questionsAnswered + 1} de {PREGUNTASNUM}</p>
+                      <p className="mt-2 text-2xl font-semibold align-left justify-top ml-1 text-white">{translations.game_question_1 || "Pregunta"} {questionsAnswered + 1} {translations.game_question_2 || "of"} {PREGUNTASNUM}</p>
                       <div className="grid grid-rows-3 align-right justify-bottom mr-2">
-                        <p className="text-lg font-semibold">Puntuación: {score}</p>
-                        <p className="text-lg font-semibold">Tiempo restante: {timeLeft} s</p>
+                        <p className="text-lg font-semibold">{translations.game_score || "Puntuación: "} {score}</p>
+                        <p className="text-lg font-semibold">{translations.game_time || "Tiempo restante: "} {timeLeft} s</p>
                       </div>
                     </div>
                     <ProgressBar timeLeft={timeLeft}/>
