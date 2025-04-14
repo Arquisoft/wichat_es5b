@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { 
     Dialog, 
     DialogTitle, 
@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import axios from 'axios';
 import {jwtDecode} from "jwt-decode";
+import { LanguageContext } from "../../LanguageContext";
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
@@ -21,6 +22,7 @@ export default function UpdatePassword() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState('');
     const [openSnackbar, setOpenSnackbar] = useState(false);
+        const { translations } = useContext(LanguageContext);
 
     const token = localStorage.getItem("token");
 
@@ -66,7 +68,7 @@ export default function UpdatePassword() {
                     }} 
                     onClick= {() => mostrarUpdatePassword()}
                 >
-                    Editar contraseña
+                    {translations.nav_edit_password || "Editar contraseña"}
                 </MenuItem>
                 <Dialog 
                     open={show} 

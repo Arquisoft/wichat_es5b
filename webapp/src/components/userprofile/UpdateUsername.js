@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { 
     Dialog, 
     DialogTitle, 
@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import axios from 'axios';
 import {jwtDecode} from "jwt-decode";
+import { LanguageContext } from "../../LanguageContext";
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
@@ -19,6 +20,7 @@ export default function UpdateUsername() {
     const [newUsername, setNewUsername] = useState("");
     const [error, setError] = useState('');
     const [openSnackbar, setOpenSnackbar] = useState(false);
+    const { translations } = useContext(LanguageContext);
 
     const token = localStorage.getItem("token");
 
@@ -61,7 +63,7 @@ export default function UpdateUsername() {
                     }} 
                     onClick= {() => mostrarUpdateUser()}
                 >
-                    Editar nombre de usuario
+                    {translations.nav_edit_username || "Editar nombre de usuario"}
                 </MenuItem>
                 <Dialog 
                     open={show} 
