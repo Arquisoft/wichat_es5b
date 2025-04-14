@@ -279,6 +279,25 @@ progress::-webkit-progress-bar {
   border-radius: 1em;
 }
 
+.object-cover {
+  max-width: 100%;
+  max-height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+}
+
+
+
+img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
 .text-2xl {
   font-size: 1.75rem;
   font-weight: 600;
