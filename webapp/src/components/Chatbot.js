@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { TextField, Button, Box, List, ListItem, ListItemText, Paper } from '@mui/material';
 import axios from 'axios';
+import { LanguageContext } from "../LanguageContext";
 
 const Chatbot = ({ movieName, setScore }) => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [isMinimized, setIsMinimized] = useState(true);
+    const { translations } = useContext(LanguageContext);
 
     const DEFAULT_MODEL = 'empathy';
     const QWEN_MODEL = 'empathyQwen';
@@ -52,7 +54,7 @@ const Chatbot = ({ movieName, setScore }) => {
         //que aparezca mensaje informativo al chat del cambio de modelo
         const modelName = newModel === DEFAULT_MODEL ? 'Mistral' : 'Qwen';
         const infoMessage = {
-            text: `Se ha cambiado el modelo a ${modelName}.`,
+            text: (translations.chatbot_model_change || "Se ha cambiado el modelo a") + ` ${modelName}.`,
             sender: 'system'
         };
         setMessages(prev => [...prev, infoMessage]);
@@ -108,7 +110,7 @@ const Chatbot = ({ movieName, setScore }) => {
                             minWidth: isMinimized ? 'auto' : 0
                         }}
                     >
-                        {isMinimized ? 'Chat de Pistas ▲' : 'Chat de Pistas ▼'}
+                        {translations.chatbot_title || "Chat de pistas"} {isMinimized ? '▲' : '▼'}
                     </Button>
                     
                     {!isMinimized && (
@@ -130,7 +132,10 @@ const Chatbot = ({ movieName, setScore }) => {
                                 textTransform: 'none'
                             }}
                         >
-                            {currentModel === DEFAULT_MODEL ? 'Usar Qwen' : 'Usar Mistral'}
+                            {currentModel === DEFAULT_MODEL 
+                            ? (translations.chatbot_use_qwen || 'Usar Qwen') 
+                            : (translations.chatbot_use_mistral || 'Usar Mistral')}
+
                         </Button>
                     )}
                 </Box>
@@ -181,7 +186,7 @@ const Chatbot = ({ movieName, setScore }) => {
                                 size="medium"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
-                                placeholder="Escribe tu pregunta..."
+                                placeholder={translations.chatbot_question || "Escribe tu pregunta..."}
                                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                                 sx={{
                                     '& .MuiOutlinedInput-root': {
@@ -214,7 +219,7 @@ const Chatbot = ({ movieName, setScore }) => {
                                     height: '45px'
                                 }}
                             >
-                                Enviar
+                                {translations.send || "Enviar"}
                             </Button>
                         </Box>
                     </>
