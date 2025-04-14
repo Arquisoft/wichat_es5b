@@ -41,6 +41,7 @@ const Login = ({userForHistory}) => {
   component="main"
   sx={{
     marginTop: 4,
+    marginBottom: 4,
     width: "100%",
     height: "100%",
     backgroundColor: "#a9c8c4",

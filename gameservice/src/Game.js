@@ -34,7 +34,7 @@ app.get("/question", (req  , res  ) => {
   res.json(question);
 });
 
-// Petición para obtener respuesta
+// Petición para obtener respuesta    <
 app.post("/answer", (req  , res  ) => {
   const selectedAnswer = req.body.answer;
   const timeLeft = req.body.timeLeft;
