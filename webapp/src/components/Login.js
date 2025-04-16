@@ -156,34 +156,103 @@ const Login = ({userForHistory}) => {
       }}
     >
       {loginSuccess ? (
-        <div>
-          {loadingMessage ? (
+  <div style={{ width: '100%', maxWidth: '400px', margin: '0 auto' }}>
+    {/* Contenedor del mensaje */}
+    <Box sx={{ 
+      minHeight: '80px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 2,
+      textAlign: 'center'
+    }}>
+      {loadingMessage ? (
             <Typography>Loading welcome message...</Typography>
           ) : message ? (
-            <Typewriter
-              words={[message]}
-              cursor
-              cursorStyle="|"
-              typeSpeed={50}
-            />
-          ) : null}
+              <Typewriter
+                words={[message]}
+                cursor
+                cursorStyle="|"
+                typeSpeed={50}
+                style={{ 
+                  display: 'inline-block',
+                  width: '100%'
+                }}
+              />
+            ) : null}
+          </Box>
           
           {createdAt && (
-            <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
+            <Typography component="p" variant="body1" sx={{ 
+              textAlign: 'center', 
+              marginBottom: 3,
+              color: '#555'
+            }}>
               Your account was created on {new Date(createdAt).toLocaleDateString()}.
             </Typography>
           )}
           
-          <Typography component="p" variant="body1" sx={{ textAlign: 'left', marginTop: 2 }}>
+          <Typography component="p" variant="body1" sx={{ 
+            textAlign: 'center', 
+            marginBottom: 2,
+            fontWeight: 'bold',
+            color: '#333'
+          }}>
             Escoge la longitud de la partida:
           </Typography>
           
-          <Box sx={{display: 'flex', justifyContent: 'space-between', mt: 2, mb: 2}}>
-            <ButtonGroup variant="contained" aria-label="outlined primary button group" sx={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
-              <Button disabled={nQuestions === 6} onClick={() => setNQuestions(6)} sx={{width: '33%'}}>Corta</Button>
-              <Button disabled={nQuestions === 12} onClick={() => setNQuestions(12)} sx={{width: '33%'}}>Normal</Button>
-              <Button disabled={nQuestions === 18} onClick={() => setNQuestions(18)} sx={{width: '33%'}}>Larga</Button>
-            </ButtonGroup>
+          {/* Contenedor de botones mejorado */}
+          <Box sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginBottom: 3,
+            gap: 0, // Elimina espacio entre botones
+            '& .MuiButton-root': {
+              flex: 1,
+              maxWidth: '120px',
+              boxShadow: 'none', // Elimina sombras
+              border: '1px solid #c46331',
+              '&:not(:last-child)': {
+                borderRight: 'none' // Elimina borde derecho excepto en último botón
+              },
+              '&:hover': {
+                backgroundColor: '#e07a4d'
+              }
+            },
+            '& .Mui-disabled': {
+              backgroundColor: '#f0a988',
+              color: 'white'
+            }
+          }}>
+            <Button 
+              disabled={nQuestions === 6} 
+              onClick={() => setNQuestions(6)}
+              sx={{ 
+                borderTopLeftRadius: '8px',
+                borderBottomLeftRadius: '8px'
+              }}
+            >
+              Corta
+            </Button>
+            <Button 
+              disabled={nQuestions === 12} 
+              onClick={() => setNQuestions(12)}
+              sx={{ 
+                borderRadius: 0
+              }}
+            >
+              Normal
+            </Button>
+            <Button 
+              disabled={nQuestions === 18} 
+              onClick={() => setNQuestions(18)}
+              sx={{ 
+                borderTopRightRadius: '8px',
+                borderBottomRightRadius: '8px'
+              }}
+            >
+              Larga
+            </Button>
           </Box>
           
           <Button 
@@ -195,7 +264,16 @@ const Login = ({userForHistory}) => {
               setMostrarPantalla(false); 
               setStartGame(true);
             }} 
-            sx={{ marginTop: 2 }}
+            sx={{ 
+              width: '100%',
+              maxWidth: '200px',
+              display: 'block',
+              margin: '0 auto',
+              backgroundColor: '#c46331',
+              '&:hover': {
+                backgroundColor: '#e07a4d'
+              }
+            }}
           >
             Start Game
           </Button>
