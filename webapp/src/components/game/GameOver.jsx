@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect } from "react";
-import { Table, TableHead, TableRow, TableCell, TableBody, Button } from "@mui/material";
+import { Table, TableHead, TableRow, TableCell, TableBody, Button, Typography } from "@mui/material";
+import '@fontsource/great-vibes'; 
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
@@ -20,10 +21,10 @@ export default function GameOver({ correct, wrong, username, questions, score })
 
     return (
       <div style={{display:"flex", alignItems:"center", alignItems:"center", flexDirection:"column"}}>
-        <div style = {{display: "flex", alignItems:"center", width:"50%"}}>
-          <img src="/The_end.png" alt="The End" />   
+        <div style = {{display: "flex", alignItems:"center", width:"100%"}}>
+          <Typography component="h1" variant="h1" sx={{ textAlign: 'center', marginTop: 4, fontFamily: 'Great Vibes, bold', fontSize: '15em' }}>The End</Typography> 
         </div>
-        <div style={{display:"flex", justifyContent:'space-between', gap:"5em"}}>
+        <div style={{display:"flex"}}>
           <Table>
             <TableBody>
               <TableRow>
@@ -40,8 +41,12 @@ export default function GameOver({ correct, wrong, username, questions, score })
               </TableRow>
             </TableBody>
           </Table>
+        </div>
+      </div>
+    );
 
-          <div>
+    /*
+    <div>
           <form>
             <label>
               Dejanos tu opinion:
@@ -50,7 +55,5 @@ export default function GameOver({ correct, wrong, username, questions, score })
             <Button variant="primary">Enviar</Button>
           </form>
           </div>
-        </div>
-      </div>
-    );
+    */
   }
