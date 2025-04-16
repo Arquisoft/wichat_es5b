@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Container, Typography, TextField, Button, Snackbar, Alert } from '@mui/material';
 import { Typewriter } from "react-simple-typewriter";
 import Game from './game/GameQuestion';
+import LoadingScreen from './LoadingScreen';
 
 
 
@@ -18,6 +19,7 @@ const Login = ({userForHistory}) => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [startGame, setStartGame] = useState(false);
   const [keyReinicio, setKeyReinicio] = useState(0);
+  const [mostrarPantalla, setMostrarPantalla] = useState(false);
 
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
@@ -62,14 +64,35 @@ const Login = ({userForHistory}) => {
     //start();
   }
 
+  
+  if(mostrarPantalla)
+    return (<LoadingScreen />);
+
+
   if (startGame) {
     return (
+      <Container
+      component="div"
+      sx={{
+        marginTop: 4,
+        width: "100%",
+        height: "100%",
+        backgroundColor: "#a9c8c4",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        border: "4px solid #c46331",
+        boxSizing: "border-box"
+      }}
+      >
       <div>
       <Game username={username} key={keyReinicio}/>
       <Button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => reinicio()}>
         Volver
       </Button>
       </div>
+      </Container>
+
     );
   }
 
@@ -101,7 +124,7 @@ const Login = ({userForHistory}) => {
           <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
             Your account was created on {new Date(createdAt).toLocaleDateString()}.
           </Typography>
-          <Button variant="contained" color="primary" onClick={async () => { await start(); setStartGame(true);}} sx={{ marginTop: 2 }}>
+          <Button variant="contained" color="primary" onClick={async () => { setMostrarPantalla(true); await start(); setMostrarPantalla(false); setStartGame(true);}} sx={{ marginTop: 2 }}>
             Start Game
           </Button>
 
