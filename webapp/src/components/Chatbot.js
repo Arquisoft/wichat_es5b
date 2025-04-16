@@ -62,8 +62,8 @@ const Chatbot = ({ movieName, setScore }) => {
         <div style={{
             position: 'fixed',
             left: '20px',
-            bottom: '80px', //antes 20
-            width: '300px', //antes 380 
+            bottom: '42px', //antes 20
+            width: '320px', //antes 380 
             zIndex: 1000,
             borderRadius: '8px',
             overflow: 'hidden'
