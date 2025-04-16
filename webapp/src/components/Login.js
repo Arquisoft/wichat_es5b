@@ -206,14 +206,14 @@ const Login = ({userForHistory}) => {
             display: 'flex',
             justifyContent: 'center',
             marginBottom: 3,
-            gap: 0, // Elimina espacio entre botones
+            gap: 0, 
             '& .MuiButton-root': {
               flex: 1,
               maxWidth: '120px',
               boxShadow: 'none', // Elimina sombras
               border: '1px solid #c46331',
               '&:not(:last-child)': {
-                borderRight: 'none' // Elimina borde derecho excepto en último botón
+                borderRight: 'none' 
               },
               '&:hover': {
                 backgroundColor: '#e07a4d'
