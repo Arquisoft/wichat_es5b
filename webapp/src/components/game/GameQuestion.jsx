@@ -5,11 +5,13 @@ import HintsButtons from '../HintsButtons';
 import Chatbot from '../Chatbot';
 import LoadingScreen from '../LoadingScreen';
 import axios from 'axios';
-import ProgressBar from '../ProgressBar';  // Asegúrate de importar la barra de progreso correctamente
+import ProgressBar from '../ProgressBar';
+import NormalGame from "./NormalGame";
+import BateriaDeSabiosGame from "./BateriaDeSabiosGame";  // Asegúrate de importar la barra de progreso correctamente
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
-export default function MovieQuiz({username, nQuestions}) {
+export default function MovieQuiz({username, nQuestions, modoJuego}) {
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [timeLeft, setTimeLeft] = useState(60);
@@ -148,14 +150,11 @@ export default function MovieQuiz({username, nQuestions}) {
     }
   }
 
-
   async function endGame() {
     return (await fetch(apiEndpoint + "/end", {
       method: 'POST',
     }))
   }
-
-
 
   return (
       <div className="object-cover">
@@ -171,37 +170,11 @@ export default function MovieQuiz({username, nQuestions}) {
                     </div>
                     <ProgressBar timeLeft={timeLeft}/>
                   </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div class>
-                      <img src={currentQuestion.imageUrl} alt="Pregunta" className="w-full h-48 my-3 rounded" />
-                    </div>
-                    <div className = "bg-orange shadow-lg rounded-lg py-2">
-                      <h2 className="text-2xl font-bold text-white mx-4">{currentQuestion.question}</h2>
-                      <div className="grid grid-cols-1 gap-2">
-                        {currentQuestion.options.map((option, index) => (
-                            <button
-                                id={`option-${index}`}
-                                key={index}
-                                onClick={() => !optionsDisabled && handleOptionClick(option)}
-                                className={`py-2 px-4 mx-4 rounded font-semibold border transition-all duration-200 
-                                  ${selectedOption !== null
-                                        ? option === currentQuestion.correctAnswer
-                                            ? "bg-green-500 text-black"
-                                            : option === selectedOption
-                                                ? "bg-red-500 text-black"
-                                                : "bg-gray-200"
-                                        : "bg-blue-500 text-black hover:bg-blue-700"}
-                                  ${optionsDisabled ? "pointer-events-none" : ""}
-                                `}
-                            >
-                              {option}
-                            </button>
-
-                        ))}
-                      </div>
-
-                    </div>
-                  </div>
+                  {modoJuego=="normal" ?
+                    (<NormalGame handleOptionClick={handleOptionClick} selectedOption={selectedOption} currentQuestion={currentQuestion} optionsDisabled={optionsDisabled}/>)
+                    :
+                    (<BateriaDeSabiosGame handleOptionClick={handleOptionClick} selectedOption={selectedOption} currentQuestion={currentQuestion} optionsDisabled={optionsDisabled}/>)
+                  }
                   <HintsButtons key={currentQuestion} questionsLlm={currentQuestion.questionsLlm} setScore={setScore} />
                   <Chatbot movieName={currentQuestion.correctAnswer} setScore={setScore} />
                 </div>

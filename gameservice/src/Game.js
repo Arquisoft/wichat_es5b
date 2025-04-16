@@ -1,13 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 
-const { GameController } = require("../src/GameController");
-const { QuestionManager } = require("../src/QuestionManager");
-const { AnswerVerifier } = require("../src/AnswerVerifier");
+const { QuestionManager } = require("./QuestionManager");
+const { AnswerVerifier } = require("./AnswerVerifier");
+const { ClassicGameController } = require("./gameMode/ClassicGameController");
+const { BateriaDeSabiosController } = require("./gameMode/BateriaDeSabiosController");
 
-const questionGen = new QuestionManager();
 const answerVer = new AnswerVerifier();
-const gameController = new GameController(questionGen, answerVer);
+const questionGen = new QuestionManager();
+let gameController = new ClassicGameController(questionGen, answerVer);
 
 const app = express();
 app.use(express.json());
@@ -16,10 +17,22 @@ app.use(cors());
 // Petición para iniciar el juego
 app.post("/start", async (req  , res  ) => {
   console.log("Juego iniciado", req.body.nQuestions);
+  selectController(req.body.gameMode);
   gameController.setNumberOfQuestions(req.body.nQuestions);
   await gameController.startGame();
   res.sendStatus(200);
 });
+
+function selectController(gameMode){
+  if(gameMode ==="normal"){
+    gameController= new ClassicGameController(questionGen, answerVer);
+    gameController.setNumberOfOptions(4);
+  }
+  else if(gameMode === "bateriaSabios"){
+    gameController= new BateriaDeSabiosController(questionGen, answerVer);
+    gameController.setNumberOfOptions(2);
+  }
+}
 
 // Petición para terminar el juego
 app.post("/end", (req  , res  ) => {

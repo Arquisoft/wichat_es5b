@@ -1,18 +1,18 @@
 const { Question } = require("../questions/Question");
 const { shuffle } = require("../util/GameUtil");
 
-
-
 class AbstractQuestionGenerator  {
 
     query ="";
+
+    nOptions= 4;
 
     getQuery(){
         return this.query;
     }
 
-    generateQuestions(queryResult, nQuestions){
-        console.log("OREGUNTAS"+nQuestions)
+    generateQuestions(queryResult, nQuestions, nOptions){
+        this.nOptions=nOptions;
         const mappedRes = new Map();
         this.mapResult(queryResult, mappedRes);
 
@@ -40,7 +40,7 @@ class AbstractQuestionGenerator  {
 
         let randomIndex;
 
-        for(let i = 0; i< Question.NUMBER_OF_OPTIONS;i++){
+        for(let i = 0; i< this.nOptions-1;i++){
             randomIndex = this.getUnusedIndex(array.length, optionsIndex);
             const [incorrectName, incorrectData] = array[randomIndex];
             options.push(incorrectName);

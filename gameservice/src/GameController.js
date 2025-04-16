@@ -1,6 +1,4 @@
-const { Question } = require("../src/questions/Question");
-const { AnswerVerifier } = require("../src/AnswerVerifier");
-const { MovieQuestion } = require("../src/questions/MovieQuestion");
+const { Question } = require("./questions/Question");
 
 class GameController {
   constructor(questionManager, answerVerifier){
@@ -9,17 +7,17 @@ class GameController {
     this.answerVerifier = answerVerifier,
     this.currentQuestion = null
     this.hasGameEnded = false;
-    this.NUMBER_OF_QUESTIONS = 6;
+    this.numberOfQuestions = 6;
+    this.numberOfOptions=4;
     this.POINTS_PER_QUESTION=100;
     this.POINTS_HINTBUTTONS_USED=5;
     this.POINTS_CHATBOT_USED = 20;
    }
 
-  
     async startGame() {
       this.score = 0;
       console.log("Inicio del juego");
-      await this.questionManager.generateQuestions(this.NUMBER_OF_QUESTIONS);
+      await this.questionManager.generateQuestions(this.numberOfQuestions, this.numberOfOptions);
       this.nextQuestion();
     }
 
@@ -56,27 +54,7 @@ class GameController {
     }
   
     submitAnswer(selectedAnswer, timeLeft) {
-      if (!this.currentQuestion) {
-        console.log("No hay una pregunta activa.");
-        return false;
-      }
-      const isCorrect = this.answerVerifier.verifyAnswer(
-        selectedAnswer,
-        this.currentQuestion.getCorrectAnswer()
-      );
-      
-      if (isCorrect) {
-        this.score+=this.POINTS_PER_QUESTION+timeLeft;
-      }
-      console.log(isCorrect);
-      this.nextQuestion();
-      return isCorrect;
-    }
-
-    timeOver(){
-      this.score--;
-      console.log("time over");
-      this.nextQuestion();
+        throw new Error("sin implementar");
     }
   
     getScore() {
@@ -107,11 +85,16 @@ class GameController {
     }
 
     setNumberOfQuestions(n) {
-      this.NUMBER_OF_QUESTIONS = n;
+      this.numberOfQuestions = n;
+    }
+
+    setNumberOfOptions(n){
+        console.log("N Opciones"+n)
+        this.numberOfOptions = n;
     }
 
     getNumberOfQuestions(){
-        return this.NUMBER_OF_QUESTIONS;
+        return this.numberOfQuestions;
     }
   }
   module.exports = { GameController };

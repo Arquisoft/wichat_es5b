@@ -10,14 +10,14 @@ export default function SelectionScreen({ username }) {
     const [startGame, setStartGame] = useState(false);
     const [mostrarPantalla, setMostrarPantalla] = useState(false);
     const [modoJuego, setModoJuego] = useState('NORMAL');
-    const [dificultad, setDificultad] = useState('FÁCIL');
     const [nQuestions, setNQuestions] = useState(6);
 
     const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
     async function start() {
         const res= await axios.post(apiEndpoint + "/start", {
-            nQuestions: nQuestions
+            nQuestions: nQuestions,
+            gameMode: modoJuego
         });
         return res;    }
 
@@ -29,7 +29,7 @@ export default function SelectionScreen({ username }) {
     if (startGame) {
         return (
             <div>
-                <Game username={username} nQuestions={nQuestions}/>
+                <Game username={username} nQuestions={nQuestions} modoJuego={modoJuego}/>
                 <Button
                     className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
                     onClick={() => reinicio()}
@@ -62,7 +62,14 @@ export default function SelectionScreen({ username }) {
                                 >
                                     Normal
                                 </Button>
-                                {/* Puedes añadir más modos aquí */}
+                                <Button
+                                    variant={modoJuego === 'bateriaSabios' ? 'contained' : 'outlined'}
+                                    color={modoJuego === 'bateriaSabios' ? 'primary' : 'inherit'}
+                                    onClick={() => setModoJuego('bateriaSabios')}
+                                    sx={{ borderRadius: 2, fontWeight: 'bold', textTransform: 'none' }}
+                                >
+                                    Batería de sabios
+                                </Button>
                             </ButtonGroup>
                         </Box>
                     </Paper>
