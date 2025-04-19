@@ -1,13 +1,17 @@
 import { AppBar, Toolbar, Button, Menu, MenuItem} from "@mui/material";
-  import { useState } from "react";
+  import { useEffect, useState } from "react";
   import "./game/GameQuestion.css";
   import History from "./History";
   import Ranking from "./Ranking";
   import UpdateUsername from "./userprofile/UpdateUsername";
   import UpdatePassword from "./userprofile/UpdatePassword";
+  import {jwtDecode} from "jwt-decode";
+  import axios from "axios";
 
   const grafanaUrl = process.env.GRAFANA_URI || 'http://localhost:9091';
   const prometheusUrl = process.env.PROMETHEUS_URI || 'http://localhost:9090';
+
+  const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
   const NavMenu = ({ username }) => {
     const [anchorElPerfil, setAnchorElPerfil] = useState(null);
@@ -15,6 +19,28 @@ import { AppBar, Toolbar, Button, Menu, MenuItem} from "@mui/material";
 
     const [anchorElAdmin, setAnchorElAdmin] = useState(null);
     const openAdmin = Boolean(anchorElAdmin);
+
+    const [role, setRole] = useState(null);
+
+    const token = localStorage.getItem("token");
+    
+    const getRole = async (userId) => {
+      try {
+        console.log("userId", userId);
+        const response = await axios.post(`${apiEndpoint}/getUserRole`, { userId });
+        console.log("response", response.data);
+        setRole(response.data.role);
+      } catch (error) {
+        console.error("Error fetching user role:", error);
+      }
+    };
+
+    useEffect(() => {
+      if (token) {
+        getRole(jwtDecode(token).userId);
+        console.log("role", role);
+      }
+    }, [token]);
 
   
     const handleMenuOpen = (event) => {
@@ -116,7 +142,7 @@ import { AppBar, Toolbar, Button, Menu, MenuItem} from "@mui/material";
                   </MenuItem>
                 </Menu>
                 </div>
-                <div style={{display:"flex", justifyContent:"center"}}>
+                {role==="admin" ?(<div style={{display:"flex", justifyContent:"center"}}>
                 <Button
                   onClick={handleAdminMenuOpen}
                   sx={{ color: "#fecd24", fontSize: "1.1rem" }}
@@ -159,7 +185,7 @@ import { AppBar, Toolbar, Button, Menu, MenuItem} from "@mui/material";
                   </MenuItem>
                 </Menu>
                 
-                </div>
+                </div>) : null}
                 </div>
             ) : (
               <Button 

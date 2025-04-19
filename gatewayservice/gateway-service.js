@@ -70,6 +70,17 @@ app.post('/updatepassword', async (req, res) => {
   }
 });
 
+app.post('/getUserRole', async (req, res) => {
+  try {
+    // Forward the get user role request to the user service
+    console.log("getUserRole",req.body);
+    const userResponse = await axios.post(userServiceUrl+'/getUserRole', req.body);
+    res.json(userResponse.data);
+  } catch (error) {
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
+
 app.post('/askllm', async (req, res) => {
   try {
     // Forward the add user request to the user service
