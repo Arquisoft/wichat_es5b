@@ -83,14 +83,14 @@ export default function UpdateUsername() {
                             fontSize: "1.3rem" 
                         }}
                     >
-                        Edite su nombre de usuario
+                        {translations.nav_edit_username_title || "Edite su nombre de usuario"}
                     </DialogTitle>
                     <DialogContent>
                     <TextField
                         name="username"
                         margin="normal"
                         fullWidth
-                        label="Nombre de usuario"
+                        label={translations.nav_edit_username_label || "Nombre de usuario"}
                         value={newUsername}
                         onChange={(e) => setNewUsername(e.target.value)}
                         sx={{
@@ -128,7 +128,7 @@ export default function UpdateUsername() {
                             }
                           }}
                     >
-                        Actualizar nombre de usuario
+                        {translations.nav_edit_username_button || "Actualizar nombre de usuario"}
                     </Button>
                     </DialogContent>
                     <DialogActions>
@@ -139,7 +139,7 @@ export default function UpdateUsername() {
                                 fontWeight: "bold" 
                             }}
                         >
-                            Cerrar
+                            {translations.close || "Cerrar"}
                         </Button>
                     </DialogActions>
 
@@ -151,7 +151,7 @@ export default function UpdateUsername() {
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                         >
                             <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
-                            Nombre de usuario modificado correctamente
+                            {translations.nav_edit_username_confirmation || "Nombre de usuario modificado correctamente"}
                             </Alert>
                         </Snackbar>
                     

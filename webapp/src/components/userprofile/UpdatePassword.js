@@ -88,14 +88,14 @@ export default function UpdatePassword() {
                             fontSize: "1.3rem" 
                         }}
                     >
-                        Edite su contraseña
+                      {translations.nav_edit_password_title || "Edite su contraseña"}
                     </DialogTitle>
                     <DialogContent>
                     <TextField
                         name="password"
                         margin="normal"
                         fullWidth
-                        label="Contraseña actual"
+                        label={translations.nav_edit_password_label_1 || "Contraseña actual"}
                         type="password"
                         value={oldPassword}
                         onChange={(e) => setOldPassword(e.target.value)}
@@ -122,7 +122,7 @@ export default function UpdatePassword() {
                         name="password"
                         margin="normal"
                         fullWidth
-                        label="Nueva contraseña"
+                        label={translations.nav_edit_password_label_2 || "Nueva contraseña"}
                         type="password"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
@@ -149,7 +149,7 @@ export default function UpdatePassword() {
                         name="password"
                         margin="normal"
                         fullWidth
-                        label="Confirmar contraseña"
+                        label={translations.nav_edit_password_label_3 || "Confirmar contraseña"}
                         type="password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
@@ -188,7 +188,7 @@ export default function UpdatePassword() {
                             }
                           }}
                     >
-                        Actualizar contraseña
+                      {translations.nav_edit_password_button || "Actualizar Contraseña"}
                     </Button>
                     </DialogContent>
                     <DialogActions>
@@ -199,7 +199,7 @@ export default function UpdatePassword() {
                                 fontWeight: "bold" 
                             }}
                         >
-                            Cerrar
+                          {translations.close || "Cerrar"}
                         </Button>
                     </DialogActions>
 
@@ -211,7 +211,7 @@ export default function UpdatePassword() {
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                         >
                             <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
-                            Contraseña actualizada correctamente
+                              {translations.nav_edit_password_confirmation || "Contraseña actualizada correctamente"}
                             </Alert>
                         </Snackbar>
                     

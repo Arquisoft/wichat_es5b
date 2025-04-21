@@ -174,7 +174,7 @@ const Login = ({ userForHistory }) => {
           )}
 
           <Typography variant="body1" sx={{ textAlign: 'center', marginBottom: 2, fontWeight: 'bold', color: '#333' }}>
-            {translations.select_game_length || "Escoge la longitud de la partida:"}
+            {translations.welocme_select_length_title || "Escoge la longitud de la partida:"}
           </Typography>
 
           <Box sx={{
@@ -200,13 +200,13 @@ const Login = ({ userForHistory }) => {
             }
           }}>
             <Button disabled={nQuestions === 6} onClick={() => setNQuestions(6)} sx={{ borderTopLeftRadius: '8px', borderBottomLeftRadius: '8px' }}>
-              Corta
+              {translations.welocme_select_length_short || "Corta"}
             </Button>
             <Button disabled={nQuestions === 12} onClick={() => setNQuestions(12)} sx={{ borderRadius: 0 }}>
-              Normal
+              {translations.welocme_select_length_normal || "Normal"}
             </Button>
             <Button disabled={nQuestions === 18} onClick={() => setNQuestions(18)} sx={{ borderTopRightRadius: '8px', borderBottomRightRadius: '8px' }}>
-              Larga
+              {translations.welocme_select_length_long || "Larga"}
             </Button>
           </Box>
 
