@@ -259,3 +259,22 @@ progress::-webkit-progress-bar {
   background-color: #e5e7eb;
   border-radius: 1em;
 }
+
+.object-cover {
+  max-width: 100%; 
+  max-height: 100%; 
+   
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center; 
+  overflow-y: auto;
+}
+
+
+
+img {
+  max-width: 100%; 
+  height: auto; 
+  object-fit: contain; 
+}

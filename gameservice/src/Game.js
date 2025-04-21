@@ -15,7 +15,8 @@ app.use(cors());
 
 // Petición para iniciar el juego
 app.post("/start", async (req  , res  ) => {
-  console.log("Juego iniciado");
+  console.log("Juego iniciado", req.body.nQuestions);
+  gameController.setNumberOfQuestions(req.body.nQuestions);
   await gameController.startGame();
   res.sendStatus(200);
 });

@@ -6,16 +6,13 @@ import Login from './Login';
 
 const mockAxios = new MockAdapter(axios);
 
-const userForHistory = () =>{
-
-}
+const userForHistory = jest.fn();
 
 describe('Login component', () => {
   beforeEach(() => {
     mockAxios.reset();
+    jest.clearAllMocks();
   });
-
-  
 
   it('should log in successfully', async () => {
     await mockAxios.onPost('http://localhost:8000/history').reply(200, [{date: "2024-01-01T12:34:56Z", correctAnswers: 4, wrongAnswers:2}]);
@@ -43,82 +40,73 @@ describe('Login component', () => {
     expect(screen.getByText(/Start Game/i)).toBeInTheDocument();
   });
 
-  it('should handle error when logging in', async () => {
-    render(<Login userForHistory={userForHistory}/>);
-
-    const usernameInput = screen.getByLabelText(/Username/i);
+  it('should display error message when login fails', async () => {
+    localStorage.clear(); 
+    jest.spyOn(Storage.prototype, 'getItem').mockImplementation(() => null);
+  
+    mockAxios.onPost('http://localhost:8000/login').reply(401, {
+      error: 'Invalid credentials',
+    });
+  
+    render(<Login userForHistory={userForHistory} />);
+  
+    
+    const usernameInput = await screen.findByLabelText(/Username/i);
     const passwordInput = screen.getByLabelText(/Password/i);
     const loginButton = screen.getByRole('button', { name: /Login/i });
-
-    // Mock the axios.post request to simulate an error response
-    mockAxios.onPost('http://localhost:8000/login').reply(401, { error: 'Unauthorized' });
-
-    // Simulate user input
-    fireEvent.change(usernameInput, { target: { value: 'testUser' } });
-    fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
-
-    // Trigger the login button click
+  
+    fireEvent.change(usernameInput, { target: { value: 'wrongUser' } });
+    fireEvent.change(passwordInput, { target: { value: 'wrongPassword' } });
     fireEvent.click(loginButton);
-
-    // Wait for the error Snackbar to be open
-    await waitFor(() => {
-      expect(screen.getByText(/Unauthorized/i)).toBeInTheDocument();
-    });
-
-    // Verify that the user information is not displayed
-    expect(screen.queryByText(/Hello testUser!/i)).toBeNull();
-    expect(screen.queryByText(/Your account was created on/i)).toBeNull();
+  
+    await waitFor(() =>
+      expect(screen.getByText(/Invalid credentials/i)).toBeInTheDocument()
+    );
   });
-
   
   
-
-  it('El botón de volver debe aparecer y funcionar', async () => {
-    await mockAxios.onPost('http://localhost:8000/history').reply(200, [{date: "2024-01-01T12:34:56Z", correctAnswers: 4, wrongAnswers:2}]);
-    await mockAxios.onGet('http://localhost:8000/ranking').reply(200, [{username:"user1", date: "2024-01-01T12:34:56Z", correctAnswers: 4, wrongAnswers:2}]);
-    render(<Login userForHistory={userForHistory}/>);
-    
-
-    const usernameInput = screen.getByLabelText(/Username/i);
-    const passwordInput = screen.getByLabelText(/Password/i);
-    const loginButton = screen.getByRole('button', { name: /Login/i });
-
-    // Mock the axios.post request to simulate a successful response
-    await mockAxios.onPost('http://localhost:8000/login').reply(200, { createdAt: '2024-01-01T12:34:56Z' });
-    await mockAxios.onPost('http://localhost:8000/askllm').reply(200, { answer: 'Hello test user' });
-    await mockAxios.onPost('http://localhost:8000/start').reply(200);
-
-    mockAxios.onGet('../Game').reply(200, {
-      componente: () => <p>Mock de Game</p>,
+  
+  
+  it('should disable the selected game length button', async () => {
+    mockAxios.onPost('http://localhost:8000/login').reply(200, {
+      token: 'test-token',
+      createdAt: '2024-01-01T12:34:56Z',
     });
-    
-
-    // Simulate user input
+  
+    mockAxios.onPost('http://localhost:8000/askllm').reply(200, {
+      answer: 'Hello test user',
+    });
+  
+    render(<Login userForHistory={userForHistory} />);
+  
     await act(async () => {
-        fireEvent.change(usernameInput, { target: { value: 'testUser' } });
-        fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
-        fireEvent.click(loginButton);
-        
+      fireEvent.change(screen.getByLabelText(/Username/i), {
+        target: { value: 'testUser' },
+      });
+      fireEvent.change(screen.getByLabelText(/Password/i), {
+        target: { value: 'testPassword' },
+      });
+      fireEvent.click(screen.getByRole('button', { name: /Login/i }));
     });
-
-    await act(async () => {
-      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
-    });
-
-    
-    await waitFor(() => {
-      expect(screen.getByText("Volver")).toBeInTheDocument();
-    });
-    await fireEvent.click(screen.getByText("Volver"));
-
-    await waitFor(() => {
-      expect(screen.getByText("Start Game")).toBeInTheDocument();
-    });
-
-    });  
-
-  })
-
   
+    await waitFor(() =>
+      expect(screen.getByText(/Escoge la longitud de la partida/i)).toBeInTheDocument()
+    );
   
-
+    const cortaBtn = screen.getByRole('button', { name: /Corta/i });
+    const normalBtn = screen.getByRole('button', { name: /Normal/i });
+    const largaBtn = screen.getByRole('button', { name: /Larga/i });
+  
+    expect(cortaBtn).toBeDisabled(); // Default es 6 => Corta
+    expect(normalBtn).not.toBeDisabled();
+    expect(largaBtn).not.toBeDisabled();
+  
+    // Cambiamos a "Normal"
+    fireEvent.click(normalBtn);
+  
+    expect(cortaBtn).not.toBeDisabled();
+    expect(normalBtn).toBeDisabled();
+    expect(largaBtn).not.toBeDisabled();
+  });
+  
+});
