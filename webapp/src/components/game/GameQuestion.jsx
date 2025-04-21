@@ -23,12 +23,8 @@ export default function MovieQuiz({username, nQuestions}) {
   const [optionsDisabled, setOptionsDisabled] = useState(false);//opcion para desactivar los botones de respuesta
   const PREGUNTASNUM = {nQuestions}.nQuestions;
   const user = {username}.username
-<<<<<<< HEAD
   const { translations } = useContext(LanguageContext);
-=======
   const [questions, setQuestions] = useState([]);
->>>>>>> development
-
 
   const nextQuestion = async () => {
 

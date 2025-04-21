@@ -5,14 +5,10 @@ import { LanguageContext } from "../../LanguageContext";
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
-<<<<<<< HEAD
-export default function GameOver({ correct, wrong, username }) {
+export default function GameOver({ correct, wrong, username, questions, score }) {
 
   const { translations } = useContext(LanguageContext);
 
-=======
-export default function GameOver({ correct, wrong, username, questions, score }) {
->>>>>>> development
   const saveHistorial = async () =>{
     const data = {username: username, date: new Date().toISOString(), correctAnswers: correct, wrongAnswers: wrong, totalScore:score, questions: questions};
     await axios.post(apiEndpoint + "/newHistory", data);

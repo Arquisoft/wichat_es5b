@@ -34,15 +34,10 @@ const Ranking = () => {
                     <Table>
                         <TableHead>
                             <TableRow>
-<<<<<<< HEAD
                                 <TableCell>{translations.nav_ranking_date || "Fecha"}</TableCell>
-                                <TableCell>{translations.nav_ranking_score || "Puntuación"}</TableCell>
-=======
-                                <TableCell>Fecha</TableCell>
                                 <TableCell>Preguntas correctas</TableCell>
                                 <TableCell>Preguntas Incorrectas</TableCell>
-                                <TableCell>Puntuación</TableCell>
->>>>>>> development
+                                <TableCell>{translations.nav_ranking_score || "Puntuación"}</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

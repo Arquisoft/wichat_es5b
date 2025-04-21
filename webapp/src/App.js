@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-import React, { useState, useContext } from 'react';
-=======
-import React, { useState, useEffect } from 'react';
->>>>>>> development
+
+import React, { useState, useContext, useEffect } from 'react';
 import AddUser from './components/AddUser';
 import Login from './components/Login';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,11 +11,9 @@ import { LanguageContext } from "./LanguageContext";
 
 function App() {
   const [showLogin, setShowLogin] = useState(true);
-<<<<<<< HEAD
+
   const [user, setUser] = useState();
   const { translations } = useContext(LanguageContext);
-=======
-  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -29,7 +24,6 @@ function App() {
       }
     }
   }, []);
->>>>>>> development
 
   const handleToggleView = () => {
     setShowLogin(!showLogin);
@@ -61,7 +55,6 @@ function App() {
         boxSizing: "border-box"
       }}>
         <CssBaseline />
-<<<<<<< HEAD
         {showLogin ? <Login userForHistory={userForHistory} /> : <AddUser />}
         <Typography component="div" align="center" sx={{ marginTop: 1}}>
           {showLogin ? (
@@ -74,24 +67,6 @@ function App() {
             </Link>
           )}
         </Typography>
-        
-=======
-        {!user ? (showLogin ? <Login userForHistory={userForHistory} /> : <AddUser />) : <Login userForHistory={userForHistory} />}
-
-        {!user && (
-          <Typography component="div" align="center" sx={{ marginTop: 1}}>
-            {showLogin ? (
-              <Link name="gotoregister" component="button" variant="body2" onClick={handleToggleView}>
-                ¿No tienes una cuenta? Regístrate aquí.
-              </Link>
-            ) : (
-              <Link component="button" variant="body2" onClick={handleToggleView}>
-                ¿Ya tienes una cuenta? Inicia sesión aquí.
-              </Link>
-            )}
-          </Typography>
-        )}
->>>>>>> development
       </Container>
     </div>
   );

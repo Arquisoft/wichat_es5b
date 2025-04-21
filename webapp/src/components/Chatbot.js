@@ -110,11 +110,7 @@ const Chatbot = ({ movieName, setScore }) => {
                             minWidth: isMinimized ? 'auto' : 0
                         }}
                     >
-<<<<<<< HEAD
                         {translations.chatbot_title || "Chat de pistas"} {isMinimized ? '▲' : '▼'}
-=======
-                        {isMinimized ? 'Chat de Pistas ▲' : 'Chat ▼'}
->>>>>>> development
                     </Button>
                     
                     {!isMinimized && (
@@ -190,11 +186,7 @@ const Chatbot = ({ movieName, setScore }) => {
                                 size="medium"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
-<<<<<<< HEAD
                                 placeholder={translations.chatbot_question || "Escribe tu pregunta..."}
-=======
-                                placeholder="Preguntame..."
->>>>>>> development
                                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                                 sx={{
                                     '& .MuiOutlinedInput-root': {
