@@ -108,5 +108,22 @@ describe('Login component', () => {
     expect(normalBtn).toBeDisabled();
     expect(largaBtn).not.toBeDisabled();
   });
+
+  it('sets username and createdAt when token is present', () => {
+    localStorage.setItem('token', 'some-token');
+    localStorage.setItem('username', 'test-username');
+    localStorage.setItem('createdAt', '2022-01-01T12:00:00.000Z');
+    render(<Login />);
+    expect(localStorage.username).not.toBe(null);
+    expect(localStorage.createdAt).not.toBe(null);
+  });
+
+  it('parses createdAt date correctly', () => {
+    localStorage.setItem('token', 'some-token');
+    localStorage.setItem('username', 'test-username');
+    localStorage.setItem('createdAt', '2022-01-01T12:00:00.000Z');
+    render(<Login />);
+    expect(localStorage.createdAt).toBe('2022-01-01T12:00:00.000Z');
+  });
   
 });
