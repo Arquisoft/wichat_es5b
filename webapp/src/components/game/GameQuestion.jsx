@@ -10,7 +10,7 @@ import { LanguageContext } from "../../LanguageContext";
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
-export default function MovieQuiz({username}) {
+export default function MovieQuiz({username, nQuestions}) {
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [timeLeft, setTimeLeft] = useState(60);
@@ -21,12 +21,18 @@ export default function MovieQuiz({username}) {
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
   const [loading, setLoading] = useState(true);
   const [optionsDisabled, setOptionsDisabled] = useState(false);//opcion para desactivar los botones de respuesta
-  const PREGUNTASNUM = 6;
+  const PREGUNTASNUM = {nQuestions}.nQuestions;
   const user = {username}.username
+<<<<<<< HEAD
   const { translations } = useContext(LanguageContext);
+=======
+  const [questions, setQuestions] = useState([]);
+>>>>>>> development
 
 
   const nextQuestion = async () => {
+
+    console.log("Preguntas: " + PREGUNTASNUM);
 
     setLoading(true);
     const question = await getQuestion();
@@ -40,6 +46,19 @@ export default function MovieQuiz({username}) {
     console.log("Nueva pregunta obtenida:", question);
 
     setCurrentQuestion(question);
+    setQuestions(prevQuestions => [
+      ...prevQuestions,
+      {
+        text: question.question,
+        image: question.imageUrl,
+        option1: question.options[0],
+        option2: question.options[1],
+        option3: question.options[2],
+        option4: question.options[3],
+        correctOption: question.correctAnswer
+      }
+    ]);
+    console.log(questions)
     setSelectedOption(null);
     setTimeLeft(60);
     setLoading(false);
@@ -105,7 +124,8 @@ export default function MovieQuiz({username}) {
 
   if (gameFinished) {
     endGame()
-    return <GameOver correct={correctAnswers} wrong={wrongAnswers} username ={user} score  ={score} />
+    console.log(score)
+    return <GameOver correct={correctAnswers} wrong={wrongAnswers} username ={user} questions={questions} score={score} />
   }
 
   async function getQuestion() {

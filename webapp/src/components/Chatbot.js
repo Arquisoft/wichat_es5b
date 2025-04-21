@@ -64,8 +64,8 @@ const Chatbot = ({ movieName, setScore }) => {
         <div style={{
             position: 'fixed',
             left: '20px',
-            bottom: '20px',
-            width: '380px',  
+            bottom: '42px', //antes 20
+            width: '320px', //antes 380 
             zIndex: 1000,
             borderRadius: '8px',
             overflow: 'hidden'
@@ -110,7 +110,11 @@ const Chatbot = ({ movieName, setScore }) => {
                             minWidth: isMinimized ? 'auto' : 0
                         }}
                     >
+<<<<<<< HEAD
                         {translations.chatbot_title || "Chat de pistas"} {isMinimized ? '▲' : '▼'}
+=======
+                        {isMinimized ? 'Chat de Pistas ▲' : 'Chat ▼'}
+>>>>>>> development
                     </Button>
                     
                     {!isMinimized && (
@@ -162,7 +166,7 @@ const Chatbot = ({ movieName, setScore }) => {
                                                     msg.sender === 'system' ? '#e0e0e0' : '#f0e6de',
                                             p: 1.5,
                                             borderRadius: '12px',
-                                            maxWidth: '85%',
+                                            maxWidth: '90%',
                                             display: 'inline-block',
                                             color: msg.sender === 'user' ? '#5a2d16' : 
                                                   msg.sender === 'system' ? '#333' : '#4a2512',
@@ -186,7 +190,11 @@ const Chatbot = ({ movieName, setScore }) => {
                                 size="medium"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
+<<<<<<< HEAD
                                 placeholder={translations.chatbot_question || "Escribe tu pregunta..."}
+=======
+                                placeholder="Preguntame..."
+>>>>>>> development
                                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                                 sx={{
                                     '& .MuiOutlinedInput-root': {

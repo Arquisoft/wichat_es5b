@@ -34,8 +34,15 @@ const Ranking = () => {
                     <Table>
                         <TableHead>
                             <TableRow>
+<<<<<<< HEAD
                                 <TableCell>{translations.nav_ranking_date || "Fecha"}</TableCell>
                                 <TableCell>{translations.nav_ranking_score || "Puntuación"}</TableCell>
+=======
+                                <TableCell>Fecha</TableCell>
+                                <TableCell>Preguntas correctas</TableCell>
+                                <TableCell>Preguntas Incorrectas</TableCell>
+                                <TableCell>Puntuación</TableCell>
+>>>>>>> development
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -43,6 +50,8 @@ const Ranking = () => {
                             <TableRow key={index}>
                                 <TableCell>{user.username}</TableCell>
                                 <TableCell>{user.correctAnswers}</TableCell>
+                                <TableCell>{user.wrongAnswers}</TableCell>
+                                <TableCell>{user.totalScore}</TableCell>
                             </TableRow>
                         ))}
 
