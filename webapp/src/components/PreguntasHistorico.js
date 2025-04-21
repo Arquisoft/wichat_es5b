@@ -11,10 +11,10 @@ const PreguntasHistorico = ({user}) => {
 
     return(
         <div>
-            <Button onClick= {() => mostrarPreguntas()}>Preguntas</Button>
+            <Button onClick= {() => mostrarPreguntas()}>Mostrar Preguntas</Button>
             <Dialog open={show} onClose={()=> setShow(false)}>
                 <DialogTitle>
-                    Preguntas
+                    Historial de Preguntas
                 </DialogTitle>
                 <DialogContent>
                     <Table>
