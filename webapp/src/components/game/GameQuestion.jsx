@@ -202,8 +202,15 @@ export default function MovieQuiz({username, nQuestions}) {
 
                     </div>
                   </div>
+                  
                   <HintsButtons key={currentQuestion} questionsLlm={currentQuestion.questionsLlm} setScore={setScore} />
-                  <Chatbot movieName={currentQuestion.correctAnswer} setScore={setScore} />
+
+                  <Chatbot 
+                    movieName={currentQuestion.correctAnswer} 
+                    imageUrl={currentQuestion.imageUrl}
+                    setScore={setScore} 
+                  />
+
                 </div>
             )}
 
