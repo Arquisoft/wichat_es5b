@@ -7,7 +7,7 @@ const Chatbot = ({ movieName, setScore }) => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [isMinimized, setIsMinimized] = useState(true);
-    const { translations } = useContext(LanguageContext);
+    const { translations, currentLang } = useContext(LanguageContext);
 
     const DEFAULT_MODEL = 'empathy';
     const QWEN_MODEL = 'empathyQwen';
@@ -27,7 +27,8 @@ const Chatbot = ({ movieName, setScore }) => {
             const response = await axios.post(`${apiEndpoint}/askllm`, { 
                 question: `El usuario está jugando a adivinar películas y necesita pistas sobre "${movieName}". 
                           Responde de manera útil pero sin revelar directamente el nombre de la película. 
-                          Pregunta del usuario: ${input}`,
+                          Pregunta del usuario: ${input}.
+                          Responde en ${currentLang === 'es' ? 'español' : 'english'}`,
                 model: currentModel
             });
             

@@ -19,7 +19,7 @@ const Login = ({ userForHistory }) => {
   const [startGame, setStartGame] = useState(false);
   const [keyReinicio, setKeyReinicio] = useState(0);
   const [mostrarPantalla, setMostrarPantalla] = useState(false);
-  const { translations } = useContext(LanguageContext);
+  const { translations, currentLang } = useContext(LanguageContext);
   const [nQuestions, setNQuestions] = useState(6);
   const [loadingMessage, setLoadingMessage] = useState(false);
 
@@ -45,16 +45,16 @@ const Login = ({ userForHistory }) => {
         }
 
         if (!message) {
-          generateWelcomeMessage(username);
+          generateWelcomeMessage(username, currentLang);
         }
       }
     }
   }, [apiEndpoint]);
 
-  const generateWelcomeMessage = async (username) => {
+  const generateWelcomeMessage = async (username, lang) => {
     setLoadingMessage(true);
     try {
-      const question = `Welcome back message for ${username}, student of Software Architecture at University of Oviedo. Be nice and polite. Two sentences max.`;
+      const question = `Welcome back message for ${username}, student of Software Architecture at University of Oviedo. Be nice and polite. Two sentences max. Respond in ${lang}.`;
       const model = "empathy";
       const response = await axios.post(`${apiEndpoint}/askllm`, { question, model });
       setMessage(response.data.answer);
@@ -156,7 +156,7 @@ const Login = ({ userForHistory }) => {
             textAlign: 'center'
           }}>
             {loadingMessage ? (
-              <Typography>Loading welcome message...</Typography>
+              <Typography>{translations.welcome_loading || "Cargando mensaje de bienvenida..."}</Typography>
             ) : message ? (
               <Typewriter
                 words={[message]}
