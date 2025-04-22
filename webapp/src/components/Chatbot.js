@@ -31,7 +31,7 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                 model: currentModel
             });
 
-            // Verificar si la respuesta contiene un error de Qwen
+            // MODIFICAR(no parece funcionar cuando qwen esta caido): Verificar si la respuesta contiene un error de Qwen
             if (typeof response.data.answer === 'string' && 
                 response.data.answer.includes('status code 504')) {
                 throw new Error('QWEN_TIMEOUT');
@@ -163,10 +163,10 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                                 onClick={handleImageHint}
                                 disabled={imageHintUsed || !imageUrl}
                                 sx={{ 
-                                    backgroundColor: blueGrey,  // Nuevo color azul
+                                    backgroundColor: blueGrey, 
                                     color: 'white',
                                     '&:hover': { 
-                                        backgroundColor: '#2980b9',  // Azul más oscuro al hover
+                                        backgroundColor: '#2980b9', 
                                     },
                                     '&:disabled': {
                                         backgroundColor: '#bdc3c7',
