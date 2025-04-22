@@ -88,7 +88,7 @@ describe('Chatbot Component', () => {
         expandChat();
         
         expect(screen.getByRole('list')).toBeInTheDocument();
-        expect(screen.getByPlaceholderText('Preguntame...')).toBeInTheDocument();
+        expect(screen.getByPlaceholderText('Escribe tu pregunta...')).toBeInTheDocument();
         expect(screen.getByRole('button', { name: /Enviar/i })).toBeInTheDocument();
     });
 
@@ -105,7 +105,7 @@ describe('Chatbot Component', () => {
         
         //verificar que se expandió
         await waitFor(() => {
-          expect(screen.getByPlaceholderText('Preguntame...')).toBeInTheDocument();
+          expect(screen.getByPlaceholderText('Escribe tu pregunta...')).toBeInTheDocument();
         });
         
         //segundo click para minimizar
@@ -113,7 +113,7 @@ describe('Chatbot Component', () => {
         
         //verificar que se minimizó
         await waitFor(() => {
-          expect(screen.queryByPlaceholderText('Preguntame...')).not.toBeInTheDocument();
+          expect(screen.queryByPlaceholderText('Escribe tu pregunta...')).not.toBeInTheDocument();
           expect(toggleButton).toHaveTextContent(/Chat de Pistas ▲/i);
         });
 
@@ -156,7 +156,7 @@ describe('Chatbot Component', () => {
         
         //esperar a que el chat se expanda completamente
         await waitFor(() => {
-          expect(screen.getByPlaceholderText('Preguntame...')).toBeInTheDocument();
+          expect(screen.getByPlaceholderText('Escribe tu pregunta...')).toBeInTheDocument();
         });
         
         //ahora el botón debería mostrar ▼
@@ -165,7 +165,7 @@ describe('Chatbot Component', () => {
         });
         
         //continuar con la prueba de estilos
-        const inputField = screen.getByPlaceholderText('Preguntame...');
+        const inputField = screen.getByPlaceholderText('Escribe tu pregunta...');
         const outlinedInput = inputField.closest('.MuiOutlinedInput-root');
         
       });
@@ -219,7 +219,7 @@ describe('Chatbot Component', () => {
 
     it('should add user message to chat when sent', async () => {
 
-      const inputField = screen.getByPlaceholderText('Preguntame...');
+      const inputField = screen.getByPlaceholderText('Escribe tu pregunta...');
       const sendButton = screen.getByRole('button', { name: /Enviar/i });
       
       fireEvent.change(inputField, { target: { value: '¿Quién es el director?' } });
@@ -235,7 +235,7 @@ describe('Chatbot Component', () => {
 
     it('should clear input field after sending message', async () => {
 
-      const inputField = screen.getByPlaceholderText('Preguntame...');
+      const inputField = screen.getByPlaceholderText('Escribe tu pregunta...');
       const sendButton = screen.getByRole('button', { name: /Enviar/i });
       
       fireEvent.change(inputField, { target: { value: '¿Quién es el director?' } });
@@ -249,7 +249,7 @@ describe('Chatbot Component', () => {
 
     it('should send message when pressing Enter key', async () => {
 
-      const inputField = screen.getByPlaceholderText('Preguntame...');
+      const inputField = screen.getByPlaceholderText('Escribe tu pregunta...');
       
       fireEvent.change(inputField, { target: { value: '¿En qué año se estrenó?' } });
       fireEvent.keyPress(inputField, { key: 'Enter', code: 'Enter', charCode: 13 });
@@ -269,7 +269,7 @@ describe('Chatbot Component', () => {
       const testResponse = 'Respuesta del bot';
       mockAxios.onPost(/askllm/).reply(200, { answer: testResponse });
       
-      const inputField = screen.getByPlaceholderText('Preguntame...');
+      const inputField = screen.getByPlaceholderText('Escribe tu pregunta...');
       const sendButton = screen.getByRole('button', { name: /Enviar/i });
       
       fireEvent.change(inputField, { target: { value: 'Pregunta del usuario' } });
@@ -321,7 +321,7 @@ describe('Chatbot Component', () => {
         fireEvent.click(toggleButton);
         
         //esperar a que el campo de entrada esté disponible
-        const inputField = await screen.findByPlaceholderText('Preguntame...');
+        const inputField = await screen.findByPlaceholderText('Escribe tu pregunta...');
         const sendButton = screen.getByRole('button', { name: /Enviar/i });
         
         //enviar un mensaje
@@ -353,7 +353,7 @@ describe('Chatbot Component', () => {
         fireEvent.click(getByRole('button', { name: /Chat de Pistas ▲/i }));
       
         const sendMessage = async (text) => {
-          const inputField = await screen.findByPlaceholderText('Preguntame...');
+          const inputField = await screen.findByPlaceholderText('Escribe tu pregunta...');
           const sendButton = screen.getByRole('button', { name: /Enviar/i });
           
           fireEvent.change(inputField, { target: { value: text } });
@@ -397,7 +397,7 @@ describe('Chatbot Component', () => {
         
         
         //buscar los elementos del chat expandido
-        const inputField = await screen.findByPlaceholderText('Preguntame...');
+        const inputField = await screen.findByPlaceholderText('Escribe tu pregunta...');
         const sendButton = screen.getByRole('button', { name: /Enviar/i });
         
         //interactuar con el chat
@@ -429,7 +429,7 @@ describe('Chatbot Component', () => {
         const toggleButton = within(container).getByRole('button', { name: /▲/i });
         fireEvent.click(toggleButton);
         
-        const inputField = within(container).getByPlaceholderText('Preguntame...');
+        const inputField = within(container).getByPlaceholderText('Escribe tu pregunta...');
         const sendButton = within(container).getByRole('button', { name: /Enviar/i });
         
         fireEvent.change(inputField, { target: { value: 'Pregunta' } });
@@ -546,7 +546,7 @@ describe('Chatbot Component', () => {
         mockAxios.onPost(/askllm/).reply(200, { answer: longMessage });
         
         
-        const inputField = screen.getByPlaceholderText('Preguntame...');
+        const inputField = screen.getByPlaceholderText('Escribe tu pregunta...');
         const sendButton = screen.getByRole('button', { name: /Enviar/i });
         
         fireEvent.change(inputField, { target: { value: 'Pregunta' } });
@@ -575,7 +575,7 @@ describe('Chatbot Component', () => {
       jest.spyOn(listContainer, 'scrollTop', 'get').mockImplementation(() => 500);
       jest.spyOn(listContainer, 'clientHeight', 'get').mockImplementation(() => 400);
       
-      const inputField = screen.getByPlaceholderText('Preguntame...');
+      const inputField = screen.getByPlaceholderText('Escribe tu pregunta...');
       const sendButton = screen.getByRole('button', { name: /Enviar/i });
       
       fireEvent.change(inputField, { target: { value: 'Pregunta' } });

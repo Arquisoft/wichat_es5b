@@ -173,7 +173,7 @@ export default function MovieQuiz({username, nQuestions}) {
                     <ProgressBar timeLeft={timeLeft}/>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <div class>
+                    <div>
                       <img src={currentQuestion.imageUrl} alt="Pregunta" className="w-full h-48 my-3 rounded" />
                     </div>
                     <div className = "bg-orange shadow-lg rounded-lg py-2">
