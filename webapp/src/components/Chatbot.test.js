@@ -283,18 +283,22 @@ describe('Chatbot Component', () => {
         expect(messages).toHaveLength(2);
         expect(messages[1]).toHaveTextContent(testResponse);
 
+        
+
         const userMessage = await screen.getByText('Pregunta del usuario');
         const botMessage = await screen.getByText(testResponse);
+
         
         expect(userMessage.parentElement).toHaveStyle({
           backgroundColor: '#e8d5c9',
           color: '#5a2d16'
         });
         
-        expect(botMessage.parentElement).toHaveStyle({
+        expect(botMessage.parentElement.parentElement).toHaveStyle({
           backgroundColor: '#f0e6de',
           color: '#4a2512'
         });
+        
       });
 
     });
