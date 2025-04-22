@@ -14,8 +14,8 @@ describe('AddUser component', () => {
   it('should add user successfully', async () => {
     render(<AddUser />);
 
-    const usernameInput = screen.getByLabelText(/Username/i);
-    const passwordInput = screen.getByLabelText(/Password/i);
+    const usernameInput = screen.getByLabelText(/Usuario/i);
+    const passwordInput = screen.getByLabelText(/Contraseña/i);
     const addUserButton = screen.getByRole('button', { name: /Add User/i });
 
     // Mock the axios.post request to simulate a successful response
@@ -37,8 +37,8 @@ describe('AddUser component', () => {
   it('should handle error when adding user', async () => {
     render(<AddUser />);
 
-    const usernameInput = screen.getByLabelText(/Username/i);
-    const passwordInput = screen.getByLabelText(/Password/i);
+    const usernameInput = screen.getByLabelText(/Usuario/i);
+    const passwordInput = screen.getByLabelText(/Contraseña/i);
     const addUserButton = screen.getByRole('button', { name: /Add User/i });
 
     // Mock the axios.post request to simulate an error response

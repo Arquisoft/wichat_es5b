@@ -30,7 +30,7 @@ const Ranking = () => {
             <Button variant="primary" sx={{color:"#fecd24",fontSize: "1.1rem"}} onClick= {() => mostrarRanking()}>{translations.nav_ranking || "RANKING"}</Button>
             <Dialog open={show} onClose={()=> setShow(false)}>
                 <DialogContent>
-                    <DialogTitle>{translations.nav_ranking || "RANKING"}</DialogTitle>
+                    <DialogTitle>{translations.nav_ranking_title || "Ranking"}</DialogTitle>
                     <Table>
                         <TableHead>
                             <TableRow>
