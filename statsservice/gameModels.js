@@ -59,10 +59,10 @@ const GameHistorySchema = new Schema({
         {
             text: { type: String, required: true },
             image: { type: String },
-            option1: { type: String, required: true },
-            option2: { type: String, required: true },
+            options: { type: Array, required: true },
+        /*    option2: { type: String, required: true },
             option3: { type: String, required: true },
-            option4: { type: String, required: true },
+            option4: { type: String, required: true },*/
             correctOption: { type: String, required: true }
         }
     ]

@@ -19,7 +19,7 @@ class GameController {
       this.score = 0;
       console.log("Inicio del juego");
       await this.questionManager.generateQuestions(this.numberOfQuestions, this.numberOfOptions);
-      console.log("PReguntas generadas")
+      console.log("-Preguntas generadas")
       console.log(this.questionManager.questions)
       this.nextQuestion();
     }

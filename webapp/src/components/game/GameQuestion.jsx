@@ -77,9 +77,6 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
 
   useEffect(() => {
     if (timeLeft === 0) {
-      // setWrongAnswers((prev) => prev + 1);
-      // setQuestionsAnswered((prev) => prev + 1);
-      console.log("TIEMPO"+ timeLeft)
       handleOptionClick();
       return; // Evita seguir con el temporizador
     }
@@ -98,21 +95,18 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
         setCorrectAnswers((prev) => prev + 1);
         setScore(res.score)
       }
+      else setWrongAnswers((prev) => prev + 1);
       if(res.isOver){
         setGameFinished(true);
       }
-
-      else setWrongAnswers((prev) => prev + 1);
     } else {
       console.error("Error: respuesta inesperada del servidor", res);
     }
 
     setTimeout(() => {
       if (res.isOver) {
-        console.log("POR AQUÍ")
         setGameFinished(true);
       } else {
-        console.log("POR AQUÍ NO")
         nextQuestion();
       }
     }, 500);

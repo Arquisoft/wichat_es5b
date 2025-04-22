@@ -35,10 +35,10 @@ const PreguntasHistorico = ({user}) => {
                                 </TableCell>
                                 <TableCell>
                                 <ul>
-                                    <li>{question.option1}</li>
-                                    <li>{question.option2}</li>
-                                    <li>{question.option3}</li>
-                                    <li>{question.option4}</li>
+                                    {question.options.map((option, index) => (
+                                        <li>{option}</li>
+                                    ))
+                                    }
                                 </ul>
                                 </TableCell>
                                 <TableCell>
