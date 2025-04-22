@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor, act, cleanup, within } from '@testing-library/react';
+import { render, fireEvent, screen, waitFor, act, cleanup, within } from '../test-utils';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import Chatbot from './Chatbot';

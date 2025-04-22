@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '../../test-utils';
 import MovieQuiz from './GameQuestion';
 import axios from 'axios';
 import { executeSparqlQuery } from '../../../../wikidataservice/wikidata-service';
