@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AddUser from './components/AddUser';
 import Login from './components/Login';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,7 +9,17 @@ import NavMenu from './components/NavMenu';
 
 function App() {
   const [showLogin, setShowLogin] = useState(true);
-  const [user, setUser] = useState(null); // Inicializado como null para mejor semántica
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const username = localStorage.getItem('username');
+      if (username) {
+        setUser(username);
+      }
+    }
+  }, []);
 
   const handleToggleView = () => {
     setShowLogin(!showLogin);
@@ -17,6 +27,7 @@ function App() {
 
   const userForHistory = (username) => {
     setUser(username);
+    localStorage.setItem('username', username);
   };
 
   return (
@@ -40,9 +51,8 @@ function App() {
         boxSizing: "border-box"
       }}>
         <CssBaseline />
-        {showLogin ? <Login userForHistory={userForHistory} /> : <AddUser />}
+        {!user ? (showLogin ? <Login userForHistory={userForHistory} /> : <AddUser />) : <Login userForHistory={userForHistory} />}
 
-        {/* Solo mostrar los enlaces si no hay usuario logueado */}
         {!user && (
           <Typography component="div" align="center" sx={{ marginTop: 1}}>
             {showLogin ? (
