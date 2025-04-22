@@ -157,7 +157,7 @@ const Chatbot = ({ movieName, setScore }) => {
                                     alignItems: 'flex-start'
                                 }}>
                                     <ListItemText 
-                                        primary={msg.sender === 'bot' ? <Typewriter words={[msg.text]} typeSpeed={10} /> : msg.text } 
+                                        primary={msg.sender === 'bot' ? <Typewriter words={[msg.text]} typeSpeed={5} /> : msg.text } 
                                         sx={{
                                             bgcolor: msg.sender === 'user' ? '#e8d5c9' : 
                                                     msg.sender === 'system' ? '#e0e0e0' : '#f0e6de',
