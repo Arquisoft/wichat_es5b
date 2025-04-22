@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, List, ListItem, ListItemText, Paper } from '@mui/material';
 import axios from 'axios';
+import { blueGrey } from '@mui/material/colors';
 
 const Chatbot = ({ movieName, imageUrl, setScore }) => {
     const [messages, setMessages] = useState([]);
@@ -29,6 +30,12 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                           Pregunta del usuario: ${input}`,
                 model: currentModel
             });
+
+            // Verificar si la respuesta contiene un error de Qwen
+            if (typeof response.data.answer === 'string' && 
+                response.data.answer.includes('status code 504')) {
+                throw new Error('QWEN_TIMEOUT');
+            }
             
             const botMessage = { text: response.data.answer, sender: 'bot' };
             setMessages(prev => [...prev, botMessage]);
@@ -44,8 +51,9 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                 sender: 'bot' 
             };
 
-            // Manejo específico para error 504 con Qwen
-            if (error.response && error.response.status === 504 && currentModel === QWEN_MODEL) {
+            // Manejo específico para timeout de Qwen
+            if (error.message === 'QWEN_TIMEOUT' || 
+                (error.response && error.response.status === 504 && currentModel === QWEN_MODEL)) {
                 errorMessage.text = "⚠️ Qwen no está disponible (Error 504: Tiempo de espera agotado). Cambiando a Mistral...";
                 
                 setCurrentModel(DEFAULT_MODEL);
@@ -155,10 +163,10 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                                 onClick={handleImageHint}
                                 disabled={imageHintUsed || !imageUrl}
                                 sx={{ 
-                                    backgroundColor: '#8e44ad',
+                                    backgroundColor: blueGrey,  // Nuevo color azul
                                     color: 'white',
                                     '&:hover': { 
-                                        backgroundColor: '#732d91',
+                                        backgroundColor: '#2980b9',  // Azul más oscuro al hover
                                     },
                                     '&:disabled': {
                                         backgroundColor: '#bdc3c7',
@@ -193,7 +201,7 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                                     px: 1
                                 }}
                             >
-                                {currentModel === DEFAULT_MODEL ? 'Qwen' : 'Mistral'}
+                                {currentModel === DEFAULT_MODEL ? 'Usar Qwen' : 'Usar Mistral'}
                             </Button>
                         </Box>
                     )}
