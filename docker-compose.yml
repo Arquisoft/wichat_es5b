@@ -127,6 +127,8 @@ services:
       - "3000:3000"
     environment:
       GAMECONTROLLER_URI: http://llmservice:8005
+      GRAFANA_URI: http://grafana:9091
+      PROMETHEUS_URI: http://prometheus:9090
 
   prometheus:
     image: prom/prometheus
