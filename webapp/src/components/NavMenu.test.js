@@ -8,7 +8,7 @@ describe('NavMenu Component', () => {
 
     it('Aparecen todos los componentes del Menu', () => {
         render(<NavMenu />);
-        expect(screen.getByText('IDENTIFICATE')).toBeInTheDocument();
+        expect(screen.getByText('IDENTIFÍCATE')).toBeInTheDocument();
         expect(screen.getByText('IDIOMA - ES')).toBeInTheDocument();
         expect(screen.getByText('HISTORIAL')).toBeInTheDocument();
         expect(screen.getByText('RANKING')).toBeInTheDocument();
