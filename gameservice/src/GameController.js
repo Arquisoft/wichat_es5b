@@ -3,9 +3,10 @@ const { Question } = require("./questions/Question");
 class GameController {
   constructor(questionManager, answerVerifier){
     this.score = 0,
-    this.questionManager = questionManager,
-    this.answerVerifier = answerVerifier,
-    this.currentQuestion = null
+    this.questionManager = questionManager
+    this.answerVerifier = answerVerifier
+    this.currentQuestion = null;
+    this.numberOfAnsweredQuestions = 0;
     this.hasGameEnded = false;
     this.numberOfQuestions = 6;
     this.numberOfOptions=4;
@@ -54,6 +55,11 @@ class GameController {
     }
   
     submitAnswer(selectedAnswer, timeLeft) {
+        this.numberOfAnsweredQuestions++;
+        return this.doSubmitAnswer(selectedAnswer, timeLeft)
+    }
+
+    doSubmitAnswer(selectedAnswer, timeLeft){
         throw new Error("sin implementar");
     }
   

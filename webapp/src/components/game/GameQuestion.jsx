@@ -14,7 +14,7 @@ const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000
 export default function MovieQuiz({username, nQuestions, modoJuego}) {
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState((modoJuego === "normal" ? 60 : 40));
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
   const [score, setScore] = useState(0);
@@ -57,7 +57,9 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
     ]);
     console.log(questions)
     setSelectedOption(null);
-    setTimeLeft(60);
+    if(modoJuego === "normal"){
+      setTimeLeft(60);
+    }
     setLoading(false);
     setOptionsDisabled(false);
   };
@@ -79,14 +81,8 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
     if (timeLeft === 0) {
       // setWrongAnswers((prev) => prev + 1);
       // setQuestionsAnswered((prev) => prev + 1);
-
+      console.log("TIEMPO"+ timeLeft)
       handleOptionClick();
-
-      if (questionsAnswered >= PREGUNTASNUM) {
-        setGameFinished(true);
-      } else {
-        nextQuestion();
-      }
       return; // Evita seguir con el temporizador
     }
   }, [timeLeft]);
@@ -104,6 +100,9 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
         setCorrectAnswers((prev) => prev + 1);
         setScore(res.score)
       }
+      if(res.isOver){
+        setGameFinished(true);
+      }
 
       else setWrongAnswers((prev) => prev + 1);
     } else {
@@ -111,9 +110,11 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
     }
 
     setTimeout(() => {
-      if (questionsAnswered >= PREGUNTASNUM - 1) {
+      if (res.isOver) {
+        console.log("POR AQUÍ")
         setGameFinished(true);
       } else {
+        console.log("POR AQUÍ NO")
         nextQuestion();
       }
     }, 500);
@@ -159,7 +160,7 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
   return (
       <div className="object-cover">
         {loading ? (<LoadingScreen/>) :
-            (<div className="grid grid-rows-3 gap-2 max-w-xl mx-auto p-10 text-center" >
+            (<div className="grid grid-rows-3 gap-2 mx-auto p-10 text-center" >
                   <div className="grid grid-rows-2 bg-orange shadow-lg rounded-lg my-3 py-2">
                     <div className="grid grid-cols-2 ">
                       <p className="mt-2 text-2xl font-semibold align-left justify-top ml-1 text-white">Pregunta {questionsAnswered + 1} de {PREGUNTASNUM}</p>
@@ -170,7 +171,7 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
                     </div>
                     <ProgressBar timeLeft={timeLeft}/>
                   </div>
-                  {modoJuego=="normal" ?
+                  {modoJuego==="normal" ?
                     (<NormalGame handleOptionClick={handleOptionClick} selectedOption={selectedOption} currentQuestion={currentQuestion} optionsDisabled={optionsDisabled}/>)
                     :
                     (<BateriaDeSabiosGame handleOptionClick={handleOptionClick} selectedOption={selectedOption} currentQuestion={currentQuestion} optionsDisabled={optionsDisabled}/>)

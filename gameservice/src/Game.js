@@ -51,9 +51,9 @@ app.get("/question", (req  , res  ) => {
 app.post("/answer", (req  , res  ) => {
   const selectedAnswer = req.body.answer;
   const timeLeft = req.body.timeLeft;
-  const isCorrect = gameController.submitAnswer(selectedAnswer, timeLeft);
+  const {isCorrect, isOver} = gameController.submitAnswer(selectedAnswer, timeLeft);
   const score = gameController.score
-  res.json({ isCorrect, score});
+  res.json({ isCorrect: isCorrect, score: score, isOver: isOver});
 });
 
 // Petición tras utilizar una pista del llm (actualizar puntuación)

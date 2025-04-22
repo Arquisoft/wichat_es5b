@@ -1,7 +1,7 @@
 const { GameController } = require("../GameController");
 
 class ClassicGameController extends GameController {
-    submitAnswer(selectedAnswer, timeLeft) {
+    doSubmitAnswer(selectedAnswer, timeLeft) {
         if (!this.currentQuestion) {
             console.log("No hay una pregunta activa.");
             return false;
@@ -16,7 +16,8 @@ class ClassicGameController extends GameController {
         }
         console.log(isCorrect);
         this.nextQuestion();
-        return isCorrect;
+        let isOver = this.getNumberOfQuestions() <= this.numberOfAnsweredQuestions
+        return {isCorrect: isCorrect, isOver: isOver};
     }
 }
 
