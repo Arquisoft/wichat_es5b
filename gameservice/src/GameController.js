@@ -2,7 +2,7 @@ const { Question } = require("./questions/Question");
 
 class GameController {
   constructor(questionManager, answerVerifier){
-    this.score = 0,
+    this.score = 0
     this.questionManager = questionManager
     this.answerVerifier = answerVerifier
     this.currentQuestion = null;
@@ -19,6 +19,8 @@ class GameController {
       this.score = 0;
       console.log("Inicio del juego");
       await this.questionManager.generateQuestions(this.numberOfQuestions, this.numberOfOptions);
+      console.log("PReguntas generadas")
+      console.log(this.questionManager.questions)
       this.nextQuestion();
     }
 

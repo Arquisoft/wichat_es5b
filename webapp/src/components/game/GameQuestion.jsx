@@ -43,15 +43,13 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
     console.log("Nueva pregunta obtenida:", question);
 
     setCurrentQuestion(question);
+    const options =
     setQuestions(prevQuestions => [
       ...prevQuestions,
       {
         text: question.question,
         image: question.imageUrl,
-        option1: question.options[0],
-        option2: question.options[1],
-        option3: question.options[2],
-        option4: question.options[3],
+        options: question.options,
         correctOption: question.correctAnswer
       }
     ]);
@@ -122,7 +120,6 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
 
   if (gameFinished) {
     endGame()
-    console.log(score)
     return <GameOver correct={correctAnswers} wrong={wrongAnswers} username ={user} questions={questions} score={score} />
   }
 
