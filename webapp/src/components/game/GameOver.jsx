@@ -20,7 +20,7 @@ export default function GameOver({ correct, wrong, username, questions, score })
   },[]);
 
     return (
-      <div style={{display:"flex", alignItems:"center", alignItems:"center", flexDirection:"column"}}>
+      <div style={{display:"flex", alignItems:"center", flexDirection:"column"}}>
         <div style = {{display: "flex", alignItems:"center", width:"100%"}}>
           <Typography component="h1" variant="h1" sx={{ textAlign: 'center', marginTop: 4, fontFamily: 'Great Vibes, bold', fontSize: '15em' }}>The End</Typography> 
         </div>
