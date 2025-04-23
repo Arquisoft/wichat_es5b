@@ -13,7 +13,7 @@ const LoadingScreen = () => {
             flexDirection: "column"
         }}>
 
-            <h2>Preparando las palomitas...</h2>
+            <h2>{translations.loading_popcorn || "Preparando las palomitas..."}</h2>
             <PacmanLoader color="#c46331" size={30} />
 
         </div>

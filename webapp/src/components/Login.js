@@ -135,20 +135,20 @@ const Login = ({ userForHistory }) => {
     >
       {loginSuccess ? (
         <div>
-          <Typography component="h1" variant="h2" sx={{ textAlign: 'center', marginTop: 4 }}>🎬¡Bienvenido a Wichat!</Typography>
-          <Typography component="h2" variant="h5" sx={{ textAlign: 'center', marginTop: 4 }}>¿Preparado para poner a prueba tus conocimientos en el mundo del cine?</Typography>
-          <Typography component="p" variant="body1" sx={{ textAlign: 'left', marginTop: 2}}>Escoge la longitud de la partida:</Typography>
+          <Typography component="h1" variant="h2" sx={{ textAlign: 'center', marginTop: 4 }}>🎬{translations.login_welcome || "¡Bienvenido a Wichat!"}</Typography>
+          <Typography component="h2" variant="h5" sx={{ textAlign: 'center', marginTop: 4 }}>{translations.login_question|| "¿Preparado para poner a prueba tus conocimientos en el mundo del cine?"}</Typography>
+          <Typography component="p" variant="body1" sx={{ textAlign: 'left', marginTop: 2}}>{translations.login_choose || "Escoge la longitud de la partida:"}Escoge la longitud de la partida:</Typography>
           <Box sx={{display: 'flex', justifyContent: 'space-between', mt: 2, mb: 2}}>
             <ButtonGroup variant="contained" aria-label="outlined primary button group" sx={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
-              <Button disabled={nQuestions === 6} onClick={() => {setNQuestions(6); console.log("Corta")}} sx={{width: '33%', color: "#d87152", backgroundColor: "#faf5ea"}}>Corta</Button>
-              <Button disabled={nQuestions === 12} onClick={() => {setNQuestions(12); console.log("Normal")}} sx={{width: '33%', color: "#d87152", backgroundColor: "#faf5ea"}}>Normal</Button>
-              <Button disabled={nQuestions === 18} onClick={() => {setNQuestions(18); console.log("Larga")}} sx={{width: '33%', color: "#d87152", backgroundColor: "#faf5ea"}}>Larga</Button>
+              <Button disabled={nQuestions === 6} onClick={() => {setNQuestions(6); console.log("Corta")}} sx={{width: '33%', color: "#d87152", backgroundColor: "#faf5ea"}}>{translations.welocme_select_length_short || "Corta"}</Button>
+              <Button disabled={nQuestions === 12} onClick={() => {setNQuestions(12); console.log("Normal")}} sx={{width: '33%', color: "#d87152", backgroundColor: "#faf5ea"}}>{translations.welocme_select_length_normal || "Normal"}</Button>
+              <Button disabled={nQuestions === 18} onClick={() => {setNQuestions(18); console.log("Larga")}} sx={{width: '33%', color: "#d87152", backgroundColor: "#faf5ea"}}>{translations.welocme_select_length_long || "Larga"}</Button>
             </ButtonGroup>
           </Box>
 
-          <Typography component="p" variant="body1" sx={{ textAlign: 'left', marginTop: 2}}>Preparados, listos...</Typography>
+          <Typography component="p" variant="body1" sx={{ textAlign: 'left', marginTop: 2}}>{translations.login_ready || "Preparados, listos..."}</Typography>
           <Button variant="contained" color="primary" onClick={async () => { setMostrarPantalla(true); await start(); setMostrarPantalla(false); setStartGame(true);}} sx={{ marginTop: 2, color: "#d87152", backgroundColor: "#faf5ea" }}>
-            ¡Acción!
+            {translations.login_action || "¡Acción!"}
           </Button>
         </div>
       ) : (
