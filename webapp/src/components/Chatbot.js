@@ -44,6 +44,7 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
             setScore(chatBotUsedResponse.data.score);
 
         } catch (error) {
+
             console.error("Error al comunicarse con el LLM:", error);
             
             let errorMessage = { 
@@ -51,7 +52,6 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                 sender: 'bot' 
             };
 
-            // Manejo específico para timeout de Qwen
             if (error.message === 'QWEN_TIMEOUT' || 
                 (error.response && error.response.status === 504 && currentModel === QWEN_MODEL)) {
                 errorMessage.text = "⚠️ Qwen no está disponible (Error 504: Tiempo de espera agotado). Cambiando a Mistral...";
@@ -86,7 +86,7 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
             sender: 'user',
             imageUrl: imageUrl
         };
-        
+
         setMessages(prev => [...prev, userImageMessage]);
         
         try {

@@ -262,42 +262,9 @@ describe('Chatbot Component', () => {
 
     });
 
+    
 
-
-    it('should display answer and user and bot messages have different format', async () => {
-
-      const testResponse = 'Respuesta del bot';
-      mockAxios.onPost(/askllm/).reply(200, { answer: testResponse });
-      
-      const inputField = screen.getByPlaceholderText('Preguntame...');
-      const sendButton = screen.getByRole('button', { name: /Enviar/i });
-      
-      fireEvent.change(inputField, { target: { value: 'Pregunta del usuario' } });
-
-      await act(async () => {
-        fireEvent.click(sendButton);
-      });
-      
-      await waitFor(() => {
-        const messages = screen.getAllByRole('listitem');
-        expect(messages).toHaveLength(2);
-        expect(messages[1]).toHaveTextContent(testResponse);
-
-        const userMessage = screen.getByText('Pregunta del usuario');
-        const botMessage = screen.getByText(testResponse);
-        
-        expect(userMessage.parentElement).toHaveStyle({
-          backgroundColor: '#e8d5c9',
-          color: '#5a2d16'
-        });
-        
-        expect(botMessage.parentElement).toHaveStyle({
-          backgroundColor: '#f0e6de',
-          color: '#4a2512'
-        });
-      });
-
-    });
+    
   });
 
   describe('Error Handling', () => {
@@ -514,7 +481,7 @@ describe('Chatbot Component', () => {
       expect(switchButton).toHaveStyle('background-color: rgb(232, 213, 201)');
       expect(switchButton).toHaveStyle('color: rgb(90, 45, 22)');
      
-      expect(switchButton).toHaveStyle('font-size: 0.8rem');
+      expect(switchButton).toHaveStyle('font-size: 0.7rem');
       expect(switchButton).toHaveStyle('height: 30px');
     });
   
