@@ -42,9 +42,11 @@ export default function SelectionScreen({ username }) {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box className="bg-white min-h-screen py-8">
+            <div>
+                <Typography component="h1" variant="h2" sx={{ textAlign: 'center', marginTop: 4 }}>🎬¡Bienvenido a Wichat!</Typography>
+                <Typography component="h2" variant="h5" sx={{ textAlign: 'center', marginTop: 4 }}>¿Preparado para poner a prueba tus conocimientos en el mundo del cine?</Typography>
+                <Typography component="p" variant="body1" sx={{ textAlign: 'left', marginTop: 2}}>Escoge la longitud de la partida:</Typography>
                 <Container maxWidth="md">
-                    {/* MODALIDAD DE JUEGO */}
                     <Paper elevation={6} sx={{ backgroundColor: '#c46331', borderRadius: 3, p: 4, mb: 6 }}>
                         <Typography variant="h5" fontWeight="bold" gutterBottom>
                             MODALIDAD DE JUEGO
@@ -52,7 +54,7 @@ export default function SelectionScreen({ username }) {
                         <Typography variant="body1" sx={{ mt: 1, mb: 2 }}>
                             Escoge el modo de juego:
                         </Typography>
-                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <Box sx={{display: 'flex', justifyContent: 'space-between', mt: 2, mb: 2}}>
                             <ButtonGroup fullWidth>
                                 <Button
                                     variant={modoJuego === 'normal' ? 'contained' : 'outlined'}
@@ -73,8 +75,6 @@ export default function SelectionScreen({ username }) {
                             </ButtonGroup>
                         </Box>
                     </Paper>
-
-                    {/* DIFICULTAD DEL JUEGO */}
                     <Paper elevation={6} sx={{ backgroundColor: '#c46331', borderRadius: 3, p: 4, mb: 6 }}>
                         <Typography variant="h5" fontWeight="bold" gutterBottom>
                             DIFICULTAD DEL JUEGO
@@ -82,7 +82,7 @@ export default function SelectionScreen({ username }) {
                         <Typography variant="body1" sx={{ mt: 1, mb: 2 }}>
                             Escoge la longitud de la partida:
                         </Typography>
-                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <Box sx={{display: 'flex', justifyContent: 'space-between', mt: 2, mb: 2}}>
                             <ButtonGroup fullWidth>
                                 <Button
                                     variant={nQuestions === 6 ? 'contained' : 'outlined'}
@@ -111,8 +111,6 @@ export default function SelectionScreen({ username }) {
                             </ButtonGroup>
                         </Box>
                     </Paper>
-
-                    {/* BOTÓN INICIAR */}
                     <Box sx={{ textAlign: 'center' }}>
                         <Button
                             variant="contained"
@@ -138,7 +136,7 @@ export default function SelectionScreen({ username }) {
                         </Button>
                     </Box>
                 </Container>
-            </Box>
+            </div>
         </ThemeProvider>
     );
 }
