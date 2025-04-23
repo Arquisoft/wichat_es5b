@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { Container, Typography, TextField, Button, Snackbar, Alert, Box } from '@mui/material';
+import { Container, Typography, TextField, Button, Snackbar, Alert, ButtonGroup, Box } from '@mui/material';
 import { Typewriter } from "react-simple-typewriter";
 import Game from './game/GameQuestion';
 import LoadingScreen from './LoadingScreen';
@@ -46,11 +46,6 @@ const Login = ({ userForHistory }) => {
             console.error("Error parsing date:", e);
           }
         }
-
-        if (!message) {
-          generateWelcomeMessage(username);
-        }
-
       }
     }
   }, [apiEndpoint]);
@@ -71,8 +66,6 @@ const Login = ({ userForHistory }) => {
 
       const createdAtDate = new Date(response.data.createdAt);
       localStorage.setItem('createdAt', createdAtDate.toISOString());
-
-      await generateWelcomeMessage(username);
 
       setCreatedAt(createdAtDate.toISOString());
       setLoginSuccess(true);
