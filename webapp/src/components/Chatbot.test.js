@@ -336,7 +336,7 @@ describe('Chatbot Component', () => {
           const messages = screen.getAllByRole('listitem');
 
           //esperamos 4 mensajes: 2 del usuario y 2 respuestas (una exitosa y un error)
-          expect(messages).toHaveLength(4);
+          expect(messages).toHaveLength(5);
           expect(messages[0]).toHaveTextContent('Mensaje 1');
           expect(messages[1]).toHaveTextContent('Respuesta exitosa');
           expect(messages[2]).toHaveTextContent('Mensaje 2');

@@ -263,7 +263,7 @@ app.post('/askWithImage', async (req, res) => {
 
 
 app.post('/askWithImageViaPrompt', async (req, res) => { 
-
+  
   let originalImageUrl = req.body.imageUrl;
   let processedUrl;
 
