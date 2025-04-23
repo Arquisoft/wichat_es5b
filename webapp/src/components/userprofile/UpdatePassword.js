@@ -154,11 +154,10 @@ export default function UpdatePassword() {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         sx={{
-                            backgroundColor: "#fff",
-                            borderRadius: 1,
                             '& label.Mui-focused': {
                               color: "#c46331",
                             },
+                            backgroundColor: "#fff",
                             '& .MuiOutlinedInput-root': {
                               '& fieldset': {
                                 borderColor: "#a9c8c4",
@@ -169,6 +168,7 @@ export default function UpdatePassword() {
                               '&.Mui-focused fieldset': {
                                 borderColor: "#c46331",
                               },
+                            borderRadius: 1,
                             },
                           }}
                     />
@@ -218,10 +218,10 @@ export default function UpdatePassword() {
                         {/* Mensaje de error en rojo con Alert */}
                         {error && (
                             <Snackbar
-                            open={!!error}
                             autoHideDuration={6000}
-                            onClose={() => setError('')}
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                            open={!!error}
+                            onClose={() => setError('')}
                             >
                             <Alert onClose={() => setError('')} severity="error" sx={{ width: '100%' }}>
                                 {error}

@@ -278,3 +278,7 @@ img {
   height: auto; 
   object-fit: contain; 
 }
+
+.table {
+  font-size: 100px;
+}

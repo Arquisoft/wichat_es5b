@@ -29,7 +29,7 @@ endif::arc42help[]
 
 === Decisiones tecnológicas
 ==== Lenguajes y Frameworks
-* **TypeScript**: lenguaje de programación utilizado para el desarrollo de aplicaciones web, tanto del lado del cliente como del servidor. Elegimos este lenguaje en vez de otras alternativas debido a su tipado dinámico, que facilita la detección de errores, además de la facilidad de usarlo tanto con Node como con React.
+* **JavaScript**: es un lenguaje de programación de alto nivel, interpretado y orientado a objetos, utilizado principalmente para el desarrollo web. Permite crear páginas dinámicas e interactivas mediante la manipulación del DOM y la comunicación con servidores. Decidimos elegirlo por su amplia compatibilidad y ecosistema de bibliotecas. 
 * **React**: biblioteca de JavaScript ampliamente utilizada para construir interfaces de usuario dinámicas. Elegimos usarla en el proyecto ya que permite la reutilización de componentes, y, al ser muy utilizada en la actualidad, hay mucha documentación y ejemplos disponibles.
 * **Express**: es un framework minimalista y flexible para aplicaciones web en Node.js. Permite construir APIs y servidores web de manera sencilla y eficiente. Elegimos este framework por su sencillez y rapidez.
 
@@ -50,6 +50,7 @@ endif::arc42help[]
 
 ==== Decisiones descartadas
 * **Microsoft SQL Server**: sistema de Gestión de Bases de Datos SQL de Microsoft. Inicialmente lo habíamos elegido porque que es la única opción que ofrece Azure para crear una base de datos en la nube, pero finalmente decidimos que MongoDB era una mejor opción puesto que el despliegue ya estaba configurado para esa base de datos.
+* **TypeScript**: lenguaje de programación utilizado para el desarrollo de aplicaciones web. Inicialmente lo elegimos por su tipado dinamico que ayuda a la deteccion temprana de errores y por su compatibilidad con Node y React pero finalmente decidimos utilizar JavaScript ya que la mayoria de la aplicacion estaba desarrollada con JavaScript.
 
 === Decisiones sobre cómo alcanzar objetivos clave de calidad
 * **Usabilidad**: las interfaces serán intuitivas, basándose en aplicaciones ya existentes, de modo que cualquier usuario pueda utilizarlas sin experiencia previa. Además, la comunicación con el LLM también deberá ser sencilla, de forma que todos los usuarios puedan utilizar la funcionalidad de las pistas sin tener conocimientos acerca cómo utilizar una IA.

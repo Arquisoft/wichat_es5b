@@ -1,7 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { TextField, Button, Box, List, ListItem, ListItemText, Paper } from '@mui/material';
 import axios from 'axios';
+
 import { LanguageContext } from "../LanguageContext";
+
+import { RingLoader } from "react-spinners";
+import { Typewriter } from "react-simple-typewriter";
+
 
 const Chatbot = ({ movieName, setScore }) => {
     const [messages, setMessages] = useState([]);
@@ -16,12 +21,15 @@ const Chatbot = ({ movieName, setScore }) => {
     
     const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const handleSendMessage = async () => {
         if (!input.trim()) return;
         
         const userMessage = { text: input, sender: 'user' };
         setMessages(prev => [...prev, userMessage]);
         setInput('');
+        setIsLoading(true);
         
         try {
             const response = await axios.post(`${apiEndpoint}/askllm`, { 
@@ -45,6 +53,7 @@ const Chatbot = ({ movieName, setScore }) => {
             };
             setMessages(prev => [...prev, errorMessage]);
         }
+        setIsLoading(false);
     };
 
     const toggleModel = () => {
@@ -156,7 +165,7 @@ const Chatbot = ({ movieName, setScore }) => {
                                     alignItems: 'flex-start'
                                 }}>
                                     <ListItemText 
-                                        primary={msg.text} 
+                                        primary={msg.sender === 'bot' ? <Typewriter words={[msg.text]} typeSpeed={5} /> : msg.text } 
                                         sx={{
                                             bgcolor: msg.sender === 'user' ? '#e8d5c9' : 
                                                     msg.sender === 'system' ? '#e0e0e0' : '#f0e6de',
@@ -173,6 +182,11 @@ const Chatbot = ({ movieName, setScore }) => {
                                     />
                                 </ListItem>
                             ))}
+                            {isLoading && (
+                                <ListItem sx={{ justifyContent: 'flex-start', p: 0.5 }}>
+                                    <RingLoader color="#c46331" size={30} />
+                                </ListItem>
+                            )}
                         </List>
     
                         <Box sx={{ 
