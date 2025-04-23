@@ -14,7 +14,8 @@ const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000
 export default function MovieQuiz({username, nQuestions, modoJuego}) {
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
-  const [timeLeft, setTimeLeft] = useState((modoJuego === "normal" ? 60 : 120));
+  const [maxTime, setMaxTime] = useState((modoJuego === "normal" ? 60 : 120));
+  const [timeLeft, setTimeLeft] = useState(maxTime);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
   const [score, setScore] = useState(0);
@@ -171,7 +172,7 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
                         <p className="text-lg font-semibold">Tiempo restante: {formatTime(timeLeft)}</p>
                       </div>
                     </div>
-                    <ProgressBar timeLeft={timeLeft}/>
+                    <ProgressBar timeLeft={timeLeft} maxTime={maxTime}/>
                   </div>
                   {modoJuego==="normal" ?
                     (<NormalGame handleOptionClick={handleOptionClick} selectedOption={selectedOption} currentQuestion={currentQuestion} optionsDisabled={optionsDisabled}/>)
