@@ -71,6 +71,29 @@ describe('GameQuestion Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.useFakeTimers();
+
+    global.fetch = jest.fn((url) => {
+      if (url.includes('/question')) {
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve(mockQuestion),
+        });
+      }
+    
+      if (url.includes('messages_es.properties')) {
+        return Promise.resolve({
+          ok: true,
+          text: () => Promise.resolve('Primera Pista=Primera Pista\nSegunda Pista=Segunda Pista\nTercera Pista=Tercera Pista\nCuarta Pista=Cuarta Pista'),
+        });
+      }
+    
+      // fallback
+      return Promise.resolve({
+        ok: true,
+        text: () => Promise.resolve(''),
+      });
+    });    
+
     mockSetters = {}; //resetear state setters
 
     //mockeo useState
