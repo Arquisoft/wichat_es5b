@@ -69,7 +69,9 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
         }
     };
 
-    const handleImageHint = () => {
+    const handleImageHint = async () => {
+
+
         if (!imageUrl) {
             const errorMessage = { 
                 text: "No hay imagen disponible para esta película", 
@@ -78,6 +80,7 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
             return setMessages(prev => [...prev, errorMessage]);
         }
         
+        
         const userImageMessage = { 
             text: "Te envío esta imagen para que me des una pista:", 
             sender: 'user',
@@ -85,11 +88,39 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
         };
         setMessages(prev => [...prev, userImageMessage]);
         
-        setImageHintUsed(true);
-        
-        axios.post(`${apiEndpoint}/chatBotUsed`)
-            .then(response => setScore(response.data.score))
-            .catch(error => console.error("Error:", error));
+        try {
+            // Mensaje de carga
+            const loadingMessage = { 
+                text: "Analizando la imagen para darte una pista...", 
+                sender: 'bot' 
+            };
+            setMessages(prev => [...prev, loadingMessage]);
+            
+            // Llamada al endpoint correcto (/askWithImage)
+            const response = await axios.post(`${apiEndpoint}/askWithImage`, { 
+                question: `Estoy jugando a adivinar una película o actor. Dame una pista útil basada en esta imagen sin revelar directamente el nombre.`,
+                imageUrl: imageUrl
+            });
+    
+            const botMessage = { 
+                text: response.data.answer || "No pude generar una pista basada en la imagen.", 
+                sender: 'bot' 
+            };
+            setMessages(prev => [...prev, botMessage]);
+    
+            setImageHintUsed(true);
+            
+            await axios.post(`${apiEndpoint}/chatBotUsed`);
+            setScore(prevScore => prevScore - 1); 
+        } catch (error) {
+            console.error("Error al procesar la imagen:", error);
+            const errorMessage = { 
+                text: error.response?.data?.error || 
+                     "Lo siento, no pude analizar la imagen. Intenta con otra pista.", 
+                sender: 'bot' 
+            };
+            setMessages(prev => [...prev, errorMessage]);
+        }
     };
 
     const toggleModel = () => {
