@@ -117,7 +117,7 @@ export default function UpdatePassword() {
                           }}
                     />
                     <TextField
-                        name="password"
+                        name="newpassword"
                         margin="normal"
                         fullWidth
                         label="Nueva contraseña"
@@ -144,7 +144,7 @@ export default function UpdatePassword() {
                           }}
                     />
                     <TextField
-                        name="password"
+                        name="confirmpassword"
                         margin="normal"
                         fullWidth
                         label="Confirmar contraseña"
