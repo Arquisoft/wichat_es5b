@@ -14,7 +14,7 @@ const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000
 export default function MovieQuiz({username, nQuestions, modoJuego}) {
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
-  const [timeLeft, setTimeLeft] = useState((modoJuego === "normal" ? 60 : 40));
+  const [timeLeft, setTimeLeft] = useState((modoJuego === "normal" ? 60 : 120));
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
   const [score, setScore] = useState(0);
@@ -148,6 +148,17 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
     }))
   }
 
+  function formatTime(seconds) {
+    if (seconds >= 60) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      return remainingSeconds > 0
+          ? `${minutes} min ${remainingSeconds} s`
+          : `${minutes} min`;
+    }
+    return `${seconds} s`;
+  }
+
   return (
       <div className="object-cover">
         {loading ? (<LoadingScreen/>) :
@@ -157,7 +168,7 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
                       <p className="mt-2 text-2xl font-semibold align-left justify-top ml-1 text-white">Pregunta {questionsAnswered + 1} de {PREGUNTASNUM}</p>
                       <div className="grid grid-rows-3 align-right justify-bottom mr-2">
                         <p className="text-lg font-semibold">Puntuación: {score}</p>
-                        <p className="text-lg font-semibold">Tiempo restante: {timeLeft} s</p>
+                        <p className="text-lg font-semibold">Tiempo restante: {formatTime(timeLeft)}</p>
                       </div>
                     </div>
                     <ProgressBar timeLeft={timeLeft}/>
