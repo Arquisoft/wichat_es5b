@@ -16,10 +16,10 @@ jest.mock('../../../../wikidataservice/wikidata-service', () => ({
 //mockeo componentes hijos
 jest.mock('../LoadingScreen', () => () => <div data-testid="mock-loading">Loading Mockeado</div>);
 jest.mock('./GameOver', () => ({ correct, wrong }) => (
-  <div data-testid="game-over">
-    <span>Aciertos: {correct}</span>
-    <span>Fallos: {wrong}</span>
-  </div>
+    <div data-testid="game-over">
+      <span>Aciertos: {correct}</span>
+      <span>Fallos: {wrong}</span>
+    </div>
 ));
 
 describe('GameQuestion Component', () => {
@@ -49,7 +49,7 @@ describe('GameQuestion Component', () => {
 
   //state mocking
   function mockUseState(initialState) {
-    //mockeo estados especificos 
+    //mockeo estados especificos
     if (initialState === "") {
       //currentQuestion state
       return [mockQuestion, (val) => { mockSetters.currentQuestion = val; }];
@@ -125,15 +125,15 @@ describe('GameQuestion Component', () => {
   });
 
   test('se renderiza correctamente con una pregunta', async () => {
-    render(<MovieQuiz />);
-    
-    //checkeamos la pregunta 
+    render(<MovieQuiz username={"user"} modoJuego={"normal"} nQuestions={6}/>);
+
+    //checkeamos la pregunta
     expect(screen.getByText(mockQuestion.question)).toBeInTheDocument();
   });
 
   test('muestra una imagen en la pregunta', async () => {
-    render(<MovieQuiz />);
-    
+    render(<MovieQuiz username={"user"} modoJuego={"normal"} nQuestions={6}/>);
+
     const img = screen.getByAltText("Pregunta");
     expect(img).toBeInTheDocument();
     expect(img).toHaveAttribute('src', mockQuestion.imageUrl);
@@ -142,52 +142,52 @@ describe('GameQuestion Component', () => {
   /*
   test('muestra opciones de respuesta', async () => {
     render(<MovieQuiz />);
-    
+
     mockQuestion.options.forEach(option => {
       expect(screen.getByText(option)).toBeInTheDocument();
-    }); 
+    });
   }); */
 
   test('muestra opciones de respuesta', async () => {
-    render(<MovieQuiz />);
-    
+    render(<MovieQuiz username={"user"} modoJuego={"normal"} nQuestions={6}/>);
+
     mockQuestion.options.forEach(option => {
-      
+
       const buttons = screen.getAllByRole('button', { name: option });
       expect(buttons.length).toBeGreaterThan(0);
-      
+
     });
   });
 
   test('cambia el color del botón al seleccionar una opción', async () => {
-    render(<MovieQuiz />);
-    
+    render(<MovieQuiz username={"user"} modoJuego={"normal"} nQuestions={6}/>);
+
     //encuentra pirmer boton de pregunta
     const firstOptionButton = screen.getByText(mockQuestion.options[0]);
     expect(firstOptionButton).toHaveClass("bg-blue-500");
-    
+
     //ha click
     fireEvent.click(firstOptionButton);
-    
+
     //veerifica que axios.post se ha llmaado
     expect(axios.post).toHaveBeenCalledWith(
-      `${apiEndpoint}/answer`,
-      { answer: mockQuestion.options[0] , timeLeft:60}
+        `${apiEndpoint}/answer`,
+        { answer: mockQuestion.options[0] , timeLeft:60}
     );
   });
 
   test('muestra el tiempo restante', async () => {
-    render(<MovieQuiz />);
-    
-    expect(screen.getByText("Tiempo restante: 60 s")).toBeInTheDocument();
+    render(<MovieQuiz username={"user"} modoJuego={"normal"} nQuestions={6}/>);
+
+    expect(screen.getByText("Tiempo restante: 1 min")).toBeInTheDocument();
   });
 
   test('el tiempo restante se actualiza correctamente', async () => {
-    render(<MovieQuiz />);
-    
+    render(<MovieQuiz username={"user"} modoJuego={"normal"} nQuestions={6}/>);
+
     //check t0
-    expect(screen.getByText("Tiempo restante: 60 s")).toBeInTheDocument();
-    
+    expect(screen.getByText("Tiempo restante: 1 min")).toBeInTheDocument();
+
     //avanzo tiempo
     act(() => {
       jest.advanceTimersByTime(1000);
@@ -195,8 +195,8 @@ describe('GameQuestion Component', () => {
   });
 
   test('muestra el componente de pistas', async () => {
-    render(<MovieQuiz />);
-    
+    render(<MovieQuiz username={"user"} modoJuego={"normal"} nQuestions={6}/>);
+
     //checkear componente de pistas
     const hintButtonLabels = [
       'Primera Pista',
@@ -209,31 +209,31 @@ describe('GameQuestion Component', () => {
       const hintButton = await screen.findByRole('button', { name: label });
       expect(hintButton).toBeInTheDocument();
     }
-    
+
     //checkear nombre de la pelicula
-   // const movieNameElement = screen.getByTestId('movie-name');
-   // expect(movieNameElement).toHaveTextContent(mockQuestion.llmQuestions);
+    // const movieNameElement = screen.getByTestId('movie-name');
+    // expect(movieNameElement).toHaveTextContent(mockQuestion.llmQuestions);
   });
 
   test('muestra GameOver cuando se completan todas las preguntas', async () => {
     //en este test se necesita hacer override de gameFinished state
     jest.spyOn(React, 'useState').mockImplementation((initialState) => {
       if (initialState === false && typeof initialState === 'boolean') {
-        
+
         return [true, jest.fn()]; //se pone a true para mostrar GameOver
       }
       //para otros estados
       return mockUseState(initialState);
     });
-    
-    render(<MovieQuiz />);
-    
+
+    render(<MovieQuiz username={"user"} modoJuego={"normal"} nQuestions={6}/>);
+
     //chekeacmos GameOver component
     expect(screen.getByTestId('game-over')).toBeInTheDocument();
   });
 
   test('actualiza la puntuación al utilizar los botones de pistas', async () => {
-    render(<MovieQuiz />);
+    render(<MovieQuiz username={"user"} modoJuego={"normal"} nQuestions={6}/>);
 
     const hintButtonLabels = [
       'Primera Pista',
@@ -255,7 +255,7 @@ describe('GameQuestion Component', () => {
   });
 
   test('actualiza la puntuación al utilizar el chatBot', async () => {
-    render(<MovieQuiz />);
+    render(<MovieQuiz username={"user"} modoJuego={"normal"} nQuestions={6}/>);
 
     const toggleButton = screen.getByRole('button', { name: /Chat de Pistas ▲/i });
     fireEvent.click(toggleButton);
@@ -272,7 +272,7 @@ describe('GameQuestion Component', () => {
   });
 
   test('actualiza la puntuación al acertar una pregunta', async () => {
-    render(<MovieQuiz />);
+    render(<MovieQuiz username={"user"} modoJuego={"normal"} nQuestions={6}/>);
     const button = screen.getByRole('button', { name: mockQuestion.correctAnswer });
     fireEvent.click(button);
 
