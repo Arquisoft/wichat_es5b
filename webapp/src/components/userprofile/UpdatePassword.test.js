@@ -34,17 +34,20 @@ describe("UpdatePassword component", () => {
   it("should call axios and show success snackbar", async () => {
     axios.post.mockResolvedValueOnce({});
 
+    let oldPassword1 = "OldPassword1";
+    let newPassword1 = "NewPassword1";
+
     render(<UpdatePassword />);
     fireEvent.click(screen.getByText(/Editar contraseña/i));
 
     fireEvent.change(screen.getByLabelText(/Contraseña actual/i), {
-      target: { value: "OldPassword1" },
+      target: { value: oldPassword1 },
     });
     fireEvent.change(screen.getByLabelText(/Nueva contraseña/i), {
-      target: { value: "NewPassword1" },
+      target: { value: newPassword1 },
     });
     fireEvent.change(screen.getByLabelText(/Confirmar contraseña/i), {
-      target: { value: "NewPassword1" },
+      target: { value: newPassword1 },
     });
 
     fireEvent.click(screen.getByRole("button", { name: /Actualizar contraseña/i }));
@@ -66,17 +69,20 @@ describe("UpdatePassword component", () => {
       response: { data: { error: "Contraseña actual incorrecta" } },
     });
 
+    let wrongPassword2 = "WrongOld1";
+    let newPassword2 = "NewPassword1";
+
     render(<UpdatePassword />);
     fireEvent.click(screen.getByText(/Editar contraseña/i));
 
     fireEvent.change(screen.getByLabelText(/Contraseña actual/i), {
-      target: { value: "WrongOld1" },
+      target: { value: wrongPassword2 },
     });
     fireEvent.change(screen.getByLabelText(/Nueva contraseña/i), {
-      target: { value: "NewPassword1" },
+      target: { value: newPassword2 },
     });
     fireEvent.change(screen.getByLabelText(/Confirmar contraseña/i), {
-      target: { value: "NewPassword1" },
+      target: { value: newPassword2 },
     });
 
     fireEvent.click(screen.getByRole("button", { name: /Actualizar contraseña/i }));
