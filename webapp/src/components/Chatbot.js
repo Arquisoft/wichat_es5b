@@ -86,17 +86,18 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
             sender: 'user',
             imageUrl: imageUrl
         };
+        
         setMessages(prev => [...prev, userImageMessage]);
         
         try {
-            // Mensaje de carga
+            
             const loadingMessage = { 
                 text: "Analizando la imagen para darte una pista...", 
                 sender: 'bot' 
             };
             setMessages(prev => [...prev, loadingMessage]);
             
-            // Llamada al endpoint correcto (/askWithImage)
+            
             const response = await axios.post(`${apiEndpoint}/askWithImage`, { 
                 question: `Estoy jugando a adivinar una película o actor. Dame una pista útil basada en esta imagen sin revelar directamente el nombre.`,
                 imageUrl: imageUrl
@@ -106,19 +107,22 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                 text: response.data.answer || "No pude generar una pista basada en la imagen.", 
                 sender: 'bot' 
             };
+
             setMessages(prev => [...prev, botMessage]);
-    
             setImageHintUsed(true);
             
             await axios.post(`${apiEndpoint}/chatBotUsed`);
             setScore(prevScore => prevScore - 1); 
+
         } catch (error) {
+
             console.error("Error al procesar la imagen:", error);
             const errorMessage = { 
                 text: error.response?.data?.error || 
                      "Lo siento, no pude analizar la imagen. Intenta con otra pista.", 
                 sender: 'bot' 
             };
+
             setMessages(prev => [...prev, errorMessage]);
         }
     };

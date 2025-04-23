@@ -83,7 +83,7 @@ app.post('/askllm', async (req, res) => {
 app.post('/askWithImage', async (req, res) => {
   try {
     // Forward the request to the LLM service
-    const llmResponse = await axios.post(llmServiceUrl+'/askWithImageViaPrompt', req.body); //askWithImageViaPrompt  /askWithImage
+    const llmResponse = await axios.post(llmServiceUrl+'/askWithImageViaPrompt', req.body); // /askWithImageViaPrompt (actual)  /askWithImage
     res.json(llmResponse.data);
   } catch (error) {
     res.status(error.response?.status || 500).json({ 
