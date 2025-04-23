@@ -43,8 +43,8 @@ app.post('/login', async (req, res) => {
 app.post('/adduser', async (req, res) => {
   try {
     // Forward the add user request to the user service
-    const userResponse = await axios.post(userServiceUrl+'/adduser', req.body);
-    res.json(userResponse.data);
+    const userResponseAdd = await axios.post(userServiceUrl+'/adduser', req.body);
+    res.json(userResponseAdd.data);
   } catch (error) {
     res.status(error.response.status).json({ error: error.response.data.error });
   }
@@ -53,8 +53,8 @@ app.post('/adduser', async (req, res) => {
 app.post('/updateusername', async (req, res) => {
   try {
     // Forward the update username request to the user service
-    const userResponse = await axios.post(userServiceUrl+'/updateusername', req.body);
-    res.json(userResponse.data);
+    const userResponseUpdateUser = await axios.post(userServiceUrl+'/updateusername', req.body);
+    res.json(userResponseUpdateUser.data);
   } catch (error) {
     res.status(error.response.status).json({ error: error.response.data.error });
   }
@@ -63,8 +63,8 @@ app.post('/updateusername', async (req, res) => {
 app.post('/updatepassword', async (req, res) => {
   try {
     // Forward the update password request to the user service
-    const userResponse = await axios.post(userServiceUrl+'/updatepassword', req.body);
-    res.json(userResponse.data);
+    const userResponseUpdatePass = await axios.post(userServiceUrl+'/updatepassword', req.body);
+    res.json(userResponseUpdatePass.data);
   } catch (error) {
     res.status(error.response.status).json({ error: error.response.data.error });
   }

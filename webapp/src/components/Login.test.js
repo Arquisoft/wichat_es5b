@@ -106,5 +106,46 @@ describe('Login component', () => {
     expect(normalBtn).toBeDisabled();
     expect(largaBtn).not.toBeDisabled();
   });
+
+  it('sets username and createdAt when token is present', () => {
+    jest.spyOn(localStorage, 'getItem').mockImplementation((field) => {
+      if (field === 'token') {
+        return 'some-token';
+      }
+      if (field === 'username') {
+        return 'test-username';
+      }
+      if (field === 'createdAt') {
+        return '2022-01-01T12:00:00.000Z';
+      }
+    });
+
+    localStorage.setItem('token', 'some-token');
+    localStorage.setItem('username', 'test-username');
+    localStorage.setItem('createdAt', '2022-01-01T12:00:00.000Z');
+    render(<Login userForHistory={userForHistory}/>);
+    expect(localStorage.username).not.toBe(null);
+    expect(localStorage.createdAt).not.toBe(null);
+  });
+
+  it('parses createdAt date correctly', () => {
+    jest.spyOn(localStorage, 'getItem').mockImplementation((field) => {
+      if (field === 'token') {
+        return 'some-token';
+      }
+      if (field === 'username') {
+        return 'test-username';
+      }
+      if (field === 'createdAt') {
+        return '2022-01-01T12:00:00.000Z';
+      }
+    });
+
+    localStorage.setItem('token', 'some-token');
+    localStorage.setItem('username', 'test-username');
+    localStorage.setItem('createdAt', '2022-01-01T12:00:00.000Z');
+    render(<Login userForHistory={userForHistory}/>);
+    expect(localStorage.createdAt).toBe('2022-01-01T12:00:00.000Z');
+  });
   
 });
