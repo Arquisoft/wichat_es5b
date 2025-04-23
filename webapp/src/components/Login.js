@@ -4,13 +4,14 @@ import { Container, Typography, TextField, Button, Snackbar, Alert, ButtonGroup,
 import { Typewriter } from "react-simple-typewriter";
 import Game from './game/GameQuestion';
 import LoadingScreen from './LoadingScreen';
+import CssBaseline from '@mui/material/CssBaseline';
+
 
 const Login = ({userForHistory}) => {
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
   
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [createdAt, setCreatedAt] = useState(null);
@@ -19,7 +20,6 @@ const Login = ({userForHistory}) => {
   const [keyReinicio, setKeyReinicio] = useState(0);
   const [mostrarPantalla, setMostrarPantalla] = useState(false);
   const [nQuestions, setNQuestions] = useState(6);
-  const [loadingMessage, setLoadingMessage] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -42,29 +42,9 @@ const Login = ({userForHistory}) => {
             console.error("Error parsing date:", e);
           }
         }
-
-        // Generar mensaje de bienvenida solo si no existe
-        if (!message) {
-          generateWelcomeMessage(username);
-        }
       }
     }
   }, [apiEndpoint]);
-
-  const generateWelcomeMessage = async (username) => {
-    setLoadingMessage(true);
-    try {
-      const question = `Welcome back message for ${username}, student of Software Architecture at University of Oviedo. Be nice and polite. Two sentences max.`;
-      const model = "empathy";
-      const response = await axios.post(`${apiEndpoint}/askllm`, { question, model });
-      setMessage(response.data.answer);
-    } catch (error) {
-      console.error("Error generating welcome message:", error);
-      setMessage(`Welcome back, ${username}! Ready to continue learning?`);
-    } finally {
-      setLoadingMessage(false);
-    }
-  };
 
   const loginHistory = () => {
     userForHistory(username);
@@ -74,7 +54,10 @@ const Login = ({userForHistory}) => {
     try {
       const response = await axios.post(`${apiEndpoint}/login`, { username, password });
 
-      // Guardar datos en localStorage
+
+      // Extract data from the response
+      const { createdAt: userCreatedAt } = response.data;
+
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('username', username);
       
@@ -82,8 +65,6 @@ const Login = ({userForHistory}) => {
       const createdAtDate = new Date(response.data.createdAt);
       localStorage.setItem('createdAt', createdAtDate.toISOString());
 
-      // Generar mensaje de bienvenida
-      await generateWelcomeMessage(username);
 
       setCreatedAt(createdAtDate.toISOString());
       setLoginSuccess(true);
@@ -156,126 +137,21 @@ const Login = ({userForHistory}) => {
       }}
     >
       {loginSuccess ? (
-  <div style={{ width: '100%', maxWidth: '400px', margin: '0 auto' }}>
-    {/* Contenedor del mensaje */}
-    <Box sx={{ 
-      minHeight: '80px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: 2,
-      textAlign: 'center'
-    }}>
-      {loadingMessage ? (
-            <Typography>Loading welcome message...</Typography>
-          ) : message ? (
-              <Typewriter
-                words={[message]}
-                cursor
-                cursorStyle="|"
-                typeSpeed={50}
-                style={{ 
-                  display: 'inline-block',
-                  width: '100%'
-                }}
-              />
-            ) : null}
+        <div>
+          <Typography component="h1" variant="h2" sx={{ textAlign: 'center', marginTop: 4 }}>🎬¡Bienvenido a Wichat!</Typography>
+          <Typography component="h2" variant="h5" sx={{ textAlign: 'center', marginTop: 4 }}>¿Preparado para poner a prueba tus conocimientos en el mundo del cine?</Typography>
+          <Typography component="p" variant="body1" sx={{ textAlign: 'left', marginTop: 2}}>Escoge la longitud de la partida:</Typography>
+          <Box sx={{display: 'flex', justifyContent: 'space-between', mt: 2, mb: 2}}>
+            <ButtonGroup variant="contained" aria-label="outlined primary button group" sx={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
+              <Button disabled={nQuestions === 6} onClick={() => {setNQuestions(6); console.log("Corta")}} sx={{width: '33%', color: "#d87152", backgroundColor: "#faf5ea"}}>Corta</Button>
+              <Button disabled={nQuestions === 12} onClick={() => {setNQuestions(12); console.log("Normal")}} sx={{width: '33%', color: "#d87152", backgroundColor: "#faf5ea"}}>Normal</Button>
+              <Button disabled={nQuestions === 18} onClick={() => {setNQuestions(18); console.log("Larga")}} sx={{width: '33%', color: "#d87152", backgroundColor: "#faf5ea"}}>Larga</Button>
+            </ButtonGroup>
           </Box>
-          
-          {createdAt && (
-            <Typography component="p" variant="body1" sx={{ 
-              textAlign: 'center', 
-              marginBottom: 3,
-              color: '#555'
-            }}>
-              Your account was created on {new Date(createdAt).toLocaleDateString()}.
-            </Typography>
-          )}
-          
-          <Typography component="p" variant="body1" sx={{ 
-            textAlign: 'center', 
-            marginBottom: 2,
-            fontWeight: 'bold',
-            color: '#333'
-          }}>
-            Escoge la longitud de la partida:
-          </Typography>
-          
-          {/* Contenedor de botones mejorado */}
-          <Box sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginBottom: 3,
-            gap: 0, 
-            '& .MuiButton-root': {
-              flex: 1,
-              maxWidth: '120px',
-              boxShadow: 'none', // Elimina sombras
-              border: '1px solid #c46331',
-              '&:not(:last-child)': {
-                borderRight: 'none' 
-              },
-              '&:hover': {
-                backgroundColor: '#e07a4d'
-              }
-            },
-            '& .Mui-disabled': {
-              backgroundColor: '#f0a988',
-              color: 'white'
-            }
-          }}>
-            <Button 
-              disabled={nQuestions === 6} 
-              onClick={() => setNQuestions(6)}
-              sx={{ 
-                borderTopLeftRadius: '8px',
-                borderBottomLeftRadius: '8px'
-              }}
-            >
-              Corta
-            </Button>
-            <Button 
-              disabled={nQuestions === 12} 
-              onClick={() => setNQuestions(12)}
-              sx={{ 
-                borderRadius: 0
-              }}
-            >
-              Normal
-            </Button>
-            <Button 
-              disabled={nQuestions === 18} 
-              onClick={() => setNQuestions(18)}
-              sx={{ 
-                borderTopRightRadius: '8px',
-                borderBottomRightRadius: '8px'
-              }}
-            >
-              Larga
-            </Button>
-          </Box>
-          
-          <Button 
-            variant="contained" 
-            color="primary" 
-            onClick={async () => { 
-              setMostrarPantalla(true); 
-              await start(); 
-              setMostrarPantalla(false); 
-              setStartGame(true);
-            }} 
-            sx={{ 
-              width: '100%',
-              maxWidth: '200px',
-              display: 'block',
-              margin: '0 auto',
-              backgroundColor: '#c46331',
-              '&:hover': {
-                backgroundColor: '#e07a4d'
-              }
-            }}
-          >
-            Start Game
+
+          <Typography component="p" variant="body1" sx={{ textAlign: 'left', marginTop: 2}}>Preparados, listos...</Typography>
+          <Button variant="contained" color="primary" onClick={async () => { setMostrarPantalla(true); await start(); setMostrarPantalla(false); setStartGame(true);}} sx={{ marginTop: 2, color: "#d87152", backgroundColor: "#faf5ea" }}>
+            ¡Acción!
           </Button>
         </div>
       ) : (

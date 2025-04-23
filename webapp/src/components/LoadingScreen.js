@@ -6,13 +6,10 @@ const LoadingScreen = () => {
             display: "flex",
             justifyContent: "center",
             alignContent: "center",
-            "flex-direction": "column"
+            flexDirection: "column"
         }}>
-            <h2>Loading...</h2>
-            <div>
-                <PacmanLoader color="#c46331" size={30} />
-            </div>
-           
+            <h2>Preparando las palomitas...</h2>
+            <PacmanLoader color="#c46331" size={30} />
         </div>
     );
 }

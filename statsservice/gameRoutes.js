@@ -27,7 +27,7 @@ const port=8006
 // Ruta para obtener el ranking
 app.get('/ranking', async (req, res) => {
     try {
-      const ranking = await Ranking.find().sort({ correctAnswers: -1 });
+      const ranking = await Ranking.find().sort({ correctAnswers: -1 }).limit(10);
       res.json(ranking);
     } catch (err) {
       res.status(500).json({ message: err.message });

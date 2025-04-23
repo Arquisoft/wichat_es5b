@@ -21,6 +21,7 @@ const Ranking = () => {
     }, []);
 
     const mostrarRanking = () =>{
+        getRanking();
         setShow(true);
     }
 
