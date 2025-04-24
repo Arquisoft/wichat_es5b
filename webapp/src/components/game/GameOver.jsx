@@ -39,11 +39,11 @@ export default function GameOver({ correct, wrong, username, questions, score })
                 <TableCell style={{fontSize: "1.5em"}}>{score}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell style={{fontSize: "1.5em"}}>{translations.end_correct_answers || "Respuestas correctas: "}</TableCell>
+                <TableCell style={{fontSize: "1.5em"}}>{translations.end_correct_answers || "Preguntas Correctas"}</TableCell>
                 <TableCell style={{fontSize: "1.5em"}}>{correct}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell style={{fontSize: "1.5em"}}>{translations.end_wrong_answers || "Respuestas incorrectas: "}</TableCell>
+                <TableCell style={{fontSize: "1.5em"}}>{translations.end_wrong_answers || "Preguntas Incorrectas"}</TableCell>
                 <TableCell style={{fontSize: "1.5em"}}>{wrong}</TableCell>
               </TableRow>
             </TableBody>

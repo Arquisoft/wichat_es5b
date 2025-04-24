@@ -20,9 +20,9 @@ describe('Login component', () => {
     render(<Login userForHistory={userForHistory}/>);
     
 
-    const usernameInput = screen.getByLabelText(/Username/i);
-    const passwordInput = screen.getByLabelText(/Password/i);
-    const loginButton = screen.getByRole('button', { name: /Login/i });
+    const usernameInput = screen.getByLabelText(/Usuario/i);
+    const passwordInput = screen.getByLabelText(/Contraseña/i);
+    const loginButton = screen.getByRole('button', { name: /Iniciar Sesión/i });
 
     // Mock the axios.post request to simulate a successful response
     mockAxios.onPost('http://localhost:8000/login').reply(200, { createdAt: '2024-01-01T12:34:56Z' });
@@ -49,9 +49,9 @@ describe('Login component', () => {
     render(<Login userForHistory={userForHistory} />);
   
     
-    const usernameInput = await screen.findByLabelText(/Username/i);
-    const passwordInput = screen.getByLabelText(/Password/i);
-    const loginButton = screen.getByRole('button', { name: /Login/i });
+    const usernameInput = await screen.findByLabelText(/Usuario/i);
+    const passwordInput = screen.getByLabelText(/Contraseña/i);
+    const loginButton = screen.getByRole('button', { name: /Iniciar Sesión/i });
   
     fireEvent.change(usernameInput, { target: { value: 'wrongUser' } });
     fireEvent.change(passwordInput, { target: { value: 'wrongPassword' } });
@@ -78,13 +78,13 @@ describe('Login component', () => {
     render(<Login userForHistory={userForHistory} />);
   
     await act(async () => {
-      fireEvent.change(screen.getByLabelText(/Username/i), {
+      fireEvent.change(screen.getByLabelText(/Usuario/i), {
         target: { value: 'testUser' },
       });
-      fireEvent.change(screen.getByLabelText(/Password/i), {
+      fireEvent.change(screen.getByLabelText(/Contraseña/i), {
         target: { value: 'testPassword' },
       });
-      fireEvent.click(screen.getByRole('button', { name: /Login/i }));
+      fireEvent.click(screen.getByRole('button', { name: /Iniciar Sesión/i }));
     });
   
     await waitFor(() =>

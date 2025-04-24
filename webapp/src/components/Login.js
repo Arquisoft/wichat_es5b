@@ -168,7 +168,7 @@ const Login = ({ userForHistory }) => {
             margin="normal"
             fullWidth
             name="password"
-            label={translations.login_password || "Password"}
+            label={translations.login_password || "Contraseña"}
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
