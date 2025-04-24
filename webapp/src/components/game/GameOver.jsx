@@ -1,11 +1,18 @@
 import axios from 'axios';
-import { useEffect } from "react";
+
+import { useEffect, useContext } from "react";
+import { LanguageContext } from "../../LanguageContext";
+
 import { Table, TableHead, TableRow, TableCell, TableBody, Button, Typography } from "@mui/material";
 import '@fontsource/great-vibes'; 
+
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
 export default function GameOver({ correct, wrong, username, questions, score }) {
+
+  const { translations } = useContext(LanguageContext);
+
   const saveHistorial = async () =>{
     const data = {username: username, date: new Date().toISOString(), correctAnswers: correct, wrongAnswers: wrong, totalScore:score, questions: questions};
     await axios.post(apiEndpoint + "/newHistory", data);
@@ -32,16 +39,17 @@ export default function GameOver({ correct, wrong, username, questions, score })
                 <TableCell style={{fontSize: "1.5em"}}>{score}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell style={{fontSize: "1.5em"}}>Preguntas Correctas</TableCell>
+                <TableCell style={{fontSize: "1.5em"}}>{translations.end_correct_answers || "Preguntas Correctas"}</TableCell>
                 <TableCell style={{fontSize: "1.5em"}}>{correct}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell style={{fontSize: "1.5em"}}>Preguntas Incorrectas</TableCell>
+                <TableCell style={{fontSize: "1.5em"}}>{translations.end_wrong_answers || "Preguntas Incorrectas"}</TableCell>
                 <TableCell style={{fontSize: "1.5em"}}>{wrong}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
         </div>
+
       </div>
     );
 

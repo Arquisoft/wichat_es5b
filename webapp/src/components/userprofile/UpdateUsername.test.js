@@ -1,6 +1,6 @@
 // UpdateUsername.test.js
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '../../test-utils';
 import UpdateUsername from './UpdateUsername';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
