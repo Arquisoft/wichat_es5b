@@ -1,5 +1,5 @@
 // UpdatePassword.test.js
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "../../test-utils";
 import UpdatePassword from "./UpdatePassword";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";

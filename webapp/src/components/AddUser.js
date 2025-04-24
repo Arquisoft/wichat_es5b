@@ -1,7 +1,8 @@
 // src/components/AddUser.js
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Container, Typography, TextField, Button, Snackbar,Alert } from '@mui/material';
+import { LanguageContext } from "../LanguageContext";
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
@@ -10,6 +11,7 @@ const AddUser = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const { translations } = useContext(LanguageContext);
 
   const addUser = async () => {
     try {
@@ -27,13 +29,13 @@ const AddUser = () => {
   return (
     <Container component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
       <Typography component="h1" variant="h5">
-        Add User
+        {translations.register || "Add User"}
       </Typography>
       <TextField
         name="username"
         margin="normal"
         fullWidth
-        label="Username"
+        label={translations.register_username || "Usuario"}
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
@@ -41,13 +43,13 @@ const AddUser = () => {
         name="password"
         margin="normal"
         fullWidth
-        label="Password"
+        label={translations.register_password || "Contraseña"}
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
       <Button fullWidth id="add-user-btn" variant="contained" color="primary" onClick={addUser}>
-        Add User
+        {translations.register_button || "Crear Usuario"}
       </Button>
       {/* Mensaje de éxito */}
       <Snackbar
@@ -57,7 +59,7 @@ const AddUser = () => {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
         <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
-          Usuario añadido correctamente
+          {translations.register_message || "Usuario añadido correctamente"}
         </Alert>
       </Snackbar>
 

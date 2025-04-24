@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { TextField, Button, Box, List, ListItem, ListItemText, Paper } from '@mui/material';
 import axios from 'axios';
 
 import { blueGrey } from '@mui/material/colors';
+import { LanguageContext } from "../LanguageContext";
+
 import { RingLoader } from "react-spinners";
 import { Typewriter } from "react-simple-typewriter";
+
 
 
 const Chatbot = ({ movieName, imageUrl, setScore }) => {
@@ -12,6 +15,8 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
     const [input, setInput] = useState('');
     const [isMinimized, setIsMinimized] = useState(true);
     const [imageHintUsed, setImageHintUsed] = useState(false);
+    const { translations } = useContext(LanguageContext);
+
 
     const DEFAULT_MODEL = 'empathy';
     const QWEN_MODEL = 'empathyQwen';
@@ -38,7 +43,7 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                 model: currentModel
             });
 
-            // MODIFICAR(no parece funcionar cuando qwen esta caido): Verificar si la respuesta contiene un error de Qwen
+            
             if (typeof response.data.answer === 'string' && 
                 response.data.answer.includes('status code 504')) {
                 throw new Error('QWEN_TIMEOUT');
@@ -141,7 +146,7 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
         
         const modelName = newModel === DEFAULT_MODEL ? 'Mistral' : 'Qwen';
         const infoMessage = {
-            text: `Se ha cambiado el modelo a ${modelName}.`,
+            text: (translations.chatbot_model_change || "Se ha cambiado el modelo a") + ` ${modelName}.`,
             sender: 'system'
         };
         setMessages(prev => [...prev, infoMessage]);
@@ -196,7 +201,7 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                             justifyContent: 'center'
                         }}
                     >
-                        {isMinimized ? 'Chat de Pistas ▲' : 'Chat ▼'}
+                        {translations.chatbot_title || "Chat de Pistas"} {isMinimized ? '▲' : '▼'}
                     </Button>
                     
                     {!isMinimized && (
@@ -223,30 +228,36 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                                     px: 1
                                 }}
                             >
-                                {imageHintUsed ? 'Pista usada' : 'Pista visual'}
+                                {imageHintUsed 
+                                ? (translations.chatbot_visual_hint_used || 'Pista usada')
+                                : (translations.chatbot_visual_hint || 'Pista visual')} 
                             </Button>
                             
                             <Button 
-                                variant="outlined"
-                                onClick={toggleModel}
-                                sx={{ 
-                                    backgroundColor: '#f0e6de',
-                                    color: '#5a2d16',
-                                    borderColor: '#c46331',
-                                    '&:hover': { 
-                                        backgroundColor: '#e8d5c9',
-                                        borderColor: '#a6532a'
-                                    },
-                                    fontSize: '0.7rem',
-                                    height: '30px',
-                                    minWidth: '80px',
-                                    textTransform: 'none',
-                                    px: 1
-                                }}
+                            variant="outlined"
+                            onClick={toggleModel}
+                            sx={{ 
+                                backgroundColor: '#f0e6de',
+                                color: '#5a2d16',
+                                borderColor: '#c46331',
+                                '&:hover': { 
+                                    backgroundColor: '#e8d5c9',
+                                    borderColor: '#a6532a'
+                                },
+                                fontSize: '0.8rem',
+                                mr: 1,
+                                height: '30px',
+                                minWidth: '100px',
+                                textTransform: 'none'
+                            }}
                             >
-                                {currentModel === DEFAULT_MODEL ? 'Usar Qwen' : 'Usar Mistral'}
+                                {currentModel === DEFAULT_MODEL 
+                                ? (translations.chatbot_use_qwen || 'Usar Qwen') 
+                                : (translations.chatbot_use_mistral || 'Usar Mistral')}
+
                             </Button>
                         </Box>
+                        
                     )}
                 </Box>
     
@@ -323,7 +334,7 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                                 size="medium"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
-                                placeholder="Preguntame..."
+                                placeholder={translations.chatbot_question || "Escribe tu pregunta..."}
                                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                                 sx={{
                                     '& .MuiOutlinedInput-root': {
@@ -357,7 +368,7 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                                     minWidth: '80px'
                                 }}
                             >
-                                Enviar
+                                {translations.send || "Enviar"}
                             </Button>
                         </Box>
                     </>
