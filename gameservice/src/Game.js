@@ -32,7 +32,6 @@ function selectController(gameMode){
     gameController= new BateriaDeSabiosController(questionGen, answerVer);
     gameController.setNumberOfOptions(2);
   }
-  console.log("OPCIONES DESPUÉS DEL SET" + gameController.numberOfOptions)
 }
 
 // Petición para terminar el juego

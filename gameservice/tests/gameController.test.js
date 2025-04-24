@@ -1,4 +1,4 @@
-const { GameController } = require("../src/GameController");
+const { ClassicGameController } = require("../src/gameMode/ClassicGameController");
 const { QuestionManager } = require("../src/QuestionManager");
 const { AnswerVerifier } = require("../src/AnswerVerifier");
 const { MovieQuestion } = require("../src/questions/MovieQuestion");
@@ -10,7 +10,7 @@ let answerVerifier;
 beforeEach(() => {
     questionManager = new QuestionManager();
     answerVerifier = new AnswerVerifier();
-    gameController = new GameController(questionManager, answerVerifier);
+    gameController = new ClassicGameController(questionManager, answerVerifier);
 });
 
 test("Inicio del juego", async () => {
@@ -112,10 +112,10 @@ test("Se devuelve una respuesta sin haber pregunta", () => {
 });
 
 test("Se acaba el tiempo", () => {
+    gameController.setQuestion("", ["Star Wars", "Inception", "The Matrix", "Interstellar"], "Interstellar");
     gameController.getQuestionManager().pushQuestion(new MovieQuestion("", "The Matrix", ["Star Wars", "Inception", "The Matrix", "Interstellar"]));
-    gameController.getQuestionManager().pushQuestion(new MovieQuestion("", "Inception", ["Star Wars", "Inception", "The Matrix", "Interstellar"]));
-    gameController.timeOver();
 
-    expect(gameController.getScore()).toBe(-1);
+    gameController.submitAnswer("",0);
+    expect(gameController.getScore()).toBe(0);
     expect(gameController.getCurrentQuestion()).not.toBeNull(); 
 })
