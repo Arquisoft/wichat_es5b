@@ -16,8 +16,8 @@ class BateriaDeSabiosController extends  GameController {
         }
         console.log(isCorrect);
         this.nextQuestion();
-        let isOver = (this.getNumberOfQuestions() <= this.numberOfAnsweredQuestions || timeLeft === 0 || !isCorrect)
-        return {isCorrect: isCorrect, isOver: isOver};
+        this.hasGameEnded = (this.getNumberOfQuestions() <= this.numberOfAnsweredQuestions || timeLeft === 0 || !isCorrect)
+        return {isCorrect: isCorrect, isOver: this.hasGameEnded};
     }
 }
 module.exports = { BateriaDeSabiosController };

@@ -95,10 +95,10 @@ test("Selección de respuesta incorrecta", () => {
 });
 
 test("Fin del juego", () => {
+    gameController.setNumberOfQuestions(1)
     gameController.setQuestion("", ["Star Wars", "Inception", "The Matrix", "Interstellar"], "Interstellar");
     gameController.submitAnswer("Interstellar", 30);
 
-    gameController.endGame();
     expect(gameController.isGameEnded()).toBe(true);
 });
 

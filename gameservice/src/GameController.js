@@ -13,18 +13,13 @@ class GameController {
     this.POINTS_PER_QUESTION=100;
     this.POINTS_HINTBUTTONS_USED=5;
     this.POINTS_CHATBOT_USED = 20;
-   }
+  }
 
     async startGame() {
       this.score = 0;
       console.log("Inicio del juego");
       await this.questionManager.generateQuestions(this.numberOfQuestions, this.numberOfOptions);
       this.nextQuestion();
-    }
-
-    async endGame() {
-      console.log("Fin del juego. Puntuación:", this.score);
-      this.hasGameEnded = true;
     }
   
     /**
