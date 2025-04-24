@@ -15,8 +15,8 @@ class ClassicGameController extends GameController {
             this.score+=this.POINTS_PER_QUESTION+timeLeft;
         }
         this.nextQuestion();
-        let isOver = this.getNumberOfQuestions() <= this.numberOfAnsweredQuestions
-        return {isCorrect: isCorrect, isOver: isOver};
+        this.hasGameEnded = this.getNumberOfQuestions() <= this.numberOfAnsweredQuestions
+        return {isCorrect: isCorrect, isOver: this.hasGameEnded};
     }
 }
 

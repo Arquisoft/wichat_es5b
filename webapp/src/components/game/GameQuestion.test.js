@@ -46,6 +46,7 @@ describe('GameQuestion Component', () => {
 
   //trackeo de todos los state setters mockeados
   let mockSetters = {};
+  let gameMode ="normal"
 
   //state mocking
   function mockUseState(initialState) {
@@ -112,7 +113,9 @@ describe('GameQuestion Component', () => {
       }
       if(url.includes('answer')){
         const timeLeft  = data.timeLeft;
-        return Promise.resolve({ data: { isCorrect: true, score: 100+timeLeft } });
+        const isCorrectAnsw = data.answer === mockQuestion.correctAnswer
+        const isGameOver = gameMode === "normal" ? false : isCorrectAnsw
+        return Promise.resolve({ data: { isCorrect: isCorrectAnsw, score: 100+timeLeft, isOver:isGameOver  } });
       }
       return Promise.resolve({ data: {} });
     });
@@ -139,20 +142,11 @@ describe('GameQuestion Component', () => {
     expect(img).toHaveAttribute('src', mockQuestion.imageUrl);
   });
 
-  /*
-  test('muestra opciones de respuesta', async () => {
-    render(<MovieQuiz />);
-
-    mockQuestion.options.forEach(option => {
-      expect(screen.getByText(option)).toBeInTheDocument();
-    });
-  }); */
-
   test('muestra opciones de respuesta', async () => {
     render(<MovieQuiz username={"user"} modoJuego={"normal"} nQuestions={6}/>);
 
     mockQuestion.options.forEach(option => {
-
+      expect(screen.getByText(option)).toBeInTheDocument();
       const buttons = screen.getAllByRole('button', { name: option });
       expect(buttons.length).toBeGreaterThan(0);
 
@@ -209,10 +203,6 @@ describe('GameQuestion Component', () => {
       const hintButton = await screen.findByRole('button', { name: label });
       expect(hintButton).toBeInTheDocument();
     }
-
-    //checkear nombre de la pelicula
-    // const movieNameElement = screen.getByTestId('movie-name');
-    // expect(movieNameElement).toHaveTextContent(mockQuestion.llmQuestions);
   });
 
   test('muestra GameOver cuando se completan todas las preguntas', async () => {
@@ -286,4 +276,36 @@ describe('GameQuestion Component', () => {
     });
 
   });
+
+  test('en el modo "batería de sabios", al fallar una pregunta acaba el juego', async () => {
+    gameMode = "bateriaSabios";
+
+    const incorrectAnswer = mockQuestion.options.find(opt => opt !== mockQuestion.correctAnswer);
+
+    let gameFinished = false;
+    const setGameFinishedMock = jest.fn((val) => { gameFinished = val; });
+
+    jest.spyOn(React, 'useState').mockImplementation((init) => {
+      if (init === false && typeof init === 'boolean') {
+        return [gameFinished, setGameFinishedMock];
+      }
+      return originalUseState(init);
+    });
+
+    const { rerender } = render(<MovieQuiz username={"user"} modoJuego={gameMode} nQuestions={6}/>);
+
+    const button = await screen.findByRole('button', { name: incorrectAnswer });
+    fireEvent.click(button);
+
+    expect(setGameFinishedMock).toHaveBeenCalledWith(true);
+
+    rerender(<MovieQuiz username={"user"} modoJuego={gameMode} nQuestions={6}/>);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('game-over')).toBeInTheDocument();
+      expect(screen.getByText(/Fallos:/)).toBeInTheDocument();
+    });
+  });
+
+
 });

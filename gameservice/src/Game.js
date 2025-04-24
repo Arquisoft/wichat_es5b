@@ -34,12 +34,6 @@ function selectController(gameMode){
   }
 }
 
-// Petición para terminar el juego
-app.post("/end", (req  , res  ) => {
-  gameController.endGame();
-  res.sendStatus(200);
-});
-
 // Petición para obtener la pregunta actual
 app.get("/question", (req  , res  ) => {
   const question = gameController.getCurrentQuestion();

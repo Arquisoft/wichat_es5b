@@ -114,7 +114,6 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
   };
 
   if (gameFinished) {
-    endGame()
     return <GameOver correct={correctAnswers} wrong={wrongAnswers} username ={user} questions={questions} score={score} />
   }
 
@@ -141,12 +140,6 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
       console.error("Error al enviar la respuesta:", error);
       return { result: false }; // Evita `undefined` y devuelve un objeto seguro
     }
-  }
-
-  async function endGame() {
-    return (await fetch(apiEndpoint + "/end", {
-      method: 'POST',
-    }))
   }
 
   function formatTime(seconds) {
