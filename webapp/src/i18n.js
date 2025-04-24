@@ -32,8 +32,8 @@ export const loadProperties = (lang) => {
         return properties;
       })
       .catch((error) => {
-        console.error("Error cargando el archivo .properties:", error);
-        return {};
+        // console.error("Error cargando el archivo .properties:", error);
+        return Promise.resolve({});
       });
 };
   

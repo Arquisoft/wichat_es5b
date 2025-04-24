@@ -1,6 +1,10 @@
 import axios from 'axios';
+
 import { useEffect, useContext } from "react";
 import { LanguageContext } from "../../LanguageContext";
+
+import { Table, TableHead, TableRow, TableCell, TableBody, Button, Typography } from "@mui/material";
+import '@fontsource/great-vibes'; 
 
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
@@ -23,10 +27,41 @@ export default function GameOver({ correct, wrong, username, questions, score })
   },[]);
 
     return (
-      <div className="max-w-lg mx-auto p-5 bg-orange shadow-lg rounded-lg text-center py-2 px-5">
-        <h2 className="text-2xl font-bold text-white">{translations.end || "Fin de la partida"}</h2>
-        <p className="mt-4 text-lg font-semibold">{translations.end_correct_answers || "Respuestas correctas"} {correct}</p>
-        <p className="mt-2 text-lg font-semibold">{translations.end_wrong_answers || "Respuestas incorrectas"} {wrong}</p>
+      <div style={{display:"flex", alignItems:"center", flexDirection:"column"}}>
+        <div style = {{display: "flex", alignItems:"center", width:"100%"}}>
+          <Typography component="h1" variant="h1" sx={{ textAlign: 'center', marginTop: 4, fontFamily: 'Great Vibes, bold', fontSize: '15em' }}>The End</Typography> 
+        </div>
+        <div style={{display:"flex"}}>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell style={{fontSize: "1.5em"}}>Puntuación</TableCell>
+                <TableCell style={{fontSize: "1.5em"}}>{score}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell style={{fontSize: "1.5em"}}>{translations.end_correct_answers || "Preguntas Correctas"}</TableCell>
+                <TableCell style={{fontSize: "1.5em"}}>{correct}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell style={{fontSize: "1.5em"}}>{translations.end_wrong_answers || "Preguntas Incorrectas"}</TableCell>
+                <TableCell style={{fontSize: "1.5em"}}>{wrong}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+
       </div>
     );
+
+    /*
+    <div>
+          <form>
+            <label>
+              Dejanos tu opinion:
+              <textarea style={{width:"150%", resize:"none"}}></textarea>
+            </label>
+            <Button variant="primary">Enviar</Button>
+          </form>
+          </div>
+    */
   }

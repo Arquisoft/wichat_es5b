@@ -22,6 +22,7 @@ const Ranking = () => {
     }, []);
 
     const mostrarRanking = () =>{
+        getRanking();
         setShow(true);
     }
 
@@ -30,13 +31,13 @@ const Ranking = () => {
             <Button variant="primary" sx={{color:"#fecd24",fontSize: "1.1rem"}} onClick= {() => mostrarRanking()}>{translations.nav_ranking || "RANKING"}</Button>
             <Dialog open={show} onClose={()=> setShow(false)}>
                 <DialogContent>
-                    <DialogTitle>{translations.nav_ranking || "RANKING"}</DialogTitle>
+                    <DialogTitle>{translations.nav_ranking_title || "Ranking"}</DialogTitle>
                     <Table>
                         <TableHead>
                             <TableRow>
                                 <TableCell>{translations.nav_ranking_date || "Fecha"}</TableCell>
-                                <TableCell>Preguntas correctas</TableCell>
-                                <TableCell>Preguntas Incorrectas</TableCell>
+                                <TableCell>{translations.nav_ranking_correct_answers || "Preguntas correctas"}</TableCell>
+                                <TableCell>{translations.nav_ranking_wrong_answers || "Preguntas Incorrectas"}</TableCell>
                                 <TableCell>{translations.nav_ranking_score || "Puntuación"}</TableCell>
                             </TableRow>
                         </TableHead>

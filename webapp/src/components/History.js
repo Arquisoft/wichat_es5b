@@ -31,7 +31,7 @@ const History = ({username}) => {
             <Button variant="primary" sx={{color:"#fecd24",fontSize: "1.1rem"}} onClick= {() => mostrarHistorial()}>{translations.nav_history || "HISTORIAL"}</Button>
             <Dialog open={show} onClose={()=> setShow(false)}>
                 <DialogTitle>
-                    {translations.nav_history || "HISTORIAL"}
+                    {translations.nav_history || "Historial"}
                 </DialogTitle>
                 <DialogContent>
                     {username ? (<Table>
