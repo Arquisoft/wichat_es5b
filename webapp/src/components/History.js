@@ -24,6 +24,13 @@ const History = ({username}) => {
         setHistorial(res.data);
     }
 
+    const formatoFecha = (fechaHistorial) => {
+        let fecha = new Date(fechaHistorial);
+        console.log(fecha);
+        fecha = new Intl.DateTimeFormat(translations.current_language).format(fecha);
+        console.log(fecha);
+        return fecha;
+    }
 
 
     return(
@@ -46,7 +53,7 @@ const History = ({username}) => {
                         <TableBody>
                         {historial.map((user,index)=>(
                             <TableRow key={index}>
-                                <TableCell>{user.date}</TableCell>
+                                <TableCell>{formatoFecha(user.date)}</TableCell>
                                 <TableCell>{user.correctAnswers}</TableCell>
                                 <TableCell>{user.wrongAnswers}</TableCell>
                                 <PreguntasHistorico user={user}/>
