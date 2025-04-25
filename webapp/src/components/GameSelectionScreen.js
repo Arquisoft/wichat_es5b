@@ -60,10 +60,10 @@ export default function SelectionScreen({ username }) {
                     }}
                 >
                     <Typography variant="h5" fontWeight="bold" gutterBottom>
-                        MODALIDAD DE JUEGO
+                        {translations.welcome_gameMode_title || "MODALIDAD DEL JUEGO"}
                     </Typography>
                     <Typography variant="body1" sx={{ mb: 3 }}>
-                        Escoge el modo de juego:
+                        {translations.welcome_gameMode_choose || "Escoge el modo de juego:"}
                     </Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                         <ButtonGroup fullWidth>
@@ -73,7 +73,7 @@ export default function SelectionScreen({ username }) {
                                 onClick={() => setModoJuego('normal')}
                                 sx={{ borderRadius: 2, fontWeight: 'bold', textTransform: 'none', color: '#fff' }}
                             >
-                                NORMAL
+                                {translations.welcome_gameMode_normal || "NORMAL"}
                             </Button>
                             <Button
                                 variant={modoJuego === 'bateriaSabios' ? 'contained' : 'outlined'}
@@ -81,7 +81,7 @@ export default function SelectionScreen({ username }) {
                                 onClick={() => setModoJuego('bateriaSabios')}
                                 sx={{ borderRadius: 2, fontWeight: 'bold', textTransform: 'none', color: '#fff' }}
                             >
-                                BATERÍA DE SABIOS
+                                {translations.welcome_gameMode_wiseStack || "BATERÍA DE SABIOS"}
                             </Button>
                         </ButtonGroup>
                     </Box>
@@ -97,7 +97,7 @@ export default function SelectionScreen({ username }) {
                     }}
                 >
                     <Typography variant="h5" fontWeight="bold" gutterBottom>
-                        DIFICULTAD DEL JUEGO
+                        {translations.login_length_title || "LONGITUD DEL JUEGO"}
                     </Typography>
                     <Typography variant="body1" sx={{ mb: 3 }}>
                         {translations.login_choose || "Escoge la longitud de la partida:"}
