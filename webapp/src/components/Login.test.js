@@ -92,18 +92,23 @@ describe('Login component', () => {
     );
   
     const cortaBtn = screen.getByRole('button', { name: /Corta/i });
-    const normalBtn = screen.getByRole('button', { name: /Normal/i });
+    const normalBtn = screen.getAllByRole('button', { name: /Normal/i });
     const largaBtn = screen.getByRole('button', { name: /Larga/i });
-  
+
+    const bateríaDeSabiosBt = screen.getByRole('button', { name: /Batería de sabios/i });
+
     expect(cortaBtn).toBeDisabled(); // Default es 6 => Corta
-    expect(normalBtn).not.toBeDisabled();
+    expect(normalBtn[1]).not.toBeDisabled();
     expect(largaBtn).not.toBeDisabled();
-  
+
+    expect(normalBtn[0]).toBeDisabled(); // Default es 6 => Corta
+    expect(bateríaDeSabiosBt).not.toBeDisabled();
+
     // Cambiamos a "Normal"
-    fireEvent.click(normalBtn);
+    fireEvent.click(normalBtn[1]);
   
     expect(cortaBtn).not.toBeDisabled();
-    expect(normalBtn).toBeDisabled();
+    expect(normalBtn[1]).toBeDisabled();
     expect(largaBtn).not.toBeDisabled();
   });
 

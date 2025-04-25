@@ -3,6 +3,8 @@ import { render, screen, fireEvent, waitFor, act } from '../../test-utils';
 import MovieQuiz from './GameQuestion';
 import axios from 'axios';
 import { executeSparqlQuery } from '../../../../wikidataservice/wikidata-service';
+import { LanguageProvider } from '../../LanguageContext';
+
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
@@ -84,7 +86,7 @@ describe('GameQuestion Component', () => {
       if (url.includes('messages_es.properties')) {
         return Promise.resolve({
           ok: true,
-          text: () => Promise.resolve('Primera Pista=Primera Pista\nSegunda Pista=Segunda Pista\nTercera Pista=Tercera Pista\nCuarta Pista=Cuarta Pista'),
+          text: () => Promise.resolve('Primera Pista=Primera Pista\nSegunda Pista=Segunda Pista\nTercera Pista=Tercera Pista\nCuarta Pista=Cuarta Pista\n'),
         });
       }
     
@@ -315,14 +317,22 @@ describe('GameQuestion Component', () => {
       return originalUseState(init);
     });
 
-    const { rerender } = render(<MovieQuiz username={"user"} modoJuego={gameMode} nQuestions={6}/>);
+    const { rerender } = render(
+        <LanguageProvider>
+          <MovieQuiz username={"user"} modoJuego={gameMode} nQuestions={6}/>
+        </LanguageProvider>
+    );
 
     const button = await screen.findByRole('button', { name: incorrectAnswer });
     fireEvent.click(button);
 
     expect(setGameFinishedMock).toHaveBeenCalledWith(true);
 
-    rerender(<MovieQuiz username={"user"} modoJuego={gameMode} nQuestions={6}/>);
+    rerender(
+        <LanguageProvider>
+          <MovieQuiz username={"user"} modoJuego={gameMode} nQuestions={6}/>
+        </LanguageProvider>
+    );
 
     await waitFor(() => {
       expect(screen.getByTestId('game-over')).toBeInTheDocument();
