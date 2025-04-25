@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor, act } from '@testing-library/react';
+import { render, fireEvent, screen, waitFor, act } from '../test-utils';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import Login from './Login';
@@ -20,9 +20,9 @@ describe('Login component', () => {
     render(<Login userForHistory={userForHistory}/>);
     
 
-    const usernameInput = screen.getByLabelText(/Username/i);
-    const passwordInput = screen.getByLabelText(/Password/i);
-    const loginButton = screen.getByRole('button', { name: /Login/i });
+    const usernameInput = screen.getByLabelText(/Usuario/i);
+    const passwordInput = screen.getByLabelText(/Contraseña/i);
+    const loginButton = screen.getByRole('button', { name: /Iniciar Sesión/i });
 
     // Mock the axios.post request to simulate a successful response
     mockAxios.onPost('http://localhost:8000/login').reply(200, { createdAt: '2024-01-01T12:34:56Z' });
@@ -49,9 +49,9 @@ describe('Login component', () => {
     render(<Login userForHistory={userForHistory} />);
   
     
-    const usernameInput = await screen.findByLabelText(/Username/i);
-    const passwordInput = screen.getByLabelText(/Password/i);
-    const loginButton = screen.getByRole('button', { name: /Login/i });
+    const usernameInput = await screen.findByLabelText(/Usuario/i);
+    const passwordInput = screen.getByLabelText(/Contraseña/i);
+    const loginButton = screen.getByRole('button', { name: /Iniciar Sesión/i });
   
     fireEvent.change(usernameInput, { target: { value: 'wrongUser' } });
     fireEvent.change(passwordInput, { target: { value: 'wrongPassword' } });
@@ -60,6 +60,51 @@ describe('Login component', () => {
     await waitFor(() =>
       expect(screen.getByText(/Invalid credentials/i)).toBeInTheDocument()
     );
+  });
+  
+  
+  
+  
+  it('should disable the selected game length button', async () => {
+    mockAxios.onPost('http://localhost:8000/login').reply(200, {
+      token: 'test-token',
+      createdAt: '2024-01-01T12:34:56Z',
+    });
+  
+    mockAxios.onPost('http://localhost:8000/askllm').reply(200, {
+      answer: 'Hello test user',
+    });
+  
+    render(<Login userForHistory={userForHistory} />);
+  
+    await act(async () => {
+      fireEvent.change(screen.getByLabelText(/Usuario/i), {
+        target: { value: 'testUser' },
+      });
+      fireEvent.change(screen.getByLabelText(/Contraseña/i), {
+        target: { value: 'testPassword' },
+      });
+      fireEvent.click(screen.getByRole('button', { name: /Iniciar Sesión/i }));
+    });
+  
+    await waitFor(() =>
+      expect(screen.getByText(/Escoge la longitud de la partida/i)).toBeInTheDocument()
+    );
+  
+    const cortaBtn = screen.getByRole('button', { name: /Corta/i });
+    const normalBtn = screen.getByRole('button', { name: /Normal/i });
+    const largaBtn = screen.getByRole('button', { name: /Larga/i });
+  
+    expect(cortaBtn).toBeDisabled(); // Default es 6 => Corta
+    expect(normalBtn).not.toBeDisabled();
+    expect(largaBtn).not.toBeDisabled();
+  
+    // Cambiamos a "Normal"
+    fireEvent.click(normalBtn);
+  
+    expect(cortaBtn).not.toBeDisabled();
+    expect(normalBtn).toBeDisabled();
+    expect(largaBtn).not.toBeDisabled();
   });
 
   it('sets username and createdAt when token is present', () => {

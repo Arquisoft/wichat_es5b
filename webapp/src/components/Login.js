@@ -1,9 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { Container, Typography, TextField, Button, Snackbar, Alert } from '@mui/material';
-import SelectionScreen from "./GameSelectionScreen";
+import { Container, Typography, TextField, Button, Snackbar, Alert, ButtonGroup, Box } from '@mui/material';
+import { Typewriter } from "react-simple-typewriter";
+import Game from './game/GameQuestion';
+import LoadingScreen from './LoadingScreen';
 
-const Login = ({userForHistory}) => {
+import { LanguageContext } from "../LanguageContext";
+
+import CssBaseline from '@mui/material/CssBaseline';
+
+
+
+const Login = ({ userForHistory }) => {
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
   const [username, setUsername] = useState('');
@@ -13,7 +21,7 @@ const Login = ({userForHistory}) => {
   const [createdAt, setCreatedAt] = useState(null);
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
-
+   const { translations, currentLang } = useContext(LanguageContext);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -26,6 +34,7 @@ const Login = ({userForHistory}) => {
         setLoginSuccess(true);
 
         // Parsear la fecha correctamente
+
         if (createdAt) {
           try {
             const date = new Date(createdAt);
@@ -39,7 +48,6 @@ const Login = ({userForHistory}) => {
       }
     }
   }, [apiEndpoint]);
-
   const loginHistory = () => {
     userForHistory(username);
   };
@@ -48,17 +56,16 @@ const Login = ({userForHistory}) => {
     try {
       const response = await axios.post(`${apiEndpoint}/login`, { username, password });
 
-
       // Extract data from the response
       const { createdAt: userCreatedAt } = response.data;
 
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('username', username);
 
+
       // Asegurarse de que la fecha está en formato ISO
       const createdAtDate = new Date(response.data.createdAt);
       localStorage.setItem('createdAt', createdAtDate.toISOString());
-
 
       setCreatedAt(createdAtDate.toISOString());
       setLoginSuccess(true);

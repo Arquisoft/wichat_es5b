@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { 
     Dialog, 
     DialogTitle, 
@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import axios from 'axios';
 import {jwtDecode} from "jwt-decode";
+import { LanguageContext } from "../../LanguageContext";
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
@@ -19,6 +20,7 @@ export default function UpdateUsername() {
     const [newUsername, setNewUsername] = useState("");
     const [error, setError] = useState('');
     const [openSnackbar, setOpenSnackbar] = useState(false);
+    const { translations } = useContext(LanguageContext);
 
     const token = localStorage.getItem("token");
 
@@ -61,7 +63,7 @@ export default function UpdateUsername() {
                     }} 
                     onClick= {() => mostrarUpdateUser()}
                 >
-                    Editar nombre de usuario
+                    {translations.nav_edit_username || "Editar nombre de usuario"}
                 </MenuItem>
                 <Dialog 
                     open={show} 
@@ -81,14 +83,14 @@ export default function UpdateUsername() {
                             fontSize: "1.3rem" 
                         }}
                     >
-                        Edite su nombre de usuario
+                        {translations.nav_edit_username_title || "Edite su nombre de usuario"}
                     </DialogTitle>
                     <DialogContent>
                     <TextField
                         name="username"
                         margin="normal"
                         fullWidth
-                        label="Nombre de usuario"
+                        label={translations.nav_edit_username_label || "Nombre de usuario"}
                         value={newUsername}
                         onChange={(e) => setNewUsername(e.target.value)}
                         sx={{
@@ -126,7 +128,7 @@ export default function UpdateUsername() {
                             }
                           }}
                     >
-                        Actualizar nombre de usuario
+                        {translations.nav_edit_username_button || "Actualizar nombre de usuario"}
                     </Button>
                     </DialogContent>
                     <DialogActions>
@@ -137,7 +139,7 @@ export default function UpdateUsername() {
                                 fontWeight: "bold" 
                             }}
                         >
-                            Cerrar
+                            {translations.close || "Cerrar"}
                         </Button>
                     </DialogActions>
 
@@ -149,7 +151,7 @@ export default function UpdateUsername() {
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                         >
                             <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
-                            Nombre de usuario modificado correctamente
+                            {translations.nav_edit_username_confirmation || "Nombre de usuario modificado correctamente"}
                             </Alert>
                         </Snackbar>
                     

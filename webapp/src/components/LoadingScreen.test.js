@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '../test-utils';
 import LoadingScreen from './LoadingScreen';
 
 //mockeo el componente PacmanLoader
@@ -10,6 +10,7 @@ jest.mock('react-spinners', () => ({
 describe('LoadingScreen Component', () => {
   test('renders without crashing', () => {
     render(<LoadingScreen />);
+
     expect(screen.getByText('Preparando las palomitas...')).toBeInTheDocument();
   });
 
@@ -29,6 +30,7 @@ describe('LoadingScreen Component', () => {
   test('has proper styling for centered content', () => {
     render(<LoadingScreen />);
     const container = screen.getByText('Preparando las palomitas...').parentElement;
+
     
     expect(container).toHaveStyle({
       display: 'flex',

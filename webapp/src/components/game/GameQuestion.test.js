@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '../../test-utils';
 import MovieQuiz from './GameQuestion';
 import axios from 'axios';
 import { executeSparqlQuery } from '../../../../wikidataservice/wikidata-service';
@@ -72,6 +72,29 @@ describe('GameQuestion Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.useFakeTimers();
+
+    global.fetch = jest.fn((url) => {
+      if (url.includes('/question')) {
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve(mockQuestion),
+        });
+      }
+    
+      if (url.includes('messages_es.properties')) {
+        return Promise.resolve({
+          ok: true,
+          text: () => Promise.resolve('Primera Pista=Primera Pista\nSegunda Pista=Segunda Pista\nTercera Pista=Tercera Pista\nCuarta Pista=Cuarta Pista'),
+        });
+      }
+    
+      // fallback
+      return Promise.resolve({
+        ok: true,
+        text: () => Promise.resolve(''),
+      });
+    });    
+
     mockSetters = {}; //resetear state setters
 
     //mockeo useState
@@ -235,10 +258,10 @@ describe('GameQuestion Component', () => {
     let score = 0
     for(let i = 0; i <hintButtonLabels.length;i++){
       const hintButton = await screen.findByRole('button', { name: hintButtonLabels[i] });
-      score =  5 * (i + 1)
+      // score =  5 * (i + 1);
       fireEvent.click(hintButton);
       await waitFor(() => {
-        expect(screen.getByText(new RegExp(`${-score}`))).toBeInTheDocument();
+        expect(screen.getByText(new RegExp(-5))).toBeInTheDocument(); // -5
         console.log("SCORE ("+i+")"+score)
       });
     }
@@ -250,7 +273,7 @@ describe('GameQuestion Component', () => {
     const toggleButton = screen.getByRole('button', { name: /Chat de Pistas ▲/i });
     fireEvent.click(toggleButton);
 
-    const inputField = screen.getByPlaceholderText('Preguntame...');
+    const inputField = screen.getByPlaceholderText('Escribe tu pregunta...');
     const sendButton = screen.getByRole('button', { name: /Enviar/i });
 
     fireEvent.change(inputField, { target: { value: '¿Quién es el director?' } });

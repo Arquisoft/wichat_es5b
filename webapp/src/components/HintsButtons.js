@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Container from '@mui/material/Container';
 import { Typewriter } from "react-simple-typewriter";
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import { LanguageContext } from "../LanguageContext";
 
 
 const HintsButtons = (props) =>{
     const [hints, setHints] = useState([]);
     const [unlockedIndex, setUnlockedIndex] = useState(0); //estado para el indice desbloqueado
+    const { translations } = useContext(LanguageContext);
 
     //const pelicula = "El Resplandor";
     const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
@@ -31,7 +33,7 @@ const HintsButtons = (props) =>{
 
       return (
         <Container className="bg-orange shadow-lg rounded-lg" component="div" maxWidth="s" sx={{ mt: 5, display: "flex", justifyContent:"center", alignContent: "center"}}>
-            {['Primera Pista', 'Segunda Pista', 'Tercera Pista', 'Cuarta Pista'].map((label, index) => (
+            {[(translations.hints_buttons_first || "Primera Pista"), (translations.hints_buttons_second || "Segunda Pista"), (translations.hints_buttons_third || "Tercera Pista"), (translations.hints_buttons_fourth || "Cuarta Pista")].map((label, index) => (
                 
                 <Container key={index} >
                 {hints[index] ? (
