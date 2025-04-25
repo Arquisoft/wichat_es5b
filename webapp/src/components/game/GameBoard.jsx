@@ -1,6 +1,6 @@
 import './GameQuestion.css';
 
-export default function NormalGame({handleOptionClick, selectedOption, currentQuestion, optionsDisabled, currentLang}) {
+export default function GameBoard({handleOptionClick, selectedOption, currentQuestion, optionsDisabled, currentLang}) {
 
   return (
         <div className="grid grid-cols-2 gap-2">

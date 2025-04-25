@@ -6,8 +6,7 @@ import Chatbot from '../Chatbot';
 import LoadingScreen from '../LoadingScreen';
 import axios from 'axios';
 import ProgressBar from '../ProgressBar';
-import NormalGame from "./NormalGame";
-import BateriaDeSabiosGame from "./BateriaDeSabiosGame";
+import GameBoard from "./GameBoard";
 import { LanguageContext } from "../../LanguageContext";
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
@@ -168,11 +167,7 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
                     </div>
                     <ProgressBar timeLeft={timeLeft} maxTime={maxTime}/>
                   </div>
-                  {modoJuego==="normal" ?
-                    (<NormalGame handleOptionClick={handleOptionClick} selectedOption={selectedOption} currentQuestion={currentQuestion} optionsDisabled={optionsDisabled} currentLang={currentLang}/>)
-                    :
-                    (<BateriaDeSabiosGame handleOptionClick={handleOptionClick} selectedOption={selectedOption} currentQuestion={currentQuestion} optionsDisabled={optionsDisabled} currentLang={currentLang}/>)
-                  }
+                    <GameBoard handleOptionClick={handleOptionClick} selectedOption={selectedOption} currentQuestion={currentQuestion} optionsDisabled={optionsDisabled} currentLang={currentLang}/>
                   <HintsButtons
                       key={currentQuestion}
                       questionsLlm={currentQuestion.questionsLlm?.[currentLang] ?? []}
