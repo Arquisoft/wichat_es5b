@@ -120,7 +120,12 @@ app.post('/askWithImageViaPrompt', async (req, res) => {
     validateRequiredFields(req, ['question', 'imageUrl']);
 
     const { question } = req.body;
-    originalImageUrl = req.body.imageUrl;
+
+    //Validacion de API Key
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      return res.status(400).json({ error: 'Gemini API key is missing.' });
+    }
 
     //Procesamiento y Correccion de URL
     if (originalImageUrl.includes('wiki/Special:FilePath/')) {
@@ -134,11 +139,6 @@ app.post('/askWithImageViaPrompt', async (req, res) => {
 
     console.log('Processed URL to include in prompt:', processedUrl);
 
-    //Validacion de API Key
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      return res.status(400).json({ error: 'Gemini API key is missing.' });
-    }
 
     //configuración de Gemini
     const config = llmConfigs.gemini;

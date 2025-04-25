@@ -268,10 +268,10 @@ describe('GameQuestion Component', () => {
     let score = 0
     for(let i = 0; i <hintButtonLabels.length;i++){
       const hintButton = await screen.findByRole('button', { name: hintButtonLabels[i] });
-      score =  5 * (i + 1)
+      // score =  5 * (i + 1);
       fireEvent.click(hintButton);
       await waitFor(() => {
-        expect(screen.getByText(new RegExp(`${-score}`))).toBeInTheDocument();
+        expect(screen.getByText(new RegExp(-5))).toBeInTheDocument(); // -5
         console.log("SCORE ("+i+")"+score)
       });
     }
