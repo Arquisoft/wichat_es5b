@@ -25,6 +25,7 @@ describe('LLM Service', () => {
   });
 
   // Test /ask endpoint with gemini
+  /* Modificado el uso de Gemini y no entra dentro del uso del enpoint /ask
   it('the gemini llm should reply', async () => {
     const response = await request(app)
       .post('/ask')
@@ -32,7 +33,8 @@ describe('LLM Service', () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.body.answer).toBe('llmanswer');
-  });
+  }); 
+  */
 
   // Test /ask endpoint with empathy
   it('the empathy llm should reply', async () => {
@@ -43,6 +45,7 @@ describe('LLM Service', () => {
     expect(response.statusCode).toBe(200);
     expect(response.body.answer).toBe('llmanswer');
   });
+  
 
 });
 

@@ -91,6 +91,18 @@ app.post('/askllm', async (req, res) => {
   }
 });
 
+app.post('/askWithImage', async (req, res) => {
+  try {
+    // Forward the request to the LLM service
+    const llmResponse = await axios.post(llmServiceUrl+'/askWithImageViaPrompt', req.body); // /askWithImageViaPrompt (actual)  /askWithImage
+    res.json(llmResponse.data);
+  } catch (error) {
+    res.status(error.response?.status || 500).json({ 
+      error: error.response?.data?.error || 'Error processing image' 
+    });
+  }
+});
+
 
 app.post('/queryWikiData', async (req, res) => {
   try {

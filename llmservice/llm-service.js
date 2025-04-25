@@ -14,11 +14,10 @@ const llmConfigs = {
 
   gemini: {
     url: (apiKey) => `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-    transformRequest: (question) => ({
-      contents: [{ parts: [{ text: question }] }]
-    }),
-    transformResponse: (response) => response.data.candidates[0]?.content?.parts[0]?.text
+    transformResponse: (response) => response.data?.candidates?.[0]?.content?.parts?.[0]?.text || "No pude generar una respuesta"
   },
+
+  
 
   empathy: {
     url: () => 'https://empathyai.prod.empathy.co/v1/chat/completions',
@@ -105,6 +104,90 @@ app.post('/ask', async (req, res) => {
 
   } catch (error) {
     res.status(400).json({ error: error.message });
+  }
+});
+
+
+
+
+app.post('/askWithImageViaPrompt', async (req, res) => { 
+  
+  let originalImageUrl = req.body.imageUrl;
+  let processedUrl;
+
+  try {
+    console.log('Using Gemini API Key:', process.env.GEMINI_API_KEY ? '***' + process.env.GEMINI_API_KEY.slice(-4) : 'MISSING');
+    validateRequiredFields(req, ['question', 'imageUrl']);
+
+    const { question } = req.body;
+
+    //Validacion de API Key
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      return res.status(400).json({ error: 'Gemini API key is missing.' });
+    }
+
+    //Procesamiento y Correccion de URL
+    if (originalImageUrl.includes('wiki/Special:FilePath/')) {
+        let filenamePart = originalImageUrl.split('wiki/Special:FilePath/')[1];
+        try { filenamePart = decodeURIComponent(filenamePart); } catch (e) { console.warn("Could not decode filename part:", filenamePart, e.message); }
+        const filename = encodeURIComponent(filenamePart).replace(/%2F/g, "/");
+        processedUrl = `https://upload.wikimedia.org/wikipedia/commons/${filename}`;
+    } else {
+        try { processedUrl = encodeURI(decodeURI(originalImageUrl)); } catch(e) { console.warn("Could not decode/re-encode non-wiki URL:", originalImageUrl, e.message); processedUrl = originalImageUrl; }
+    }
+
+    console.log('Processed URL to include in prompt:', processedUrl);
+
+
+    //configuración de Gemini
+    const config = llmConfigs.gemini;
+    const geminiApiUrl = config.url(apiKey);
+
+    //crear el prompt con la URL
+    const combinedPrompt = `${question}\n\nPor favor, analiza la imagen que se encuentra en la siguiente URL para dar la pista: ${processedUrl}`;
+
+    
+    const requestData = {
+      contents: [{
+        parts: [
+          { text: combinedPrompt }
+        ]
+      }]
+    };
+
+    console.log('Sending request to Gemini API (URL in prompt):', {
+      prompt_start: combinedPrompt.substring(0, 100) + (combinedPrompt.length > 100 ? '...' : '')
+    });
+
+    //Envío a Gemini
+    const response = await axios.post(geminiApiUrl, requestData, {
+      headers: { 'Content-Type': 'application/json' },
+      timeout: 30000 
+    });
+
+    //respuesta de Gemini
+    const answer = config.transformResponse(response);
+    res.json({ answer });
+
+  } catch (error) {
+     
+     console.error('Error in /askWithImageViaPrompt endpoint:', {
+       message: error.message,
+       statusCode: error.statusCode,
+       isAxiosError: error.isAxiosError,
+       apiResponseStatus: error.response?.status,
+       apiResponseData: error.response?.data,
+       requestBody: { question: req.body.question, imageUrl: originalImageUrl },
+       processedUrl: processedUrl,
+     });
+
+     const status = error.response?.status || error.statusCode || 500;
+     res.status(status).json({
+       error: 'Error processing request with image URL in prompt',
+       details: error.response?.data?.error?.message || error.message,
+       processedUrl: processedUrl
+     });
   }
 });
 
