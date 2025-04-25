@@ -40,7 +40,7 @@ const History = ({username}) => {
                                 <TableCell>{translations.nav_history_date || "Fecha"}</TableCell>
                                 <TableCell>{translations.nav_history_correct_answers || "Preguntas correctas"}</TableCell>
                                 <TableCell>{translations.nav_history_wrong_answers || "Preguntas incorrectas"}</TableCell>
-                                <TableCell>Preguntas</TableCell>
+                                <TableCell>{translations.nav_history_questions || "Preguntas"}</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
