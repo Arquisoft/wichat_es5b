@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useEffect, useContext } from "react";
 import { LanguageContext } from "../../LanguageContext";
 
-import { Table, TableHead, TableRow, TableCell, TableBody, Button, Typography } from "@mui/material";
+import { Table, TableRow, TableCell, TableBody, Typography } from "@mui/material";
 import '@fontsource/great-vibes'; 
 
 
@@ -21,7 +21,9 @@ export default function GameOver({ correct, wrong, username, questions, score })
     const data={username: username, correctAnswers: correct, wrongAnswers: wrong, totalScore:score, questions: questions}
     await axios.post(apiEndpoint + "/newRanking", data);
   }
+
   useEffect(()=>{
+    console.log(22222222222222)
     saveHistorial();
     saveRanking();
   },[]);

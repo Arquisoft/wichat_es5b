@@ -7,7 +7,7 @@ import LoadingScreen from '../LoadingScreen';
 import axios from 'axios';
 import ProgressBar from '../ProgressBar';
 import NormalGame from "./NormalGame";
-import BateriaDeSabiosGame from "./BateriaDeSabiosGame";  // Asegúrate de importar la barra de progreso correctamente
+import BateriaDeSabiosGame from "./BateriaDeSabiosGame";
 import { LanguageContext } from "../../LanguageContext";
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
@@ -23,7 +23,7 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
   const [gameFinished, setGameFinished] = useState(false);
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [optionsDisabled, setOptionsDisabled] = useState(false);//opcion para desactivar los botones de respuesta
+  const [optionsDisabled, setOptionsDisabled] = useState(false);
   const PREGUNTASNUM = {nQuestions}.nQuestions;
   const user = {username}.username
   const { translations, currentLang } = useContext(LanguageContext);
@@ -80,7 +80,7 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
   useEffect(() => {
     if (timeLeft === 0) {
       handleOptionClick();
-      return; // Evita seguir con el temporizador
+      return;
     }
   }, [timeLeft]);
 
@@ -115,6 +115,7 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
   };
 
   if (gameFinished) {
+    console.log("11111111111")
     return <GameOver correct={correctAnswers} wrong={wrongAnswers} username ={user} questions={questions} score={score} />
   }
 
@@ -136,10 +137,10 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
       console.log("Enviando respuesta:", selectedAnswer, "tiempo: "+timeLeft);
       const response = await axios.post(apiEndpoint + "/answer", { answer: selectedAnswer, timeLeft: timeLeft });
       console.log("Respuesta recibida:", response);
-      return response.data; // Devolver los datos en lugar del objeto completo
+      return response.data;
     } catch (error) {
       console.error("Error al enviar la respuesta:", error);
-      return { result: false }; // Evita `undefined` y devuelve un objeto seguro
+      return { result: false };
     }
   }
 
@@ -169,11 +170,15 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
                     <ProgressBar timeLeft={timeLeft} maxTime={maxTime}/>
                   </div>
                   {modoJuego==="normal" ?
-                    (<NormalGame handleOptionClick={handleOptionClick} selectedOption={selectedOption} currentQuestion={currentQuestion} optionsDisabled={optionsDisabled}/>)
+                    (<NormalGame handleOptionClick={handleOptionClick} selectedOption={selectedOption} currentQuestion={currentQuestion} optionsDisabled={optionsDisabled} currentLang={currentLang}/>)
                     :
-                    (<BateriaDeSabiosGame handleOptionClick={handleOptionClick} selectedOption={selectedOption} currentQuestion={currentQuestion} optionsDisabled={optionsDisabled}/>)
+                    (<BateriaDeSabiosGame handleOptionClick={handleOptionClick} selectedOption={selectedOption} currentQuestion={currentQuestion} optionsDisabled={optionsDisabled} currentLang={currentLang}/>)
                   }
-                  <HintsButtons key={currentQuestion} questionsLlm={currentQuestion.questionsLlm} setScore={setScore} />
+                  <HintsButtons
+                      key={currentQuestion}
+                      questionsLlm={currentQuestion.questionsLlm?.[currentLang] ?? []}
+                      setScore={setScore}
+                  />
                   <Chatbot movieName={currentQuestion.correctAnswer} setScore={setScore} />
                 </div>
             )}

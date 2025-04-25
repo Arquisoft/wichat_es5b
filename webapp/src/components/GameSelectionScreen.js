@@ -1,10 +1,11 @@
 import { Button, ButtonGroup, Box, Typography, Container, Paper } from "@mui/material";
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
 import { ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
 import LoadingScreen from "./LoadingScreen";
 import Game from "./game/GameQuestion";
 import theme from './estilos/temas';
+import {LanguageContext} from "../LanguageContext";
 
 export default function SelectionScreen({ username }) {
     const [startGame, setStartGame] = useState(false);
@@ -13,6 +14,8 @@ export default function SelectionScreen({ username }) {
     const [nQuestions, setNQuestions] = useState(6);
 
     const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
+
+    const { translations, currentLang } = useContext(LanguageContext);
 
     async function start() {
         const res= await axios.post(apiEndpoint + "/start", {
@@ -30,11 +33,8 @@ export default function SelectionScreen({ username }) {
         return (
             <div>
                 <Game username={username} nQuestions={nQuestions} modoJuego={modoJuego}/>
-                <Button
-                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-                    onClick={() => reinicio()}
-                >
-                    Volver
+                <Button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={() => reinicio()}>
+                    {translations.go_back || "Volver"}
                 </Button>
             </div>
         );
@@ -44,10 +44,10 @@ export default function SelectionScreen({ username }) {
         <ThemeProvider theme={theme}>
             <Container maxWidth="md" sx={{ mt: 6, mb: 6 }}>
                 <Typography component="h1" variant="h2" align="center" gutterBottom>
-                    🎦¡Bienvenido a Wichat!
+                    🎦{translations.login_welcome || "¡Bienvenido a Wichat!"}
                 </Typography>
                 <Typography component="h2" variant="h5" align="center" sx={{ mb: 6 }}>
-                    ¿Preparado para poner a prueba tus conocimientos en el mundo del cine?
+                    {translations.login_question|| "¿Preparado para poner a prueba tus conocimientos en el mundo del cine?"}
                 </Typography>
 
                 <Paper
@@ -100,7 +100,7 @@ export default function SelectionScreen({ username }) {
                         DIFICULTAD DEL JUEGO
                     </Typography>
                     <Typography variant="body1" sx={{ mb: 3 }}>
-                        Escoge la longitud de la partida:
+                        {translations.login_choose || "Escoge la longitud de la partida:"}
                     </Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                         <ButtonGroup fullWidth>
@@ -110,7 +110,7 @@ export default function SelectionScreen({ username }) {
                                 onClick={() => setNQuestions(6)}
                                 sx={{ borderRadius: 2, fontWeight: 'bold', textTransform: 'none', color: '#fff' }}
                             >
-                                CORTA
+                                {translations.welocme_select_length_short || "Corta"}
                             </Button>
                             <Button
                                 variant={nQuestions === 12 ? 'contained' : 'outlined'}
@@ -118,7 +118,7 @@ export default function SelectionScreen({ username }) {
                                 onClick={() => setNQuestions(12)}
                                 sx={{ borderRadius: 2, fontWeight: 'bold', textTransform: 'none', color: '#fff' }}
                             >
-                                NORMAL
+                                {translations.welocme_select_length_normal || "Normal"}
                             </Button>
                             <Button
                                 variant={nQuestions === 18 ? 'contained' : 'outlined'}
@@ -126,7 +126,7 @@ export default function SelectionScreen({ username }) {
                                 onClick={() => setNQuestions(18)}
                                 sx={{ borderRadius: 2, fontWeight: 'bold', textTransform: 'none', color: '#fff' }}
                             >
-                                LARGA
+                                {translations.welocme_select_length_long || "Larga"}
                             </Button>
                         </ButtonGroup>
                     </Box>
@@ -138,7 +138,7 @@ export default function SelectionScreen({ username }) {
                         variant="h6"
                         sx={{ mr: 2, fontWeight: 'bold' }}
                     >
-                        Preparados, listos...
+                        {translations.login_ready || "Preparados, listos..."}
                     </Typography>
                     <Button
                         variant="contained"
@@ -163,7 +163,7 @@ export default function SelectionScreen({ username }) {
                             setStartGame(true);
                         }}
                     >
-                        ¡Acción!
+                        {translations.login_action || "¡Acción!"}
                     </Button>
                 </Box>
             </Container>

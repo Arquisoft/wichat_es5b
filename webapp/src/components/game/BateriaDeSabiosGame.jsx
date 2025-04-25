@@ -1,14 +1,16 @@
 import './GameQuestion.css';
 
-export default function BateriaDeSabiosGame({handleOptionClick, selectedOption, currentQuestion, optionsDisabled}) {
+export default function BateriaDeSabiosGame({handleOptionClick, selectedOption, currentQuestion, optionsDisabled, currentLang}) {
   return (
       <div className="grid grid-cols-2 gap-2">
         <div class>
           <img src={currentQuestion.imageUrl} alt="Pregunta" className="w-full h-48 my-3 rounded" />
         </div>
         <div className = "bg-orange shadow-lg rounded-lg py-2">
-          <h2 className="text-2xl font-bold text-white mx-4">{currentQuestion.question}</h2>
-          <div className="grid grid-cols-1 gap-2">
+            <h2 className="text-2xl font-bold text-white mx-4">
+                {typeof currentQuestion.question === 'object' ? currentQuestion.question[currentLang] : currentQuestion.question}
+            </h2>
+            <div className="grid grid-cols-1 gap-2">
             {currentQuestion.options.map((option, index) => (
                 <button
                     id={`option-${index}`}
