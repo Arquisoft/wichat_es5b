@@ -57,7 +57,7 @@ const GameHistorySchema = new Schema({
    
     questions: [
         {
-            text: { type: String, required: true },
+            question: { type: Object, required: true },
             image: { type: String },
             option1: { type: String, required: true },
             option2: { type: String, required: true },

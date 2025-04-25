@@ -45,7 +45,7 @@ export default function MovieQuiz({username, nQuestions}) {
     setQuestions(prevQuestions => [
       ...prevQuestions,
       {
-        text: question.question,
+        question: question.question,
         image: question.imageUrl,
         option1: question.options[0],
         option2: question.options[1],

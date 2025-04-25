@@ -29,7 +29,7 @@ const PreguntasHistorico = ({user}) => {
                         <TableBody>
                         {user.questions.map((question,index)=>(
                             <TableRow key={index}>
-                                <TableCell>{question.text}</TableCell>
+                                <TableCell>{question.question.es}</TableCell>
                                 <TableCell>
                                     <img src={question.image} alt="Imagen de la pregunta" style={{ maxWidth: '100%', maxHeight: '100%' }} />
                                 </TableCell>
