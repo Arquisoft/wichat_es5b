@@ -23,7 +23,7 @@ const Login = ({ userForHistory }) => {
   const [startGame, setStartGame] = useState(false);
   const [keyReinicio, setKeyReinicio] = useState(0);
   const [mostrarPantalla, setMostrarPantalla] = useState(false);
-  const { translations } = useContext(LanguageContext);
+  const { translations, currentLang } = useContext(LanguageContext);
   const [nQuestions, setNQuestions] = useState(6);
 
   useEffect(() => {
@@ -49,7 +49,6 @@ const Login = ({ userForHistory }) => {
       }
     }
   }, [apiEndpoint]);
-
   const loginHistory = () => {
     userForHistory(username);
   };
