@@ -68,7 +68,6 @@ export default function SelectionScreen({ username }) {
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                         <ButtonGroup fullWidth>
                             <Button
-                                disabled={modoJuego === 'normal'}
                                 variant={modoJuego === 'normal' ? 'contained' : 'outlined'}
                                 color={modoJuego === 'normal' ? 'primary' : 'inherit'}
                                 onClick={() => setModoJuego('normal')}
@@ -77,7 +76,6 @@ export default function SelectionScreen({ username }) {
                                 {translations.welcome_gameMode_normal || "NORMAL"}
                             </Button>
                             <Button
-                                disabled={modoJuego === 'bateriaSabios'}
                                 variant={modoJuego === 'bateriaSabios' ? 'contained' : 'outlined'}
                                 color={modoJuego === 'bateriaSabios' ? 'primary' : 'inherit'}
                                 onClick={() => setModoJuego('bateriaSabios')}
@@ -107,7 +105,6 @@ export default function SelectionScreen({ username }) {
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                         <ButtonGroup fullWidth>
                             <Button
-                                disabled={nQuestions === 6}
                                 variant={nQuestions === 6 ? 'contained' : 'outlined'}
                                 color={nQuestions === 6 ? 'primary' : 'inherit'}
                                 onClick={() => setNQuestions(6)}
@@ -116,7 +113,6 @@ export default function SelectionScreen({ username }) {
                                 {translations.welocme_select_length_short || "Corta"}
                             </Button>
                             <Button
-                                disabled={nQuestions === 12}
                                 variant={nQuestions === 12 ? 'contained' : 'outlined'}
                                 color={nQuestions === 12 ? 'primary' : 'inherit'}
                                 onClick={() => setNQuestions(12)}
@@ -125,7 +121,6 @@ export default function SelectionScreen({ username }) {
                                 {translations.welocme_select_length_normal || "Normal"}
                             </Button>
                             <Button
-                                disabled={nQuestions === 18}
                                 variant={nQuestions === 18 ? 'contained' : 'outlined'}
                                 color={nQuestions === 18 ? 'primary' : 'inherit'}
                                 onClick={() => setNQuestions(18)}

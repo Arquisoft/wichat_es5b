@@ -97,19 +97,19 @@ describe('Login component', () => {
 
     const bateríaDeSabiosBt = screen.getByRole('button', { name: /Batería de sabios/i });
 
-    expect(cortaBtn).toBeDisabled(); // Default es 6 => Corta
-    expect(normalBtn[1]).not.toBeDisabled();
-    expect(largaBtn).not.toBeDisabled();
+    expect(cortaBtn).toHaveClass('MuiButton-contained');  // Default es 6 => Corta
+    expect(normalBtn[1]).toHaveClass('MuiButton-outlined');
+    expect(largaBtn).toHaveClass('MuiButton-outlined');
 
-    expect(normalBtn[0]).toBeDisabled(); // Default es 6 => Corta
-    expect(bateríaDeSabiosBt).not.toBeDisabled();
+    expect(normalBtn[0]).toHaveClass('MuiButton-contained');
+    expect(bateríaDeSabiosBt).toHaveClass('MuiButton-outlined');
 
     // Cambiamos a "Normal"
     fireEvent.click(normalBtn[1]);
-  
-    expect(cortaBtn).not.toBeDisabled();
-    expect(normalBtn[1]).toBeDisabled();
-    expect(largaBtn).not.toBeDisabled();
+
+    expect(cortaBtn).toHaveClass('MuiButton-outlined');
+    expect(normalBtn[1]).toHaveClass('MuiButton-contained');
+    expect(largaBtn).toHaveClass('MuiButton-outlined');
   });
 
   it('sets username and createdAt when token is present', () => {
