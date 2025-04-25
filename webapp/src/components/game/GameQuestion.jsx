@@ -115,7 +115,6 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
   };
 
   if (gameFinished) {
-    console.log("11111111111")
     return <GameOver correct={correctAnswers} wrong={wrongAnswers} username ={user} questions={questions} score={score} />
   }
 

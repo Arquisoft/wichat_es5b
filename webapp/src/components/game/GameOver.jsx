@@ -23,7 +23,6 @@ export default function GameOver({ correct, wrong, username, questions, score })
   }
 
   useEffect(()=>{
-    console.log(22222222222222)
     saveHistorial();
     saveRanking();
   },[]);
