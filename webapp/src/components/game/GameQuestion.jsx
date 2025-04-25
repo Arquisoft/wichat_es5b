@@ -210,7 +210,13 @@ export default function MovieQuiz({username, nQuestions}) {
                     questionsLlm={currentQuestion.questionsLlm?.[currentLang] ?? []}
                     setScore={setScore}
                   />
-                  <Chatbot movieName={currentQuestion.correctAnswer} setScore={setScore} />
+
+                  <Chatbot 
+                    movieName={currentQuestion.correctAnswer} 
+                    imageUrl={currentQuestion.imageUrl}
+                    setScore={setScore} 
+                  />
+                  
                 </div>
             )}
 
