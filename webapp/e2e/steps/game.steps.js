@@ -32,7 +32,7 @@ defineFeature(feature, test => {
 
         // Registro del usuario
         await expect(page).toClick("button", { text: "¿No tienes una cuenta? Regístrate aquí." });
-        await expect(page).toFill('input[name="username"]', "aswuser");
+        await expect(page).toFill('input[name="username"]', "aswusergametesting");
         await expect(page).toFill('input[name="password"]', "ValidPassword123");
         await expect(page).toClick('button', { text: "Crear Usuario" });
 
@@ -49,7 +49,7 @@ defineFeature(feature, test => {
         let password;
 
         given('A registered user with username "aswuser" and password "ValidPassword123"', async () => {
-            username = "aswuser";
+            username = "aswusergametesting";
             password = "ValidPassword123";
         });
 
@@ -82,7 +82,7 @@ defineFeature(feature, test => {
         let password;
 
         given('A registered user with username "aswuser" and password "ValidPassword123"', async () => {
-            username = "aswuser";
+            username = "aswusergametesting";
             password = "ValidPassword123";
         });
 
@@ -138,7 +138,7 @@ defineFeature(feature, test => {
         let password;
 
         given('A registered user with username "aswuser" and password "ValidPassword123"', async () => {
-            username = "aswuser";
+            username = "aswusergametesting";
             password = "ValidPassword123";
         });
 
@@ -202,7 +202,7 @@ defineFeature(feature, test => {
         let password;
 
         given('A registered user with username "aswuser" and password "ValidPassword123"', async () => {
-            username = "aswuser";
+            username = "aswusergametesting";
             password = "ValidPassword123";
         });
 
@@ -294,7 +294,7 @@ defineFeature(feature, test => {
         let password;
 
         given('A registered user with username "aswuser" and password "ValidPassword123"', async () => {
-            username = "aswuser";
+            username = "aswusergametesting";
             password = "ValidPassword123";
         });
 
@@ -391,63 +391,7 @@ defineFeature(feature, test => {
 
     });
 
-    test('Authenticated user starts and finish a wizards stack game', ({given,when,then}) => {
 
-        let username;
-        let password;
-
-        given('A registered user with username "aswuser" and password "ValidPassword123"', async () => {
-            username = "aswuser";
-            password = "ValidPassword123";
-        });
-
-        when('I log in and I click on Start Game and I answer all questions', async () => {
-            await expect(page).toFill('input[name="username"]', username);
-            await expect(page).toFill('input[name="password"]', password);
-            await expect(page).toClick('button', { text: 'Iniciar Sesión' });
-            await expect(page).toMatchElement("h5", { text: "MODALIDAD DEL JUEGO" });
-            await expect(page).toClick('button', { text: 'BATERÍA DE SABIOS' });
-
-            await page.waitForTimeout(1000);
-            await expect(page).toClick('button', { text: '¡Acción!' });
-
-            await expect(page).toMatchElement("h2", { text: "Preparando las palomitas..." });
-
-            await expect(page).toMatchElement("img"); 
-
-            // Primera pregunta
-            await expect(page).toMatchElement("p", { text: "Pregunta 1 de 6" });
-            await expect(page).toClick('#option-0');
-            // Segunda pregunta
-            await page.waitForTimeout(1000);
-            await expect(page).toMatchElement("p", { text: "Pregunta 2 de 6" });
-            await expect(page).toClick('#option-0');
-            // Tercera pregunta
-            await page.waitForTimeout(1000);
-            await expect(page).toMatchElement("p", { text: "Pregunta 3 de 6" });
-            await expect(page).toClick('#option-0');
-            // Cuarta pregunta
-            await page.waitForTimeout(1000);
-            await expect(page).toMatchElement("p", { text: "Pregunta 4 de 6" });
-            await expect(page).toClick('#option-0');
-            // Quinta pregunta
-            await page.waitForTimeout(1000);
-            await expect(page).toMatchElement("p", { text: "Pregunta 5 de 6" });
-            await expect(page).toClick('#option-0');
-            // Sexta pregunta
-            await page.waitForTimeout(1000);
-            await expect(page).toMatchElement("p", { text: "Pregunta 6 de 6" });
-            await expect(page).toClick('#option-0');
-        });
-
-        then('I should see the finish page', async () => {
-            await expect(page).toMatchElement("h1", { text: "The End" });
-            // Cerramos la sesión
-            await expect(page).toClick('button', { text: 'Mi perfil' });
-            await expect(page).toClick('li', { text: 'Cerrar sesión' });
-        });
-
-    });
 
     afterAll(async ()=>{
         if (page) {

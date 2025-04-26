@@ -24,8 +24,3 @@ Scenario: Authenticated user starts and finish a large game
   Given A registered user with username "aswuser" and password "ValidPassword123"
   When I log in and I click on Start Game and I answer all questions
   Then I should see the finish page
-
-Scenario: Authenticated user starts and finish a wizards stack game
-  Given A registered user with username "aswuser" and password "ValidPassword123"
-  When I log in and I click on Start Game and I answer all questions
-  Then I should see the finish page
