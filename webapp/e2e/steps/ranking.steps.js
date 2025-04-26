@@ -17,11 +17,11 @@ defineFeature(feature, test => {
           : await puppeteer.launch({ 
             // executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', // Only for Mac users
             headless: false, 
-            slowMo: 40
+            slowMo: 20
           });
         page = await browser.newPage();
         //Way of setting up the timeout
-        setDefaultOptions({ timeout: 40000 })
+        setDefaultOptions({ timeout: 20000 })
     
         await page
           .goto("http://localhost:3000", {
@@ -58,7 +58,7 @@ defineFeature(feature, test => {
         });
 
         when('I go to the register page and I try to access the game ranking page', async () => {
-            await expect(page).toClick("button", { text: "Don't have an account? Register here." });
+            await expect(page).toClick("button", { text: "¿No tienes una cuenta? Regístrate aquí." });
             await expect(page).toClick('button', { text: 'RANKING' });
         });
 
@@ -79,20 +79,20 @@ defineFeature(feature, test => {
             username = "aswuser";
             password = "ValidPassword123";
 
-            await expect(page).toClick("button", { text: "Don't have an account? Register here." });
+            await expect(page).toClick("button", { text: "¿No tienes una cuenta? Regístrate aquí." });
             await expect(page).toFill('input[name="username"]', username);
             await expect(page).toFill('input[name="password"]', password);
-            await expect(page).toClick('button', { text: 'Add User' });
+            await expect(page).toClick('button', { text: 'Crear Usuario' });
         });
 
         when('I log in and I click on Ranking', async () => {
             await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
             await expect(page).toFill('input[name="username"]', username);
             await expect(page).toFill('input[name="password"]', password);
-            await expect(page).toClick('button', { text: 'Login' });
+            await expect(page).toClick('button', { text: 'Iniciar Sesión' });
 
-            await expect(page).toMatchElement('button', { text: 'Start Game' });
-
+            await expect(page).toMatchElement('button[name="start-game-button"]');
+            
             await expect(page).toClick('button', { text: 'RANKING' });
         });
 
@@ -115,13 +115,13 @@ defineFeature(feature, test => {
         });
 
         when('I log in and I click to start game and I click on Ranking', async () => {
-            await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
-            await expect(page).toFill('input[name="username"]', username);
-            await expect(page).toFill('input[name="password"]', password);
-            await expect(page).toClick('button', { text: 'Login' });
+            // await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
+            // await expect(page).toFill('input[name="username"]', username);
+            // await expect(page).toFill('input[name="password"]', password);
+            // await expect(page).toClick('button', { text: 'Inciar Sesión' });
 
-            await expect(page).toMatchElement('button', { text: 'Start Game' });
-            await expect(page).toClick('button', { text: 'Start Game' });
+            await expect(page).toMatchElement('button[name="start-game-button"]');
+            await expect(page).toClick('button[name="start-game-button"]');            
             await expect(page).toMatchElement("img"); 
 
             await expect(page).toClick('button', { text: 'RANKING' });
@@ -147,12 +147,12 @@ defineFeature(feature, test => {
 
         when('I log in and I click to start game and I answer 3 questions and I click on Ranking', async () => {
             await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
-            await expect(page).toFill('input[name="username"]', username);
-            await expect(page).toFill('input[name="password"]', password);
-            await expect(page).toClick('button', { text: 'Login' });
+            // await expect(page).toFill('input[name="username"]', username);
+            // await expect(page).toFill('input[name="password"]', password);
+            // await expect(page).toClick('button', { text: 'Iniciar Sesión' });
 
-            await expect(page).toMatchElement('button', { text: 'Start Game' });
-            await expect(page).toClick('button', { text: 'Start Game' });
+            await expect(page).toMatchElement('button[name="start-game-button"]');
+            await expect(page).toClick('button[name="start-game-button"]');            
             await expect(page).toMatchElement("img"); 
 
             // Primera pregunta
@@ -190,12 +190,12 @@ defineFeature(feature, test => {
 
         when('I log in and I click to start game and I answer all questions and I click on Ranking', async () => {
             await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
-            await expect(page).toFill('input[name="username"]', username);
-            await expect(page).toFill('input[name="password"]', password);
-            await expect(page).toClick('button', { text: 'Login' });
+            // await expect(page).toFill('input[name="username"]', username);
+            // await expect(page).toFill('input[name="password"]', password);
+            // await expect(page).toClick('button', { text: 'Iniciar Sesión' });
 
-            await expect(page).toMatchElement('button', { text: 'Start Game' });
-            await expect(page).toClick('button', { text: 'Start Game' });
+            await expect(page).toMatchElement('button[name="start-game-button"]');
+            await expect(page).toClick('button[name="start-game-button"]');            
             await expect(page).toMatchElement("img"); 
 
             // Primera pregunta

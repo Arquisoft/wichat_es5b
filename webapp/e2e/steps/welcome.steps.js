@@ -30,7 +30,7 @@ defineFeature(feature, test => {
             .catch(() => {});
 
         // Registro del usuario
-        await expect(page).toClick("button", { text: "Don't have an account? Register here." });
+        await expect(page).toClick("button", { text: "¿No tienes una cuenta? Regístrate aquí." });
         await expect(page).toFill('input[name="username"]', "aswuser");
         await expect(page).toFill('input[name="password"]', "ValidPassword123");
         // await page.waitForSelector('button', { visible: true });
@@ -60,13 +60,12 @@ defineFeature(feature, test => {
         when('I log in', async () => {
             await expect(page).toFill('input[name="username"]', username);
             await expect(page).toFill('input[name="password"]', password);
-            await expect(page).toClick('button', { text: 'Login' });
+            await expect(page).toClick('button', { text: 'Iniciar Sesión' });
             await page.waitForTimeout(1000);
         });
 
         then('I should see the Welcome message of the game', async () => {
-            await expect(page).toMatchElement("span");
-            await expect(page).toMatchElement("p", { text: new RegExp(`Your account was created on`) });
+            await expect(page).toMatchElement("h2", { text: new RegExp("¿Preparado para poner a prueba tus conocimientos en el mundo del cine?") });
 
         });
 

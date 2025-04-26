@@ -15,6 +15,7 @@ defineFeature(feature, test => {
           ? await puppeteer.launch({headless: "new", args: ['--no-sandbox', '--disable-setuid-sandbox']})
           // : await puppeteer.launch({ headless: false, slowMo: 100 });
           : await puppeteer.launch({ 
+
             // executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', // Only for Mac users
             //executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', // Only for Mac users
             headless: true, 

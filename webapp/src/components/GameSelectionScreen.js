@@ -141,6 +141,7 @@ export default function SelectionScreen({ username }) {
                         {translations.login_ready || "Preparados, listos..."}
                     </Typography>
                     <Button
+                        name="start-game-button"
                         variant="contained"
                         size="large"
                         startIcon={<span role="img" aria-label="acción">🎬</span>}
