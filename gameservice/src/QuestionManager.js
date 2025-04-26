@@ -21,10 +21,10 @@ class QuestionManager {
   }
 
   async generateQuestions(nQuestions, nOptions) {
-    let nQuestType = Math.floor(nQuestions/this.generator.length);
+    let nQuestType = Math.floor(nQuestions / this.generator.length);
     let nExtraQuestions = nQuestions % this.generator.length;
-    this.questions = []
-    console.log("OPCIONES "+nOptions)
+    this.questions = [];
+    console.log("OPCIONES " + nOptions);
 
     let queryPromises = this.generator.map((gen, index) => {
       let nQuestionsToGenerate = nQuestType + (index === 0 ? nExtraQuestions : 0);
@@ -36,11 +36,10 @@ class QuestionManager {
     let results = await Promise.all(queryPromises);
 
     results.forEach(generatedQuestions => {
-      generatedQuestions.forEach(q => this.questions.push(q));
+      this.questions.push(...generatedQuestions);
     });
 
     this.questions = shuffle(this.questions);
-
     this.currentQuestion = 0;
   }
 
