@@ -245,6 +245,9 @@ const NavMenu = ({ username }) => {
                     <MenuItem onClick={() => window.open(prometheusUrl)}>
                       Prometheus
                     </MenuItem>
+                    <MenuItem onClick={() => window.open(apiEndpoint + "/api-doc")}>
+                      Api
+                    </MenuItem>
                   </Menu>
                 </div>
               )}
