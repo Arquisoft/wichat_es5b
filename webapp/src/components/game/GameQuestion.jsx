@@ -48,7 +48,7 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
     setQuestions(prevQuestions => [
       ...prevQuestions,
       {
-        text: question.question,
+        question: question.question,
         image: question.imageUrl,
         options: question.options,
         correctOption: question.correctAnswer

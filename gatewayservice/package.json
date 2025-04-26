@@ -5,7 +5,7 @@
     "main": "service.js",
     "scripts": {
         "start": "node gateway-service.js",
-        "test": "jest"
+        "test": "jest --coverage"
     },
     "repository": {
         "type": "git",
