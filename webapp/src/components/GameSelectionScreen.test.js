@@ -10,7 +10,7 @@ const mockAxios = new MockAdapter(axios);
 
 const userForHistory = jest.fn();
 
-describe('Login component', () => {
+describe('Game selection screen', () => {
     beforeEach(() => {
         mockAxios.reset();
         jest.clearAllMocks();
