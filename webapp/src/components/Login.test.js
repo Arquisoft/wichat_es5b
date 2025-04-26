@@ -92,19 +92,24 @@ describe('Login component', () => {
     );
   
     const cortaBtn = screen.getByRole('button', { name: /Corta/i });
-    const normalBtn = screen.getByRole('button', { name: /Normal/i });
+    const normalBtn = screen.getAllByRole('button', { name: /Normal/i });
     const largaBtn = screen.getByRole('button', { name: /Larga/i });
-  
-    expect(cortaBtn).toBeDisabled(); // Default es 6 => Corta
-    expect(normalBtn).not.toBeDisabled();
-    expect(largaBtn).not.toBeDisabled();
-  
+
+    const bateríaDeSabiosBt = screen.getByRole('button', { name: /Batería de sabios/i });
+
+    expect(cortaBtn).toHaveClass('MuiButton-contained');  // Default es 6 => Corta
+    expect(normalBtn[1]).toHaveClass('MuiButton-outlined');
+    expect(largaBtn).toHaveClass('MuiButton-outlined');
+
+    expect(normalBtn[0]).toHaveClass('MuiButton-contained');
+    expect(bateríaDeSabiosBt).toHaveClass('MuiButton-outlined');
+
     // Cambiamos a "Normal"
-    fireEvent.click(normalBtn);
-  
-    expect(cortaBtn).not.toBeDisabled();
-    expect(normalBtn).toBeDisabled();
-    expect(largaBtn).not.toBeDisabled();
+    fireEvent.click(normalBtn[1]);
+
+    expect(cortaBtn).toHaveClass('MuiButton-outlined');
+    expect(normalBtn[1]).toHaveClass('MuiButton-contained');
+    expect(largaBtn).toHaveClass('MuiButton-outlined');
   });
 
   it('sets username and createdAt when token is present', () => {
