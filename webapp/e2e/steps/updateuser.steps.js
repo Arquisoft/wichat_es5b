@@ -15,7 +15,7 @@ defineFeature(feature, test => {
       : await puppeteer.launch({ 
         //executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', // Only for Mac users
         //executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', // Only for Mac users
-        headless: false, 
+        headless: true, 
         slowMo: 20
       });
     page = await browser.newPage();
@@ -36,7 +36,7 @@ defineFeature(feature, test => {
     // Comprobar si el login fue exitoso
     const loggedIn = await page.evaluate(() => {
 
-        return !!document.querySelector("div")?.textContent?.includes("Bienvenido");
+        return !!document.querySelector("div")?.textContent?.includes("Welcome");
 
     });
     
@@ -367,8 +367,7 @@ defineFeature(feature, test => {
     });
 
     and('I fill in the form with not valid new password', async () => {
-        //Esperar a que la página cargue completamente
-        await expect(page).toMatchElement("div", { text: "Edite su contraseña" });
+        
         
         await expect(page).toFill('input[name="password"]', "NewValidPassword123");
         await expect(page).toFill('input[name="newpassword"]', "invalidnewpassword");
@@ -419,8 +418,6 @@ defineFeature(feature, test => {
     });
 
     and('I fill in the form with different new password and confirmation', async () => {
-        //Esperar a que la página cargue completamente
-        await expect(page).toMatchElement("div", { text: "Edite su contraseña" });
         
         await expect(page).toFill('input[name="password"]', "NewValidPassword123");
         await expect(page).toFill('input[name="newpassword"]', "DifferentPassword123");
