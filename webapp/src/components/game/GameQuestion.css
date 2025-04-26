@@ -11,6 +11,10 @@
   background-color: #c46331;
 }
 
+.bg-orange-dark {
+  background-color: #cc5c24;
+}
+
 .shadow-lg {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -41,17 +45,22 @@
 
 .h-48 {
   width: 40em;
-  height: 20em; 
-  object-fit: contain; 
+  height: 20em;
+  object-fit: contain;
 }
 
 .object-cover {
   object-fit: cover;
-}  
+}
 
 .my-3 {
   margin-top: 1rem;
-  margin-bottom: 1rem;   
+  margin-bottom: 1rem;
+}
+
+.my-6 {
+  margin-top: 6rem;
+  margin-bottom: 6rem;
 }
 
 .rounded {
@@ -91,6 +100,11 @@
   padding-bottom: 1rem;
 }
 
+.py-3 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -99,6 +113,11 @@
 .px-5 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+
+.px-9 {
+    padding-left: 9rem;
+    padding-right: 9rem;
 }
 
 .rounded {
@@ -227,39 +246,101 @@ button:disabled:hover {
 }
 
 .align-left{
-  align-self: start; 
+  align-self: start;
 }
 
 .align-right{
-  align-self: end; 
+  align-self: end;
 }
 
 .justify-top{
-  justify-self: start; 
+  justify-self: start;
 }
 
 .justify-bottom{
-  justify-self: end; 
+  justify-self: end;
 }
 
-
-/* Cambiar el color de la parte que muestra el progreso */
 progress {
   width: 100%;
-  height: 1em; /* Ajusta la altura de la barra de progreso */
-  appearance: none; /* Desactivar el estilo por defecto */
+  height: 1em;
+  appearance: none;
   transition: width 1s ease;
 }
 
-/* Estilo para la parte que marca el progreso */
 progress::-webkit-progress-value {
-  background-color: #a9c8c4; /* Color verde para la parte de progreso */
+  background-color: #a9c8c4;
   border-radius: 1em;
-  transition: width 1s ease; /* Transición suave */
+  transition: width 1s ease;
 }
 
-/* Estilo para la parte del fondo de la barra */
 progress::-webkit-progress-bar {
-  background-color: #e5e7eb; /* Color gris claro para la parte no completada */
+  background-color: #e5e7eb;
   border-radius: 1em;
+}
+
+.object-cover {
+  max-width: 100%;
+  max-height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+}
+
+
+
+img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.table {
+  font-size: 100px;
+}
+
+.text-2xl {
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.button-transition {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button-transition:hover {
+  transform: scale(1.02);
+}
+
+/* Estilo opcional para Paper contenedor */
+.selection-box {
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+/* Clase para centrar botones y elementos */
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilo para botones grandes y llamativos */
+.btn-primary-large {
+  background-color: #4abcb0;
+  color: white;
+  padding: 12px 32px;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary-large:hover {
+  background-color: #3aa89e;
 }

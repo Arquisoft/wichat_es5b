@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor, act } from '@testing-library/react';
+import { render, fireEvent, screen, waitFor, act } from '../test-utils';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import Login from './Login';
@@ -9,15 +9,16 @@ const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000
 
 
 const mockAxios = new MockAdapter(axios);
+const mockSetScore = jest.fn();
 
 describe('HintsButtons component', () => {
   beforeEach(() => {
     mockAxios.reset();
     const llmQuestions= ["Pista 1", "Pista 2", "Pista 3", "Pista 4"]
-    render(<HintsButtons questionsLlm={llmQuestions} />);
-  
-    mockAxios.onPost(apiEndpoint+'/askllm').reply(200, { answer: 'Hello test user' });
+    render(<HintsButtons questionsLlm={llmQuestions} setScore={mockSetScore}/>);
 
+    mockAxios.onPost(apiEndpoint+'/askllm').reply(200, { answer: 'Hello test user' });
+    mockAxios.onPost(apiEndpoint + '/hintUsed').reply(200,  { score: -5 }); // Asegurar respuesta asíncrona
   });
   
   it('should show hints when hint buttons are clicked', async () => {

@@ -1,26 +1,27 @@
 const { Question } = require("../questions/Question");
 const { shuffle } = require("../util/GameUtil");
 
-
-
 class AbstractQuestionGenerator  {
 
     query ="";
+
+    nOptions= 4;
 
     getQuery(){
         return this.query;
     }
 
-    generateQuestions(queryResult, nQuestions){  
+    generateQuestions(queryResult, nQuestions, nOptions){
+        this.nOptions=nOptions;
         const mappedRes = new Map();
         this.mapResult(queryResult, mappedRes);
 
         const array = Array.from(mappedRes);
         
-        const questions = new Array(6); 
-        const generatedQuestions = new Array(6);
+        const questions = new Array(nQuestions);
+        const generatedQuestions = new Array(nQuestions);
 
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < nQuestions; i++) {
             questions[i] = this.generateQuestion(array, generatedQuestions);
         }
 
@@ -38,9 +39,8 @@ class AbstractQuestionGenerator  {
         optionsIndex.push(movieIndex);
 
         let randomIndex;
-        console.log(Question.NUMBER_OF_OPTIONS);
-        
-        for(let i = 0; i< Question.NUMBER_OF_OPTIONS;i++){
+
+        for(let i = 0; i< this.nOptions-1;i++){
             randomIndex = this.getUnusedIndex(array.length, optionsIndex);
             const [incorrectName, incorrectData] = array[randomIndex];
             options.push(incorrectName);

@@ -43,7 +43,38 @@ app.post('/login', async (req, res) => {
 app.post('/adduser', async (req, res) => {
   try {
     // Forward the add user request to the user service
-    const userResponse = await axios.post(userServiceUrl+'/adduser', req.body);
+    const userResponseAdd = await axios.post(userServiceUrl+'/adduser', req.body);
+    res.json(userResponseAdd.data);
+  } catch (error) {
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
+
+app.post('/updateusername', async (req, res) => {
+  try {
+    // Forward the update username request to the user service
+    const userResponseUpdateUser = await axios.post(userServiceUrl+'/updateusername', req.body);
+    res.json(userResponseUpdateUser.data);
+  } catch (error) {
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
+
+app.post('/updatepassword', async (req, res) => {
+  try {
+    // Forward the update password request to the user service
+    const userResponseUpdatePass = await axios.post(userServiceUrl+'/updatepassword', req.body);
+    res.json(userResponseUpdatePass.data);
+  } catch (error) {
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
+
+app.post('/getUserRole', async (req, res) => {
+  try {
+    // Forward the get user role request to the user service
+    console.log("getUserRole",req.body);
+    const userResponse = await axios.post(userServiceUrl+'/getUserRole', req.body);
     res.json(userResponse.data);
   } catch (error) {
     res.status(error.response.status).json({ error: error.response.data.error });
@@ -57,6 +88,18 @@ app.post('/askllm', async (req, res) => {
     res.json(llmResponse.data);
   } catch (error) {
     res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
+
+app.post('/askWithImage', async (req, res) => {
+  try {
+    // Forward the request to the LLM service
+    const llmResponse = await axios.post(llmServiceUrl+'/askWithImageViaPrompt', req.body); // /askWithImageViaPrompt (actual)  /askWithImage
+    res.json(llmResponse.data);
+  } catch (error) {
+    res.status(error.response?.status || 500).json({ 
+      error: error.response?.data?.error || 'Error processing image' 
+    });
   }
 });
 
@@ -138,6 +181,24 @@ app.post("/answer", async (req, res) => {
   try {
     const answerResponse = await axios.post(gameUrl+'/answer', req.body);
     res.json(answerResponse.data)
+  } catch (error){
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
+
+app.post("/hintUsed", async (req, res) => {
+  try {
+    const hintUsedResponse = await axios.post(gameUrl+'/hintUsed', req.body);
+    res.json(hintUsedResponse.data)
+  } catch (error){
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+});
+
+app.post("/chatBotUsed", async (req, res) => {
+  try {
+    const chatBotUsedResponse = await axios.post(gameUrl+'/chatBotUsed', req.body);
+    res.json(chatBotUsedResponse.data)
   } catch (error){
     res.status(error.response.status).json({ error: error.response.data.error });
   }

@@ -1,28 +1,25 @@
-const { Question } = require("../src/questions/Question");
-const { AnswerVerifier } = require("../src/AnswerVerifier");
-const { MovieQuestion } = require("../src/questions/MovieQuestion");
+const { Question } = require("./questions/Question");
 
 class GameController {
   constructor(questionManager, answerVerifier){
-    this.score = 0,
-    this.questionManager = questionManager,
-    this.answerVerifier = answerVerifier,
-    this.currentQuestion = null
+    this.score = 0
+    this.questionManager = questionManager
+    this.answerVerifier = answerVerifier
+    this.currentQuestion = null;
+    this.numberOfAnsweredQuestions = 0;
     this.hasGameEnded = false;
-    this.NUMBER_OF_QUESTIONS = 6;
-   }
+    this.numberOfQuestions = 6;
+    this.numberOfOptions=4;
+    this.POINTS_PER_QUESTION=100;
+    this.POINTS_HINTBUTTONS_USED=5;
+    this.POINTS_CHATBOT_USED = 20;
+  }
 
-  
     async startGame() {
       this.score = 0;
       console.log("Inicio del juego");
-      await this.questionManager.generateQuestions(GameController.NUMBER_OF_QUESTIONS);
+      await this.questionManager.generateQuestions(this.numberOfQuestions, this.numberOfOptions);
       this.nextQuestion();
-    }
-
-    async endGame() {
-      console.log("Fin del juego. Puntuación:", this.score);
-      this.hasGameEnded = true;
     }
   
     /**
@@ -52,31 +49,13 @@ class GameController {
       this.currentQuestion.setOptions(options);
     }
   
-    submitAnswer(selectedAnswer) {
-      if (!this.currentQuestion) {
-        console.log("No hay una pregunta activa.");
-        return false;
-      }
-      const isCorrect = this.answerVerifier.verifyAnswer(
-        selectedAnswer,
-        this.currentQuestion.getCorrectAnswer()
-      );
-      
-      if (isCorrect) {
-        this.score++;
-      }
-      else{
-        this.score--;
-      }
-      console.log(isCorrect);
-      this.nextQuestion();
-      return isCorrect;
+    submitAnswer(selectedAnswer, timeLeft) {
+        this.numberOfAnsweredQuestions++;
+        return this.doSubmitAnswer(selectedAnswer, timeLeft)
     }
 
-    timeOver(){
-      this.score--;
-      console.log("time over");
-      this.nextQuestion();
+    doSubmitAnswer(selectedAnswer, timeLeft){
+        throw new Error("sin implementar");
     }
   
     getScore() {
@@ -96,6 +75,26 @@ class GameController {
 
     getQuestionManager() {
       return this.questionManager;
+    }
+
+    hintUsed(numHint){
+        this.score -= (this.POINTS_HINTBUTTONS_USED * (numHint+1))
+    }
+
+    chatBotUsed(){
+        this.score -=this.POINTS_CHATBOT_USED;
+    }
+
+    setNumberOfQuestions(n) {
+      this.numberOfQuestions = n;
+    }
+
+    setNumberOfOptions(n){
+        this.numberOfOptions = n;
+    }
+
+    getNumberOfQuestions(){
+        return this.numberOfQuestions;
     }
   }
   module.exports = { GameController };
