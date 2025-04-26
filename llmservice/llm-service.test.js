@@ -17,6 +17,7 @@ jest.mock('axios');
 describe('LLM Service', () => {
   // Mock responses from external services
   axios.post.mockImplementation((url, data) => {
+    console.log('Mocking axios.post:', url, data); // Log the URL and data being sent
     if (url.startsWith('https://generativelanguage')) {
       return Promise.resolve({ data: { candidates: [{ content: { parts: [{ text: 'llmanswer' }] } }] } });
     } else if (url.startsWith('https://empathyai')) {
@@ -24,23 +25,24 @@ describe('LLM Service', () => {
     } 
   });
 
-  // Test /ask endpoint with gemini
-  /* Modificado el uso de Gemini y no entra dentro del uso del enpoint /ask
-  it('the gemini llm should reply', async () => {
-    const response = await request(app)
-      .post('/ask')
-      .send({ question: 'a question', model: 'gemini' });
-
-    expect(response.statusCode).toBe(200);
-    expect(response.body.answer).toBe('llmanswer');
-  }); 
-  */
+  
+  
 
   // Test /ask endpoint with empathy
-  it('the empathy llm should reply', async () => {
+  it('the mistral llm should reply', async () => {
     const response = await request(app)
       .post('/ask')
       .send({ question: 'a question', model: 'empathy' });
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.answer).toBe('llmanswer');
+  });
+
+  // Test /ask endpoint with empathy
+  it('the qwen llm should reply', async () => {
+    const response = await request(app)
+      .post('/ask')
+      .send({ question: 'a question', model: 'empathyQwen' });
 
     expect(response.statusCode).toBe(200);
     expect(response.body.answer).toBe('llmanswer');
@@ -82,22 +84,60 @@ describe('Validate Required Fields', () =>{
 
       expect(response.statusCode).toBe(200);
       expect(console.error).toHaveBeenCalledWith('Error sending question to unknown:', 'Model "unknown" is not supported.');
-    })
+    });
+
+    it('could only decode wiki URL', async () => {
+      jest.spyOn(console, 'warn');
+
+      const response = await request(app)
+        .post('/askWithImageViaPrompt')
+        .send({question: 'url', imageUrl: 'er%ror.pn'});
+
+      expect(response.statusCode).toBe(200);
+      expect(console.warn).toHaveBeenCalledWith('Could not decode/re-encode non-wiki URL:','er%ror.pn','URI malformed');
+    });
+  });
+
+  
+  describe('Test the /askWithImageViaPrompt endpoint', () => {
+    it('should return a response', async () => {
+      const response = await request(app)
+      .post('/askWithImageViaPrompt')
+      .send({ question:'question', imageUrl: 'wiki/Special:FilePath/url.png'});
+
+      console.log(response.body);
+      expect(response.statusCode).toBe(200);
+      expect(response.body.answer).toBe('llmanswer');
+    });
+
+
   });
 
   //Test to check the API key if missing
   describe('Validate missing API key', () => {
     it('API key is missing', async () => {
       process.env.LLM_API_KEY="";
+      process.env.GEMINI_API_KEY="";
 
-      const response = await request(app)
+      let response = await request(app)
         .post('/ask')
         .send({question: 'a question', model: 'empathy'});
 
       expect(response.statusCode).toBe(400);
       expect(response.body.error).toBe('API key is missing.');
+
+      response = await request(app)
+        .post('/askWithImageViaPrompt')
+        .send({question: 'url', imageUrl: 'wiki/Special:FilePath/url.png'});
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.error).toBe('Gemini API key is missing.');
     })
   });
+
+  
+
+    
 
   
 

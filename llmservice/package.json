@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node llm-service.js",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "author": "",
   "license": "ISC",
