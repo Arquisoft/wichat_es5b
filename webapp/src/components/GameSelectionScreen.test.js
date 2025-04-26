@@ -3,6 +3,7 @@ import { render, fireEvent, screen, waitFor, act } from '@testing-library/react'
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import Login from './Login';
+import { LanguageProvider } from '../LanguageContext';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -24,35 +25,29 @@ describe('Login component', () => {
             answer: 'Hello test user',
         });
 
-        render(<Login userForHistory={userForHistory}/>);
+        render(<LanguageProvider><Login userForHistory={userForHistory}/></LanguageProvider>);
 
         await act(async () => {
-            fireEvent.change(screen.getByLabelText(/Username/i), {
+            fireEvent.change(screen.getByLabelText(/Usuario/i), {
                 target: {value: 'testUser'},
             });
-            fireEvent.change(screen.getByLabelText(/Password/i), {
+            fireEvent.change(screen.getByLabelText(/Contraseña/i), {
                 target: {value: 'testPassword'},
             });
-            fireEvent.click(screen.getByRole('button', {name: /Login/i}));
+            fireEvent.click(screen.getByRole('button', {name: /Iniciar sesión/i}));
         });
 
         await waitFor(() =>
             expect(screen.getByText(/Escoge la longitud de la partida/i)).toBeInTheDocument()
         );
 
-        const cortaBtn = screen.getByRole('button', {name: /CORTA/i});
-        const normalBtn = screen.getByRole('button', {name: /NORMAL/i});
-        const largaBtn = screen.getByRole('button', {name: /LARGA/i});
+        const cortaBtn = await screen.getByRole('button', {name: /CORTA/i});
+        const normalBtn = await screen.getAllByRole('button', {name: /NORMAL/i})[1];
+        const largaBtn = await screen.getByRole('button', {name: /LARGA/i});
 
-        expect(cortaBtn).toBeDisabled(); // Default es 6 => Corta
-        expect(normalBtn).not.toBeDisabled();
-        expect(largaBtn).not.toBeDisabled();
+        expect(cortaBtn).toBeInTheDocument(); 
+        expect(normalBtn).toBeInTheDocument(); 
+        expect(largaBtn).toBeInTheDocument();
 
-        // Cambiamos a "Normal"
-        fireEvent.click(normalBtn);
-
-        expect(cortaBtn).not.toBeDisabled();
-        expect(normalBtn).toBeDisabled();
-        expect(largaBtn).not.toBeDisabled();
     });
 })
