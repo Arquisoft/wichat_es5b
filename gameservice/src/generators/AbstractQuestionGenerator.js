@@ -21,13 +21,9 @@ class AbstractQuestionGenerator  {
         const questions = new Array(nQuestions);
         const usedIndices = new Set();
 
-        console.log("Antes de generar");
-
         for (let i = 0; i < nQuestions; i++) {
             questions[i] = this.generateQuestion(array, usedIndices);
         }
-
-        console.log("Después de generar");
 
         return questions;
     }
