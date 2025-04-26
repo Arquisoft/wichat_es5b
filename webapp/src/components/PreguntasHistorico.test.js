@@ -15,7 +15,7 @@ describe('PreguntasHistorico tests', () => {
   
   it('Se maneja el cierre del dialog', () => {
 
-    const user = { questions: [{ question: {es:'Pregunta 1'}, image: 'imagen1', option1: 'a', option2: 'b', option3: 'c', option4: 'd', correctOption: 'a'}] };
+    const user = { questions: [{ question: {es:'Pregunta 1'}, image: 'imagen1', options: ['a', 'b', 'c', 'd'], correctOption: 'a'}] };
     render(<LanguageProvider><PreguntasHistorico user={user} /></LanguageProvider>);
 
     const button = screen.getByText('Mostrar Preguntas');
