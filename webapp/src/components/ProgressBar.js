@@ -1,10 +1,10 @@
-const ProgressBar = ({ timeLeft }) => {
+const ProgressBar = ({ timeLeft, maxTime }) => {
   return (
     <div className="bg-orange rounded-lg overflow-hidden px-2 mx-4">
       <progress
         className="progress-bar"
         value={timeLeft}
-        max={60}
+        max={maxTime}
         width="100%"
       />
     </div>
