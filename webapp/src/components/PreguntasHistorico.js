@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
+import { LanguageContext } from "../LanguageContext";
 
 
 const PreguntasHistorico = ({user}) => {
     const [show, setShow] = useState(false);
+    const { translations } = useContext(LanguageContext);
 
     const mostrarPreguntas = () =>{
         setShow(true);
@@ -11,19 +13,19 @@ const PreguntasHistorico = ({user}) => {
 
     return(
         <div>
-            <Button onClick= {() => mostrarPreguntas()}>Mostrar Preguntas</Button>
+            <Button onClick= {() => mostrarPreguntas()}>{translations.historic_show || "Mostrar Preguntas"}</Button>
             <Dialog open={show} onClose={()=> setShow(false)}>
                 <DialogTitle>
-                    Historial de Preguntas
+                    {translations.historic_title || "Historial de Preguntas"}
                 </DialogTitle>
                 <DialogContent>
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Pregunta</TableCell>
-                                <TableCell>Imagen</TableCell>
-                                <TableCell>Opciones</TableCell>
-                                <TableCell>Opción correcta</TableCell>
+                                <TableCell>{translations.historic_question || "Pregunta"}</TableCell>
+                                <TableCell>{translations.historic_img || "Imagen"}</TableCell>
+                                <TableCell>{translations.historic_options || "Opciones"}</TableCell>
+                                <TableCell>{translations.historic_correct_option || "Opción correcta"}</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -52,7 +54,7 @@ const PreguntasHistorico = ({user}) => {
                     
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => setShow(false)}>Cerrar</Button>
+                    <Button onClick={() => setShow(false)}>{translations.close || "Cerrar"}</Button>
                 </DialogActions>
 
             </Dialog>
