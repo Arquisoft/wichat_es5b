@@ -25,7 +25,6 @@ class QuestionManager {
     let nExtraQuestions = nQuestions % this.generator.length;
     this.questions = [];
     console.log("OPCIONES " + nOptions);
-    console.log(lang)
 
     let queryPromises = this.generator.map((gen, index) => {
       let nQuestionsToGenerate = nQuestType + (index === 0 ? nExtraQuestions : 0);

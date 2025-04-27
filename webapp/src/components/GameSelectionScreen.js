@@ -20,7 +20,8 @@ export default function SelectionScreen({ username }) {
     async function start() {
         const res= await axios.post(apiEndpoint + "/start", {
             nQuestions: nQuestions,
-            gameMode: modoJuego
+            gameMode: modoJuego,
+            lang:currentLang
         });
         return res;    }
 
