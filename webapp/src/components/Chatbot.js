@@ -47,7 +47,12 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                 throw new Error('QWEN_TIMEOUT');
             }
             
-            const botMessage = { text: response.data.answer, sender: 'bot' };
+            const botMessage = { 
+                text: response.data.answer, 
+                sender: 'bot',
+                isTyping: true,
+                typedText: ''
+            };
             setMessages(prev => [...prev, botMessage]);
 
             const chatBotUsedResponse = await axios.post(`${apiEndpoint}/chatBotUsed`);
@@ -59,7 +64,9 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
             
             let errorMessage = { 
                 text: "Lo siento, hubo un error al procesar tu solicitud. Intenta de nuevo más tarde.", 
-                sender: 'bot' 
+                sender: 'bot',
+                isTyping: true,
+                typedText: ''
             };
 
             if (error.message === 'QWEN_TIMEOUT' || 
@@ -70,7 +77,9 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                 
                 const systemMessage = {
                     text: "Se ha cambiado automáticamente al modelo Mistral.",
-                    sender: 'system'
+                    sender: 'system',
+                    isTyping: true,
+                    typedText: ''
                 };
                 setMessages(prev => [...prev, errorMessage, systemMessage]);
             } else {
@@ -83,7 +92,9 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
         if (!imageUrl) {
             const errorMessage = { 
                 text: "No hay imagen disponible para esta película", 
-                sender: 'bot' 
+                sender: 'bot',
+                isTyping: true,
+                typedText: ''
             };
             return setMessages(prev => [...prev, errorMessage]);
         }
@@ -97,11 +108,15 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
         setMessages(prev => [...prev, userImageMessage]);
         
         try {
+            
             const loadingMessage = { 
                 text: "Analizando la imagen para darte una pista...", 
-                sender: 'bot' 
+                sender: 'bot',
+                isTyping: true,
+                typedText: ''
             };
             setMessages(prev => [...prev, loadingMessage]);
+            
             
             const response = await axios.post(`${apiEndpoint}/askWithImage`, { 
                 question: `Estoy jugando a adivinar una película o actor. Dame una pista útil basada en esta imagen sin revelar directamente el nombre.`,
@@ -110,7 +125,9 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
     
             const botMessage = { 
                 text: response.data.answer || "No pude generar una pista basada en la imagen.", 
-                sender: 'bot' 
+                sender: 'bot',
+                isTyping: true,
+                typedText: ''
             };
 
             setMessages(prev => [...prev, botMessage]);
@@ -120,11 +137,14 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
             setScore(prevScore => prevScore - 1); 
 
         } catch (error) {
+
             console.error("Error al procesar la imagen:", error);
             const errorMessage = { 
                 text: error.response?.data?.error || 
                      "Lo siento, no pude analizar la imagen. Intenta con otra pista.", 
-                sender: 'bot' 
+                sender: 'bot',
+                isTyping: true,
+                typedText: ''
             };
 
             setMessages(prev => [...prev, errorMessage]);
@@ -139,9 +159,23 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
         const modelName = newModel === DEFAULT_MODEL ? 'Mistral' : 'Qwen';
         const infoMessage = {
             text: (translations.chatbot_model_change || "Se ha cambiado el modelo a") + ` ${modelName}.`,
-            sender: 'system'
+            sender: 'system',
+            isTyping: true,
+            typedText: ''
         };
         setMessages(prev => [...prev, infoMessage]);
+    };
+
+    const handleType = (index, val) => {
+        setMessages(prev => {
+            const newMessages = [...prev];
+            newMessages[index] = {
+                ...newMessages[index],
+                typedText: val,
+                isTyping: val.length < newMessages[index].text.length
+            };
+            return newMessages;
+        });
     };
 
     return (
@@ -245,7 +279,7 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                                     fontSize: '0.7rem',
                                     mr: 1,
                                     height: '30px',
-                                    minWidth: '85px',
+                                    minWidth: '105px',
                                     textTransform: 'none',
                                     whiteSpace: 'nowrap',
                                     overflow: 'hidden',
@@ -289,10 +323,23 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                                         wordBreak: 'break-word',
                                         fontStyle: msg.sender === 'system' ? 'italic' : 'normal'
                                     }}>
-                                        <ListItemText 
-                                            primary={msg.text} 
-                                            sx={{ whiteSpace: 'pre-wrap' }}
-                                        />
+                                        {msg.sender === 'user' ? (
+                                            <ListItemText 
+                                                primary={msg.text} 
+                                                sx={{ whiteSpace: 'pre-wrap' }}
+                                            />
+                                        ) : (
+                                            <Typewriter
+                                                words={[msg.text]}
+                                                loop={1}
+                                                cursor
+                                                cursorStyle="|"
+                                                typeSpeed={30}
+                                                deleteSpeed={0}
+                                                delaySpeed={0}
+                                                onType={(val) => handleType(index, val)}
+                                            />
+                                        )}
                                         {msg.imageUrl && (
                                             <Box sx={{ 
                                                 mt: 1,
