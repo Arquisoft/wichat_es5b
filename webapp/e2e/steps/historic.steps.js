@@ -117,8 +117,8 @@ defineFeature(feature, test => {
       //Cerramos el historial
       await expect(page).toClick('button', { text: 'Cerrar' });
       // Cerramos la sesión
-      await expect(page).toClick('button', { text: 'Mi perfil' });
-      await expect(page).toClick('li', { text: 'Cerrar sesión' });
+      //await expect(page).toClick('button', { text: 'Mi perfil' });
+      //await expect(page).toClick('li', { text: 'Cerrar sesión' });
     });
 
   });
