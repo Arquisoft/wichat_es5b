@@ -16,8 +16,8 @@ defineFeature(feature, test => {
             // : await puppeteer.launch({ headless: false, slowMo: 100 });
             : await puppeteer.launch({ 
             // executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', // Only for Mac users
-            executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', // Only for Mac users
-            headless: false, 
+            //executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', // Only for Mac users
+            headless: true, 
             slowMo: 20
             });
         page = await browser.newPage();
