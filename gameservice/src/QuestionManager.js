@@ -12,7 +12,7 @@ class QuestionManager {
 
   constructor() {
     this.questions = [];
-    this.generator = [new MovieQuestionGenerator(), new ActorQuestionGenerator()];
+    this.generator = [new MovieQuestionGenerator(), new ActorQuestionGenerator(), new CharacterQuestionGenerator()];
     this.currentQuestion=0;
   }
 
@@ -20,15 +20,17 @@ class QuestionManager {
     this.generator = generators;
   }
 
-  async generateQuestions(nQuestions, nOptions) {
+  async generateQuestions(nQuestions, nOptions,lang) {
     let nQuestType = Math.floor(nQuestions / this.generator.length);
     let nExtraQuestions = nQuestions % this.generator.length;
     this.questions = [];
     console.log("OPCIONES " + nOptions);
+    console.log(lang)
 
     let queryPromises = this.generator.map((gen, index) => {
       let nQuestionsToGenerate = nQuestType + (index === 0 ? nExtraQuestions : 0);
-      return this.executeQuery(gen.getQuery()).then(queryResult =>
+      const queryI18n = gen.getQuery().replace('{{LANG}}', lang === "es" ? "es,en" : "en, [AUTOLANGUAGE]")
+      return this.executeQuery(queryI18n).then(queryResult =>
           gen.generateQuestions(queryResult, nQuestionsToGenerate, nOptions)
       );
     });

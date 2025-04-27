@@ -23,11 +23,7 @@ async function executeSparqlQuery(query) {
   }
 
   try {
-    const response = await axios.get('https://query.wikidata.org/sparql', {
-      headers: {
-        'User-Agent': 'Your User Agent',
-        'Accept': 'application/json',
-      },
+    const response = await sparqlClient.get('', {
       params: {
         query: query,
         format: 'json',

@@ -6,7 +6,7 @@ const movieQuery = `
     
       FILTER (?publication_date >= "2000-01-01T00:00:00Z"^^xsd:dateTime)
     
-      SERVICE wikibase:label { bd:serviceParam wikibase:language "es". }
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "{{LANG}}". }
     }
     LIMIT 100
 `;
@@ -21,7 +21,7 @@ const actorQuery = `
       ?work wdt:P31 wd:Q11424;
             wdt:P1476 ?filmTitle.
     
-      SERVICE wikibase:label { bd:serviceParam wikibase:language "es". }
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "{{LANG}}". }
     }
     LIMIT 100
 `;
@@ -33,7 +33,7 @@ const characterQuery = `
                  wdt:P18 ?pic.
     
       SERVICE wikibase:label { 
-        bd:serviceParam wikibase:language "es,en".
+        bd:serviceParam wikibase:language "{{LANG}}".
       }
     }
     LIMIT 100
