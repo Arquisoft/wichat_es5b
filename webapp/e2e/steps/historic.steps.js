@@ -17,7 +17,7 @@ defineFeature(feature, test => {
           : await puppeteer.launch({ 
 
             // executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', // Only for Mac users
-            //executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', // Only for Mac users
+            executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', // Only for Mac users
             headless: true, 
             slowMo: 20
           });
@@ -91,6 +91,7 @@ defineFeature(feature, test => {
       password = "ValidPassword123";
       // Añadimos al usuario
       await expect(page).toClick("button", { text: "¿No tienes una cuenta? Regístrate aquí." });
+      await expect(page).toMatchElement("h1", { text: "Creación de Usuario" });
       await expect(page).toFill('input[name="username"]', username);
       await expect(page).toFill('input[name="password"]', password);
       await expect(page).toClick('button', { text: 'Crear Usuario' })
@@ -100,6 +101,7 @@ defineFeature(feature, test => {
     when('I log in and I go to the history window', async () => {
       await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
       // Iniciar sesión
+      await expect(page).toMatchElement("h1", { text: "Inicio de Sesión" });
       await expect(page).toFill('input[name="username"]', username);
       await expect(page).toFill('input[name="password"]', password);
       await expect(page).toClick('button', { text: 'Iniciar Sesión' });
