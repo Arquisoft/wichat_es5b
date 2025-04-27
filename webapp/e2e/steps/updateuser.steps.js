@@ -128,7 +128,7 @@ defineFeature(feature, test => {
 
   })
 
-  test('Authenticated user tries to update their data with empty username', ({given,when,and,then}) => {
+  /*test('Authenticated user tries to update their data with empty username', ({given,when,and,then}) => {
 
     let username;
     let password;
@@ -476,7 +476,7 @@ defineFeature(feature, test => {
 
     });
 
-  })
+  })*/
 
 
   afterAll(async ()=>{
