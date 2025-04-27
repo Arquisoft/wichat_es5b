@@ -218,11 +218,11 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                                 backgroundColor: '#a6532a',
                             },
                             fontWeight: 'bold',
-                            fontSize: '0.8rem',
+                            fontSize: '0.75rem',
                             width: isMinimized ? '100%' : 'auto',
-                            minWidth: isMinimized ? '100%' : '120px',
+                            minWidth: isMinimized ? '100%' : '110px',
                             textTransform: 'none',
-                            px: 1,
+                            px: 0.8,
                             mr: isMinimized ? 0 : 1,
                             justifyContent: 'center',
                             whiteSpace: 'nowrap',
@@ -234,7 +234,7 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                     </Button>
                     
                     {!isMinimized && (
-                        <Box sx={{ display: 'flex', gap: '6px' }}>
+                        <Box sx={{ display: 'flex', gap: '4px' }}>
                             <Button 
                                 variant="contained"
                                 onClick={handleImageHint}
@@ -251,10 +251,10 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                                     },
                                     textTransform: 'none',
                                     fontWeight: 'bold',
-                                    fontSize: '0.65rem',
+                                    fontSize: '0.6rem',
                                     height: '30px',
-                                    minWidth: '85px',
-                                    px: 0.5,
+                                    minWidth: '80px',
+                                    px: 0.3,
                                     whiteSpace: 'nowrap',
                                     overflow: 'hidden',
                                     textOverflow: 'ellipsis'
@@ -276,10 +276,10 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                                         backgroundColor: '#e8d5c9',
                                         borderColor: '#a6532a'
                                     },
-                                    fontSize: '0.7rem',
-                                    mr: 1,
+                                    fontSize: '0.65rem',
+                                    mr: 0.5,
                                     height: '30px',
-                                    minWidth: '105px',
+                                    minWidth: '95px',
                                     textTransform: 'none',
                                     whiteSpace: 'nowrap',
                                     overflow: 'hidden',
