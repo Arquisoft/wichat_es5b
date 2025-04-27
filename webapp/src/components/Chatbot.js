@@ -54,12 +54,12 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                 typedText: ''
             };
             setMessages(prev => [...prev, botMessage]);
+            setIsLoading(false); // Aquí detenemos el loading
 
             const chatBotUsedResponse = await axios.post(`${apiEndpoint}/chatBotUsed`);
             setScore(chatBotUsedResponse.data.score);
 
         } catch (error) {
-
             console.error("Error al comunicarse con el LLM:", error);
             
             let errorMessage = { 
@@ -85,6 +85,7 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
             } else {
                 setMessages(prev => [...prev, errorMessage]);
             }
+            setIsLoading(false); // También detenemos el loading en caso de error
         }
     };
 
@@ -106,9 +107,9 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
         };
 
         setMessages(prev => [...prev, userImageMessage]);
+        setIsLoading(true);
         
         try {
-            
             const loadingMessage = { 
                 text: "Analizando la imagen para darte una pista...", 
                 sender: 'bot',
@@ -116,7 +117,6 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                 typedText: ''
             };
             setMessages(prev => [...prev, loadingMessage]);
-            
             
             const response = await axios.post(`${apiEndpoint}/askWithImage`, { 
                 question: `Estoy jugando a adivinar una película o actor. Dame una pista útil basada en esta imagen sin revelar directamente el nombre.`,
@@ -132,12 +132,12 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
 
             setMessages(prev => [...prev, botMessage]);
             setImageHintUsed(true);
+            setIsLoading(false); // Detenemos el loading aquí también
             
             await axios.post(`${apiEndpoint}/chatBotUsed`);
             setScore(prevScore => prevScore - 1); 
 
         } catch (error) {
-
             console.error("Error al procesar la imagen:", error);
             const errorMessage = { 
                 text: error.response?.data?.error || 
@@ -148,8 +148,8 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
             };
 
             setMessages(prev => [...prev, errorMessage]);
+            setIsLoading(false); // Y aquí en caso de error
         }
-        setIsLoading(false);
     };
 
     const toggleModel = () => {
