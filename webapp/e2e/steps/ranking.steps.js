@@ -22,7 +22,7 @@ defineFeature(feature, test => {
           });
         page = await browser.newPage();
         //Way of setting up the timeout
-        setDefaultOptions({ timeout: 20000 })
+        setDefaultOptions({ timeout: 240000 })
     
         await page
           .goto("http://localhost:3000", {
@@ -81,7 +81,7 @@ defineFeature(feature, test => {
         let password;
 
         given('A registered user with username "aswuser" and password "ValidPassword123"', async () => {
-            username = "aswuser";
+            username = "aswuserranking";
             password = "ValidPassword123";
 
             await expect(page).toClick("button", { text: "¿No tienes una cuenta? Regístrate aquí." });

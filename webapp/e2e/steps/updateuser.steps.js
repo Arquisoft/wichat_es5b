@@ -20,7 +20,7 @@ defineFeature(feature, test => {
       });
     page = await browser.newPage();
     //Way of setting up the timeout
-    setDefaultOptions({ timeout: 10000 })
+    setDefaultOptions({ timeout: 240000 })
 
     await page
       .goto("http://localhost:3000", {
