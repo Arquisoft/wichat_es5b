@@ -68,8 +68,21 @@ defineFeature(feature, test => {
 
         then('I should see the Welcome message of the game', async () => {
             await expect(page).toMatchElement("h1", { text: "¡Bienvenido a Wichat!" });
+
+            // Cerramos la sesión
+            await expect(page).toClick('button', { text: 'Mi perfil' });
+            await expect(page).toClick('li', { text: 'Cerrar sesión' });
         });
 
     });
+
+    afterAll(async ()=>{
+        if (page) {
+          await page.close();
+        }
+        if (browser) {
+          await browser.close();
+        }
+      })
 
 });
