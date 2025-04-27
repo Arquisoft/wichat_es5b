@@ -28,7 +28,7 @@ class QuestionManager {
 
     let queryPromises = this.generator.map((gen, index) => {
       let nQuestionsToGenerate = nQuestType + (index === 0 ? nExtraQuestions : 0);
-      const queryI18n = gen.getQuery().replace('{{LANG}}', lang === "es" ? "es,en" : "en, [AUTOLANGUAGE]")
+      const queryI18n = gen.getQuery().replace('{{LANG}}', lang === "es" ? "es,en" : "en")
       return this.executeQuery(queryI18n).then(queryResult =>
           gen.generateQuestions(queryResult, nQuestionsToGenerate, nOptions)
       );
