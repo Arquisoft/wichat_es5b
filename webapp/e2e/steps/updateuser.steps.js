@@ -29,7 +29,7 @@ defineFeature(feature, test => {
       .catch(() => {});
 
     // Intentar iniciar sesión con existinguser
-    await expect(page).toFill('input[name="username"]', "aswuser2");
+    /*await expect(page).toFill('input[name="username"]', "aswuser2");
     await expect(page).toFill('input[name="password"]', "ValidPassword123");
     await expect(page).toClick('button', { text: 'Iniciar Sesión' });
 
@@ -59,7 +59,11 @@ defineFeature(feature, test => {
         // Confirmar que el registro fue exitoso
         //await expect(page).toMatchElement("div", { text: "Usuario añadido correctamente" });
 
-    }
+    }*/
+        await expect(page).toClick("button", { text: "¿No tienes una cuenta? Regístrate aquí." });
+        await expect(page).toFill('input[name="username"]', "aswuser2");
+        await expect(page).toFill('input[name="password"]', "ValidPassword123");
+        await expect(page).toClick('button', { text: "Crear Usuario" });
   });
 
   beforeEach(async () => {
@@ -79,6 +83,7 @@ defineFeature(feature, test => {
 
         username = "aswuser2";
         password = "ValidPassword123";
+
         await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
 
     });
