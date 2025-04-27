@@ -37,6 +37,9 @@ describe('Game Routes', () => {
     };
     const res = await request(server).post('/newRanking').send(ranking);
     expect(res.statusCode).toEqual(201);
+    expect(res.body).toHaveProperty('username', 'testuser');
+    expect(res.body).toHaveProperty('correctAnswers', 4);
+    expect(res.body).toHaveProperty('wrongAnswers', 2);
   });
 
   it('should GET all the game histories', async () => {
@@ -60,5 +63,8 @@ describe('Game Routes', () => {
     };
     const res = await request(server).post('/newHistory').send(history);
     expect(res.statusCode).toEqual(201);
+    expect(res.body).toHaveProperty('username', 'testuser');
+    expect(res.body).toHaveProperty('correctAnswers', 1);
+    expect(res.body).toHaveProperty('wrongAnswers', 0);
   });
 });
