@@ -49,6 +49,8 @@ defineFeature(feature, test => {
             await expect(page).toMatchElement("h2", { text: "Ranking" });
             await expect(page).toMatchElement("th", { text: "Fecha" });
             await expect(page).toMatchElement("th", { text: "Puntuación" });
+            //Cerramos el historial
+            await expect(page).toClick('button', { text: 'Cerrar' });
         });
 
     });
@@ -67,6 +69,8 @@ defineFeature(feature, test => {
             await expect(page).toMatchElement("h2", { text: "Ranking" });
             await expect(page).toMatchElement("th", { text: "Fecha" });
             await expect(page).toMatchElement("th", { text: "Puntuación" });
+            //Cerramos el historial
+            await expect(page).toClick('button', { text: 'Cerrar' });
         });
 
     });
@@ -101,6 +105,11 @@ defineFeature(feature, test => {
             await expect(page).toMatchElement("h2", { text: "Ranking" });
             await expect(page).toMatchElement("th", { text: "Fecha" });
             await expect(page).toMatchElement("th", { text: "Puntuación" });
+            //Cerramos el historial
+            await expect(page).toClick('button', { text: 'Cerrar' });
+            // Cerramos la sesión
+            await expect(page).toClick('button', { text: 'Mi perfil' });
+            await expect(page).toClick('li', { text: 'Cerrar sesión' });
         });
 
     });
