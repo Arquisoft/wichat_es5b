@@ -517,7 +517,7 @@ describe('Chatbot Component', () => {
       });
       expect(switchButton).toHaveStyle('color: rgb(90, 45, 22)');
      
-      expect(switchButton).toHaveStyle('font-size: 0.8rem');
+      expect(switchButton).toHaveStyle('font-size: 0.7rem');
       expect(switchButton).toHaveStyle('height: 30px');
     });
   

@@ -184,13 +184,16 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                                 backgroundColor: '#a6532a',
                             },
                             fontWeight: 'bold',
-                            fontSize: isMinimized ? '1rem' : '0.9rem',
+                            fontSize: '0.8rem',
                             width: isMinimized ? '100%' : 'auto',
-                            minWidth: isMinimized ? '100%' : '60px',
+                            minWidth: isMinimized ? '100%' : '120px',
                             textTransform: 'none',
-                            px: 2,
+                            px: 1,
                             mr: isMinimized ? 0 : 1,
-                            justifyContent: 'center'
+                            justifyContent: 'center',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis'
                         }}
                     >
                         {translations.chatbot_title || "Chat de Pistas"} {isMinimized ? '▲' : '▼'}
@@ -242,7 +245,7 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                                     fontSize: '0.7rem',
                                     mr: 1,
                                     height: '30px',
-                                    minWidth: '105px',
+                                    minWidth: '85px',
                                     textTransform: 'none',
                                     whiteSpace: 'nowrap',
                                     overflow: 'hidden',
