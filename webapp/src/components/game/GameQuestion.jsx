@@ -168,17 +168,18 @@ export default function MovieQuiz({username, nQuestions, modoJuego}) {
                     <ProgressBar timeLeft={timeLeft} maxTime={maxTime}/>
                   </div>
                     <GameBoard handleOptionClick={handleOptionClick} selectedOption={selectedOption} currentQuestion={currentQuestion} optionsDisabled={optionsDisabled} currentLang={currentLang}/>
-                  <HintsButtons
-                      key={currentQuestion}
-                      questionsLlm={currentQuestion.questionsLlm?.[currentLang] ?? []}
-                      setScore={setScore}
-                  />
+                    
+                    <HintsButtons
+                        key={currentQuestion}
+                        questionsLlm={currentQuestion.questionsLlm?.[currentLang] ?? []}
+                        setScore={setScore}
+                    />
 
-                  <Chatbot 
-                    movieName={currentQuestion.correctAnswer} 
-                    imageUrl={currentQuestion.imageUrl}
-                    setScore={setScore} 
-                  />
+                    <Chatbot 
+                      movieName={currentQuestion.correctAnswer} 
+                      imageUrl={currentQuestion.imageUrl}
+                      setScore={setScore} 
+                    />
                   
                 </div>
             )}
