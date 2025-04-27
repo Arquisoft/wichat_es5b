@@ -144,7 +144,7 @@ app.post('/newHistory', async (req, res) => {
 
     // Validar array de preguntas
     if (!Array.isArray(questions)) { // || questions.length !== 6
-      return res.status(400).json({ message: "Debes proporcionar un array de 6 preguntas." });
+      return res.status(400).json({ message: "Debes proporcionar un array." });
     }
 
     // Validaciones
@@ -179,8 +179,8 @@ app.post('/newHistory', async (req, res) => {
       date: req.body.date,
       correctAnswers: req.body.correctAnswers,
       wrongAnswers: req.body.wrongAnswers,
-      totalScore,
-      questions
+      totalScore: req.body.totalScore,
+      questions: req.body.questions
     });
   
     try {
