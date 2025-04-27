@@ -76,7 +76,7 @@ app.post('/newRanking', async (req, res) => {
 });
 
 // Ruta para actualizar el ranking de un usuario
-app.put('/updateRanking/:username', async (req, res) => {
+/*app.put('/updateRanking/:username', async (req, res) => {
   const { correctAnswers, wrongAnswers, totalScore, nQuestions } = req.body;
   const username = req.params.username;
 
@@ -116,7 +116,7 @@ app.put('/updateRanking/:username', async (req, res) => {
   } catch (err) {
       res.status(500).json({ message: err.message });
   }
-});
+});*/
 
 
 // Ruta para obtener el historial de partidas
@@ -192,7 +192,7 @@ app.post('/newHistory', async (req, res) => {
 });
 
 // Ruta para actualizar el historial de un usuario
-app.put('/updateHistory/:id', async (req, res) => {
+/*app.put('/updateHistory/:id', async (req, res) => {
   const { username, correctAnswers, wrongAnswers, totalScore } = req.body;
   const id = req.params.id;
 
@@ -230,7 +230,7 @@ app.put('/updateHistory/:id', async (req, res) => {
   } catch (err) {
       res.status(500).json({ message: err.message });
   }
-});
+});*/
 
 const server = app.listen(port, () => {
   console.log(`DataBase service listening at http://localhost:${port}`);

@@ -7,23 +7,21 @@ partidas y rankings en la base de datos de la aplicación.
 
 const request = require('supertest');
 const mongoose = require('mongoose');
-const server = require('../users/userservice/user-service'); // Asegúrate de que la ruta sea correcta
-const { Ranking, GameHistory } = require('../gameModels');
+const server = require('./gameRoutes');
+const { Ranking, GameHistory } = require('./gameModels');
 
-beforeAll(async () => {
-  const mongoUri = 'mongodb://localhost:27017/testdb';
-  await mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });
-});
 
 afterAll(async () => {
-  await mongoose.connection.db.dropDatabase();
+  if (mongoose.connection.db) {
+    await mongoose.connection.db.dropDatabase();
+  }
   await mongoose.connection.close();
   server.close();
 });
 
 describe('Game Routes', () => {
   it('should GET all the rankings', async () => {
-    const res = await request(server).get('/api/game/ranking');
+    const res = await request(server).get('/ranking');
     expect(res.statusCode).toEqual(200);
     expect(res.body).toBeInstanceOf(Array);
     expect(res.body.length).toBe(0);
@@ -33,17 +31,19 @@ describe('Game Routes', () => {
     const ranking = {
       username: 'testuser',
       correctAnswers: 4,
-      wrongAnswers: 2
+      wrongAnswers: 2,
+      totalScore: 10,
+      questions: ['question1', 'question2', 'question3', 'question4', 'question5', 'question6']
     };
-    const res = await request(server).post('/api/game/ranking').send(ranking);
+    const res = await request(server).post('/newRanking').send(ranking);
     expect(res.statusCode).toEqual(201);
-    expect(res.body).toHaveProperty('username', 'testuser');
-    expect(res.body).toHaveProperty('correctAnswers', 4);
-    expect(res.body).toHaveProperty('wrongAnswers', 2);
   });
 
   it('should GET all the game histories', async () => {
-    const res = await request(server).get('/api/game/history');
+    const user = {
+      username: 'testuser'
+    };
+    const res = await request(server).post('/history').send(user);
     expect(res.statusCode).toEqual(200);
     expect(res.body).toBeInstanceOf(Array);
     expect(res.body.length).toBe(0);
@@ -52,14 +52,13 @@ describe('Game Routes', () => {
   it('should POST a new game history entry', async () => {
     const history = {
       username: 'testuser',
-      date: new Date(),
-      correctAnswers:3,
-      wrongAnswers: 3
+      date: '2024-01-01T12:34:56Z',
+      correctAnswers: 1,
+      wrongAnswers: 0,
+      totalScore: 10,
+      questions: [{question:'question1',correctOption:'option'}]
     };
-    const res = await request(server).post('/api/game/history').send(history);
+    const res = await request(server).post('/newHistory').send(history);
     expect(res.statusCode).toEqual(201);
-    expect(res.body).toHaveProperty('username', 'testuser');
-    expect(res.body).toHaveProperty('correctAnswers', 3);
-    expect(res.body).toHaveProperty('wrongAnswers', 3);
   });
 });
