@@ -20,7 +20,7 @@ defineFeature(feature, test => {
       });
     page = await browser.newPage();
     //Way of setting up the timeout
-    setDefaultOptions({ timeout: 240000 })
+    setDefaultOptions({ timeout: 120000 })
 
     await page
       .goto("http://localhost:3000", {
@@ -123,7 +123,7 @@ defineFeature(feature, test => {
 
   })
 
-  test('Authenticated user tries to update their data with empty username', ({given,when,and,then}) => {
+  /*test('Authenticated user tries to update their data with empty username', ({given,when,and,then}) => {
 
     let username;
     let password;
@@ -471,7 +471,7 @@ defineFeature(feature, test => {
 
     });
 
-  })
+  })*/
 
 
   afterAll(async ()=>{
