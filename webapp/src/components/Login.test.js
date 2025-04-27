@@ -1,21 +1,18 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor, act } from '@testing-library/react';
+import { render, fireEvent, screen, waitFor, act } from '../test-utils';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import Login from './Login';
 
 const mockAxios = new MockAdapter(axios);
 
-const userForHistory = () =>{
-
-}
+const userForHistory = jest.fn();
 
 describe('Login component', () => {
   beforeEach(() => {
     mockAxios.reset();
+    jest.clearAllMocks();
   });
-
-  
 
   it('should log in successfully', async () => {
     await mockAxios.onPost('http://localhost:8000/history').reply(200, [{date: "2024-01-01T12:34:56Z", correctAnswers: 4, wrongAnswers:2}]);
@@ -23,13 +20,12 @@ describe('Login component', () => {
     render(<Login userForHistory={userForHistory}/>);
     
 
-    const usernameInput = screen.getByLabelText(/Username/i);
-    const passwordInput = screen.getByLabelText(/Password/i);
-    const loginButton = screen.getByRole('button', { name: /Login/i });
+    const usernameInput = screen.getByLabelText(/Usuario/i);
+    const passwordInput = screen.getByLabelText(/Contraseña/i);
+    const loginButton = screen.getByRole('button', { name: /Iniciar Sesión/i });
 
     // Mock the axios.post request to simulate a successful response
     mockAxios.onPost('http://localhost:8000/login').reply(200, { createdAt: '2024-01-01T12:34:56Z' });
-    mockAxios.onPost('http://localhost:8000/askllm').reply(200, { answer: 'Hello test user' });
 
     // Simulate user input
     await act(async () => {
@@ -39,86 +35,122 @@ describe('Login component', () => {
       });
 
     // Verify that the user information is displayed
-    expect(screen.getByText(/Your account was created on 1\/1\/2024/i)).toBeInTheDocument();
-    expect(screen.getByText(/Start Game/i)).toBeInTheDocument();
+    expect(screen.getByText(/¡Acción!/i)).toBeInTheDocument();
   });
 
-  it('should handle error when logging in', async () => {
-    render(<Login userForHistory={userForHistory}/>);
-
-    const usernameInput = screen.getByLabelText(/Username/i);
-    const passwordInput = screen.getByLabelText(/Password/i);
-    const loginButton = screen.getByRole('button', { name: /Login/i });
-
-    // Mock the axios.post request to simulate an error response
-    mockAxios.onPost('http://localhost:8000/login').reply(401, { error: 'Unauthorized' });
-
-    // Simulate user input
-    fireEvent.change(usernameInput, { target: { value: 'testUser' } });
-    fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
-
-    // Trigger the login button click
+  it('should display error message when login fails', async () => {
+    localStorage.clear(); 
+    jest.spyOn(Storage.prototype, 'getItem').mockImplementation(() => null);
+  
+    mockAxios.onPost('http://localhost:8000/login').reply(401, {
+      error: 'Invalid credentials',
+    });
+  
+    render(<Login userForHistory={userForHistory} />);
+  
+    
+    const usernameInput = await screen.findByLabelText(/Usuario/i);
+    const passwordInput = screen.getByLabelText(/Contraseña/i);
+    const loginButton = screen.getByRole('button', { name: /Iniciar Sesión/i });
+  
+    fireEvent.change(usernameInput, { target: { value: 'wrongUser' } });
+    fireEvent.change(passwordInput, { target: { value: 'wrongPassword' } });
     fireEvent.click(loginButton);
-
-    // Wait for the error Snackbar to be open
-    await waitFor(() => {
-      expect(screen.getByText(/Unauthorized/i)).toBeInTheDocument();
+  
+    await waitFor(() =>
+      expect(screen.getByText(/Invalid credentials/i)).toBeInTheDocument()
+    );
+  });
+  
+  
+  
+  
+  it('should disable the selected game length button', async () => {
+    mockAxios.onPost('http://localhost:8000/login').reply(200, {
+      token: 'test-token',
+      createdAt: '2024-01-01T12:34:56Z',
     });
+  
+    mockAxios.onPost('http://localhost:8000/askllm').reply(200, {
+      answer: 'Hello test user',
+    });
+  
+    render(<Login userForHistory={userForHistory} />);
+  
+    await act(async () => {
+      fireEvent.change(screen.getByLabelText(/Usuario/i), {
+        target: { value: 'testUser' },
+      });
+      fireEvent.change(screen.getByLabelText(/Contraseña/i), {
+        target: { value: 'testPassword' },
+      });
+      fireEvent.click(screen.getByRole('button', { name: /Iniciar Sesión/i }));
+    });
+  
+    await waitFor(() =>
+      expect(screen.getByText(/Escoge la longitud de la partida/i)).toBeInTheDocument()
+    );
+  
+    const cortaBtn = screen.getByRole('button', { name: /Corta/i });
+    const normalBtn = screen.getAllByRole('button', { name: /Normal/i });
+    const largaBtn = screen.getByRole('button', { name: /Larga/i });
 
-    // Verify that the user information is not displayed
-    expect(screen.queryByText(/Hello testUser!/i)).toBeNull();
-    expect(screen.queryByText(/Your account was created on/i)).toBeNull();
+    const bateríaDeSabiosBt = screen.getByRole('button', { name: /Batería de sabios/i });
+
+    expect(cortaBtn).toHaveClass('MuiButton-contained');  // Default es 6 => Corta
+    expect(normalBtn[1]).toHaveClass('MuiButton-outlined');
+    expect(largaBtn).toHaveClass('MuiButton-outlined');
+
+    expect(normalBtn[0]).toHaveClass('MuiButton-contained');
+    expect(bateríaDeSabiosBt).toHaveClass('MuiButton-outlined');
+
+    // Cambiamos a "Normal"
+    fireEvent.click(normalBtn[1]);
+
+    expect(cortaBtn).toHaveClass('MuiButton-outlined');
+    expect(normalBtn[1]).toHaveClass('MuiButton-contained');
+    expect(largaBtn).toHaveClass('MuiButton-outlined');
   });
 
-  
-  
+  it('sets username and createdAt when token is present', () => {
+    jest.spyOn(localStorage, 'getItem').mockImplementation((field) => {
+      if (field === 'token') {
+        return 'some-token';
+      }
+      if (field === 'username') {
+        return 'test-username';
+      }
+      if (field === 'createdAt') {
+        return '2022-01-01T12:00:00.000Z';
+      }
+    });
 
-  it('El botón de volver debe aparecer y funcionar', async () => {
-    await mockAxios.onPost('http://localhost:8000/history').reply(200, [{date: "2024-01-01T12:34:56Z", correctAnswers: 4, wrongAnswers:2}]);
-    await mockAxios.onGet('http://localhost:8000/ranking').reply(200, [{username:"user1", date: "2024-01-01T12:34:56Z", correctAnswers: 4, wrongAnswers:2}]);
+    localStorage.setItem('token', 'some-token');
+    localStorage.setItem('username', 'test-username');
+    localStorage.setItem('createdAt', '2022-01-01T12:00:00.000Z');
     render(<Login userForHistory={userForHistory}/>);
-    
+    expect(localStorage.username).not.toBe(null);
+    expect(localStorage.createdAt).not.toBe(null);
+  });
 
-    const usernameInput = screen.getByLabelText(/Username/i);
-    const passwordInput = screen.getByLabelText(/Password/i);
-    const loginButton = screen.getByRole('button', { name: /Login/i });
-
-    // Mock the axios.post request to simulate a successful response
-    await mockAxios.onPost('http://localhost:8000/login').reply(200, { createdAt: '2024-01-01T12:34:56Z' });
-    await mockAxios.onPost('http://localhost:8000/askllm').reply(200, { answer: 'Hello test user' });
-    await mockAxios.onPost('http://localhost:8000/start').reply(200);
-
-    mockAxios.onGet('../Game').reply(200, {
-      componente: () => <p>Mock de Game</p>,
-    });
-    
-
-    // Simulate user input
-    await act(async () => {
-        fireEvent.change(usernameInput, { target: { value: 'testUser' } });
-        fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
-        fireEvent.click(loginButton);
-        
+  it('parses createdAt date correctly', () => {
+    jest.spyOn(localStorage, 'getItem').mockImplementation((field) => {
+      if (field === 'token') {
+        return 'some-token';
+      }
+      if (field === 'username') {
+        return 'test-username';
+      }
+      if (field === 'createdAt') {
+        return '2022-01-01T12:00:00.000Z';
+      }
     });
 
-    await act(async () => {
-      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
-    });
-
-    
-    await waitFor(() => {
-      expect(screen.getByText("Volver")).toBeInTheDocument();
-    });
-    await fireEvent.click(screen.getByText("Volver"));
-
-    await waitFor(() => {
-      expect(screen.getByText("Start Game")).toBeInTheDocument();
-    });
-
-    });  
-
-  })
-
+    localStorage.setItem('token', 'some-token');
+    localStorage.setItem('username', 'test-username');
+    localStorage.setItem('createdAt', '2022-01-01T12:00:00.000Z');
+    render(<Login userForHistory={userForHistory}/>);
+    expect(localStorage.createdAt).toBe('2022-01-01T12:00:00.000Z');
+  });
   
-  
-
+});

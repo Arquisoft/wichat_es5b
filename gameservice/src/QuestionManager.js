@@ -2,6 +2,8 @@ const { shuffle } = require("../src/util/GameUtil");
 const { AnswerVerifier } = require("../src/AnswerVerifier");
 const { MovieQuestionGenerator } = require("../src/generators/MovieQuestionGenerator");
 const { ActorQuestionGenerator } = require("../src/generators/ActorQuestionGenerator");
+const { CharacterQuestionGenerator } = require("../src/generators/CharacterQuestionGenerator");
+const {getRandomValues} = require("node:crypto");
 
 
 class QuestionManager {
@@ -10,24 +12,31 @@ class QuestionManager {
 
   constructor() {
     this.questions = [];
-    this.generator = [new MovieQuestionGenerator(), new ActorQuestionGenerator()];
+    this.generator = [new MovieQuestionGenerator(), new ActorQuestionGenerator(), new CharacterQuestionGenerator()];
     this.currentQuestion=0;
   }
 
-  async generateQuestions(nQuestions) {
+  setGenerators(generators) {
+    this.generator = generators;
+  }
+
+  async generateQuestions(nQuestions, nOptions) {
     let nQuestType = Math.floor(nQuestions/this.generator.length);
     let nExtraQuestions = nQuestions % this.generator.length;
+    this.questions = []
+    console.log("OPCIONES "+nOptions)
 
     let queryPromises = this.generator.map((gen, index) => {
       let nQuestionsToGenerate = nQuestType + (index === 0 ? nExtraQuestions : 0);
       return this.executeQuery(gen.getQuery()).then(queryResult =>
-          gen.generateQuestions(queryResult, nQuestionsToGenerate)
+          gen.generateQuestions(queryResult, nQuestionsToGenerate, nOptions)
       );
     });
 
     let results = await Promise.all(queryPromises);
+
     results.forEach(generatedQuestions => {
-        generatedQuestions.forEach(q => this.questions.push(q));
+      generatedQuestions.forEach(q => this.questions.push(q));
     });
 
     this.questions = shuffle(this.questions);

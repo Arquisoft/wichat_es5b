@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import { render, fireEvent, screen, waitFor } from '../test-utils';
 import axios from 'axios';
 import History from './History';
 import MockAdapter from 'axios-mock-adapter';
@@ -11,7 +11,8 @@ const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000
 
 //mockeo llamadas a base de datos
 const mockAxios = new MockAdapter(axios);
-mockAxios.onPost(apiEndpoint+'/history').reply(200, [{ username: 'prueba' , date: 'hoy',correctAnswers: 2, wrongAnswers:4 }]);
+mockAxios.onPost(apiEndpoint+'/history').reply(200, [{ username: 'prueba' , date: new Date(),correctAnswers: 2, wrongAnswers:4 }]);
+jest.mock('./PreguntasHistorico', () => () => <div>Preguntas</div>);
 
 describe('History Component', () => {
 

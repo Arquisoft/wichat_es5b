@@ -29,10 +29,20 @@ describe('Gateway Service', () => {
       return Promise.resolve({ data: { start: 'start' } });
     } else if (url.endsWith('/end')) {
       return Promise.resolve({ data: { end: 'end' } });
-    
     } else if (url.endsWith('/answer')) {
       return Promise.resolve({ data: { answer: 'answer' } });
-    } 
+    } else if (url.endsWith('/updateusername')) {
+      return Promise.resolve({ data: { message: 'updated' } });
+    } else if (url.endsWith('/updatepassword')) {
+      return Promise.resolve({ data: { message: 'updated' } });
+    } else if (url.endsWith('/getUserRole')) {
+      return Promise.resolve({ data: { role: 'Admin' } });
+    } else if (url.endsWith('/hintUsed') || url.endsWith('/chatBotUsed')) {
+      return Promise.resolve({ data: { score: 10 } });
+    } else if (url.endsWith('/askWithImageViaPrompt')) {
+      return Promise.resolve({ data: { answer: 'answer' } });
+    }
+  
      
   });
 
@@ -41,7 +51,78 @@ describe('Gateway Service', () => {
       return Promise.resolve({ data: { ranking: 'rank' } });
     } else if (url.endsWith('/question')) {
       return Promise.resolve({ data: { question: 'question' } });
+    } else if (url.endsWith('/health')) {
+      return Promise.resolve({ data: { status: 'OK' } });
   }});
+
+
+  // Test /health endpoint
+  it('should ask for the health of gateway', async () => {
+    const response = await request(app)
+      .get('/health')
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.status).toBe('OK');
+  });
+
+  // Test /updateusername endpoint
+  it('should try to update the username', async () => {
+    const response = await request(app)
+      .post('/updateusername')
+      .send({ userId: '432r234', newUsername: 'user' });
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.message).toBe('updated');
+  });
+
+  // Test /updatepassword endpoint
+  it('should try to update the password', async () => {
+    const response = await request(app)
+      .post('/updatepassword')
+      .send({ userid:'userId', oldPassword:'oldPassword', newPassword:'newPassword', confirmPassword:'confirmPassword' });
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.message).toBe('updated');
+  });
+
+  // Test /hintUsed
+  it('should try to change the score because of a hint', async () => {
+    const response = await request(app)
+      .post('/hintUsed')
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.score).toBe(10);
+  });
+
+  // Test /chatBotUsed
+  it('should try to change the score because of the chat', async () => {
+    const response = await request(app)
+      .post('/chatBotUsed')
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.score).toBe(10);
+  });
+
+  // Test /askWithImage
+  it('should try to ask with image', async () => {
+    const response = await request(app)
+      .post('/askWithImage')
+      .send({ imageUrl: 'url' });
+    
+    expect(response.statusCode).toBe(200);
+    expect(response.body.answer).toBe('answer');
+  });
+    
+
+  // Test /getUserRole endpoint
+  it('should try to get the role of a user', async () => {
+    const response = await request(app)
+      .post('/getUserRole')
+      .send({ userId: '432r234' });
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.role).toBe('Admin');
+  });
 
   // Test /login endpoint
   it('should forward login request to auth service', async () => {
@@ -111,7 +192,7 @@ describe('Gateway Service', () => {
     expect(response.body.history).toBe('history');
   });
 
-  // Test /newHistory endpoint
+  // Test /newRanking endpoint
   it('should add the newRanking', async () => {
     const response = await request(app)
       .post('/newRanking')

@@ -15,7 +15,7 @@ defineFeature(feature, test => {
       : await puppeteer.launch({ 
         // executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', // Only for Mac users
         headless: false, 
-        slowMo: 10
+        slowMo: 20
       });
     page = await browser.newPage();
     //Way of setting up the timeout
@@ -42,13 +42,13 @@ defineFeature(feature, test => {
     given('An unregistered user', async () => {
       username = "userasw";
       password = "ValidPassword123";
-      await expect(page).toClick("button", { text: "Don't have an account? Register here." });
+      await expect(page).toClick("button", { text: "¿No tienes una cuenta? Regístrate aquí." });
     });
 
     when('I fill the data in the form and press submit', async () => {
       await expect(page).toFill('input[name="username"]', username);
       await expect(page).toFill('input[name="password"]', password);
-      await expect(page).toClick('button', { text: 'Add User' })
+      await expect(page).toClick('button', { text: 'Crear Usuario' })
     });
 
     then('A confirmation message should be shown in the screen', async () => {
@@ -60,13 +60,13 @@ defineFeature(feature, test => {
   test('The user submits the form without filling username and password', ({given,when,then}) =>  {
 
     given('An unregistered user', async () => {
-      await expect(page).toClick("button", { text: "Don't have an account? Register here." });
+      await expect(page).toClick("button", { text: "¿No tienes una cuenta? Regístrate aquí." });
     });
 
     when('I leave the username and password fields empty and i press submit', async () => {
       await expect(page).toFill('input[name="username"]', '');
       await expect(page).toFill('input[name="password"]', '');
-      await expect(page).toClick('button', { text: 'Add User' });
+      await expect(page).toClick('button', { text: 'Crear Usuario' });
     });
 
     then('A validation message "El campo nombre de usuario es obligatorio y no puede estar vacío" should be displayed', async () => {
@@ -81,13 +81,13 @@ defineFeature(feature, test => {
 
     given('An unregistered user', async () => {
       password = "ValidPassword123"
-      await expect(page).toClick("button", { text: "Don't have an account? Register here." });
+      await expect(page).toClick("button", { text: "¿No tienes una cuenta? Regístrate aquí." });
     });
 
     when('I leave the username field empty and I fill the password field and I press submit', async () => {
       await expect(page).toFill('input[name="username"]', '');
       await expect(page).toFill('input[name="password"]', password);
-      await expect(page).toClick('button', { text: 'Add User' });
+      await expect(page).toClick('button', { text: 'Crear Usuario' });
     });
 
     then('A validation message "El campo nombre de usuario es obligatorio y no puede estar vacío" should be displayed', async () => {
@@ -102,13 +102,13 @@ defineFeature(feature, test => {
 
     given('An unregistered user', async () => {
       username = "userasw"
-      await expect(page).toClick("button", { text: "Don't have an account? Register here." });
+      await expect(page).toClick("button", { text: "¿No tienes una cuenta? Regístrate aquí." });
     });
 
     when('I leave the password field empty and I fill the username field and I press submit', async () => {
       await expect(page).toFill('input[name="username"]', username);
       await expect(page).toFill('input[name="password"]', '');
-      await expect(page).toClick('button', { text: 'Add User' });
+      await expect(page).toClick('button', { text: 'Crear Usuario' });
     });
 
     then('A validation message "El campo contraseña es obligatorio y no puede estar vacío" should be displayed', async () => {
@@ -125,17 +125,17 @@ defineFeature(feature, test => {
     given('A user with username "repeateduser" is already registered', async () => {
       username = "repeateduser";
       password = "ValidPassword123";
-      await expect(page).toClick("button", { text: "Don't have an account? Register here." });
+      await expect(page).toClick("button", { text: "¿No tienes una cuenta? Regístrate aquí." });
       await expect(page).toFill('input[name="username"]', username);
       await expect(page).toFill('input[name="password"]', password);
-      await expect(page).toClick('button', { text: 'Add User' });
+      await expect(page).toClick('button', { text: 'Crear Usuario' });
       await expect(page).toMatchElement("div", { text: "Usuario añadido correctamente" });
     });
   
     when('I fill the username field with "repeateduser" and I fill the password field and I press submit', async () => {
       await expect(page).toFill('input[name="username"]', username);
       await expect(page).toFill('input[name="password"]', password);
-      await expect(page).toClick('button', { text: 'Add User' });
+      await expect(page).toClick('button', { text: 'Crear Usuario' });
     });
   
     then('A validation message "El nombre de usuario ya está en uso" should be displayed', async () => {
@@ -152,13 +152,13 @@ defineFeature(feature, test => {
     given('An unregistered user', async () => {
       username = "userasw";
       password = "password1";
-      await expect(page).toClick("button", { text: "Don't have an account? Register here." });
+      await expect(page).toClick("button", { text: "¿No tienes una cuenta? Regístrate aquí." });
     });
 
     when('I fill the username field with "userasw" and I fill the password field with "password1" and I press submit', async () => {
       await expect(page).toFill('input[name="username"]', username);
       await expect(page).toFill('input[name="password"]', password);
-      await expect(page).toClick('button', { text: 'Add User' });
+      await expect(page).toClick('button', { text: 'Crear Usuario' });
     });
 
     then('A validation message "La contraseña debe tener al menos una letra mayúscula, un número y 6 caracteres." should be displayed', async () => {
@@ -175,13 +175,13 @@ defineFeature(feature, test => {
     given('An unregistered user', async () => {
       username = "userasw";
       password = "Password";
-      await expect(page).toClick("button", { text: "Don't have an account? Register here." });
+      await expect(page).toClick("button", { text: "¿No tienes una cuenta? Regístrate aquí." });
     });
 
     when('I fill the username field with "userasw" and I fill the password field with "Password" and I press submit', async () => {
       await expect(page).toFill('input[name="username"]', username);
       await expect(page).toFill('input[name="password"]', password);
-      await expect(page).toClick('button', { text: 'Add User' });
+      await expect(page).toClick('button', { text: 'Crear Usuario' });
     });
 
     then('A validation message "La contraseña debe tener al menos una letra mayúscula, un número y 6 caracteres." should be displayed', async () => {
@@ -198,13 +198,13 @@ defineFeature(feature, test => {
     given('An unregistered user', async () => {
       username = "userasw";
       password = "Pass1";
-      await expect(page).toClick("button", { text: "Don't have an account? Register here." });
+      await expect(page).toClick("button", { text: "¿No tienes una cuenta? Regístrate aquí." });
     });
 
     when('I fill the username field with "userasw" and I fill the password field with "Pass1" and I press submit', async () => {
       await expect(page).toFill('input[name="username"]', username);
       await expect(page).toFill('input[name="password"]', password);
-      await expect(page).toClick('button', { text: 'Add User' });
+      await expect(page).toClick('button', { text: 'Crear Usuario' });
     });
 
     then('A validation message "La contraseña debe tener al menos una letra mayúscula, un número y 6 caracteres." should be displayed', async () => {

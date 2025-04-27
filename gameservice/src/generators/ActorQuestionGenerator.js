@@ -15,7 +15,6 @@ class ActorQuestionGenerator extends AbstractQuestionGenerator {
     }
 
     mapResult(queryResult , mappedRes){
-        console.log("queryResult: "+queryResult)
         queryResult.results.bindings.forEach((entry) => {
             const character = entry.characterLabel.value;
             const performer = entry.performerLabel.value;

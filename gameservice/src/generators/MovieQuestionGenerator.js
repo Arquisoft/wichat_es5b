@@ -1,5 +1,4 @@
 const { AbstractQuestionGenerator } = require("./AbstractQuestionGenerator");
-const { Question } = require("../questions/Question");
 const { MovieQuestion } = require("../questions/MovieQuestion");
 const { movieQuery } = require("./Queries");
 

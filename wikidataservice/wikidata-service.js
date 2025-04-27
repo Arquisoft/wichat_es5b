@@ -1,28 +1,28 @@
-import axios from 'axios';
-import express from 'express';
+const axios = require('axios');
+const express = require('express');
 
 const app = express();
 const port = 8004;
 
 app.use(express.json());
 
-export async function executeSparqlQuery(query) {
-    try {
-      const response = await axios.get('https://query.wikidata.org/sparql', {
-        headers: {
-          'User-Agent': 'Your User Agent',
-          'Accept': 'application/json',
-        },
-        params: {
-          query: query,
-          format: 'json',
-        },
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Se ha producido un error al ejecutar la query de SPARQL:', error);
-      throw error;
-    }
+async function executeSparqlQuery(query) {
+  try {
+    const response = await axios.get('https://query.wikidata.org/sparql', {
+      headers: {
+        'User-Agent': 'Your User Agent',
+        'Accept': 'application/json',
+      },
+      params: {
+        query: query,
+        format: 'json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Se ha producido un error al ejecutar la query de SPARQL:', error);
+    throw error;
+  }
 }
 
 app.post("/query", async (req, res) => {
@@ -32,8 +32,10 @@ app.post("/query", async (req, res) => {
 })
 
 // Start the wikidata service
-export const server = app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Wikidata Service listening at http://localhost:${port}`);
 });
+
+module.exports = {server, executeSparqlQuery}
 
 
