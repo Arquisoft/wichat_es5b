@@ -16,6 +16,7 @@ defineFeature(feature, test => {
             // : await puppeteer.launch({ headless: false, slowMo: 100 });
             : await puppeteer.launch({ 
             // executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', // Only for Mac users
+            executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', // Only for Mac users
             headless: false, 
             slowMo: 20
             });
@@ -31,7 +32,8 @@ defineFeature(feature, test => {
 
         // Registro del usuario
         await expect(page).toClick("button", { text: "¿No tienes una cuenta? Regístrate aquí." });
-        await expect(page).toFill('input[name="username"]', "aswuser");
+        await expect(page).toMatchElement("h1", { text: "Creación de Usuario" });
+        await expect(page).toFill('input[name="username"]', "aswuserwelcome");
         await expect(page).toFill('input[name="password"]', "ValidPassword123");
         // await page.waitForSelector('button', { visible: true });
         // await expect(page).toClick('button', { text: "Add User", force: true });
@@ -53,20 +55,19 @@ defineFeature(feature, test => {
         let password;
 
         given('A registered user with username "aswuser" and password "ValidPassword123"', async () => {
-            username = "aswuser";
+            username = "aswuserwelcome";
             password = "ValidPassword123";
         });
 
         when('I log in', async () => {
+            await expect(page).toMatchElement("h1", { text: "Inicio de Sesión" });
             await expect(page).toFill('input[name="username"]', username);
             await expect(page).toFill('input[name="password"]', password);
             await expect(page).toClick('button', { text: 'Iniciar Sesión' });
-            await page.waitForTimeout(1000);
         });
 
         then('I should see the Welcome message of the game', async () => {
-            await expect(page).toMatchElement("h2", { text: new RegExp("¿Preparado para poner a prueba tus conocimientos en el mundo del cine?") });
-
+            await expect(page).toMatchElement("h1", { text: "¡Bienvenido a Wichat!" });
         });
 
     });

@@ -14,7 +14,7 @@ defineFeature(feature, test => {
       // : await puppeteer.launch({ headless: false, slowMo: 100 });
       : await puppeteer.launch({ 
         //executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium', // Only for Mac users
-        //executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', // Only for Mac users
+        executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', // Only for Mac users
         headless: true, 
         slowMo: 20
       });
@@ -36,7 +36,7 @@ defineFeature(feature, test => {
     // Comprobar si el login fue exitoso
     const loggedIn = await page.evaluate(() => {
 
-        return !!document.querySelector("div")?.textContent?.includes("Welcome");
+        return !!document.querySelector("div")?.textContent?.includes("Bienvenido");
 
     });
     
@@ -47,6 +47,8 @@ defineFeature(feature, test => {
         await page.goto("http://localhost:3000", { waitUntil: "networkidle0" });
 
         await expect(page).toClick("button", { text: "¿No tienes una cuenta? Regístrate aquí." });
+
+        await expect(page).toMatchElement("h1", { text: "Creación de Usuario" });
 
         await expect(page).toFill('input[name="username"]', "aswuser2");
 
@@ -82,6 +84,8 @@ defineFeature(feature, test => {
     });
 
     when('I log in and I click on Update username', async () => {
+
+        await expect(page).toMatchElement("h1", { text: "Inicio de Sesión" });
 
         await expect(page).toFill('input[name="username"]', username);
         await expect(page).toFill('input[name="password"]', password);
@@ -132,6 +136,8 @@ defineFeature(feature, test => {
     });
 
     when('I log in and I click on Update username', async () => {
+
+        await expect(page).toMatchElement("h1", { text: "Inicio de Sesión" });
 
         await expect(page).toFill('input[name="username"]', username);
         await expect(page).toFill('input[name="password"]', password);
@@ -203,6 +209,8 @@ defineFeature(feature, test => {
 
     when('I log in and I click on Update username', async () => {
 
+        await expect(page).toMatchElement("h1", { text: "Inicio de Sesión" });
+
         await expect(page).toFill('input[name="username"]', username);
         await expect(page).toFill('input[name="password"]', password);
 
@@ -252,6 +260,8 @@ defineFeature(feature, test => {
     });
 
     when('I log in and I click on Update password', async () => {
+
+        await expect(page).toMatchElement("h1", { text: "Inicio de Sesión" });
 
         await expect(page).toFill('input[name="username"]', username);
         await expect(page).toFill('input[name="password"]', password);
@@ -305,6 +315,8 @@ defineFeature(feature, test => {
 
     when('I log in and I click on Update password', async () => {
 
+        await expect(page).toMatchElement("h1", { text: "Inicio de Sesión" });
+
         await expect(page).toFill('input[name="username"]', username);
         await expect(page).toFill('input[name="password"]', password);
 
@@ -357,6 +369,8 @@ defineFeature(feature, test => {
 
     when('I log in and I click on Update password', async () => {
 
+        await expect(page).toMatchElement("h1", { text: "Inicio de Sesión" });
+
         await expect(page).toFill('input[name="username"]', username);
         await expect(page).toFill('input[name="password"]', password);
 
@@ -367,7 +381,9 @@ defineFeature(feature, test => {
     });
 
     and('I fill in the form with not valid new password', async () => {
-        
+
+        //Esperar a que la página cargue completamente
+        await expect(page).toMatchElement("div", { text: "Edite su contraseña" });
         
         await expect(page).toFill('input[name="password"]', "NewValidPassword123");
         await expect(page).toFill('input[name="newpassword"]', "invalidnewpassword");
@@ -408,6 +424,8 @@ defineFeature(feature, test => {
 
     when('I log in and I click on Update password', async () => {
 
+        await expect(page).toMatchElement("h1", { text: "Inicio de Sesión" });
+
         await expect(page).toFill('input[name="username"]', username);
         await expect(page).toFill('input[name="password"]', password);
 
@@ -418,6 +436,9 @@ defineFeature(feature, test => {
     });
 
     and('I fill in the form with different new password and confirmation', async () => {
+
+        //Esperar a que la página cargue completamente
+        await expect(page).toMatchElement("div", { text: "Edite su contraseña" });
         
         await expect(page).toFill('input[name="password"]', "NewValidPassword123");
         await expect(page).toFill('input[name="newpassword"]', "DifferentPassword123");
