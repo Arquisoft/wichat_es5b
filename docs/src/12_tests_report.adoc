@@ -1,0 +1,38 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[[section-tests]]
+== Informe de pruebas
+
+ifdef::arc42help[]
+[role="arc42help"]
+****
+.Contenido
+Las pruebas realizadas en el proyecto asi como sus resultados.
+
+.Motivación
+Mostrar que las pruebas realizadas han sido satisfactorias y como mejorarlas a futuro.
+
+
+****
+endif::arc42help[]
+
+=== Pruebas unitarias
+Durante el desarrollo de todo el proyecto se han desarrollado varias pruebas unitarias,
+estas pruebas nos han dado un porcentage de coverage segun SonarQube del 84.2%.
+
+image::12_Coverage.png[Informe de sonarQube]
+
+=== Pruebas e2e
+Para el despliegue se han realizado un numero de pruebas e2e. Las funcionalidades probadas fueron las siguientes:
+. Game
+. Historic
+. Login
+. Ranking
+. Register Form
+. Update User
+
+Los cuales pasaron a la hora de realizar el despliegue.
+
+image::12_despliegue.png[Workflow del despliegue]
+
+=== Pruebas de carga
