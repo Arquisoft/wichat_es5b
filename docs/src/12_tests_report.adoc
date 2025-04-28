@@ -36,3 +36,26 @@ Los cuales pasaron a la hora de realizar el despliegue.
 image::12_despliegue.png[Workflow del despliegue]
 
 === Pruebas de carga
+En las pruebas de carga realizamos 2 simulaciones.
+
+. Login, Ranking y Historial
+. Game
+
+==== Login, Ranking y Historial
+En la prueba de login realizamos los tests con 50 y con 100 usuarios, notando que las llamadas empezaban a fallar con la de 100 usuarios.
+
+image::12_login_load.png[Imagen de las requests de login]
+
+Las requests que comienzan a fallar en este caso son las 2, 3 y 6 correspondientes al logo y a los ficheros de internacionalización. Comenzamos a investigar cual podria ser la causa.
+
+==== Game
+En el caso del juego hicimos las pruebas de carga con 50 y 100 usuarios al mismo tiempo y con 2, 20, 50 y 100 usuarios por segundo durante 1 minuto.
+Analizaremos la que mayor carga aplica sobre nuestro sistema donde podemos ver que empieza a fallar un gran numero de requests y otras comienzan a ralentizarse.
+
+image::12_game_load.png[Imagen de las requests de game]
+
+En la información dada por los tests vimos que las que mas se retrasan en cuanto a tiempo de ejecución son las llamadas a usos externos como wikidata y el LLM. Intentamos comenzar con una optimización en estos servicios.
+
+==== Conclusión
+Con esta información podemos sacar dos conclusiones, hay que investigar cual es el problema por el cual las requests correspondientes a la internacionalización y a recursos internos como imagenes fallan
+y hay que mejorar los tiempos de carga en cuanto a los servicios externos asi como los problemas en los fallos en las requests a partir de un número elevado de clientes.
