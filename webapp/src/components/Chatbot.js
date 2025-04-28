@@ -8,15 +8,12 @@ import { LanguageContext } from "../LanguageContext";
 import { RingLoader } from "react-spinners";
 import { Typewriter } from "react-simple-typewriter";
 
-
-
 const Chatbot = ({ movieName, imageUrl, setScore }) => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [isMinimized, setIsMinimized] = useState(true);
     const { translations, currentLang } = useContext(LanguageContext);
     const [imageHintUsed, setImageHintUsed] = useState(false);
-
 
     const DEFAULT_MODEL = 'empathy';
     const QWEN_MODEL = 'empathyQwen';
@@ -50,19 +47,26 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                 throw new Error('QWEN_TIMEOUT');
             }
             
-            const botMessage = { text: response.data.answer, sender: 'bot' };
+            const botMessage = { 
+                text: response.data.answer, 
+                sender: 'bot',
+                isTyping: true,
+                typedText: ''
+            };
             setMessages(prev => [...prev, botMessage]);
+            setIsLoading(false); // Aquí detenemos el loading
 
             const chatBotUsedResponse = await axios.post(`${apiEndpoint}/chatBotUsed`);
             setScore(chatBotUsedResponse.data.score);
 
         } catch (error) {
-
             console.error("Error al comunicarse con el LLM:", error);
             
             let errorMessage = { 
                 text: "Lo siento, hubo un error al procesar tu solicitud. Intenta de nuevo más tarde.", 
-                sender: 'bot' 
+                sender: 'bot',
+                isTyping: true,
+                typedText: ''
             };
 
             if (error.message === 'QWEN_TIMEOUT' || 
@@ -73,26 +77,28 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                 
                 const systemMessage = {
                     text: "Se ha cambiado automáticamente al modelo Mistral.",
-                    sender: 'system'
+                    sender: 'system',
+                    isTyping: true,
+                    typedText: ''
                 };
                 setMessages(prev => [...prev, errorMessage, systemMessage]);
             } else {
                 setMessages(prev => [...prev, errorMessage]);
             }
+            setIsLoading(false); // También detenemos el loading en caso de error
         }
     };
 
     const handleImageHint = async () => {
-
-
         if (!imageUrl) {
             const errorMessage = { 
                 text: "No hay imagen disponible para esta película", 
-                sender: 'bot' 
+                sender: 'bot',
+                isTyping: true,
+                typedText: ''
             };
             return setMessages(prev => [...prev, errorMessage]);
         }
-        
         
         const userImageMessage = { 
             text: "Te envío esta imagen para que me des una pista:", 
@@ -101,15 +107,16 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
         };
 
         setMessages(prev => [...prev, userImageMessage]);
+        setIsLoading(true);
         
         try {
-            
             const loadingMessage = { 
                 text: "Analizando la imagen para darte una pista...", 
-                sender: 'bot' 
+                sender: 'bot',
+                isTyping: true,
+                typedText: ''
             };
             setMessages(prev => [...prev, loadingMessage]);
-            
             
             const response = await axios.post(`${apiEndpoint}/askWithImage`, { 
                 question: `Estoy jugando a adivinar una película o actor. Dame una pista útil basada en esta imagen sin revelar directamente el nombre.`,
@@ -118,27 +125,31 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
     
             const botMessage = { 
                 text: response.data.answer || "No pude generar una pista basada en la imagen.", 
-                sender: 'bot' 
+                sender: 'bot',
+                isTyping: true,
+                typedText: ''
             };
 
             setMessages(prev => [...prev, botMessage]);
             setImageHintUsed(true);
+            setIsLoading(false); // Detenemos el loading aquí también
             
             await axios.post(`${apiEndpoint}/chatBotUsed`);
             setScore(prevScore => prevScore - 1); 
 
         } catch (error) {
-
             console.error("Error al procesar la imagen:", error);
             const errorMessage = { 
                 text: error.response?.data?.error || 
                      "Lo siento, no pude analizar la imagen. Intenta con otra pista.", 
-                sender: 'bot' 
+                sender: 'bot',
+                isTyping: true,
+                typedText: ''
             };
 
             setMessages(prev => [...prev, errorMessage]);
+            setIsLoading(false); // Y aquí en caso de error
         }
-        setIsLoading(false);
     };
 
     const toggleModel = () => {
@@ -148,9 +159,23 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
         const modelName = newModel === DEFAULT_MODEL ? 'Mistral' : 'Qwen';
         const infoMessage = {
             text: (translations.chatbot_model_change || "Se ha cambiado el modelo a") + ` ${modelName}.`,
-            sender: 'system'
+            sender: 'system',
+            isTyping: true,
+            typedText: ''
         };
         setMessages(prev => [...prev, infoMessage]);
+    };
+
+    const handleType = (index, val) => {
+        setMessages(prev => {
+            const newMessages = [...prev];
+            newMessages[index] = {
+                ...newMessages[index],
+                typedText: val,
+                isTyping: val.length < newMessages[index].text.length
+            };
+            return newMessages;
+        });
     };
 
     return (
@@ -193,13 +218,16 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                                 backgroundColor: '#a6532a',
                             },
                             fontWeight: 'bold',
-                            fontSize: isMinimized ? '1rem' : '0.9rem',
+                            fontSize: '0.75rem',
                             width: isMinimized ? '100%' : 'auto',
-                            minWidth: isMinimized ? '100%' : '60px',
+                            minWidth: isMinimized ? '100%' : '110px',
                             textTransform: 'none',
-                            px: 2,
+                            px: 0.8,
                             mr: isMinimized ? 0 : 1,
-                            justifyContent: 'center'
+                            justifyContent: 'center',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis'
                         }}
                     >
                         {translations.chatbot_title || "Chat de Pistas"} {isMinimized ? '▲' : '▼'}
@@ -223,10 +251,13 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                                     },
                                     textTransform: 'none',
                                     fontWeight: 'bold',
-                                    fontSize: '0.7rem',
+                                    fontSize: '0.6rem',
                                     height: '30px',
                                     minWidth: '80px',
-                                    px: 1
+                                    px: 0.3,
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis'
                                 }}
                             >
                                 {imageHintUsed 
@@ -235,30 +266,31 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                             </Button>
                             
                             <Button 
-                            variant="outlined"
-                            onClick={toggleModel}
-                            sx={{ 
-                                backgroundColor: '#f0e6de',
-                                color: '#5a2d16',
-                                borderColor: '#c46331',
-                                '&:hover': { 
-                                    backgroundColor: '#e8d5c9',
-                                    borderColor: '#a6532a'
-                                },
-                                fontSize: '0.8rem',
-                                mr: 1,
-                                height: '30px',
-                                minWidth: '100px',
-                                textTransform: 'none'
-                            }}
+                                variant="outlined"
+                                onClick={toggleModel}
+                                sx={{ 
+                                    backgroundColor: '#f0e6de',
+                                    color: '#5a2d16',
+                                    borderColor: '#c46331',
+                                    '&:hover': { 
+                                        backgroundColor: '#e8d5c9',
+                                        borderColor: '#a6532a'
+                                    },
+                                    fontSize: '0.65rem',
+                                    mr: 0.5,
+                                    height: '30px',
+                                    minWidth: '95px',
+                                    textTransform: 'none',
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis'
+                                }}
                             >
                                 {currentModel === DEFAULT_MODEL 
                                 ? (translations.chatbot_use_qwen || 'Usar Qwen') 
                                 : (translations.chatbot_use_mistral || 'Usar Mistral')}
-
                             </Button>
                         </Box>
-                        
                     )}
                 </Box>
     
@@ -278,7 +310,6 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                                     p: 0.5,
                                     alignItems: 'flex-start'
                                 }}>
-
                                     <Box sx={{
                                         bgcolor: msg.sender === 'user' ? '#e8d5c9' : 
                                                msg.sender === 'system' ? '#e0e0e0' : '#f0e6de',
@@ -292,10 +323,23 @@ const Chatbot = ({ movieName, imageUrl, setScore }) => {
                                         wordBreak: 'break-word',
                                         fontStyle: msg.sender === 'system' ? 'italic' : 'normal'
                                     }}>
-                                        <ListItemText 
-                                            primary={msg.text} 
-                                            sx={{ whiteSpace: 'pre-wrap' }}
-                                        />
+                                        {msg.sender === 'user' ? (
+                                            <ListItemText 
+                                                primary={msg.text} 
+                                                sx={{ whiteSpace: 'pre-wrap' }}
+                                            />
+                                        ) : (
+                                            <Typewriter
+                                                words={[msg.text]}
+                                                loop={1}
+                                                cursor
+                                                cursorStyle="|"
+                                                typeSpeed={30}
+                                                deleteSpeed={0}
+                                                delaySpeed={0}
+                                                onType={(val) => handleType(index, val)}
+                                            />
+                                        )}
                                         {msg.imageUrl && (
                                             <Box sx={{ 
                                                 mt: 1,
