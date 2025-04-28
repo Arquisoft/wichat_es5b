@@ -19,7 +19,7 @@ app.post("/start", async (req  , res  ) => {
   console.log("Juego iniciado", req.body.nQuestions);
   selectController(req.body.gameMode);
   gameController.setNumberOfQuestions(req.body.nQuestions);
-  await gameController.startGame();
+  await gameController.startGame(req.body.lang);
   res.sendStatus(200);
 });
 

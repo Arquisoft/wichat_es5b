@@ -20,15 +20,16 @@ class QuestionManager {
     this.generator = generators;
   }
 
-  async generateQuestions(nQuestions, nOptions) {
-    let nQuestType = Math.floor(nQuestions/this.generator.length);
+  async generateQuestions(nQuestions, nOptions,lang) {
+    let nQuestType = Math.floor(nQuestions / this.generator.length);
     let nExtraQuestions = nQuestions % this.generator.length;
-    this.questions = []
-    console.log("OPCIONES "+nOptions)
+    this.questions = [];
+    console.log("OPCIONES " + nOptions);
 
     let queryPromises = this.generator.map((gen, index) => {
       let nQuestionsToGenerate = nQuestType + (index === 0 ? nExtraQuestions : 0);
-      return this.executeQuery(gen.getQuery()).then(queryResult =>
+      const queryI18n = gen.getQuery().replace('{{LANG}}', lang === "es" ? "es,en" : "en")
+      return this.executeQuery(queryI18n).then(queryResult =>
           gen.generateQuestions(queryResult, nQuestionsToGenerate, nOptions)
       );
     });
@@ -36,11 +37,10 @@ class QuestionManager {
     let results = await Promise.all(queryPromises);
 
     results.forEach(generatedQuestions => {
-      generatedQuestions.forEach(q => this.questions.push(q));
+      this.questions.push(...generatedQuestions);
     });
 
     this.questions = shuffle(this.questions);
-
     this.currentQuestion = 0;
   }
 
