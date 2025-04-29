@@ -49,18 +49,18 @@ const Login = ({ userForHistory }) => {
   const loginUser = async () => {
     try {
       const response = await axios.post(`${apiEndpoint}/login`, { username, password });
-
-      // Extract data from the response
+      
+      // Mover la lógica de éxito aquí
       const { createdAt: userCreatedAt } = response.data;
-
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('username', username);
 
-
-      // Asegurarse de que la fecha está en formato ISO
       const createdAtDate = new Date(response.data.createdAt);
       localStorage.setItem('createdAt', createdAtDate.toISOString());
 
+      // Llamar a userForHistory SOLO cuando el login es exitoso
+      userForHistory(username);
+      
       setCreatedAt(createdAtDate.toISOString());
       setLoginSuccess(true);
       setOpenSnackbar(true);
@@ -113,8 +113,14 @@ const Login = ({ userForHistory }) => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <Button fullWidth variant="contained" color="primary" onClick={()=>{loginUser();loginHistory();}} sx={{color: "#d87152", backgroundColor: "#faf5ea"}}>
-                        {translations.login_button || "Iniciar Sesión"}
+                    <Button 
+                      fullWidth 
+                      variant="contained" 
+                      color="primary" 
+                      onClick={loginUser} // Eliminar loginHistory de aquí
+                      sx={{color: "#d87152", backgroundColor: "#faf5ea"}}
+                    >
+                      {translations.login_button || "Iniciar Sesión"}
                     </Button>
                     <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
                         <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
