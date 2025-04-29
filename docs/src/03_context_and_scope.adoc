@@ -9,7 +9,7 @@ ifdef::arc42help[]
 ****
 .Contenido
 El alcance y contexto del sistema - como lo sugiere el nombre - delimita al sistema (es decir, el alcance) de todos sus
-socios de comunicación (Usuarios y sistemas vecinos, es decir, el contexto del sistema). 
+socios de comunicación (Usuarios y sistemas vecinos, es decir, el contexto del sistema).
 Con ello se especifican las interfaces externas.
 
 Si es necesario, diferenciar el contexto de negocio (Entradas y salidas específicas del dominio) del contexto técnico
@@ -71,7 +71,7 @@ cloud "LLM" {
 
 "Usuario" --> "WiChat" : Interactúa
 "WiChat" <--> "Wikidata" : Pide y recibe datos
-"WiChat" <--> "LLM" : Genera pistas para el usuario
+"WiChat" <--> "LLM" : Intercambia mensajes del usuario
 
 @enduml
 ----
@@ -86,7 +86,7 @@ Base de datos general de donde obtendremos las imágenes y datos relacionados co
 
 * LLM
 
-Modelo de Lenguaje utilizado para generar las pistas de la aplicación .Utilizamos dos LLMs distintos, Qwen y Mistral, creados por Empathy.
+Modelo de Lenguaje llamado mistral y creado por Empathy. Es el modelo de lenguaje que usaremos para apoyar al usuario en caso de que necesite pistas.
 
 === Contexto Técnico
 
@@ -101,11 +101,11 @@ el mapeo de las entradas/salidas específicas del dominio a los canales, es deci
 utiliza cual canal.
 
 .Motivación
-Muchas partes relacionadas realizan decisiones arquitectónicas basadas en las interfases técnicas entre el sistema y 
+Muchas partes relacionadas realizan decisiones arquitectónicas basadas en las interfases técnicas entre el sistema y
 su contexto. Especialmente los diseñadores de infraestructura o hardware deciden estas interfases técnicas.
 
 .Forma
-Por ejemplo, diagramas UML de despligue describiendo los canales a sistemas vecinos, junto con una tabla de 
+Por ejemplo, diagramas UML de despligue describiendo los canales a sistemas vecinos, junto con una tabla de
 mapeo mostrando las relaciones entre los canales y las entradas/salidas.
 ****
 endif::arc42help[]
@@ -182,7 +182,7 @@ cloud "LLM"
 
 |GatewayService - UserService
 |HTTP
-|Registro de usuarios
+|Registro
 
 |GatewayService - AuthService
 |HTTP
@@ -190,7 +190,7 @@ cloud "LLM"
 
 |GatewayService - LLMService
 |HTTP
-|Generación de pistas
+|Chat en tiempo real
 
 |GatewayService - GameService
 |HTTP
@@ -218,7 +218,7 @@ cloud "LLM"
 
 |UserService - Users DB
 |HTTP
-|Registro de usuarios
+|Registro
 
 |AuthService - Users DB
 |HTTP
@@ -226,5 +226,5 @@ cloud "LLM"
 
 |LLMService - LLM
 |HTTPS
-|Generación de pistas
+|Chat en tiempo real
 |===

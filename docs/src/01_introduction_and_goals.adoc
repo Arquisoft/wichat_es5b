@@ -19,12 +19,12 @@ endif::arc42help[]
 
 El propósito de este proyecto es mejorar una aplicación existente de preguntas y respuestas, donde los usuarios deben 
 responder correctamente entre varias opciones, de las cuales solo una es la correcta. La aplicación se basa en imágenes, 
-presentando a los jugadores distintos tipos de preguntas relacionadas con el contenido
+presentando a los jugadores diversas temáticas sobre las cuales deberán responder preguntas relacionadas con el contenido
 visual.
 
-Como nueva funcionalidad, este proyecto integrará un modelo de lenguaje (LLM) que permitirá ofrecer pistas a los jugadores. 
-Estas pistas estarán basadas en la imagen y en el contexto de la pregunta, ayudando a los usuarios a deducir la respuesta 
-correcta sin revelar directamente la solución. Esto no solo aumentará la accesibilidad y la experiencia del usuario, sino 
+Como nueva funcionalidad, este proyecto integrará un modelo de lenguaje (LLM) que permitirá ofrecer pistas a los jugadores.
+Estas pistas estarán basadas en la imagen y en el contexto de la pregunta, ayudando a los usuarios a deducir la respuesta
+correcta sin revelar directamente la solución. Esto no solo aumentará la accesibilidad y la experiencia del usuario, sino
 que también fomentará el aprendizaje y el razonamiento.
 
 === Requerimientos Funcionales
@@ -33,9 +33,9 @@ ifdef::arc42help[]
 [role="arc42help"]
 ****
 .Contenido
-Descripción corta de los requerimientos funcionales, motivaciones, extracto (o resumen) de los 
+Descripción corta de los requerimientos funcionales, motivaciones, extracto (o resumen) de los
 requerimientos. Ligar a los documentos de requerimientos determinados (Con número de versión e
-información de donde encontrarla). 
+información de donde encontrarla).
 
 .Motivación
 Desde el punto de vista de los usuarios finales un sistema es creado o modificado para
@@ -45,8 +45,8 @@ mejorar el soporte a una actividad de negocio o incrementar su calidad
 Descripción corta textual, probablemente en un formato de caso de uso tabular.
 Si existen documentos de requerimientos esta vista debe referir a dichos requerimientos
 
-Mantenga estos extractos tan cortos como sea posible. Encuentre el balance entre la legibilidad y 
-la redundancia de este documento respecto a los documentos de requerimientos que se encuentren 
+Mantenga estos extractos tan cortos como sea posible. Encuentre el balance entre la legibilidad y
+la redundancia de este documento respecto a los documentos de requerimientos que se encuentren
 relacionados.
 
 .Más infromación
@@ -61,7 +61,7 @@ Los requerimientos funcionales describen que debe hacer el sistema.
 . Interfaz de usuario
 .. El sistema contará con un frontend web
 .. El frontend mostrará imágenes
-.. El frontend mostrará preguntas con distintas opciones
+.. El frontend mostrará respuestas
 . Sistema de preguntas y respuestas
 .. El sistema generará automáticamente preguntas a partir de Wikidata
 .. El sistema creará una respuesta correcta para cada pregunta
@@ -94,7 +94,7 @@ Los requerimientos no funcionales describen cómo debe comportarse el sistema y 
 .. La web deberá estar desplegada
 .. La web deberá estar disponible en la web
 . Rendimiento y tiempos de respuesta
-.. El sistema deberá generar automáticamente las preguntas en tiempo razonable (<10-15s)
+.. El sistema deberá generar automáticamente las preguntas en tiempo razonable (<1s)
 .. Las pistas deben generarse en un tiempo óptimo para no afectar la experiencia del usuario
 .. Los tiempos de carga del sistema deben ser mínimos para garantizar una experiencia fluida
 . Escalabilidad y mantenimiento
@@ -159,7 +159,7 @@ Vista detallada de las partes intersadas del sistema, es decir, toda persona, ro
 * Debe estar convencida de la arquitectura
 * Tiene que trabajar con la arquitectura o con el código
 * Necesitan la documentación de la arquitectura para su trabajo
-* Intervienen en las decisiones acerca del sistema o su desarrollo 
+* Intervienen en las decisiones acerca del sistema o su desarrollo
 
 .Motivación
 Debe conocer a todas las partes involucradas en el desarrollo del sistema o que son afectadas
@@ -168,7 +168,7 @@ Estas partes relacionadas o stakeholders determinarán la extensión y el nivel 
 y sus resultados
 
 .Forma
-Tabla con nombres de los roles, personas, y sus expectativas con respecto a la arquitectura y su 
+Tabla con nombres de los roles, personas, y sus expectativas con respecto a la arquitectura y su
 documentación
 
 ****
@@ -177,21 +177,21 @@ endif::arc42help[]
 [options="header",cols="1,2,2"]
 |===
 |Rol/Nombre|Contacto|Expectativas
-| RTVE | _Equipo de RTVE_ |  Esperamos que RTVE nos facilite la suficiente informacion de que se espera de la aplicacion 
-| Equipo de desarrollo | 
+| RTVE | _Equipo de RTVE_ |  Esperamos que RTVE nos facilite la suficiente informacion de que se espera de la aplicacion
+| Equipo de desarrollo |
 Alberto Martinez Olivar - uo282069@uniovi.es +
 Pablo Jose Perez Diaz - uo282440@uniovi.es +
 Marcos Gonzalez Garcia - uo282587@uniovi.es +
 Javier Monte Guillem - uo283951@uniovi.es +
-Pelayo Palacios Suarez - uo274408@uniovi.es + 
+Pelayo Palacios Suarez - uo274408@uniovi.es +
 Celia Bobo Rodriguez Noriega - uo222898@uniovi.es
 |  Se espera que el grupo de desarrollo realice todas las actividades asignadas a tiempo y en caso de no realizarlas en el plazo asignado que esten finalizadas lo antes posible. Tambien se espera que el equipo de desarrollo aprenda lo suficiente de las tecnlogias escogidas para que puedan realizar correctamente el sistema deseado.
-| Empathy | https://www.empathy.ai/ | Esperamos que empathy mantenga disponible su LLM lo maximo posble para que podamos realizar este proyecto con su tecnologia. 
+| Empathy | https://www.empathy.ai/ | Esperamos que empathy mantenga disponible su LLM lo maximo posble para que podamos realizar este proyecto con su tecnologia.
 | Usuarios | Todo usuario que utilice la aplicación |  Se espera que los usuarios ayuden a los desarrolladores avisando en caso de encontrar algun error o bug para poder solucionarlos rapidamente.
-| Profesores | 
+| Profesores |
 Jose Emilio Labra Gayo - labra@uniovi.es +
 Irene Cid Rico - cidirene@uniovi.es +
 Diego Martín Fernández - martinfdiego@uniovi.es +
-Pablo González González - gonzalezgpablo@uniovi.es 
+Pablo González González - gonzalezgpablo@uniovi.es
 | Son los encargados de evaluar el proyecto realizado por el equipo de desarrollo, asi como la organización del grupo, y el trabajo cooperativo de todos los miembros del equipo.
 |===
