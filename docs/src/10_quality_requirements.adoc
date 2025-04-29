@@ -90,7 +90,7 @@ endif::arc42help[]
 | **Atributo de calidad** | **Escenario**
 | _Usabilidad_ | El usuario debe poder entender cómo jugar al juego en un máximo de 10 minutos sin tener conocimientos previos.
 | _Usabilidad_ | El usuario debe poder pedir pistas al LLM sin tener conocimientos previos acerca de cómo utilizar una IA. 
-| _Rendimiento_ | El sistema debe cargar las preguntas en menos de 2s.
+| _Rendimiento_ | El sistema debe cargar las preguntas en menos de 15s.
 | _Compatibilidad_ | La aplicación debe funcionar en las versiones más nuevas de los navegadores más utilizados (Chrome, Firefox, Edge...).
 | _Compatibilidad_ | La aplicación debe funcionar en distintos dispositivos (móvil, tablet y ordenador).
 | _Privacidad_ | Las contraseñas de los usuarios deben guardarse encriptadas en la base de datos.

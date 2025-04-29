@@ -165,8 +165,8 @@ A continuación se muestran algunos conceptos clave.
 
 === Conceptos de Arquitectura
 
-* **Microservicios**:
-La arquitectura de microservicios es un enfoque en el desarrollo de software que organiza la aplicación como una colección de servicios pequeños e independientes. Estos microservicios se comunican entre sí a través de APIs bien definidas, lo que permite que cada uno cumpla funciones específicas y se enfoque en capacidades concretas.
+* **Arquitectura basada en servicios**:
+La arquitectura de basada en servicios es un enfoque en el desarrollo de software que organiza la aplicación como una colección de servicios independientes. Estos servicios se comunican entre sí a través de interfaces bien definidas, lo que permite que cada uno cumpla funciones específicas y se enfoque en capacidades concretas.
 Al adoptar este patrón de diseño, nuestra aplicación se beneficia de una estructura flexible y escalable. La separación de responsabilidades entre servicios no solo facilita el mantenimiento y las actualizaciones, sino que también permite una mayor adaptabilidad ante cambios.
 
 === Conceptos de Desarrollo
