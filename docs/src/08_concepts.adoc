@@ -92,21 +92,31 @@ class Partida {
 
 class Pregunta {
   +id: int
-  +enunciado: string
   +imagen: string
-  +opciones: List<Opcion>
-  +respuestaCorrecta: Opcion
+  +opciones: String[]
+  +respuestaCorrecta: String
+  +pregunta: String[]
+  +preguntasLlm: String[][]
 }
 
-class Opcion {
-  +texto: string
-  +esCorrecta: boolean
+class PreguntaActor {
+  +nombreActor: String
+  +nombrePersonaje: String
+}
+
+class PreguntaPersonaje {
+  +nombrePersonaje: String
+}
+
+class PreguntaPelícula {
 }
 
 Usuario "1" --> "1" Historial : tiene
 Usuario "1" --> "*" Partida : juega
 Partida "1" --> "*" Pregunta : contiene
-Pregunta "1" --> "4" Opcion : tiene
+Pregunta <|-- PreguntaActor
+Pregunta <|-- PreguntaPersonaje
+Pregunta <|-- PreguntaPelícula
 @enduml
 ----
 
@@ -147,7 +157,7 @@ A continuación se muestran algunos conceptos clave.
 
 | **Control de Acceso Seguro** | Se implementará un sistema de autenticación robusto que valide correctamente las credenciales del usuario antes de conceder el acceso. En caso de datos incorrectos, se denegará el ingreso.
 
-| **Privacidad** | La información de los usuarios será completamente privada y no será visible para otros usuarios. 
+| **Privacidad** | La información sensible de los usuarios será completamente privada y no será visible para otros usuarios.
 
 | **Almacenamiento Seguro** | Las contraseñas de los usuarios nunca serán almacenadas en texto plano. Se emplearán técnicas de cifrado y hash seguro para proteger la información sensible y evitar accesos no autorizados.
 |===

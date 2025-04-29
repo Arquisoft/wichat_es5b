@@ -100,7 +100,7 @@ end
 
 === <Generacion de pregunta y respuestas>
 
-Este driagrama de secuencia resume el flujo de la aplicacion web para generar las preguntas y respuestas una vez iniciado el juego por parte del usuario.
+Este diagrama de secuencia resume el flujo de la aplicación web para generar las preguntas y respuestas una vez iniciado el juego por parte del usuario.
 
 [plantuml,"Generacion de pregunta",png]
 ----
@@ -123,7 +123,11 @@ alt Wikidata responde correctamente
     WikidataService --> WikidataService: Ejecutar consulta con SPARQL
     WikidataService --> GameService: Enviar respuesta consulta
     GameService -> GameService: Generar preguntas
+    GameService --> GatewayService: Enviar preguntas
+    GatewayService --> WebApp: Enviar preguntas
+    WebApp --> Usuario: Mostrar pregunta
 else Wikidata falla
+    WikidataService --> GameService: Notificar error al ejecutar consulta
     GameService --> GatewayService: Notificar error al generar pregunta
     GatewayService --> WebApp: Notificar error
     WebApp --> Usuario: Notificar error
@@ -131,17 +135,18 @@ end
 else Siguientes peticiones
      WikidataService --> GameService: Enviar respuesta cacheada
      GameService -> GameService: Generar preguntas
+     GameService --> GatewayService: Enviar preguntas
+     GatewayService --> WebApp: Enviar preguntas
+     WebApp --> Usuario: Mostrar pregunta
 end
-GameService --> GatewayService: Enviar preguntas
-GatewayService --> WebApp: Enviar preguntas
-WebApp --> Usuario: Mostrar pregunta
+
 
 @enduml
 ----
 
-=== <Generacion de una pista>
+=== <Generación de una pista>
 
-Este diagrama de secuencia representa como se genera una pista para una pregunta determinada tras ser solicitada por el usuario que esta jugando.
+Este diagrama de secuencia representa cómo se genera una pista para una pregunta determinada tras ser solicitada por el usuario que está jugando.
 
 [plantuml,"Generacion de pista",png]
 ----
@@ -159,9 +164,9 @@ WebApp --> Usuario: Mostrar pista generada
 @enduml
 ----
 
-=== <Consulta de estadisticas>
+=== <Consulta de estadísticas>
 
-Este diagrama de secuencia representa el flujo de la peticion de un usuario que haya iniciado sesion en el sistema y quiera saber sus estadisticas de juego.
+Este diagrama de secuencia representa el flujo de la petición de un usuario que haya iniciado sesión en el sistema y quiera saber sus estadísticas de juego.
 
 [plantuml,"Consulta de estadisticas",png]
 ----
