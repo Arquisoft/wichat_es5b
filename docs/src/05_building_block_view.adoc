@@ -199,9 +199,7 @@ frame WiChat {
 
     database "Users DB"
 
-    database "History DB"
-
-    database "Ranking DB"
+    database "Game DB"
   }
 }
 
@@ -219,8 +217,7 @@ cloud "LLM"
 "GameService" <--> "WikidataService"
 "UserService" <--> "Users DB"
 "AuthService" <--> "Users DB"
-"StatsService" <--> "History DB"
-"StatsService" <--> "Ranking DB"
+"StatsService" <--> "Game DB"
 "LLMService" <--> "LLM"
 "WikidataService" <--> "Wikidata"
 
