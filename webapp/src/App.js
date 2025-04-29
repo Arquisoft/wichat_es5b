@@ -51,11 +51,12 @@ function App() {
         backgroundColor: "#faf5ea",
         border: "10px solid #c46331",
         boxSizing: "border-box",
-        //marginTop: '1px', 
         paddingTop: '1px'
       }}>
         <CssBaseline />
         {showLogin ? <Login userForHistory={userForHistory} /> : <AddUser />}
+        
+        {/* Modificado para mostrar siempre el enlace cuando no hay usuario */}
         {!user && (
           <Typography component="div" align="center" sx={{ marginTop: 1}}>
             {showLogin ? (
