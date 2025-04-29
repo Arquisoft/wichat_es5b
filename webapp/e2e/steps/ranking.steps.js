@@ -47,7 +47,7 @@ defineFeature(feature, test => {
 
         then('I should see the ranking of the game', async () => {
             await expect(page).toMatchElement("h2", { text: "Ranking" });
-            await expect(page).toMatchElement("th", { text: "Fecha" });
+            await expect(page).toMatchElement("th", { text: "Usuario" });
             await expect(page).toMatchElement("th", { text: "Puntuación" });
             //Cerramos el historial
             await expect(page).toClick('button', { text: 'Cerrar' });
@@ -67,7 +67,7 @@ defineFeature(feature, test => {
 
         then('I should see the ranking of the game', async () => {
             await expect(page).toMatchElement("h2", { text: "Ranking" });
-            await expect(page).toMatchElement("th", { text: "Fecha" });
+            await expect(page).toMatchElement("th", { text: "Usuario" });
             await expect(page).toMatchElement("th", { text: "Puntuación" });
             //Cerramos el historial
             await expect(page).toClick('button', { text: 'Cerrar' });
@@ -103,7 +103,7 @@ defineFeature(feature, test => {
 
         then('I should see the ranking of the game', async () => {
             await expect(page).toMatchElement("h2", { text: "Ranking" });
-            await expect(page).toMatchElement("th", { text: "Fecha" });
+            await expect(page).toMatchElement("th", { text: "Usuario" });
             await expect(page).toMatchElement("th", { text: "Puntuación" });
             //Cerramos el historial
             await expect(page).toClick('button', { text: 'Cerrar' });
