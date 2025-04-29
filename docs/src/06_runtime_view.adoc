@@ -111,24 +111,29 @@ participant "WebApp" as WebApp
 participant "GatewayService" as GatewayService
 participant "GameService" as GameService
 participant "WikidataService" as WikidataService
-database "Base de datos" as BaseDatos
 
 Usuario -> WebApp: Iniciar juego
 WebApp -> GatewayService: Solicitar pregunta
 GatewayService -> GameService: Redirigir la peticion
-GameService -> WikidataService: Peticion para generar pregunta
+GameService -> WikidataService: Enviar consultas SPARQL
 
+WikidataService --> WikidataService: Comprobar si la respuesta está cacheada
+alt Primera petición o respuesta no cacheada
 alt Wikidata responde correctamente
-    WikidataService --> WikidataService: Generar pregunta con SPARQL
-    WikidataService --> GameService: Devuelve pregunta generada
-    GameService -> BaseDatos: Guardar pregunta generada
+    WikidataService --> WikidataService: Ejecutar consulta con SPARQL
+    WikidataService --> GameService: Enviar respuesta consulta
+    GameService -> GameService: Generar preguntas
 else Wikidata falla
-    GameService -> BaseDatos: Obtener pregunta almacenada
+    GameService --> GatewayService: Notificar error al generar pregunta
+    GatewayService --> WebApp: Notificar error
+    WebApp --> Usuario: Notificar error
 end
-
-BaseDatos --> GameService: Devolver pregunta
-GameService --> GatewayService: Respuesta con pregunta
-GatewayService --> WebApp: Respuesta con pregunta
+else Siguientes peticiones
+     WikidataService --> GameService: Enviar respuesta cacheada
+     GameService -> GameService: Generar preguntas
+end
+GameService --> GatewayService: Enviar preguntas
+GatewayService --> WebApp: Enviar preguntas
 WebApp --> Usuario: Mostrar pregunta
 
 @enduml
