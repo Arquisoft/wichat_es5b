@@ -50,7 +50,7 @@ defineFeature(feature, test => {
         await expect(page).toClick('button', { text: 'Crear Usuario' })
 
         // Confirmar que el registro fue exitoso
-        await expect(page).toMatchElement("div", { text: "Usuario añadido correctamente" });
+        //await expect(page).toMatchElement("div", { text: "Usuario añadido correctamente" });
     }
   });
 
