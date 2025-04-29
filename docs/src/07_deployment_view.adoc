@@ -109,7 +109,8 @@ node Azure{
         }
 
         node mongodb-wichat_es5b{
-            database "Database" as database
+            database "userdb" as userdb
+            database "game" as game
         }
         
     }
@@ -128,10 +129,10 @@ gateway --> userservice
 gateway --> gameservice
 gameservice --> wikidataservice
 wikidataservice --> "Wikidata"
-userservice --> database
-authservice --> database
+userservice --> userdb
+authservice --> userdb
 gateway --> statsservice
-statsservice --> database
+statsservice --> game
 
 @enduml
 ----
