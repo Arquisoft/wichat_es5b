@@ -50,7 +50,7 @@ const Login = ({ userForHistory }) => {
     try {
       const response = await axios.post(`${apiEndpoint}/login`, { username, password });
       
-      // Mover la lógica de éxito aquí
+      
       const { createdAt: userCreatedAt } = response.data;
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('username', username);
@@ -117,7 +117,7 @@ const Login = ({ userForHistory }) => {
                       fullWidth 
                       variant="contained" 
                       color="primary" 
-                      onClick={loginUser} // Eliminar loginHistory de aquí
+                      onClick={loginUser} 
                       sx={{color: "#d87152", backgroundColor: "#faf5ea"}}
                     >
                       {translations.login_button || "Iniciar Sesión"}
