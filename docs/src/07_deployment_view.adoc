@@ -76,40 +76,41 @@ node Dispositivo{
 
 node Azure{
     node Docker{
-        node ContenedorDocker1{
+        node webapp-wichat_es5b{
             [Webapp] as webapp
         }
 
-        node ContenedorDocker2{
+        node gatewayservice-wichat_es5b{
             [Gatewayservice] as gateway
         }
 
-        node ContenedorDocker3{
+        node authservice-wichat_es5b{
             [Authservice] as authservice
         }
 
-        node ContenedorDocker4{
+        node userservice-wichat_es5b{
             [Userservice] as userservice
         }
 
-        node ContenedorDocker5{
+        node gameservice-wichat_es5b{
             [GameService] as gameservice
         }
 
-        node ContenedorDocker6{
+        node wikidataservice-wichat_es5b{
             [WikidataService] as wikidataservice
         }
 
-        node ContenedorDocker7{
+        node statsservice-wichat_es5b{
             [StatsService] as statsservice
         }
 
-        node ContenedorDocker8{
+        node llmservice-wichat_es5b{
             [LLMService] as llmservice
         }
 
-        node ContenedorDocker9{
-            database "Database" as database
+        node mongodb-wichat_es5b{
+            database "userdb" as userdb
+            database "game" as game
         }
         
     }
@@ -128,10 +129,10 @@ gateway --> userservice
 gateway --> gameservice
 gameservice --> wikidataservice
 wikidataservice --> "Wikidata"
-userservice --> database
-authservice --> database
+userservice --> userdb
+authservice --> userdb
 gateway --> statsservice
-statsservice --> database
+statsservice --> game
 
 @enduml
 ----
