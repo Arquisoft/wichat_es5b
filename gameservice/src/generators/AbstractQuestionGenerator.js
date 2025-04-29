@@ -11,56 +11,54 @@ class AbstractQuestionGenerator  {
         return this.query;
     }
 
-    generateQuestions(queryResult, nQuestions, nOptions){
-        this.nOptions=nOptions;
+    generateQuestions(queryResult, nQuestions, nOptions) {
+        this.nOptions = nOptions;
         const mappedRes = new Map();
         this.mapResult(queryResult, mappedRes);
 
         const array = Array.from(mappedRes);
-        
+
         const questions = new Array(nQuestions);
-        const generatedQuestions = new Array(nQuestions);
+        const usedIndices = new Set();
 
         for (let i = 0; i < nQuestions; i++) {
-            questions[i] = this.generateQuestion(array, generatedQuestions);
+            questions[i] = this.generateQuestion(array, usedIndices);
         }
 
         return questions;
     }
-    
-    generateQuestion(array , generatedQuestions ) {
-        let movieIndex = this.getUnusedIndex(array.length, generatedQuestions);
-        let [correctOption, correctData] =  array[movieIndex];
 
-        let options = [] ;
-        options.push(correctOption);
+    generateQuestion(array, usedIndices) {
+        let movieIndex = this.getUnusedIndex(array.length, usedIndices);
+        let [correctOption, correctData] = array[movieIndex];
 
-        let optionsIndex = [];
-        optionsIndex.push(movieIndex);
+        let options = [correctOption];
+        let optionIndices = new Set([movieIndex]);
 
-        let randomIndex;
-
-        for(let i = 0; i< this.nOptions-1;i++){
-            randomIndex = this.getUnusedIndex(array.length, optionsIndex);
-            const [incorrectName, incorrectData] = array[randomIndex];
+        while (options.length < this.nOptions) {
+            let randomIndex = this.getUnusedIndex(array.length, optionIndices);
+            const [incorrectName] = array[randomIndex];
             options.push(incorrectName);
         }
+
         options = shuffle(options);
+
         return this.doGenerateQuestion(correctOption, options, correctData);
     }
 
-    getUnusedIndex(max, generatedIndex){
-        let index = this.getRandomIndex(max);
-        let count = 0;
-        while(generatedIndex.includes(index) && count < max) {
-            index = this.getRandomIndex(max);
-            count++;
+    getUnusedIndex(max, usedIndices) {
+        if (usedIndices.size >= max) {
+            throw new Error("No hay más índices disponibles para seleccionar.");
         }
-        generatedIndex.push(index);
+        let index;
+        do {
+            index = this.getRandomIndex(max);
+        } while (usedIndices.has(index));
+        usedIndices.add(index);
         return index;
     }
 
-    getRandomIndex(max ){
+    getRandomIndex(max) {
         return Math.floor(Math.random() * max);
     }
 

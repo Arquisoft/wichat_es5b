@@ -664,3 +664,53 @@ paths:
                 type: boolean
                 description: Indica si la pregunta fue respondida correcta o incorrectamente
                 example: true
+
+  /getUserRole:
+    post:
+      summary: Obtener el rol de un usuario a partir del id
+      operationId: getUserRole
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: ID del usuario
+                  example: "661f3bfa2d8f4a3e9e8e1b52"
+      responses:
+        '200':
+          description: La llamada se realiza correctamente, devuelve el rol del usuario
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  role:
+                    type: string
+                    description: Rol del usuario
+                    example: admin
+        '400':
+          description: Falta el campo userId en la llamada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Mensaje de error
+                    example: "El campo userId es obligatorio y no puede estar vacío"
+        '404':
+          description: No se encuentra al usuario
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Mensaje de error
+                    example: "Usuario no encontrado"

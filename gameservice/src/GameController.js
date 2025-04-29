@@ -15,10 +15,10 @@ class GameController {
     this.POINTS_CHATBOT_USED = 20;
   }
 
-    async startGame() {
+    async startGame(lang) {
       this.score = 0;
       console.log("Inicio del juego");
-      await this.questionManager.generateQuestions(this.numberOfQuestions, this.numberOfOptions);
+      await this.questionManager.generateQuestions(this.numberOfQuestions, this.numberOfOptions, lang);
       this.nextQuestion();
     }
   

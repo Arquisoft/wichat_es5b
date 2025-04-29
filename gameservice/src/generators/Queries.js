@@ -1,46 +1,43 @@
 const movieQuery = `
-    SELECT DISTINCT ?itemLabel (SAMPLE(?pic) AS ?pic) WHERE {
-    ?item wdt:P31 wd:Q11424;
-    wdt:P577 ?publication_date;
-    wdt:P18 ?pic.
-
-    FILTER (?publication_date >= "2000-00-00T00:00:00Z"^^xsd:dateTime)
-
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+    SELECT DISTINCT ?itemLabel ?pic WHERE {
+      ?item wdt:P31 wd:Q11424;
+            wdt:P577 ?publication_date;
+            wdt:P18 ?pic.
+    
+      FILTER (?publication_date >= "2000-01-01T00:00:00Z"^^xsd:dateTime)
+    
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "{{LANG}}". }
     }
-
-    GROUP BY ?item ?itemLabel
+    LIMIT 100
 `;
 
 const actorQuery = `
-    SELECT DISTINCT ?characterLabel ?performerLabel ?filmTitle (SAMPLE(?pic) AS ?pic) WHERE {
-    ?character wdt:P31 wd:Q15773347;
-    wdt:P175 ?performer;
-    wdt:P1441 ?work;
-    wdt:P18 ?pic.
-
-    ?work wdt:P31 wd:Q11424;
-    wdt:P1476 ?filmTitle;
-
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+    SELECT DISTINCT ?characterLabel ?performerLabel ?filmTitle ?pic WHERE {
+      ?character wdt:P31 wd:Q15773347;
+                 wdt:P175 ?performer;
+                 wdt:P1441 ?work;
+                 wdt:P18 ?pic.
+    
+      ?work wdt:P31 wd:Q11424;
+            wdt:P1476 ?filmTitle.
+    
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "{{LANG}}". }
     }
-
-    GROUP BY ?characterLabel ?performerLabel ?filmTitle
+    LIMIT 100
 `;
 
 const characterQuery = `
-    SELECT DISTINCT ?characterLabel ?seriesLabel (SAMPLE(?pic) AS ?pic) WHERE {
-    ?character wdt:P31 wd:Q15773317;
-    wdt:P1441 ?series;
-    wdt:P18 ?pic.
-
-    SERVICE wikibase:label { 
-        bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en".
-    }
+    SELECT DISTINCT ?characterLabel ?seriesLabel ?pic WHERE {
+      ?character wdt:P31 wd:Q15773317;
+                 wdt:P1441 ?series;
+                 wdt:P18 ?pic.
     
+      SERVICE wikibase:label { 
+        bd:serviceParam wikibase:language "{{LANG}}".
+      }
     }
+    LIMIT 100
 
-    GROUP BY ?character ?characterLabel ?series ?seriesLabel ?pic
 `;
 
 module.exports = { movieQuery, actorQuery, characterQuery };

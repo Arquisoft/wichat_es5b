@@ -1,4 +1,3 @@
-
 import React, { useState, useContext, useEffect } from 'react';
 import AddUser from './components/AddUser';
 import Login from './components/Login';
@@ -11,7 +10,6 @@ import { LanguageContext } from "./LanguageContext";
 
 function App() {
   const [showLogin, setShowLogin] = useState(true);
-
   const [user, setUser] = useState();
   const { translations } = useContext(LanguageContext);
 
@@ -52,21 +50,25 @@ function App() {
         alignItems: "center",
         backgroundColor: "#faf5ea",
         border: "10px solid #c46331",
-        boxSizing: "border-box"
+        boxSizing: "border-box",
+        //marginTop: '1px', 
+        paddingTop: '1px'
       }}>
         <CssBaseline />
         {showLogin ? <Login userForHistory={userForHistory} /> : <AddUser />}
-        <Typography component="div" align="center" sx={{ marginTop: 1}}>
-          {showLogin ? (
-            <Link name="gotoregister" component="button" variant="body2" onClick={handleToggleView}>
-              {translations.app_register || "¿No tienes una cuenta? Regístrate aquí."}
-            </Link>
-          ) : (
-            <Link component="button" variant="body2" onClick={handleToggleView}>
-              {translations.app_login || "¿Ya tienes una cuenta? Inicia sesión aquí."}
-            </Link>
-          )}
-        </Typography>
+        {!user && (
+          <Typography component="div" align="center" sx={{ marginTop: 1}}>
+            {showLogin ? (
+              <Link name="gotoregister" component="button" variant="body2" onClick={handleToggleView}>
+                {translations.app_register || "¿No tienes una cuenta? Regístrate aquí."}
+              </Link>
+            ) : (
+              <Link component="button" variant="body2" onClick={handleToggleView}>
+                {translations.app_login || "¿Ya tienes una cuenta? Inicia sesión aquí."}
+              </Link>
+            )}
+          </Typography>
+        )}
       </Container>
     </div>
   );
