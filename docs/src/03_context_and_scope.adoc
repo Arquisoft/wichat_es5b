@@ -71,7 +71,7 @@ cloud "LLM" {
 
 "Usuario" --> "WiChat" : Interactúa
 "WiChat" <--> "Wikidata" : Pide y recibe datos
-"WiChat" <--> "LLM" : Intercambia mensajes del usuario
+"WiChat" <--> "LLM" : Genera pistas para el usuario
 
 @enduml
 ----
@@ -86,7 +86,7 @@ Base de datos general de donde obtendremos las imágenes y datos relacionados co
 
 * LLM
 
-Modelo de Lenguaje llamado mistral y creado por Empathy. Es el modelo de lenguaje que usaremos para apoyar al usuario en caso de que necesite pistas.
+Modelo de Lenguaje utilizado para generar las pistas de la aplicación .Utilizamos dos LLMs distintos, Qwen y Mistral, creados por Empathy.
 
 === Contexto Técnico
 
@@ -182,7 +182,7 @@ cloud "LLM"
 
 |GatewayService - UserService
 |HTTP
-|Registro
+|Registro de usuarios
 
 |GatewayService - AuthService
 |HTTP
@@ -190,7 +190,7 @@ cloud "LLM"
 
 |GatewayService - LLMService
 |HTTP
-|Chat en tiempo real
+|Generación de pistas
 
 |GatewayService - GameService
 |HTTP
@@ -218,7 +218,7 @@ cloud "LLM"
 
 |UserService - Users DB
 |HTTP
-|Registro
+|Registro de usuarios
 
 |AuthService - Users DB
 |HTTP
@@ -226,5 +226,5 @@ cloud "LLM"
 
 |LLMService - LLM
 |HTTPS
-|Chat en tiempo real
+|Generación de pistas
 |===

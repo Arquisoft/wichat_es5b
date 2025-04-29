@@ -19,7 +19,7 @@ endif::arc42help[]
 
 El propósito de este proyecto es mejorar una aplicación existente de preguntas y respuestas, donde los usuarios deben 
 responder correctamente entre varias opciones, de las cuales solo una es la correcta. La aplicación se basa en imágenes, 
-presentando a los jugadores diversas temáticas sobre las cuales deberán responder preguntas relacionadas con el contenido 
+presentando a los jugadores distintos tipos de preguntas relacionadas con el contenido
 visual.
 
 Como nueva funcionalidad, este proyecto integrará un modelo de lenguaje (LLM) que permitirá ofrecer pistas a los jugadores. 
@@ -61,7 +61,7 @@ Los requerimientos funcionales describen que debe hacer el sistema.
 . Interfaz de usuario
 .. El sistema contará con un frontend web
 .. El frontend mostrará imágenes
-.. El frontend mostrará respuestas
+.. El frontend mostrará preguntas con distintas opciones
 . Sistema de preguntas y respuestas
 .. El sistema generará automáticamente preguntas a partir de Wikidata
 .. El sistema creará una respuesta correcta para cada pregunta
@@ -94,7 +94,7 @@ Los requerimientos no funcionales describen cómo debe comportarse el sistema y 
 .. La web deberá estar desplegada
 .. La web deberá estar disponible en la web
 . Rendimiento y tiempos de respuesta
-.. El sistema deberá generar automáticamente las preguntas en tiempo razonable (<1s)
+.. El sistema deberá generar automáticamente las preguntas en tiempo razonable (<10-15s)
 .. Las pistas deben generarse en un tiempo óptimo para no afectar la experiencia del usuario
 .. Los tiempos de carga del sistema deben ser mínimos para garantizar una experiencia fluida
 . Escalabilidad y mantenimiento
