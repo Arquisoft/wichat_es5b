@@ -35,7 +35,7 @@ const Ranking = () => {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>{translations.nav_ranking_date || "Fecha"}</TableCell>
+                                <TableCell>{translations.nav_ranking_user || "Usuario"}</TableCell>
                                 <TableCell>{translations.nav_ranking_correct_answers || "Preguntas correctas"}</TableCell>
                                 <TableCell>{translations.nav_ranking_wrong_answers || "Preguntas Incorrectas"}</TableCell>
                                 <TableCell>{translations.nav_ranking_score || "Puntuación"}</TableCell>
