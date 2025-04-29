@@ -133,7 +133,7 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus-wichat_es5b
-    profiles: ["dev"]
+    profiles: ["dev", "prod"]
     networks:
       - mynetwork
     volumes:
@@ -147,7 +147,7 @@ services:
   grafana:
     image: grafana/grafana
     container_name: grafana-wichat_es5b
-    profiles: ["dev"]
+    profiles: ["dev", "prod"]
     networks:
       - mynetwork
     volumes:
