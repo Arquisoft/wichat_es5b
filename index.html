@@ -485,8 +485,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_registro_de_nuevo_usuario">6.1. &lt;Registro de nuevo usuario&gt;</a></li>
 <li><a href="#_inicio_de_sesion">6.2. &lt;Inicio de sesion&gt;</a></li>
 <li><a href="#_generacion_de_pregunta_y_respuestas">6.3. &lt;Generacion de pregunta y respuestas&gt;</a></li>
-<li><a href="#_generacion_de_una_pista">6.4. &lt;Generacion de una pista&gt;</a></li>
-<li><a href="#_consulta_de_estadisticas">6.5. &lt;Consulta de estadisticas&gt;</a></li>
+<li><a href="#_generación_de_una_pista">6.4. &lt;Generación de una pista&gt;</a></li>
+<li><a href="#_consulta_de_estadísticas">6.5. &lt;Consulta de estadísticas&gt;</a></li>
 </ul>
 </li>
 <li><a href="#section-deployment-view">7. Vista de despliegue</a>
@@ -1216,7 +1216,7 @@ entradas y las salidas</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Contexto%20negocio.png" alt="Contexto negocio" width="568" height="137">
+<img src="./images/Contexto%20negocio.png" alt="Contexto negocio" width="640" height="146">
 </div>
 </div>
 <div class="ulist">
@@ -1277,7 +1277,7 @@ mapeo mostrando las relaciones entre los canales y las entradas/salidas.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Contexto%20tecnico.png" alt="Contexto tecnico" width="1033" height="427">
+<img src="./images/Contexto%20tecnico.png" alt="Contexto tecnico" width="1157" height="502">
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1424,6 +1424,12 @@ Realice la explicación de las deciciones clave de manera breve.</p>
 </li>
 <li>
 <p><strong>Mistral</strong>: modelo LLM de propósito general, diseñado para adaptarse a diversas tareas. Escogimos Mistral debido a que queremos participar en el concurso de Empathy, y consideramos es la más adecuada para el tipo de preguntas que se realizarán en la aplicación. Además, hay muchos recursos educativos que facilitan su uso e integración en proyectos.</p>
+</li>
+<li>
+<p><strong>Qwen</strong>: modelo LLM especializado en programación y soluciones técnicas, pensada para entornos donde se requiera asistencia en desarrollo de software. Inicialmente habíamos decidido utilizar únicamente Mistral, pero después decidimos añadir también la posibilidad de cambiar el LLM en el chat de pistas, y puesto que Qwen también pertenece a Empathy consideramos que era la mejor opción.</p>
+</li>
+<li>
+<p><strong>Gemini</strong>: modelo LLM de Google diseñada para comprender y generar texto, imágenes, audio y más, facilitando tareas complejas en múltiples formatos. Decidimos utilizar este LLM para generar pistas a partir de las imágenes debido a que los modelos de Empathy no nos permitían procesar imágenes a partir su URL.</p>
 </li>
 </ul>
 </div>
@@ -1616,7 +1622,7 @@ mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Vision%20general.png" alt="Vision general" width="551" height="137">
+<img src="./images/Vision%20general.png" alt="Vision general" width="620" height="146">
 </div>
 </div>
 <div class="sect3">
@@ -1664,7 +1670,7 @@ mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Nivel%202.png" alt="Nivel 2" width="765" height="231">
+<img src="./images/Nivel%202.png" alt="Nivel 2" width="879" height="265">
 </div>
 </div>
 <div class="sect3">
@@ -1720,7 +1726,7 @@ mejor de los casos bastará con ejemplos o la firma de los mismos.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Backend.png" alt="Backend" width="834" height="463">
+<img src="./images/Backend.png" alt="Backend" width="971" height="569">
 </div>
 </div>
 <div class="sect3">
@@ -1844,7 +1850,7 @@ Principalmente capturarás escenarios en tu documentación para comunicar tu arq
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Registro%20de%20nuevo%20usuario.png" alt="Registro de nuevo usuario" width="846" height="426">
+<img src="./images/Registro%20de%20nuevo%20usuario.png" alt="Registro de nuevo usuario" width="918" height="415">
 </div>
 </div>
 </div>
@@ -1855,40 +1861,40 @@ Principalmente capturarás escenarios en tu documentación para comunicar tu arq
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Inicio%20de%20sesion.png" alt="Inicio de sesion" width="758" height="565">
+<img src="./images/Inicio%20de%20sesion.png" alt="Inicio de sesion" width="814" height="550">
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_generacion_de_pregunta_y_respuestas">6.3. &lt;Generacion de pregunta y respuestas&gt;</h3>
 <div class="paragraph">
-<p>Este driagrama de secuencia resume el flujo de la aplicacion web para generar las preguntas y respuestas una vez iniciado el juego por parte del usuario.</p>
+<p>Este diagrama de secuencia resume el flujo de la aplicación web para generar las preguntas y respuestas una vez iniciado el juego por parte del usuario.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Generacion%20de%20pregunta.png" alt="Generacion de pregunta" width="950" height="609">
+<img src="./images/Generacion%20de%20pregunta.png" alt="Generacion de pregunta" width="1081" height="912">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_generacion_de_una_pista">6.4. &lt;Generacion de una pista&gt;</h3>
+<h3 id="_generación_de_una_pista">6.4. &lt;Generación de una pista&gt;</h3>
 <div class="paragraph">
-<p>Este diagrama de secuencia representa como se genera una pista para una pregunta determinada tras ser solicitada por el usuario que esta jugando.</p>
+<p>Este diagrama de secuencia representa cómo se genera una pista para una pregunta determinada tras ser solicitada por el usuario que está jugando.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Generacion%20de%20pista.png" alt="Generacion de pista" width="604" height="365">
+<img src="./images/Generacion%20de%20pista.png" alt="Generacion de pista" width="644" height="357">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_consulta_de_estadisticas">6.5. &lt;Consulta de estadisticas&gt;</h3>
+<h3 id="_consulta_de_estadísticas">6.5. &lt;Consulta de estadísticas&gt;</h3>
 <div class="paragraph">
-<p>Este diagrama de secuencia representa el flujo de la peticion de un usuario que haya iniciado sesion en el sistema y quiera saber sus estadisticas de juego.</p>
+<p>Este diagrama de secuencia representa el flujo de la petición de un usuario que haya iniciado sesión en el sistema y quiera saber sus estadísticas de juego.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Consulta%20de%20estadisticas.png" alt="Consulta de estadisticas" width="785" height="426">
+<img src="./images/Consulta%20de%20estadisticas.png" alt="Consulta de estadisticas" width="837" height="415">
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1987,26 +1993,26 @@ conexiones físicas entre ellos</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/arquitectura.png" alt="arquitectura" width="1199" height="723">
+<img src="./images/arquitectura.png" alt="arquitectura" width="1577" height="929">
 </div>
 </div>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Motivación</dt>
 <dd>
-<p>En el anterior diagrama podemos ver que cada componente se encuentra encapsulado en un Docker que son
-contenedores en los que se encapsula el software para simplificar su despliegue. La interfaz de nuestra
-aplicación se encuentra en Webapp donde el usuario se conecta mediante un buscador desde su dispositivo.
-La aplicación se conecta con los servicios internos de la aplicación mediante Gatewayservice que distribuye
-las llamadas de la aplicación entre el resto de los servicios de la misma. Nuestra aplicacion tambien cuenta
-con una base de datos en la que almacenamos la información de los usuarios y de sus autenticaciones</p>
+<p>En el anterior diagrama podemos ver que cada componente se encuentra encapsulado en un contenedor Docker, en los que se
+encapsula el software para simplificar su despliegue. La interfaz de nuestra
+aplicación se encuentra en Webapp, donde el usuario se conecta mediante un buscador desde su dispositivo.
+La aplicación se conecta con los servicios internos de la aplicación mediante Gatewayservice, que distribuye
+las llamadas de la aplicación entre el resto de los servicios de la misma. Nuestra aplicación también cuenta
+con dos bases de datos, una en la que almacenamos los usuarios registrados y otra en la que guardamos el historial de sus partidas y el ránking global.</p>
 </dd>
 <dt class="hdlist1">Características de calidad/rendimiento</dt>
 <dd>
-<p>Gracias al uso de docker nuestro sistema es portable (podriamos cambiarlo de maquina y seguiria funcionando sin
-muchos cambios) y escalable ya que podemos crear nuevos contenedores y nuevas instancias en el caso de que sean
-necesarias. Tambien gracias a que almacenamos la base de datos dentro de la misma maquina que nuestra aplicación
-las llamadas a la misma seran mas rapidas que si se encontrase fuera de la misma.</p>
+<p>Gracias al uso de docker nuestro sistema es portable (podríamos cambiarlo de máquina y seguiría funcionando sin
+muchos cambios) y escalable, ya que podemos crear nuevos contenedores y nuevas instancias en el caso de que sean
+necesarias. También, gracias a que almacenamos la base de datos dentro de la misma máquina que nuestra aplicación,
+las llamadas a la misma serán más rápidas que si se encontrase fuera de la misma.</p>
 </dd>
 <dt class="hdlist1">Mapeo de los Bloques de Construcción a Infraestructura</dt>
 </dl>
@@ -2033,31 +2039,31 @@ las llamadas a la misma seran mas rapidas que si se encontrase fuera de la misma
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Gatewayservice</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio mediante el cual llamamos al resto de los servicios de la aplicacion, tanto internos como externos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio mediante el cual llamamos al resto de los servicios internos de la aplicación</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Authservice</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio de autenticaciones de los usuarios</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio que se encarga de la autenticación de los usuarios</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Userservice</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio que almacena a los usuarios</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio que se encarga de almacenar los usuarios registrados en la aplicación</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">LLMService</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio que realizará las llamadas al LLM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio que realiza las llamadas al LLM</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">GameService</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio que nos facilitará la información de las preguntas y la logica del juego</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio que maneja la lógica del juego</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WikidataService</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio que obtendra la información para las peguntas de wikidata</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio que ejecuta las consultas a Wikidata</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">StatsService</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio que nos facilitará las estadisticas de los jugadores y el ranking global del juego</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Es el servicio que gestiona las estadísticas de los jugadores y el ranking global del juego</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Database</p></td>
@@ -2069,7 +2075,7 @@ las llamadas a la misma seran mas rapidas que si se encontrase fuera de la misma
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Wikidata</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Es una base de datos externa de la cual sacaremos las posibles preguntas de la aplicación asi como las respuestas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Es una base de datos externa de la que extraemos la información para generar las preguntas</p></td>
 </tr>
 </tbody>
 </table>
@@ -2187,7 +2193,7 @@ seguridad). Este es el lugar en la plantilla provisto para una especificación c
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/diagrama-clases.svg" alt="diagrama clases" width="401" height="695">
+<img src="./images/diagrama-clases.svg" alt="diagrama clases" width="619" height="734">
 </div>
 </div>
 </div>
@@ -2260,7 +2266,7 @@ A continuación se muestran algunos conceptos clave.</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Privacidad</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">La información de los usuarios será completamente privada y no será visible para otros usuarios.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La información sensible de los usuarios será completamente privada y no será visible para otros usuarios.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Almacenamiento Seguro</strong></p></td>
@@ -2274,8 +2280,8 @@ A continuación se muestran algunos conceptos clave.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Microservicios</strong>:
-La arquitectura de microservicios es un enfoque en el desarrollo de software que organiza la aplicación como una colección de servicios pequeños e independientes. Estos microservicios se comunican entre sí a través de APIs bien definidas, lo que permite que cada uno cumpla funciones específicas y se enfoque en capacidades concretas.
+<p><strong>Arquitectura basada en servicios</strong>:
+La arquitectura de basada en servicios es un enfoque en el desarrollo de software que organiza la aplicación como una colección de servicios independientes. Estos servicios se comunican entre sí a través de interfaces bien definidas, lo que permite que cada uno cumpla funciones específicas y se enfoque en capacidades concretas.
 Al adoptar este patrón de diseño, nuestra aplicación se beneficia de una estructura flexible y escalable. La separación de responsabilidades entre servicios no solo facilita el mantenimiento y las actualizaciones, sino que también permite una mayor adaptabilidad ante cambios.</p>
 </li>
 </ul>
@@ -2389,11 +2395,15 @@ Necesitamos usar un LLM en la aplicación para proporcionar un chat interactivo 
 <li>
 <p>Mistral de Empathy</p>
 </li>
+<li>
+<p>Qwen de Empathy</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
 <p><strong>Decisión tomada:</strong>
-El Modelo de Lenguaje que decidimos usar será Mistral de la empresa Empathy.</p>
+Los Modelos de Lenguaje que decidimos usar serán tanto Mistral como Qwen de la empresa Empathy para poder cambiar indistintamente en caso de fallo.
+Y Gemini para poder procesar imagenes para obtener pistas a partir de ellas.</p>
 </div>
 </div>
 <div class="sect2">
@@ -2452,7 +2462,7 @@ En cualquier caso incluya ligas a los escenarios de las siguientes secciones.</p
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/árbol%20de%20calidad.png" alt="árbol de calidad" width="734" height="539">
+<img src="./images/árbol%20de%20calidad.png" alt="árbol de calidad" width="790" height="529">
 </div>
 </div>
 </div>
@@ -2501,7 +2511,7 @@ Cuando se requiere evaluar la arquitectura utilizando métodos como ATAM se nece
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Rendimiento</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">El sistema debe cargar las preguntas en menos de 2s.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">El sistema debe cargar las preguntas en menos de 15s.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Compatibilidad</em></p></td>
@@ -2910,7 +2920,7 @@ y hay que mejorar los tiempos de carga en cuanto a los servicios externos asi co
 <div id="footer">
 <div id="footer-text">
 Version 8.2 EN<br>
-Last updated 2025-04-29 16:57:15 +0200
+Last updated 2025-04-29 15:38:35 +0200
 </div>
 </div>
 </body>
