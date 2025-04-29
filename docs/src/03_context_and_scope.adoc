@@ -137,9 +137,9 @@ frame WiChat {
 
     database "Users DB"
 
-    database "History DB"
+    database "Game DB"
 
-    database "Ranking DB"
+    database "Game DB"
 }
 
 cloud "Wikidata"
@@ -154,8 +154,8 @@ cloud "LLM"
 "GatewayService" <--> "GameService" : HTTP
 "GatewayService" <--> "StatsService" : HTTP
 "GameService" <--> "WikidataService" : HTTP
-"StatsService" <--> "History DB" : HTTP
-"StatsService" <--> "Ranking DB" : HTTP
+"StatsService" <--> "Game DB" : HTTP
+"StatsService" <--> "Game DB" : HTTP
 "UserService" <--> "Users DB" : HTTP
 "AuthService" <--> "Users DB" : HTTP
 
@@ -208,11 +208,11 @@ cloud "LLM"
 |HTTPS
 |Obtención de imágenes y datos de las preguntas
 
-|StatsService - History DB
+|StatsService - Game DB
 |HTTP
 |Obtencion del historial del jugador
 
-|StatsService - Ranking DB
+|StatsService - Game DB
 |HTTP
 |Obtencion del ranking global
 
