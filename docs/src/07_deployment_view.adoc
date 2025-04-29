@@ -143,15 +143,15 @@ En el anterior diagrama podemos ver que cada componente se encuentra encapsulado
 encapsula el software para simplificar su despliegue. La interfaz de nuestra
 aplicación se encuentra en Webapp, donde el usuario se conecta mediante un buscador desde su dispositivo.
 La aplicación se conecta con los servicios internos de la aplicación mediante Gatewayservice, que distribuye
-las llamadas de la aplicación entre el resto de los servicios de la misma. Nuestra aplicacion también cuenta
-con una base de datos en la que almacenamos los usuarios registrados, así como el historial de sus partidas y el ránking de mejores partidas.
+las llamadas de la aplicación entre el resto de los servicios de la misma. Nuestra aplicación también cuenta
+con dos bases de datos, una en la que almacenamos los usuarios registrados y otra en la que guardamos el historial de sus partidas y el ránking global.
 
 
 
 
 Características de calidad/rendimiento::
 
-Gracias al uso de docker nuestro sistema es portable (podríamos cambiarlo de máquina y seguiráa funcionando sin
+Gracias al uso de docker nuestro sistema es portable (podríamos cambiarlo de máquina y seguiría funcionando sin
 muchos cambios) y escalable, ya que podemos crear nuevos contenedores y nuevas instancias en el caso de que sean
 necesarias. También, gracias a que almacenamos la base de datos dentro de la misma máquina que nuestra aplicación,
 las llamadas a la misma serán más rápidas que si se encontrase fuera de la misma.
