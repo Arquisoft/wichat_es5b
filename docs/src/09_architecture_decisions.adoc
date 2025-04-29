@@ -52,9 +52,11 @@ Necesitamos usar un LLM en la aplicación para proporcionar un chat interactivo 
 
 * Gemini de Google
 * Mistral de Empathy
+* Qwen de Empathy
 
 *Decisión tomada:*
-El Modelo de Lenguaje que decidimos usar será Mistral de la empresa Empathy.
+Los Modelos de Lenguaje que decidimos usar serán tanto Mistral como Qwen de la empresa Empathy para poder cambiar indistintamente en caso de fallo. 
+Y Gemini para poder procesar imagenes para obtener pistas a partir de ellas.
 
 === Despliegue
 
