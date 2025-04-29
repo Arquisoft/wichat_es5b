@@ -32,8 +32,8 @@ const NavMenu = ({ username }) => {
 
   const token = localStorage.getItem("token");
 
-  const grafanaUrl = process.env.GRAFANA_URI || "http://localhost:9091";
-  const prometheusUrl = process.env.PROMETHEUS_URI || "http://localhost:9090";
+  const grafanaUrl = `http://${window.location.hostname}:9091`;
+  const prometheusUrl = `http://${window.location.hostname}:9090`;
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || "http://localhost:8000";
 
   const { currentLang, changeLanguage, translations } = useContext(LanguageContext);
