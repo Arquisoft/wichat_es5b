@@ -1,6 +1,6 @@
 global:
   scrape_interval: 5s
 scrape_configs:
-  - job_name: "example-nodejs-app"
+  - job_name: "gatewayservice"
     static_configs:
-      - targets: ["gatewayservice:8000"]
+      - targets: ["http://gatewayservice:8000"]
