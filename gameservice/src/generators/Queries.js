@@ -8,7 +8,7 @@ const movieQuery = `
     
       SERVICE wikibase:label { bd:serviceParam wikibase:language "{{LANG}}". }
     }
-    LIMIT 100
+    LIMIT 1000
 `;
 
 const actorQuery = `
@@ -23,7 +23,7 @@ const actorQuery = `
     
       SERVICE wikibase:label { bd:serviceParam wikibase:language "{{LANG}}". }
     }
-    LIMIT 100
+    LIMIT 1000
 `;
 
 const characterQuery = `
@@ -36,7 +36,7 @@ const characterQuery = `
         bd:serviceParam wikibase:language "{{LANG}}".
       }
     }
-    LIMIT 100
+    LIMIT 1000
 
 `;
 
